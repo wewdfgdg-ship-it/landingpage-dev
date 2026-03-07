@@ -1,10 +1,18 @@
-import { auth } from '@/lib/auth';
+import NextAuth from 'next-auth';
+import { authConfig } from '@/lib/auth.config';
 import { NextResponse } from 'next/server';
 
-const PUBLIC_PATHS = ['/login', '/api/auth', '/p/', '/api/track'];
+const { auth } = NextAuth(authConfig);
+
+const PUBLIC_PATHS = ['/login', '/api/auth', '/p/', '/api/track', '/pricing'];
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
+
+  // 루트 페이지 (마케팅 랜딩)
+  if (pathname === '/') {
+    return NextResponse.next();
+  }
 
   // 공개 경로는 통과
   if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {

@@ -17,6 +17,7 @@ model User {
   name          String?
   image         String?
   emailVerified DateTime?
+  isAdmin       Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -70,10 +71,12 @@ model Organization {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  memberships   Membership[]
-  projects      Project[]
-  subscriptions Subscription[]
-  payments      Payment[]
+  memberships        Membership[]
+  projects           Project[]
+  subscriptions      Subscription[]
+  payments           Payment[]
+  couponRedemptions  CouponRedemption[]
+  creditBalance      CreditBalance?
 }
 
 model Membership {
@@ -93,6 +96,26 @@ enum PlanType {
   FREE
   PRO
   BUSINESS
+}
+
+model Plan {
+  id          String   @id // FREE, PRO, BUSINESS
+  name        String   // 표시 이름
+  description String   @default("")
+  price       Int      @default(0) // 월 KRW
+  yearlyPrice Int      @default(0) // 연간 KRW (월 환산)
+  quotaLimit  Int      @default(3) // 프로젝트 수 제한
+  features    Json     @default("[]") // string[]
+  generateLimit Int    @default(5) // 월 생성 횟수 (-1 = 무제한)
+  deployLimit   Int    @default(1)
+  exportEnabled       Boolean @default(true)
+  customDomainEnabled Boolean @default(false)
+  analyticsEnabled    Boolean @default(true)
+  abTestEnabled       Boolean @default(false)
+  sortOrder   Int      @default(0) // 정렬 순서
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum MembershipRole {
@@ -129,6 +152,8 @@ model Project {
   attentionConfig   Json? // ⑦ Attention Architecture
   layoutConfig      Json? // ⑧ Layout Intelligence
   styleConfig       Json? // ⑨ Visual Style
+  generatedHtml     String? @db.Text // ⑩ Code Engine 최종 HTML
+  generatedPage     Json? // ⑩ Code Engine 메타+섹션 데이터
 
   // 배포
   isDeployed    Boolean @default(false)
@@ -407,6 +432,13 @@ model Subscription {
   cancelAtPeriodEnd  Boolean @default(false)
   cancelReason       String?
 
+  // Trial
+  trialEnd   DateTime?
+  isTrial    Boolean @default(false)
+
+  // 쿠폰
+  couponId String?
+
   externalId String? @unique // 결제사 구독 ID
 
   createdAt DateTime @default(now())
@@ -448,4 +480,99 @@ enum PaymentStatus {
   COMPLETED
   FAILED
   REFUNDED
+}
+
+// ============================================================
+// 쿠폰 & 프로모션
+// ============================================================
+
+model Coupon {
+  id          String       @id @default(cuid())
+  code        String       @unique
+  name        String // 관리자용 이름
+  description String?
+
+  // 할인 설정
+  discountType  DiscountType @default(PERCENT)
+  discountValue Int // PERCENT: 10=10%, FIXED: 5000=5000원
+
+  // 적용 조건
+  applicablePlans PlanType[] // 빈 배열 = 전체 적용
+  minAmount       Int        @default(0) // 최소 결제 금액
+  maxUses         Int        @default(0) // 0=무제한
+  maxUsesPerOrg   Int        @default(1) // 조직당 사용 횟수
+
+  // 기간
+  startsAt  DateTime @default(now())
+  expiresAt DateTime?
+
+  isActive  Boolean  @default(true)
+  usedCount Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  redemptions CouponRedemption[]
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+}
+
+model CouponRedemption {
+  id       String   @id @default(cuid())
+  couponId String
+  orgId    String
+  amount   Int // 실제 할인 금액
+  usedAt   DateTime @default(now())
+
+  coupon Coupon       @relation(fields: [couponId], references: [id])
+  org    Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([couponId])
+  @@index([orgId])
+}
+
+// ============================================================
+// 크레딧 시스템
+// ============================================================
+
+model CreditBalance {
+  id    String @id @default(cuid())
+  orgId String @unique
+
+  balance   Int @default(0) // 잔여 크레딧
+  totalUsed Int @default(0) // 누적 사용
+
+  updatedAt DateTime @updatedAt
+
+  org          Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  transactions CreditTransaction[]
+}
+
+model CreditTransaction {
+  id              String           @id @default(cuid())
+  creditBalanceId String
+  type            CreditTxType
+  amount          Int // 양수=충전, 음수=차감
+  reason          String // "trial_bonus", "generation", "purchase" 등
+  referenceId     String? // 관련 프로젝트/결제 ID
+
+  createdAt DateTime @default(now())
+
+  creditBalance CreditBalance @relation(fields: [creditBalanceId], references: [id], onDelete: Cascade)
+
+  @@index([creditBalanceId])
+}
+
+enum CreditTxType {
+  TRIAL_BONUS // 트라이얼 시작 보너스
+  PURCHASE    // 크레딧 구매
+  GENERATION  // 랜딩페이지 생성 차감
+  REGENERATION // 재생성 차감
+  IMAGE       // 이미지 생성 차감
+  REFUND      // 환불 복구
+  ADMIN       // 관리자 수동 조정
+  PROMO       // 프로모션 지급
 }
