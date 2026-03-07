@@ -1,0 +1,451 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// 인증 & 조직
+// ============================================================
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String?
+  image         String?
+  emailVerified DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  accounts    Account[]
+  sessions    Session[]
+  memberships Membership[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Organization {
+  id         String   @id @default(cuid())
+  name       String
+  plan       PlanType @default(FREE)
+  quotaUsed  Int      @default(0)
+  quotaLimit Int      @default(3)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  memberships   Membership[]
+  projects      Project[]
+  subscriptions Subscription[]
+  payments      Payment[]
+}
+
+model Membership {
+  id        String         @id @default(cuid())
+  userId    String
+  orgId     String
+  role      MembershipRole @default(MEMBER)
+  createdAt DateTime       @default(now())
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orgId])
+}
+
+enum PlanType {
+  FREE
+  PRO
+  BUSINESS
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+// ============================================================
+// 프로젝트 & 생성
+// ============================================================
+
+model Project {
+  id        String        @id @default(cuid())
+  orgId     String
+  name      String
+  slug      String?       @unique
+  status    ProjectStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  deletedAt DateTime?
+
+  // 입력 데이터
+  inputData Json? // Step 1~3 구조화 입력
+  inputScore Int? // 입력 품질 점수 (0~100)
+
+  // 엔진 출력 (각 엔진 결과 JSON)
+  productBrief      Json? // ① Product Intelligence
+  urgencyBrief      Json? // ② Why Now
+  strategyBlueprint Json? // ③ Conversion Strategy
+  objectionMap      Json? // ④ Objection Killer
+  copyBlocks        Json? // ⑤ Psychological Copy
+  trustConfig       Json? // ⑥ Trust Architecture
+  attentionConfig   Json? // ⑦ Attention Architecture
+  layoutConfig      Json? // ⑧ Layout Intelligence
+  styleConfig       Json? // ⑨ Visual Style
+
+  // 배포
+  isDeployed    Boolean @default(false)
+  deployedAt    DateTime?
+  customDomain  String?
+
+  org            Organization     @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  sections       Section[]
+  pageVersions   PageVersion[]
+  abTests        ABTest[]
+  dailyAnalytics DailyAnalytics[]
+  diagnosisLogs  DiagnosisLog[]
+  generatedImages GeneratedImage[]
+
+  @@index([orgId])
+  @@index([slug])
+}
+
+enum ProjectStatus {
+  DRAFT
+  GENERATING
+  GENERATED
+  EDITING
+  DEPLOYED
+  ARCHIVED
+}
+
+model Section {
+  id        String   @id @default(cuid())
+  projectId String
+  order     Int
+  role      SectionRole
+  type      String // hero_visual, pain_point, benefit_highlight 등
+  zone      Int? // 1~4 (Attention Architecture Zone)
+
+  // 카피
+  headline    String? @db.Text
+  subheadline String? @db.Text
+  body        String? @db.Text
+  bulletPoints Json? // string[]
+  ctaText     String?
+  microCopy   String?
+
+  // 레이아웃 & 스타일
+  layoutPattern String? // 42패턴 중 선택된 패턴명
+  customStyle   Json? // 섹션별 스타일 오버라이드
+
+  // 이미지
+  imageUrl       String? // R2 CDN URL
+  imageDirection String? @db.Text // 이미지 생성용 디렉션
+
+  // 신뢰 & 저항 파괴
+  trustLevel     Int? // 1~6
+  objectionType  String? // price, trust, need, complexity
+  objectionStrategies Json? // string[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project          Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sectionAnalytics SectionAnalytics[]
+
+  @@index([projectId])
+  @@index([projectId, order])
+}
+
+enum SectionRole {
+  HOOK
+  PAIN
+  SOLUTION
+  PROOF
+  OBJECTION
+  URGENCY
+  CTA
+  FEATURE
+  FAQ
+  FOOTER
+}
+
+model PageVersion {
+  id        String   @id @default(cuid())
+  projectId String
+  version   Int
+  label     String? // "원본", "A/B 변형 1" 등
+
+  htmlContent   String? @db.Text // 빌드된 HTML
+  reactContent  String? @db.Text // React 코드
+  sectionSnapshot Json? // 섹션 스냅샷
+
+  // 성과
+  trafficWeight Float @default(100) // A/B 트래픽 비율
+  totalVisits   Int   @default(0)
+  totalConversions Int @default(0)
+  conversionRate Float @default(0)
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  project Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  abTestsAsControl ABTest[] @relation("ControlVersion")
+  abTestsAsVariant ABTest[] @relation("VariantVersion")
+
+  @@index([projectId])
+  @@unique([projectId, version])
+}
+
+// ============================================================
+// A/B 테스트 & 학습
+// ============================================================
+
+model ABTest {
+  id        String       @id @default(cuid())
+  projectId String
+  status    ABTestStatus @default(RUNNING)
+
+  controlVersionId String
+  variantVersionId String
+
+  // 설정
+  optimizationLevel Int // 1=미세, 2=구조, 3=전체
+  targetMetric      String @default("conversion_rate")
+  minSampleSize     Int    @default(100)
+
+  // 결과
+  controlConversionRate Float?
+  variantConversionRate Float?
+  winner                String? // "control" | "variant"
+  confidence            Float? // 통계적 유의도
+
+  startedAt   DateTime  @default(now())
+  concludedAt DateTime?
+
+  project        Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  controlVersion PageVersion @relation("ControlVersion", fields: [controlVersionId], references: [id])
+  variantVersion PageVersion @relation("VariantVersion", fields: [variantVersionId], references: [id])
+
+  @@index([projectId])
+}
+
+enum ABTestStatus {
+  RUNNING
+  CONCLUDED
+  CANCELLED
+}
+
+model WinningPattern {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // 분류
+  industry      String // SaaS, 이커머스, 교육 등
+  goal          String // 구매, 가입, 문의 등
+  patternType   String // layout, copy_frame, section_order 등
+
+  // 내용
+  patternData   Json // 승리한 패턴 상세
+  winRate       Float // 승률
+  sampleSize    Int // 테스트 참여 수
+  improvement   Float // 기존 대비 개선율
+
+  @@index([industry, goal])
+}
+
+// ============================================================
+// 분석 & 진단
+// ============================================================
+
+model DailyAnalytics {
+  id        String   @id @default(cuid())
+  projectId String
+  date      DateTime @db.Date
+
+  // 트래픽
+  totalVisits     Int @default(0)
+  uniqueVisitors  Int @default(0)
+
+  // 전환
+  totalConversions Int @default(0)
+  conversionRate   Float @default(0)
+
+  // 참여
+  avgScrollDepth   Float @default(0) // 평균 스크롤 깊이 (%)
+  avgTimeOnPage    Float @default(0) // 평균 체류시간 (초)
+  bounceRate       Float @default(0)
+
+  // 유입원
+  sourceBreakdown Json? // { "direct": 30, "google": 50, ... }
+
+  // 디바이스
+  deviceBreakdown Json? // { "mobile": 60, "desktop": 35, "tablet": 5 }
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, date])
+  @@index([projectId])
+}
+
+model SectionAnalytics {
+  id        String   @id @default(cuid())
+  sectionId String
+  date      DateTime @db.Date
+
+  impressions   Int   @default(0) // 노출 수
+  avgDwellTime  Float @default(0) // 평균 체류시간 (초)
+  exitRate      Float @default(0) // 이탈률 (%)
+  ctaClicks     Int   @default(0) // CTA 클릭 수
+
+  section Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([sectionId, date])
+  @@index([sectionId])
+}
+
+model DiagnosisLog {
+  id        String   @id @default(cuid())
+  projectId String
+  createdAt DateTime @default(now())
+
+  // 진단
+  diagnosisType String // hero_weak, section_dropout, cta_ignored 등
+  severity      String // low, medium, high, critical
+  details       Json // 진단 상세
+
+  // 처방
+  prescriptionLevel Int // 1, 2, 3
+  prescription      Json // 처방 내용
+
+  // 결과
+  applied   Boolean @default(false)
+  appliedAt DateTime?
+  result    Json? // 적용 후 결과
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+// ============================================================
+// 이미지
+// ============================================================
+
+model GeneratedImage {
+  id        String   @id @default(cuid())
+  projectId String
+  createdAt DateTime @default(now())
+
+  // R2 저장
+  storageKey String // R2 key
+  cdnUrl     String // CDN URL
+  mimeType   String @default("image/jpeg")
+  fileSize   Int? // bytes
+
+  // 생성 정보
+  prompt       String @db.Text
+  sectionType  String? // hero_visual, benefit 등
+  model        String @default("gemini-flash")
+  cost         Float? // USD
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+// ============================================================
+// 결제
+// ============================================================
+
+model Subscription {
+  id        String             @id @default(cuid())
+  orgId     String
+  status    SubscriptionStatus @default(ACTIVE)
+  plan      PlanType
+
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean @default(false)
+  cancelReason       String?
+
+  externalId String? @unique // 결제사 구독 ID
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  GRACE_PERIOD
+  CANCELLED
+}
+
+model Payment {
+  id        String        @id @default(cuid())
+  orgId     String
+  amount    Int // 원 단위
+  currency  String        @default("KRW")
+  status    PaymentStatus @default(PENDING)
+  provider  String        @default("payapp")
+
+  externalId String? @unique // 결제사 거래 ID
+  metadata   Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
