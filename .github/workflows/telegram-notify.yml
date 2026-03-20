@@ -1,8 +1,12 @@
-name: Telegram PR Notification
+name: Telegram Notification
 
 on:
   pull_request:
     types: [opened, ready_for_review]
+  push:
+    branches-ignore:
+      - main
+      - master
 
 jobs:
   notify:
@@ -10,9 +14,13 @@ jobs:
     steps:
       - name: Send Telegram Notification
         run: |
-          PR_TITLE="${{ github.event.pull_request.title }}"
-          PR_URL="${{ github.event.pull_request.html_url }}"
-          REPO="${{ github.repository }}"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            MSG="PR: ${{ github.event.pull_request.title }}\n${{ github.repository }}\n${{ github.event.pull_request.html_url }}"
+          else
+            BRANCH="${{ github.ref_name }}"
+            REPO="${{ github.repository }}"
+            MSG="Push: ${REPO}\nBranch: ${BRANCH}\nCommit: ${{ github.event.head_commit.message }}"
+          fi
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             -H "Content-Type: application/json" \
-            -d "{\"chat_id\":\"${{ secrets.TELEGRAM_CHAT_ID }}\",\"text\":\"PR: ${PR_TITLE}\n${REPO}\n${PR_URL}\",\"disable_web_page_preview\":true}"
+            -d "{\"chat_id\":\"${{ secrets.TELEGRAM_CHAT_ID }}\",\"text\":\"${MSG}\",\"disable_web_page_preview\":true}"
