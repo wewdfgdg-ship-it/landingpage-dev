@@ -1,0 +1,43 @@
+name: Telegram Notification
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+  push:
+    branches-ignore:
+      - main
+      - master
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Send Telegram Notification
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          # Check if sessions.md exists and was changed
+          if [ -f ".claude/sessions.md" ]; then
+            # Send sessions file content (max 4000 chars for telegram)
+            SESSIONS=$(head -c 4000 .claude/sessions.md)
+            curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+              -H "Content-Type: application/json" \
+              -d "$(jq -n --arg chat "$TG_CHAT" --arg text "$SESSIONS" '{chat_id: $chat, text: $text, disable_web_page_preview: true}')"
+          fi
+
+          # Regular push/PR notification
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            MSG=$(printf "PR: ${{ github.event.pull_request.title }}\n${{ github.repository }}\n${{ github.event.pull_request.html_url }}")
+          else
+            REPO="${{ github.repository }}"
+            BRANCH="${{ github.ref_name }}"
+            COMMIT_MSG=$(echo '${{ github.event.head_commit.message }}' | head -c 500)
+            MSG=$(printf "Push: ${REPO}\nBranch: ${BRANCH}\n${COMMIT_MSG}")
+          fi
+          curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d "$(jq -n --arg chat "$TG_CHAT" --arg text "$MSG" '{chat_id: $chat, text: $text, disable_web_page_preview: true}')"
