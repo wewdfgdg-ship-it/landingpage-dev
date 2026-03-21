@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>웰라쥬 앰플 - 줄바꿈 방지 완벽 대응판</title>
+  <style>
+    /* Reset & Base */
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #eef2f5;
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* 
+      [시스템 해결책 1] Container Query
+      요소의 크기를 화면 크기가 아닌 'poster' 가로폭에 종속시킵니다.
+    */
+    .poster {
+      position: relative;
+      container-type: inline-size; /* 컨테이너 쿼리 활성화 */
+      width: 100%;
+      max-width: 600px; /* 최대 크기 제한 */
+      aspect-ratio: 600 / 900; /* 포스터의 완벽한 가로세로 비율 고정 */
+      overflow: hidden;
+      background: linear-gradient(180deg, #1b68ea 0%, #308cf2 30%, #5fbafb 70%, #87cfff 100%);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    }
+
+    /* 포스터 텍스트 안전 영역 */
+    .header {
+      position: absolute;
+      top: 6cqw; /* cqw: 컨테이너 가로폭의 % */
+      left: 0;
+      width: 100%;
+      padding: 0 6cqw;
+      z-index: 10;
+    }
+
+    /* 
+      [시스템 해결책 2] white-space: nowrap 와 cqw 폰트 사이즈
+      줄바꿈을 절대 허용하지 않고, 폰트 크기를 컨테이너 폭에 비례하게(cqw) 설정하여
+      화면이 줄어들면 글씨도 고무줄처럼 같이 줄어들게 만듭니다.
+    */
+    .line1 {
+      display: flex;
+      align-items: center;
+      font-size: 9cqw; /* 컨테이너 가로폭의 9% 사이즈 (600px일때 54px) */
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5cqw;
+      margin-bottom: 1cqw;
+      white-space: nowrap; /* 🔥 시스템 방어: 절대 줄바꿈 금지 */
+    }
+    
+    .line1 .box-blue {
+      background-color: #0d3bca;
+      padding: 0.3cqw 2.5cqw;
+      margin-left: 2cqw;
+      line-height: 1.1;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      white-space: nowrap;
+    }
+
+    .line2 {
+      display: flex;
+      align-items: center;
+      font-size: 7cqw; /* 컨테이너 가로폭의 7% 사이즈 */
+      font-weight: 300;
+      color: #e0f0ff;
+      letter-spacing: -0.3cqw;
+      white-space: nowrap; /* 🔥 시스템 방어: 절대 줄바꿈 금지 */
+    }
+
+    .line2 .divider {
+      color: rgba(255,255,255,0.4);
+      margin: 0 2cqw;
+      font-weight: 100;
+    }
+
+    .line2 .box-blue {
+      background-color: #0d3bca;
+      font-weight: 900;
+      color: #ffffff;
+      padding: 0.3cqw 2.2cqw;
+      line-height: 1.1;
+      margin-right: 2cqw;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      letter-spacing: -0.1cqw;
+    }
+
+    .line2 .bold-text {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* 각주 텍스트도 cqw로 비례 축소 */
+    .footnotes {
+      position: absolute;
+      top: 27cqw;
+      right: 6cqw;
+      text-align: right;
+      font-size: 1.8cqw;
+      color: #ffffff;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: -0.1cqw;
+      opacity: 0.9;
+      white-space: nowrap;
+    }
+
+    /* 거대 배경 글자도 컨테이너 규격에 종속 */
+    .giant-text {
+      position: absolute;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      text-shadow: 0 2cqw 4cqw rgba(27, 104, 234, 0.4);
+      z-index: 2;
+    }
+
+    .bg-am { top: 40cqw; left: 10cqw; font-size: 30cqw; }
+    .bg-ple { top: 40cqw; right: 10cqw; font-size: 30cqw; }
+    
+    .bg-1 { 
+      top: 80cqw; 
+      left: 10cqw; 
+      font-size: 45cqw; 
+      letter-spacing: -2cqw; 
+      transform: scaleY(1.1); 
+    }
+    
+    .bg-wi { top: 90cqw; right: 10cqw; font-size: 33cqw; }
+    .bg-wi .star { position: absolute; top: -3cqw; right: -6cqw; font-size: 15cqw; }
+
+    /* 단상 규격 비례화 */
+    .pedestal {
+      position: absolute;
+      bottom: -10cqw;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 65cqw;
+      height: 30cqw;
+      background: #fdfdfd;
+      z-index: 5;
+      box-shadow: 
+        inset -2cqw 0 4cqw rgba(0,0,0,0.05),
+        inset 0 1.5cqw 3cqw rgba(255,255,255,1),
+        0 -1.5cqw 6cqw rgba(0,0,0,0.1);
+      border-radius: 4px;
+      clip-path: polygon(10% 20%, 90% 0%, 100% 100%, 0% 100%);
+    }
+
+    .product-wrapper {
+      position: absolute;
+      bottom: 12cqw;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50cqw;
+      height: 80cqw;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      filter: drop-shadow(0 3cqw 3cqw rgba(0,0,0,0.25));
+    }
+
+    .product-image {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      z-index: 10;
+    }
+
+    .placeholder-box {
+      width: 100%;
+      height: 80cqw;
+      border: 0.5cqw dashed rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.1);
+      border-radius: 3cqw;
+      backdrop-filter: blur(5px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      cursor: pointer;
+      font-size: 2.5cqw;
+    }
+    
+    .placeholder-box svg {
+      width: 6cqw;
+      height: 6cqw;
+      margin-bottom: 2cqw;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="poster">
+    
+    <!-- 1. 헤더 텍스트 영역 -->
+    <div class="header">
+      <div class="line1">
+        <span>웰라쥬 재구매율</span>
+        <span class="box-blue">1위*</span>
+      </div>
+      <div class="line2">
+        <span>기존 앰플 대비</span>
+        <span class="divider">|</span>
+        <span class="box-blue">**100배</span>
+        <span class="bold-text">대용량</span>
+      </div>
+    </div>
+    
+    <div class="footnotes">
+      *22년 07월 누계 웰라쥬 자사몰 에센스 카테고리 기준<br>
+      **자사 원데이키트 솔루션 제품 용량 대비
+    </div>
+
+    <!-- 2. 거대한 배경 글자 -->
+    <div class="giant-text bg-am">앰</div>
+    <div class="giant-text bg-ple">플</div>
+    <div class="giant-text bg-1">1</div>
+    <div class="giant-text bg-wi">위<span class="star">*</span></div>
+
+    <!-- 3. 흰색 단상 -->
+    <div class="pedestal"></div>
+
+    <!-- 4. 제품 얹는 곳 -->
+    <div class="product-wrapper">
+      <img src="" id="productImg" class="product-image" style="display:none;" />
+      <div class="placeholder-box" id="placeholder" onclick="document.getElementById('fileInput').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        <span style="font-weight:700;">투명 앰플 누끼 업로드</span>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="loadFile(event)">
+    </div>
+
+  </div>
+
+  <script>
+    function loadFile(event) {
+      if (event.target.files.length > 0) {
+        var src = URL.createObjectURL(event.target.files[0]);
+        var preview = document.getElementById('productImg');
+        preview.src = src;
+        preview.style.display = 'block';
+        document.getElementById('placeholder').style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>

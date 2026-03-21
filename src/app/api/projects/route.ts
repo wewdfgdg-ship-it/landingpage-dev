@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { cookies } from 'next/headers';
+import { decode } from 'next-auth/jwt';
 import { db } from '@/lib/db';
 import { getOrgUsage, checkProjectQuota } from '@/lib/billing';
 
@@ -20,15 +21,37 @@ interface CreateProjectBody {
   inputScore: number;
 }
 
+async function getUserId(): Promise<string | null> {
+  const cookieStore = await cookies();
+  const token =
+    cookieStore.get('authjs.session-token')?.value ??
+    cookieStore.get('__Secure-authjs.session-token')?.value;
+
+  if (!token) return null;
+
+  try {
+    const decoded = await decode({
+      token,
+      secret: process.env.AUTH_SECRET!,
+      salt: cookieStore.has('__Secure-authjs.session-token')
+        ? '__Secure-authjs.session-token'
+        : 'authjs.session-token',
+    });
+    return (decoded?.id as string) ?? (decoded?.sub as string) ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export async function POST(req: Request): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   // 유저의 Organization 조회
   const membership = await db.membership.findFirst({
-    where: { userId: session.user.id },
+    where: { userId },
     select: { orgId: true },
   });
 
@@ -43,37 +66,45 @@ export async function POST(req: Request): Promise<NextResponse> {
     return NextResponse.json({ error: '프로젝트명 필수' }, { status: 400 });
   }
 
-  // 쿼터 체크
-  const usage = await getOrgUsage(membership.orgId);
-  const quotaCheck = checkProjectQuota(usage);
-  if (!quotaCheck.allowed) {
-    return NextResponse.json({ error: quotaCheck.reason }, { status: 403 });
+  try {
+    // 쿼터 체크
+    const usage = await getOrgUsage(membership.orgId);
+    const quotaCheck = checkProjectQuota(usage);
+    if (!quotaCheck.allowed) {
+      return NextResponse.json({ error: quotaCheck.reason }, { status: 403 });
+    }
+
+    const slug = `${name.trim().toLowerCase().replace(/[^a-z0-9가-힣]/g, '-').replace(/-+/g, '-')}-${Date.now().toString(36)}`;
+
+    const project = await db.project.create({
+      data: {
+        orgId: membership.orgId,
+        name: name.trim(),
+        slug,
+        status: 'DRAFT',
+        inputData,
+        inputScore,
+      },
+    });
+
+    return NextResponse.json({ project }, { status: 201 });
+  } catch (err) {
+    console.error('[POST /api/projects] 프로젝트 생성 실패:', err);
+    return NextResponse.json(
+      { error: '프로젝트 생성 실패', detail: err instanceof Error ? err.message : String(err) },
+      { status: 500 },
+    );
   }
-
-  const slug = `${name.trim().toLowerCase().replace(/[^a-z0-9가-힣]/g, '-').replace(/-+/g, '-')}-${Date.now().toString(36)}`;
-
-  const project = await db.project.create({
-    data: {
-      orgId: membership.orgId,
-      name: name.trim(),
-      slug,
-      status: 'DRAFT',
-      inputData,
-      inputScore,
-    },
-  });
-
-  return NextResponse.json({ project }, { status: 201 });
 }
 
 export async function GET(): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   const membership = await db.membership.findFirst({
-    where: { userId: session.user.id },
+    where: { userId },
     select: { orgId: true },
   });
 

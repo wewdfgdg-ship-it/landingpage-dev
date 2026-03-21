@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>레퍼런스(비교표-스플릿) 1:1 완벽 클론 테스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Pretendard", sans-serif; overflow-x: hidden; background-color: #f0f0f0; }
+
+/* 템플릿 CSS */
+
+.vs-wrapper {
+    position: relative;
+    width: 100%;
+    background-color: #ffffff;
+    font-family: "Pretendard", -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 8rem 0;
+    overflow: hidden;
+}
+
+.vs-container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    padding: 0 5%;
+}
+
+.vs-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.vs-micro {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #555;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.02em;
+}
+
+.vs-headline {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #111;
+    margin: 0;
+    letter-spacing: -0.05em;
+    word-break: keep-all;
+    line-height: 1.3;
+}
+
+.vs-subheadline {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #666;
+    margin: 1.5rem 0 0 0;
+}
+
+/* 텍스트 내 강조 컬러 (블루) */
+.vs-hl-color {
+    color: #4380cc;
+}
+
+/* 비교 테이블 박스 레이아웃 (Grid 또는 Flex) */
+.vs-table-area {
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+    /* 레퍼런스처럼 약간 그림자나 여백을 주기 위함 */
+    padding: 0;
+    align-items: stretch; /* 높이 맞춤 */
+}
+
+/* 개별 열(Column) */
+.vs-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* === 타사 제품 (왼쪽) === */
+.vs-col-other {
+    background-color: #f7f7f7;
+    /* 오른쪽 경계선 제거하거나 흐리게 */
+    border-right: none;
+    padding-bottom: 2rem;
+    /* 타사 제품 영역은 그림자 없이 밋밋하게 */
+}
+
+.vs-col-other .vs-col-head {
+    padding: 2rem 1rem;
+    background-color: transparent;
+}
+.vs-col-other .vs-col-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #444;
+    margin: 0;
+}
+
+.vs-col-other .vs-list li {
+    color: #666;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* 이미지 박스 */
+.vs-img-box {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.vs-other-img {
+    max-width: 70%;
+    max-height: 140px;
+    object-fit: contain;
+    filter: grayscale(30%) blur(3px); /* 흑백+블러로 흐릿하고 안좋게 보이게 처리 */
+    opacity: 0.6;
+}
+
+/* === 자사 제품 (오른쪽) === */
+.vs-col-our {
+    background-color: #ffffff;
+    /* 자사 제품을 돋보이게 하는 입체 그림자. 왼쪽은 타사를 덮도록 깊은 그림자 */
+    box-shadow: -10px 0 30px rgba(0,0,0,0.08), 10px 0 30px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 10;
+    /* 아주 약한 테두리 (옵션) */
+    border: 1px solid #e1ebf7;
+    border-top: none; /* 헤드는 배경색으로 채울거라 뺌 */
+}
+
+/* 레퍼런스의 파란색 굵은 헤더 배경 */
+.vs-our-head {
+    background-color: #4380cc;
+    padding: 2rem 1rem;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.vs-our-head .vs-col-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+}
+
+.vs-our-img {
+    max-width: 80%;
+    max-height: 160px;
+    object-fit: contain;
+    /* 선명하고 또렷하게 */
+    filter: none;
+}
+
+/* === 비교 리스트 (행렬형) === */
+.vs-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.vs-list li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem 1rem;
+    min-height: 100px;
+    /* 점선 옅게 추가 (마지막 제외) */
+}
+.vs-list li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 10%; width: 80%;
+    border-bottom: 1px solid #eaeaea;
+}
+
+/* 자사 제품 텍스트 강조 */
+.vs-our-list li {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+}
+.vs-our-list li strong {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #4380cc;
+    display: block;
+    margin-top: 0.3rem; /* "원터치로 간편하게 -> 빠른설치" 줄바꿈 느낌 */
+}
+
+/* 애니메이션 */
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 반응형 */
+@media (max-width: 600px) {
+    .vs-wrapper { padding: 4rem 0; }
+    .vs-headline { font-size: 2.2rem; }
+    .vs-micro { font-size: 1rem; }
+    
+    .vs-col-other .vs-col-title { font-size: 1.2rem; }
+    .vs-our-head .vs-col-title { font-size: 1.4rem; }
+    
+    .vs-list li { padding: 1.5rem 0.5rem; min-height: 80px; font-size: 0.95rem !important; word-break: keep-all; }
+    .vs-our-list li strong { font-size: 1.1rem; }
+    .vs-img-box { height: 120px; }
+}
+
+
+/* 와이드 랜딩페이지 래퍼 디자인 */
+.desktop-wrapper {
+    width: 100%;
+    margin: 0 auto;
+}
+</style>
+</head>
+<body>
+    <div style="text-align:center; padding: 20px 0; font-weight:bold; color:#777;">레퍼런스(17-경쟁사비교/텐트) 데스크탑 모드 클론 뷰어</div>
+    
+    <div class="desktop-wrapper">
+        
+<section class="vs-wrapper">
+    <div class="vs-container">
+        
+        <!-- 헤더 -->
+        <div class="vs-header hc-animate-fade-in-up">
+            
+            <p class="vs-micro">고객님들의 이유있는 선택</p>
+            
+            
+            <h2 class="vs-headline">타사 제품과 확실히<br><span class="vs-hl-color">비교해보세요!</span></h2>
+            
+            
+        </div>
+
+        <!-- 비교 테이블 영역 -->
+        <div class="vs-table-area hc-animate-fade-in-up" style="animation-delay: 200ms;">
+            
+            <!-- 왼쪽: 타사 제품 (어둡고 흐릿한 느낌) -->
+            <div class="vs-col vs-col-other">
+                <!-- 열 헤더 -->
+                <div class="vs-col-head">
+                    <h3 class="vs-col-title">타사 제품</h3>
+                </div>
+                <!-- 제품 블러 이미지 썸네일 -->
+                <div class="vs-img-box">
+                    <!-- 타사 이미지 (CSS 필터로 블러 처리) -->
+                    <img src="https://images.unsplash.com/photo-1571687949921-1306bfb24b72?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="타사제품" class="vs-other-img" />
+                </div>
+                <!-- 비교 항목 리스트 -->
+                <ul class="vs-list">
+                    <li>불편하고 어려운 설치</li>
+                    <li>2중 벤틸레이션</li>
+                    <li>심실링 처리되지 않아<br>틈새 방수 불가</li>
+                    <li>무거운 무게로<br>휴대성 DOWN</li>
+                </ul>
+            </div>
+
+            <!-- 오른쪽: 자사 제품 (강조되고 밝고 큰 느낌) -->
+            <div class="vs-col vs-col-our">
+                <!-- 열 헤더 바탕색 적용 -->
+                <div class="vs-col-head vs-our-head">
+                    <h3 class="vs-col-title">에이팝<br>원터치 텐트</h3>
+                </div>
+                <!-- 뚜렷한 제품 이미지 -->
+                <div class="vs-img-box">
+                    <img src="https://images.unsplash.com/photo-1628185567406-037190f7f3cb?auto=format&fit=crop&q=80&w=400" alt="자사제품" class="vs-our-img" />
+                </div>
+                <!-- 비교 항목 리스트 (강조) -->
+                <ul class="vs-list vs-our-list">
+                    <li>원터치로 간편하게<br><strong>빠른설치</strong></li>
+                    <li>4중 벤틸레이션<br><strong>통기성 우수</strong></li>
+                    <li>기능성 원단+내부 심실링<br><strong>안심생활방수</strong></li>
+                    <li>경량화 & 전용가방<br><strong>휴대성 UP</strong></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+    </div>
+</body>
+</html>

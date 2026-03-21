@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getUserId } from '@/lib/get-user-id';
 import { db } from '@/lib/db';
-import { getOrgUsage, getPlans, getPlanConfig, PLANS } from '@/lib/billing';
+import { getOrgUsage, getPlans, getPlanConfig } from '@/lib/billing';
 import type { PlanType } from '@/lib/billing';
 import { requestPayment, registerRebill, cancelRebill } from '@/lib/payapp';
 import { validateCoupon } from '@/lib/coupon';
@@ -13,13 +13,13 @@ import { validateCoupon } from '@/lib/coupon';
 // ============================================================
 
 export async function GET(): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   const membership = await db.membership.findFirst({
-    where: { userId: session.user.id },
+    where: { userId },
     select: { orgId: true },
   });
 
@@ -83,13 +83,13 @@ export async function GET(): Promise<NextResponse> {
 // ============================================================
 
 export async function POST(req: Request): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   const membership = await db.membership.findFirst({
-    where: { userId: session.user.id, role: 'OWNER' },
+    where: { userId, role: 'OWNER' },
     select: { orgId: true },
   });
 

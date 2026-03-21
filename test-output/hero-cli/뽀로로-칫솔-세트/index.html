@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>뽀로로 칫솔 세트</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" />
+<style>
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+  font-weight: 1 999;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: 1 999;
+  font-display: swap;
+}
+</style>
+  <style>
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      word-break: keep-all;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ffe9e9 0%, #E0F2FE 33%, #FCE7F3 66%, #FEF3C7 100%);
+      color: #1a1a1a;
+    }
+    .hero .headline {
+      font-family: 'Paperlogy', sans-serif;
+    }
+    .hero .eyebrow,
+    .hero .desc,
+    .hero .micro,
+    .hero .stat-label,
+    .hero .trust-badge {
+      font-family: 'Do Hyeon', sans-serif;
+    }
+    .hero .stat-number,
+    .hero .sale-price,
+    .hero .discount-badge,
+    .hero .big-badge,
+    .hero .big-stat {
+      font-family: 'Paperlogy', sans-serif;
+    }
+    .hero .cta-btn {
+      font-family: 'Do Hyeon', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero mood-playful">
+    <div class="noise-overlay" style="
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+  "><svg width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg></div>
+    <div class="bg-ghost" style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(200px, 35vw, 500px);
+    font-weight: 900;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    line-height: 1;
+    user-select: none;
+  ">뽀</div>
+    <div class="hero-inner" style="
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+    ">
+      
+      <div style="text-align: center;">
+        <p class="eyebrow" style="
+    font-size: clamp(12px, 3.5vw, 20px);
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: #555555;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    animation: fadeInUp 0.7s ease 0.1s both;
+  ">키즈 유아용품</p>
+        <h1 class="headline" style="
+    font-size: clamp(36px, 10.5vw, 72px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    word-break: keep-all;
+    color: #1a1a1a;
+    margin: 0 0 clamp(16px, 2vw, 32px) 0;
+    animation: fadeInUp 0.7s ease 0.2s both;
+  ">양치가 놀이가 되는 <span class="accent" style="color:#FF6B6B;text-shadow:0 0 30px #FF6B6B40;">순간</span></h1>
+        <div style="display: flex; justify-content: center;">
+          <p class="desc" style="
+    font-size: clamp(15px, 4.5vw, 26px);
+    font-weight: 700;
+    line-height: 1.55;
+    max-width: 640px;
+    color: #555555;
+    margin: 0 0 clamp(24px, 3vw, 40px) 0;
+    animation: fadeInUp 0.7s ease 0.4s both;
+  ">3세~7세. 지금 바로 경험하세요.</p>
+        </div>
+        <div class="product-zone" style="
+      position: relative;
+      width: 50%;
+      max-width: 320px;
+      margin: 0 auto;
+      transform: rotate(-2deg);
+      animation: fadeInUp 0.8s ease 0.5s both;
+    "><img src="product.png" alt="product" style="
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 12px 32px rgba(0,0,0,0.2)) drop-shadow(0 0 24px rgba(255,107,107,0.2));
+    " /></div>
+        <div style="margin: clamp(24px, 3vw, 40px) 0;">
+          <div class="stats-row" style="
+    display: flex;
+    justify-content: center;
+    gap: clamp(24px, 3.5vw, 48px);
+    animation: fadeInUp 0.7s ease 0.7s both;
+  "><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(20px, 5.5vw, 48px);
+        font-weight: 900;
+        color: #FF6B6B;
+        line-height: 1.1;
+      "><span class="stat-unit" style="
+        font-size: clamp(11px, 3.0vw, 20px);
+        font-weight: 300;
+        margin-left: 4px;
+      "></span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(14px, 4.0vw, 22px);
+          font-weight: 700;
+          line-height: 1.4;
+          margin-top: 4px;
+        ">3세~7세</span>
+    </div><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(20px, 5.5vw, 48px);
+        font-weight: 900;
+        color: #FF6B6B;
+        line-height: 1.1;
+      "><span class="stat-unit" style="
+        font-size: clamp(11px, 3.0vw, 20px);
+        font-weight: 300;
+        margin-left: 4px;
+      "></span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(14px, 4.0vw, 22px);
+          font-weight: 700;
+          line-height: 1.4;
+          margin-top: 4px;
+        ">부드러운 모</span>
+    </div><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(20px, 5.5vw, 48px);
+        font-weight: 900;
+        color: #FF6B6B;
+        line-height: 1.1;
+      "><span class="stat-unit" style="
+        font-size: clamp(11px, 3.0vw, 20px);
+        font-weight: 300;
+        margin-left: 4px;
+      "></span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(14px, 4.0vw, 22px);
+          font-weight: 700;
+          line-height: 1.4;
+          margin-top: 4px;
+        ">99% 만족</span>
+    </div></div>
+        </div>
+        
+        <div style="max-width: 480px; margin: clamp(24px, 3vw, 40px) auto 0;">
+          <button class="cta-btn" style="
+    width: 100%;
+    padding: 22px 0;
+    font-size: clamp(16px, 4.5vw, 24px);
+    font-weight: 900;
+    color: #ffffff;
+    background: #FF6B6B;
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 0 30px #FF6B6B59;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeInUp 0.7s ease 1.0s both;
+  " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">지금 시작하기</button>
+          <p class="micro" style="
+    font-size: clamp(13px, 3.5vw, 18px);
+    font-weight: 400;
+    line-height: 1.4;
+    color: #555555;
+    margin: 8px 0 0 0;
+    text-align: center;
+  ">100만명이 선택</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

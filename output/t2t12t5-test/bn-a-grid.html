@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>BN-A 그리드 (19)</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.bn { position: relative; padding: 48px 20px 40px; --bn-brand: #4A90D9; }
+.bn__inner { max-width: 520px; margin: 0 auto; text-align: center; }
+.bn__header { margin-bottom: 24px; }
+.bn__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--bn-brand) 70%, #5f6980); }
+.bn__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; }
+.bn__sub { max-width: 420px; margin: 12px auto 0; font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.68); }
+
+.bn__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.bn__item { padding: 16px 12px; border: 1px solid rgba(15,23,42,0.06); border-radius: 18px; background: rgba(255,255,255,0.92); text-align: center; transition: transform 0.2s; }
+.bn__item:hover { transform: translateY(-3px); }
+.bn__item-img-wrap { border-radius: 12px; overflow: hidden; margin-bottom: 10px; background: rgba(15,23,42,0.03); }
+.bn__item-img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.bn__item-placeholder { width: 100%; aspect-ratio: 1/1; border: 2px dashed rgba(15,23,42,0.08); border-radius: 12px; }
+.bn__item-name { font-size: 14px; font-weight: 700; margin: 0; }
+.bn__item-qty { font-size: 12px; color: var(--bn-brand); font-weight: 700; }
+.bn__item-value { display: block; font-size: 12px; color: rgba(15,23,42,0.5); margin-top: 2px; }
+.bn__badge { display: inline-block; padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--bn-brand) 12%, white); color: var(--bn-brand); font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+
+.bn__main { margin-bottom: 16px; }
+.bn__main-img-wrap { border-radius: 20px; overflow: hidden; background: rgba(15,23,42,0.03); max-width: 280px; margin: 0 auto 12px; }
+.bn__main-img { display: block; width: 100%; height: auto; }
+.bn__main-placeholder { width: 280px; aspect-ratio: 1/1; border: 2px dashed rgba(15,23,42,0.08); border-radius: 20px; margin: 0 auto 12px; }
+.bn__main-name { font-size: 20px; font-weight: 800; }
+.bn__sub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.bn__sub-grid .bn__item { padding: 12px 8px; }
+
+.bn__price { margin-bottom: 16px; }
+.bn__price-total { font-size: 16px; color: rgba(15,23,42,0.4); text-decoration: line-through; margin-right: 8px; }
+.bn__price-sale { font-size: 32px; font-weight: 900; color: var(--bn-brand); letter-spacing: -1px; }
+
+.bn__cta { margin-top: 16px; }
+.bn__cta-btn { display: block; width: 100%; padding: 18px; border: 0; border-radius: 16px; background: var(--bn-brand); color: #fff; text-align: center; text-decoration: none; font-size: 16px; font-weight: 700; box-shadow: 0 12px 30px color-mix(in srgb, var(--bn-brand) 26%, transparent); transition: transform 0.2s; }
+.bn__cta-btn:hover { transform: translateY(-2px); }
+.bn__micro { margin-top: 10px; font-size: 12px; color: rgba(15,23,42,0.35); }
+
+.bn.mood--clean { background: #fff; color: #111827; }
+.bn.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.bn.mood--dark { background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.bn.mood--navy { background: #0c1024; color: #fff; }
+.bn.mood--dark .bn__sub, .bn.mood--navy .bn__sub { color: rgba(255,255,255,0.6); }
+.bn.mood--dark .bn__headline, .bn.mood--dark .bn__eyebrow, .bn.mood--navy .bn__headline, .bn.mood--navy .bn__eyebrow { color: #fff; }
+.bn.mood--dark .bn__item, .bn.mood--navy .bn__item { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+.bn.mood--dark .bn__item-placeholder, .bn.mood--navy .bn__item-placeholder, .bn.mood--dark .bn__main-placeholder, .bn.mood--navy .bn__main-placeholder { border-color: rgba(255,255,255,0.1); }
+.bn.mood--dark .bn__item-value, .bn.mood--navy .bn__item-value { color: rgba(255,255,255,0.4); }
+.bn.mood--dark .bn__price-total, .bn.mood--navy .bn__price-total { color: rgba(255,255,255,0.35); }
+.bn.mood--dark .bn__micro, .bn.mood--navy .bn__micro { color: rgba(255,255,255,0.25); }
+
+@media (max-width: 480px) { .bn { padding: 36px 20px 32px; } .bn__headline { font-size: 28px; } }
+@media (min-width: 768px) { .bn { padding: 64px 28px 56px; } .bn__inner { max-width: 720px; } .bn__headline { font-size: 42px; } .bn__cta-btn { max-width: 380px; margin: 0 auto; } }
+</style></head><body><div class="page"><!-- LAYOUT: BN-A -->
+<section class="bn bn--a mood--clean" data-section="bundle" data-layout="BN-A" style="--bn-brand:#059669;"><div class="bn__inner"><header class="bn__header"><h2 class="bn__headline">세트 구성</h2></header><div class="bn__grid"><article class="bn__item"><div class="bn__item-img-wrap"><img class="bn__item-img" src="https://placehold.co/200x200/ECFDF5/059669?text=Main" alt="본품 120ml" loading="lazy" /></div><span class="bn__badge">본품</span><h3 class="bn__item-name">본품 120ml</h3><span class="bn__item-qty">x1</span></article><article class="bn__item"><div class="bn__item-img-wrap"><img class="bn__item-img" src="https://placehold.co/200x200/ECFDF5/059669?text=Mini" alt="미니 30ml" loading="lazy" /></div><h3 class="bn__item-name">미니 30ml</h3><span class="bn__item-qty">x1</span></article><article class="bn__item"><div class="bn__item-img-wrap"><img class="bn__item-img" src="https://placehold.co/200x200/ECFDF5/059669?text=Mask" alt="마스크 5매" loading="lazy" /></div><span class="bn__badge">증정</span><h3 class="bn__item-name">마스크 5매</h3><span class="bn__item-qty">x1</span></article></div><div class="bn__price"><span class="bn__price-total">89,000원</span><span class="bn__price-sale">59,000원</span></div><div class="bn__cta"><a class="bn__cta-btn" href="#">세트 구매하기</a></div></div></section></div></body></html>

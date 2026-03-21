@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebSearch(*)",
+      "Task(*)",
+      "Skill(*)",
+      "ToolSearch(*)",
+      "NotebookEdit(*)",
+      "mcp__*"
+    ]
+  },
+  "skipDangerousModePermissionPrompt": true
+}

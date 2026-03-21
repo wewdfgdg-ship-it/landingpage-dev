@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getUserId } from '@/lib/get-user-id';
 import { db } from '@/lib/db';
 import { runCodeEngine } from '@/engine/10-code-engine';
 import type { CopyBlocks } from '@/engine/05-psychological-copy/types';
@@ -10,15 +10,15 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   const { id } = await params;
 
   const membership = await db.membership.findFirst({
-    where: { userId: session.user.id },
+    where: { userId },
     select: { orgId: true },
   });
 
@@ -50,15 +50,15 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   const { id } = await params;
 
   const membership = await db.membership.findFirst({
-    where: { userId: session.user.id },
+    where: { userId },
     select: { orgId: true },
   });
 

@@ -20,7 +20,7 @@ export function generateTrackingScript(projectId: string, versionId?: string): s
     sent[key]=1;
     var body={projectId:PID,eventType:type,sessionId:SID,payload:Object.assign({device:device,timestamp:Date.now(),referrer:document.referrer},payload)};
     if(VID)body.versionId=VID;
-    navigator.sendBeacon?navigator.sendBeacon(API,JSON.stringify(body)):fetch(API,{method:"POST",body:JSON.stringify(body),keepalive:true});
+    var json=JSON.stringify(body);if(navigator.sendBeacon){navigator.sendBeacon(API,new Blob([json],{type:"application/json"}))}else{fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:json,keepalive:true})}
   }
 
   // page_view

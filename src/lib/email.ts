@@ -167,6 +167,104 @@ export async function sendSubscriptionCancelled(
 }
 
 // ============================================================
+// 환영 이메일
+// ============================================================
+
+/** 회원가입 환영 */
+export async function sendWelcome(
+  email: string,
+  userName: string,
+): Promise<boolean> {
+  return sendEmail({
+    to: email,
+    subject: '[마케팅 엔진] 가입을 환영합니다!',
+    html: baseTemplate(
+      `${userName}님, 환영합니다!`,
+      `<p style="color:#4b5563;line-height:1.6;">
+        자율 주행 마케팅 엔진에 가입해주셔서 감사합니다.
+      </p>
+      <div style="background:#f0f9ff;border-radius:8px;padding:16px;margin:16px 0;">
+        <p style="margin:0;color:#1e40af;font-weight:600;">시작하기</p>
+        <ul style="margin:8px 0 0;padding-left:20px;color:#3b82f6;line-height:1.8;">
+          <li>제품 정보를 입력하세요</li>
+          <li>AI가 자동으로 랜딩페이지를 생성합니다</li>
+          <li>전환율 최적화까지 자동으로 진행됩니다</li>
+        </ul>
+      </div>
+      <p style="color:#4b5563;">
+        무료 플랜으로 바로 시작할 수 있습니다. 지금 대시보드를 확인해보세요.
+      </p>`,
+    ),
+  });
+}
+
+// ============================================================
+// 배포 관련 이메일
+// ============================================================
+
+/** 배포 성공 알림 */
+export async function sendDeploySuccess(
+  email: string,
+  projectName: string,
+  slug: string,
+  version: number,
+): Promise<boolean> {
+  return sendEmail({
+    to: email,
+    subject: `[마케팅 엔진] "${projectName}" 페이지가 배포되었습니다`,
+    html: baseTemplate(
+      '배포 완료',
+      `<p style="color:#4b5563;line-height:1.6;">
+        <strong>${projectName}</strong> 페이지가 성공적으로 배포되었습니다.
+      </p>
+      <div style="background:#f0fdf4;border-radius:8px;padding:16px;margin:16px 0;">
+        <p style="margin:0;color:#166534;font-weight:600;">배포 정보</p>
+        <p style="margin:4px 0 0;color:#16a34a;">
+          버전: v${version}<br/>
+          URL: /p/${slug}
+        </p>
+      </div>
+      <p style="color:#4b5563;">
+        대시보드에서 실시간 분석 데이터를 확인할 수 있습니다.
+      </p>`,
+    ),
+  });
+}
+
+// ============================================================
+// 유예 기간(Grace Period) 경고 이메일
+// ============================================================
+
+/** GRACE_PERIOD 진입 경고 */
+export async function sendGracePeriodWarning(
+  email: string,
+  planName: string,
+  daysRemaining: number,
+): Promise<boolean> {
+  return sendEmail({
+    to: email,
+    subject: `[마케팅 엔진] 서비스 이용이 ${daysRemaining}일 후 중단됩니다`,
+    html: baseTemplate(
+      '서비스 중단 예정 안내',
+      `<p style="color:#4b5563;line-height:1.6;">
+        ${planName} 플랜의 결제가 장기간 미갱신 상태입니다.
+      </p>
+      <div style="background:#fef2f2;border-radius:8px;padding:16px;margin:16px 0;">
+        <p style="margin:0;color:#991b1b;font-weight:600;">긴급 안내</p>
+        <p style="margin:4px 0 0;color:#dc2626;">
+          <strong>${daysRemaining}일 이내</strong>에 결제를 완료하지 않으면
+          무료 플랜으로 강제 전환되며, 유료 기능이 비활성화됩니다.
+        </p>
+      </div>
+      <p style="color:#4b5563;">
+        데이터는 보존되지만, 배포된 페이지와 고급 기능은 사용할 수 없게 됩니다.
+        지금 결제 수단을 확인해주세요.
+      </p>`,
+    ),
+  });
+}
+
+// ============================================================
 // 사용량 알림 이메일
 // ============================================================
 
@@ -200,6 +298,19 @@ export async function sendUsageWarning(
       </p>`,
     ),
   });
+}
+
+// ============================================================
+// 조직 소유자 이메일 조회 (공용 헬퍼)
+// ============================================================
+
+export async function getOrgOwnerEmail(orgId: string): Promise<string | null> {
+  const { db } = await import('@/lib/db');
+  const membership = await db.membership.findFirst({
+    where: { orgId, role: 'OWNER' },
+    include: { user: { select: { email: true } } },
+  });
+  return membership?.user?.email ?? null;
 }
 
 /** 환불 완료 */

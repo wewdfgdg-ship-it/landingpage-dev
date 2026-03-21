@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>LS-B 분할 clean (21)</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.ls { position: relative; padding: 0; --ls-brand: #4A90D9; }
+.ls__inner { max-width: 520px; margin: 0 auto; }
+
+.ls__img-wrap { position: relative; overflow: hidden; }
+.ls__img { display: block; width: 100%; height: auto; object-fit: cover; }
+.ls__img-caption { position: absolute; bottom: 12px; left: 12px; padding: 6px 12px; border-radius: 8px; background: rgba(0,0,0,0.55); color: #fff; font-size: 12px; font-weight: 700; backdrop-filter: blur(4px); }
+.ls__hero { border-radius: 0; }
+.ls__hero .ls__img { min-height: 320px; }
+.ls__placeholder { width: 100%; min-height: 280px; background: rgba(15,23,42,0.05); display: flex; align-items: center; justify-content: center; color: rgba(15,23,42,0.25); font-size: 14px; }
+
+.ls__text { padding: 28px 20px 0; text-align: center; }
+.ls__headline { margin: 0; font-size: 28px; font-weight: 800; line-height: 1.2; letter-spacing: -0.03em; word-break: keep-all; }
+.ls__sub { margin: 10px auto 0; max-width: 380px; font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.6); }
+
+.ls__tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 16px 20px 0; }
+.ls__tag { padding: 6px 14px; border-radius: 999px; background: color-mix(in srgb, var(--ls-brand) 10%, white); color: var(--ls-brand); font-size: 12px; font-weight: 700; }
+
+.ls__cta { padding: 20px 20px 32px; }
+.ls__cta-btn { display: inline-block; padding: 14px 32px; border: 1.5px solid color-mix(in srgb, var(--ls-brand) 25%, transparent); border-radius: 14px; background: transparent; color: var(--ls-brand); text-decoration: none; font-size: 15px; font-weight: 700; transition: background 0.2s; }
+.ls__cta-btn:hover { background: color-mix(in srgb, var(--ls-brand) 6%, transparent); }
+
+/* LS-B Split */
+.ls__split { display: grid; gap: 0; }
+.ls__split-img { min-width: 0; }
+.ls__split-img .ls__img-wrap { border-radius: 0; height: 100%; }
+.ls__split-img .ls__img { height: 100%; min-height: 280px; }
+.ls__split-text { display: flex; flex-direction: column; justify-content: center; padding: 28px 20px; }
+.ls__split-text .ls__text { padding: 0; text-align: left; }
+.ls__split-text .ls__tags { justify-content: flex-start; padding: 16px 0 0; }
+.ls__split-text .ls__cta { padding: 20px 0 0; }
+
+/* LS-C Collage */
+.ls__collage { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 16px 0 0; }
+.ls__collage-item { border-radius: 0; }
+.ls__collage-item .ls__img { aspect-ratio: 1/1; }
+
+/* Moods */
+.ls.mood--clean { background: #fff; color: #111827; }
+.ls.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.ls.mood--dark { background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.ls.mood--navy { background: #0c1024; color: #fff; }
+.ls.mood--dark .ls__sub, .ls.mood--navy .ls__sub { color: rgba(255,255,255,0.6); }
+.ls.mood--dark .ls__headline, .ls.mood--navy .ls__headline { color: #fff; }
+.ls.mood--dark .ls__placeholder, .ls.mood--navy .ls__placeholder { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.2); }
+.ls.mood--dark .ls__tag, .ls.mood--navy .ls__tag { background: color-mix(in srgb, var(--ls-brand) 15%, rgba(255,255,255,0.08)); }
+.ls.mood--dark .ls__cta-btn, .ls.mood--navy .ls__cta-btn { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
+
+@media (max-width: 480px) { .ls__headline { font-size: 24px; } .ls__collage { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 768px) { .ls__inner { max-width: 960px; } .ls__headline { font-size: 36px; } .ls--b .ls__split { grid-template-columns: 1fr 1fr; } .ls__collage { grid-template-columns: repeat(3, 1fr); } .ls__hero .ls__img { min-height: 480px; } }
+</style></head><body><div class="page"><!-- LAYOUT: LS-B -->
+<section class="ls ls--b mood--clean" data-section="lifestyle" data-layout="LS-B" style="--ls-brand:#3B82F6;"><div class="ls__inner"><div class="ls__split"><div class="ls__split-img"><div class="ls__img-wrap "><img class="ls__img" src="https://placehold.co/600x800/F0F9FF/3B82F6?text=Evening" alt="" loading="lazy" /></div></div><div class="ls__split-text"><div class="ls__text"><h2 class="ls__headline">일상 속 특별함</h2><p class="ls__sub">바쁜 하루에도 나를 위한 시간은 필요합니다. 간단한 루틴으로 하루를 마무리하세요.</p></div><div class="ls__tags"><span class="ls__tag">저녁 루틴</span></div></div></div></div></section></div></body></html>

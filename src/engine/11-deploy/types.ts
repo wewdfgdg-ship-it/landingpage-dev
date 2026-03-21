@@ -8,6 +8,7 @@ export interface DeployResult {
   slug: string;
   url: string;
   deployedAt: string;
+  version?: number;
 }
 
 export interface DeployConfig {

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GaN III 멀티탭 충전기</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+
+    .poster {
+      position: relative;
+      width: 691px;
+      height: 844px;
+      margin: 0 auto;
+      overflow: hidden;
+      background:
+        radial-gradient(1200px 520px at 50% 96%, rgba(255,170,140,0.95) 0%, rgba(255,198,176,0.42) 18%, rgba(255,196,170,0.15) 30%, rgba(255,255,255,0) 42%),
+        linear-gradient(180deg, #07174f 0%, #173885 34%, #5672c3 72%, #d9cad6 100%);
+    }
+
+    .top-cable {
+      position: absolute;
+      top: -52px;
+      right: -38px;
+      width: 182px;
+      height: 610px;
+      border: 10px solid #07090f;
+      border-left: none;
+      border-radius: 0 180px 180px 0;
+      transform: rotate(4deg);
+      box-shadow: inset -2px 0 0 rgba(255,255,255,0.12), 0 0 8px rgba(0,0,0,0.35);
+      opacity: 0.98;
+    }
+
+    .title-wrap {
+      position: absolute;
+      top: 76px;
+      left: 20px;
+      width: calc(100% - 40px);
+      text-align: center;
+      z-index: 5;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 72px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -3px;
+      color: #8dc4ff;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.08);
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 64px;
+      margin-top: 18px;
+      padding: 0 28px;
+      border: 2px solid rgba(255,255,255,0.82);
+      border-radius: 17px;
+      color: #fffdf8;
+      font-size: 29px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: rgba(20, 49, 112, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .headline {
+      margin: 12px 0 0;
+      font-size: 71px;
+      line-height: 0.96;
+      font-weight: 900;
+      letter-spacing: -3px;
+      color: #fffdf7;
+      text-shadow: 0 2px 0 rgba(0,0,0,0.08);
+    }
+
+    .headline .green { color: #00ff63; }
+
+    .device {
+      position: absolute;
+      left: 104px;
+      top: 410px;
+      width: 510px;
+      height: 280px;
+      transform: rotate(-28deg);
+      z-index: 3;
+      filter: drop-shadow(0 18px 16px rgba(0,0,0,0.38));
+    }
+
+    .body-box {
+      position: absolute;
+      inset: 0;
+      border-radius: 44px;
+      background: linear-gradient(180deg, #1b1f2c 0%, #09090e 70%, #171821 100%);
+      box-shadow:
+        inset -18px -14px 20px rgba(0,0,0,0.55),
+        inset 14px 14px 22px rgba(255,255,255,0.05),
+        0 12px 30px rgba(0,0,0,0.3);
+    }
+
+    .front-panel {
+      position: absolute;
+      top: 18px;
+      right: 16px;
+      width: 345px;
+      height: 244px;
+      border-radius: 42px;
+      background: linear-gradient(180deg, #c3c9ed 0%, #7a81ae 50%, #4b5075 100%);
+      box-shadow:
+        inset 0 0 0 3px rgba(255,255,255,0.5),
+        inset -12px -12px 18px rgba(0,0,0,0.26),
+        inset 14px 14px 18px rgba(255,255,255,0.18);
+    }
+
+    .power-btn {
+      position: absolute;
+      top: 48px;
+      right: 31px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, #25252a 0%, #0a0a0d 62%, #1e1e24 100%);
+      box-shadow:
+        inset 0 0 0 5px #0b0b0e,
+        inset 0 0 0 10px #66697e,
+        0 1px 5px rgba(0,0,0,0.5);
+    }
+
+    .port {
+      position: absolute;
+      background: linear-gradient(180deg, #101113, #25262d);
+      border-radius: 4px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+    }
+    .usb-c1 { width: 18px; height: 9px; top: 133px; left: 86px; }
+    .usb-c2 { width: 18px; height: 9px; top: 133px; left: 136px; }
+    .usb-c3 { width: 18px; height: 9px; top: 133px; left: 184px; }
+    .usb-a  { width: 26px; height: 12px; top: 131px; left: 244px; border-radius: 2px; }
+
+    .side-logo {
+      position: absolute;
+      left: 28px;
+      bottom: 50px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #f2f2f7, #ced0dc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #303446;
+      font-weight: 900;
+      font-size: 28px;
+      transform: rotate(28deg);
+      letter-spacing: -2px;
+    }
+
+    .brand {
+      position: absolute;
+      bottom: 78px;
+      left: 192px;
+      color: #151518;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      opacity: 0.9;
+    }
+
+    .pedestal {
+      position: absolute;
+      left: -20px;
+      bottom: -34px;
+      width: 740px;
+      height: 206px;
+      z-index: 1;
+    }
+
+    .base-top {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      bottom: 56px;
+      height: 78px;
+      border-radius: 50% / 60%;
+      background:
+        radial-gradient(circle at 50% 58%, rgba(98,132,255,0.55) 0%, rgba(149,183,255,0.45) 18%, rgba(60,78,160,0.26) 34%, rgba(0,0,0,0) 58%),
+        linear-gradient(180deg, #1b1c23 0%, #05060c 100%);
+      box-shadow:
+        inset 0 12px 18px rgba(255,255,255,0.18),
+        inset 0 -20px 24px rgba(0,0,0,0.55),
+        0 -4px 0 rgba(255,179,139,0.4);
+    }
+
+    .base-ring {
+      position: absolute;
+      left: 110px;
+      right: 110px;
+      bottom: 76px;
+      height: 46px;
+      border-radius: 50% / 60%;
+      background: radial-gradient(circle at 50% 50%, rgba(169,201,255,0.8) 0%, rgba(135,167,238,0.75) 36%, rgba(64,86,158,0.3) 62%, rgba(0,0,0,0) 72%);
+      box-shadow: 0 0 14px rgba(141, 186, 255, 0.45);
+    }
+
+    .base-front {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 0;
+      height: 122px;
+      border-radius: 50% / 22%;
+      background: linear-gradient(180deg, #111420 0%, #05060b 62%, #000207 100%);
+      box-shadow: inset 0 12px 16px rgba(255,255,255,0.1);
+    }
+
+    .horizon {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 168px;
+      height: 12px;
+      background: linear-gradient(90deg, rgba(255,80,30,0.1) 0%, rgba(255,109,72,0.72) 48%, rgba(255,80,30,0.1) 100%);
+      filter: blur(1px);
+    }
+  </style>
+</head>
+<body>
+  <div class="poster">
+    <div class="top-cable"></div>
+
+    <div class="title-wrap">
+      <h1 class="title">GaN III 멀티탭 충전기</h1>
+      <div class="badge">Desktop Power Strip</div>
+      <div class="headline">DigiNest Pro</div>
+      <div class="headline">3680W with <span class="green">PD 100W</span></div>
+    </div>
+
+    <div class="device">
+      <div class="body-box"></div>
+      <div class="front-panel">
+        <div class="power-btn"></div>
+        <div class="port usb-c1"></div>
+        <div class="port usb-c2"></div>
+        <div class="port usb-c3"></div>
+        <div class="port usb-a"></div>
+      </div>
+      <div class="side-logo">100</div>
+      <div class="brand">UGREEN</div>
+    </div>
+
+    <div class="horizon"></div>
+
+    <div class="pedestal">
+      <div class="base-top"></div>
+      <div class="base-ring"></div>
+      <div class="base-front"></div>
+    </div>
+  </div>
+</body>
+</html>

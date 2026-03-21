@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FD-A 이미지 우측 (03)</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.fd { position: relative; padding: 48px 20px 40px; --fd-brand: #4A90D9; }
+.fd__inner { max-width: 520px; margin: 0 auto; }
+.fd__header { margin-bottom: 16px; }
+.fd__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--fd-brand) 70%, #5f6980); }
+.fd__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; word-break: keep-all; }
+
+.fd__body { font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.68); margin-bottom: 12px; }
+.fd__bullets { padding-left: 18px; margin: 0 0 12px; font-size: 14px; line-height: 1.7; color: rgba(15,23,42,0.6); }
+.fd__bullets li { margin-bottom: 4px; }
+
+/* FD-A Split */
+.fd__split { display: grid; gap: 24px; }
+.fd__split-text { min-width: 0; }
+.fd__split-media { position: relative; min-width: 0; }
+.fd--img-right .fd__split { direction: ltr; }
+.fd--img-left .fd__split { direction: rtl; }
+.fd--img-left .fd__split > * { direction: ltr; }
+
+.fd__img-wrap { border-radius: 20px; overflow: hidden; background: rgba(15,23,42,0.04); }
+.fd__img { display: block; width: 100%; height: auto; object-fit: cover; }
+.fd__img-placeholder { width: 100%; aspect-ratio: 4/3; border: 2px dashed rgba(15,23,42,0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: rgba(15,23,42,0.25); font-size: 14px; }
+
+.fd__annotations { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+.fd__ann { position: absolute; padding: 6px 12px; border-radius: 10px; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); font-size: 12px; font-weight: 700; color: var(--fd-brand); box-shadow: 0 4px 16px rgba(0,0,0,0.1); top: calc(15% + var(--fd-ann-i) * 25%); left: calc(5% + var(--fd-ann-i) * 18%); }
+
+.fd__stat { text-align: center; margin: 16px 0; }
+.fd__stat-num { font-size: 56px; font-weight: 900; color: var(--fd-brand); letter-spacing: -3px; line-height: 1; }
+.fd__stat-unit { font-size: 20px; font-weight: 400; color: color-mix(in srgb, var(--fd-brand) 60%, currentColor); margin-left: 4px; }
+.fd__stat-label { display: block; font-size: 14px; color: rgba(15,23,42,0.5); margin-top: 4px; }
+
+/* FD-B Visual */
+.fd__visual { position: relative; margin-bottom: 20px; border-radius: 20px; overflow: hidden; }
+.fd__overlay-text { padding: 0 4px; }
+
+/* FD-C Graphic */
+.fd__graphic { position: relative; margin: 20px 0; border-radius: 20px; overflow: hidden; }
+
+.fd__footer { margin-top: 12px; }
+.fd__caption { font-size: 13px; color: rgba(15,23,42,0.5); }
+.fd__source { font-size: 11px; color: rgba(15,23,42,0.35); margin-top: 4px; }
+
+.fd__cta { margin-top: 20px; }
+.fd__cta-btn { display: inline-block; padding: 14px 32px; border: 0; border-radius: 14px; background: var(--fd-brand); color: #fff; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 8px 24px color-mix(in srgb, var(--fd-brand) 25%, transparent); transition: transform 0.2s ease; }
+.fd__cta-btn:hover { transform: translateY(-2px); }
+
+/* Moods */
+.fd.mood--clean { background: #fff; color: #111827; }
+.fd.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.fd.mood--dark { background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.fd.mood--navy { background: #0c1024; color: #fff; }
+.fd.mood--dark .fd__body, .fd.mood--dark .fd__bullets, .fd.mood--navy .fd__body, .fd.mood--navy .fd__bullets { color: rgba(255,255,255,0.65); }
+.fd.mood--dark .fd__headline, .fd.mood--dark .fd__eyebrow, .fd.mood--navy .fd__headline, .fd.mood--navy .fd__eyebrow { color: #fff; }
+.fd.mood--dark .fd__img-wrap, .fd.mood--navy .fd__img-wrap { background: rgba(255,255,255,0.06); }
+.fd.mood--dark .fd__img-placeholder, .fd.mood--navy .fd__img-placeholder { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.2); }
+.fd.mood--dark .fd__ann, .fd.mood--navy .fd__ann { background: rgba(0,0,0,0.75); color: #fff; }
+.fd.mood--dark .fd__caption, .fd.mood--navy .fd__caption { color: rgba(255,255,255,0.4); }
+.fd.mood--dark .fd__source, .fd.mood--navy .fd__source { color: rgba(255,255,255,0.25); }
+.fd.mood--dark .fd__stat-label, .fd.mood--navy .fd__stat-label { color: rgba(255,255,255,0.45); }
+
+@media (max-width: 480px) { .fd { padding: 36px 20px 32px; } .fd__headline { font-size: 28px; } .fd__stat-num { font-size: 44px; } }
+@media (min-width: 768px) { .fd { padding: 64px 28px 56px; } .fd__inner { max-width: 960px; } .fd__headline { font-size: 42px; } .fd--a .fd__split { grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; } .fd__stat-num { font-size: 64px; } }
+</style></head><body><div class="page"><!-- LAYOUT: FD-A -->
+<section class="fd fd--a mood--clean fd--img-right" data-section="03" data-layout="FD-A" style="--fd-brand:#2563EB;"><div class="fd__inner">
+    <div class="fd__split">
+      <div class="fd__split-text">
+    <header class="fd__header">
+      <p class="fd__eyebrow">POINT 01</p>
+      <h2 class="fd__headline">5중 보습 레이어</h2>
+    </header><div class="fd__text"><p class="fd__body">피부 깊숙이 침투하는 히알루론산 복합체가 5겹의 보습 장벽을 형성합니다.</p><ul class="fd__bullets"><li>표피층 즉각 수분 공급</li><li>진피층 장기 보습</li><li>각질층 보호막 강화</li></ul></div></div>
+      <div class="fd__split-media"><div class="fd__img-wrap"><img class="fd__img" src="https://placehold.co/600x500/E0F2FE/2563EB?text=Layer+Structure" alt="5중 보습 레이어" loading="lazy" /></div></div>
+    </div></div></section></div></body></html>

@@ -46,6 +46,7 @@ function ImageCard({
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white">
       <div className="aspect-square">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image.previewUrl}
           alt="업로드된 이미지"

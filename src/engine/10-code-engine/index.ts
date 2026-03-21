@@ -3,7 +3,10 @@ import type { LayoutConfig } from '@/engine/08-layout-intelligence/types';
 import type { StyleConfig } from '@/engine/09-visual-style/types';
 import type { GeneratedPage, RenderedSection } from './types';
 import { renderByPatternId } from './renderers';
+import { renderWithTemplate } from './template-registry';
 import { generateTrackingScript } from '@/engine/12-learning-loop/tracking-script';
+import { renderHeroBanner } from '@/engine/sections/01-header-banner/render';
+import type { LayoutData } from '@/engine/sections/01-header-banner/render';
 export type { GeneratedPage } from './types';
 
 // ============================================================
@@ -42,6 +45,7 @@ a{color:inherit;text-decoration:none;}
 function assembleHtml(
   meta: { title: string; description: string },
   globalCss: string,
+  templateCss: string,
   sectionsHtml: string,
   stickyCtaEnabled: boolean,
   primaryColor: string,
@@ -63,9 +67,11 @@ function assembleHtml(
 <meta name="description" content="${meta.description}">
 <meta property="og:title" content="${meta.title}">
 <meta property="og:description" content="${meta.description}">
+<script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>${globalCss}</style>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>${globalCss}
+${templateCss}</style>
 </head>
 <body>
 ${sectionsHtml}
@@ -106,7 +112,51 @@ export function runCodeEngine(
       imageDirection: '',
     };
 
-    const html = renderByPatternId(
+    // ── v4 Header-Banner: v4Meta가 있으면 전용 렌더러 사용 ──
+    if (sectionLayout.v4Meta) {
+      const v4 = sectionLayout.v4Meta;
+      const layoutData: LayoutData = {
+        layoutId: v4.layoutId as LayoutData['layoutId'],
+        mood: v4.mood as LayoutData['mood'],
+        fontSet: v4.fontSet as LayoutData['fontSet'],
+        brandColor: v4.brandColor,
+        productName,
+        eyebrow: '',
+        headline: copy.headline,
+        subheadline: copy.subheadline,
+        desc: copy.body,
+        stats: [],
+        awards: copy.bulletPoints,
+        ctaText: copy.ctaText,
+        microCopy: copy.microCopy,
+        price: undefined,
+        discount: undefined,
+      };
+
+      const v4Html = renderHeroBanner(layoutData);
+      // v4 렌더러는 완전한 HTML 문서를 반환하므로 body 내용만 추출
+      const bodyMatch = v4Html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+      const bodyHtml = bodyMatch?.[1] ?? v4Html;
+      // head에서 style 태그 추출 (폰트 + 무드 CSS)
+      const styleMatches = v4Html.match(/<style[^>]*>[\s\S]*?<\/style>/gi) ?? [];
+      const linkMatches = v4Html.match(/<link[^>]*>/gi) ?? [];
+      const v4Css = styleMatches.map((s) => s.replace(/<\/?style[^>]*>/gi, '')).join('\n');
+      const v4Links = linkMatches.join('\n');
+
+      sections.push({
+        order: sectionLayout.order,
+        role: sectionLayout.role,
+        sectionType: sectionLayout.sectionType,
+        patternId: `v4_${v4.layoutId}`,
+        html: `<!-- v4-font-links -->\n${v4Links}\n${bodyHtml}`,
+        css: v4Css,
+      });
+      continue;
+    }
+
+    // v2 템플릿 우선, 없으면 v1 폴백
+    const v2Result = renderWithTemplate(sectionLayout.selectedPattern, copy, tokens);
+    const html = v2Result?.html ?? renderByPatternId(
       sectionLayout.selectedPattern,
       copy,
       tokens,
@@ -119,9 +169,16 @@ export function runCodeEngine(
       sectionType: sectionLayout.sectionType,
       patternId: sectionLayout.selectedPattern,
       html,
-      css: '', // 인라인 스타일 사용으로 개별 CSS 불필요
+      css: v2Result?.css ?? '',
     });
   }
+
+  // v2 템플릿 CSS 수집
+  const sectionCssSet = new Set<string>();
+  for (const s of sections) {
+    if (s.css) sectionCssSet.add(s.css);
+  }
+  const sectionCss = [...sectionCssSet].join('\n');
 
   // 전체 HTML 조립 (트래킹용 data-section-id 래퍼 추가)
   const sectionsHtml = sections
@@ -139,6 +196,7 @@ export function runCodeEngine(
   const fullHtml = assembleHtml(
     meta,
     globalCss,
+    sectionCss,
     sectionsHtml,
     stickyCtaEnabled,
     tokens.colors.primary,

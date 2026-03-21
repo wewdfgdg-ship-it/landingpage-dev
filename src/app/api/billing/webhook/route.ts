@@ -10,6 +10,7 @@ import type { PlanType } from '@/generated/prisma/client';
 import {
   sendSubscriptionStarted,
   sendRefundCompleted,
+  getOrgOwnerEmail,
 } from '@/lib/email';
 import { redeemCoupon } from '@/lib/coupon';
 
@@ -310,14 +311,3 @@ async function handlePaymentCancelled(payload: PayAppWebhookPayload): Promise<vo
   }
 }
 
-// ============================================================
-// Org Owner 이메일 조회
-// ============================================================
-
-async function getOrgOwnerEmail(orgId: string): Promise<string | null> {
-  const membership = await db.membership.findFirst({
-    where: { orgId, role: 'OWNER' },
-    include: { user: { select: { email: true } } },
-  });
-  return membership?.user?.email ?? null;
-}

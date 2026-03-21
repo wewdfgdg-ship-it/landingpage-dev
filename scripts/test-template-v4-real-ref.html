@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>실제 레퍼런스 기반 하이엔드 히어로 5종</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=Noto+Serif+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: "Pretendard", -apple-system, sans-serif; background: #e2e8f0; }
+    .font-serif-kr { font-family: "Noto Serif KR", serif; }
+    .title-banner { background: #1e293b; padding: 24px; text-align: center; border-top: 4px solid #64748b; color: white; }
+
+    /* =========================================================
+       Ref 1. White Clinical (EGF 앰플 스타일)
+       ========================================================= */
+    .hero-ref1 { background: #fbfbfb; position: relative; overflow: hidden; }
+    /* 분자 구조물(Molecule) 모티브 장식 */
+    .molecule-node { position: absolute; background: #fff; border-radius: 50%; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.05); }
+    .molecule-line { position: absolute; background: #e5e5e5; transform-origin: left center; z-index: 0; box-shadow: inset 0 -2px 5px rgba(0,0,0,0.05); }
+    
+    .ref1-black-badge { background: #111; color: #fff; display: inline-flex; items-center; gap: 8px; padding: 6px 20px; border-radius: 4px; font-weight: bold; }
+    .ref1-circle-cutout { 
+      position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px; border-radius: 50%; background: #ffffff;
+      box-shadow: inset 0 30px 60px rgba(0,0,0,0.04), 0 0 0 100px rgba(251,251,251,0.5); z-index: 0;
+    }
+
+    /* =========================================================
+       Ref 2. Vivid Pink Bubbly (시멘리트 핑크 스피큘 스타일)
+       ========================================================= */
+    .hero-ref2 { background: linear-gradient(180deg, #fff 0%, #ffeaf1 20%, #ffc2d8 100%); position: relative; overflow: hidden; }
+    /* 핑크 그라데이션 원형 풍선/스피어 */
+    .pink-sphere {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff 0%, #ff8db2 40%, #e63971 80%, #bd0a44 100%);
+      box-shadow: 0 30px 60px rgba(230,57,113,0.3); z-index: 0;
+    }
+    .ref2-outline-badge {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 140px; height: 140px; border-radius: 50%; border: 1px solid #e63971;
+      background: rgba(255,255,255,0.8); line-height: 1.2; box-shadow: 0 10px 20px rgba(230,57,113,0.1);
+    }
+    .ref2-table { background: #fff; border-top: 1px solid rgba(230,57,113,0.2); }
+
+    /* =========================================================
+       Ref 3. Clean Tech Promo (K뱅크 아이폰 이벤트 스타일)
+       ========================================================= */
+    .hero-ref3 { background: #f5f5f7; position: relative; overflow: hidden; }
+    /* V자 형태의 배경 디테일 (사선 투톤 배경) */
+    .hero-ref3::before {
+      content: ""; position: absolute; bottom: 0; left: 0; w-full; height: 50%;
+      background: linear-gradient(to top, #e5e5ea, transparent); pointer-events: none; z-index: 0;
+    }
+    .red-floating-badge {
+      position: absolute; right: -20px; top: -30px; background: #e63f38; color: white;
+      width: 90px; height: 90px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 15px 30px rgba(230,63,56,0.3); z-index: 10;
+    }
+    .red-floating-badge::after {
+      content: ""; position: absolute; bottom: -6px; left: 20px; border-width: 10px 10px 0;
+      border-style: solid; border-color: #e63f38 transparent transparent transparent; transform: rotate(30deg);
+    }
+    /* 다중 배경 오브젝트 복제 애니메이션용 클래스 */
+    .ghost-product { position: absolute; top: 0; bottom: 0; opacity: 0.3; filter: blur(2px); transform: scale(0.9); z-index: 0; }
+
+    /* =========================================================
+       Ref 4. Dark Spotlight Light (Vie:serva 마사지기 스타일)
+       ========================================================= */
+    .hero-ref4 { background: #221c18; color: #fff; position: relative; overflow: hidden; }
+    /* 위에서 쏟아지는 강한 백색 스포트라이트 */
+    .top-spotlight {
+      position: absolute; top: -10vw; left: 50%; transform: translateX(-50%);
+      width: 80vw; max-width: 800px; height: 120vh;
+      background: radial-gradient(ellipse at top, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.15) 40%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    /* SVG 올리브 월계관 (깔끔한 선형) */
+    .svg-laurel { stroke: #e5b078; fill: none; stroke-width: 2; stroke-linecap: round; }
+    /* 큐빅 받침대 */
+    .cubic-pedestal {
+      width: 180px; height: 60px; background: #e0e0e0;
+      box-shadow: inset 0 5px 15px rgba(255,255,255,0.8), 0 20px 40px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    .cubic-pedestal::before { content: ""; position: absolute; bottom: -30px; left: 0; width: 100%; height: 30px; background: #aaaaaa; transform: skewX(-45deg); transform-origin: top; }
+    .cubic-pedestal::after { content: ""; position: absolute; top: 0; right: -30px; width: 30px; height: 100%; background: #c0c0c0; transform: skewY(-45deg); transform-origin: left; }
+
+    /* =========================================================
+       Ref 5. Earthy Steps (Theralogic 레티놀 앰플 스타일)
+       ========================================================= */
+    .hero-ref5 { background: #bfaa95; position: relative; overflow: hidden; }
+    /* 브라운 그라데이션 배경 + 거대한 월계관 배경 워터마크 */
+    .hero-ref5::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.2) 0%, transparent 60%); pointer-events: none;
+    }
+    .huge-laurel-bg { position: absolute; top: 10%; width: 250px; opacity: 0.15; z-index: 0; }
+    
+    /* 건축적 형태의 계단형 받침대 (Step Pedestal) */
+    .step-pedestal {
+      position: absolute; bottom: 0; width: 100%; height: 35vh;
+      background: #8b7965;
+      clip-path: polygon(0 100%, 0 60%, 25% 60%, 25% 40%, 50% 40%, 50% 20%, 75% 20%, 75% 50%, 100% 50%, 100% 100%);
+      box-shadow: inset 0 5px 20px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    /* 각도에 따른 입체감 선 (가짜 라인) */
+    .step-line { position: absolute; background: rgba(0,0,0,0.15); z-index: 11; }
+
+  </style>
+</head>
+<body class="bg-slate-900 pb-20">
+
+  <!-- ==============================================
+       Ref 1. White Clinical (EGF 앰플 스타일)
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black">1. White Clinical (1위 펀딩 EGF 앰플 레퍼런스)</h2></div>
+  <section class="hero-ref1 min-h-[90vh] flex flex-col items-center pt-24 pb-12 relative">
+    
+    <!-- 배경 거대 원형 컷아웃 및 분자(Molecule) 장식 -->
+    <div class="ref1-circle-cutout"></div>
+    
+    <!-- 분자 장식 1 -->
+    <div class="absolute z-10 w-[300px] h-[300px] top-[40%] right-[10%] opacity-80 pointer-events-none hidden lg:block">
+      <div class="molecule-line" style="width:100px; height:4px; top:100px; left:50px; transform:rotate(30deg);"></div>
+      <div class="molecule-line" style="width:120px; height:4px; top:150px; left:136px; transform:rotate(-45deg);"></div>
+      <div class="molecule-node w-12 h-12 top-[76px] left-[26px]"></div>
+      <div class="molecule-node w-16 h-16 top-[118px] left-[104px] bg-slate-100"></div>
+      <div class="molecule-node w-10 h-10 top-[40px] left-[184px]"></div>
+    </div>
+    <!-- 분자 장식 2 -->
+    <div class="absolute z-10 w-[300px] h-[300px] bottom-[20%] left-[10%] opacity-90 pointer-events-none hidden lg:block">
+      <div class="molecule-line" style="width:80px; height:4px; top:80px; left:80px; transform:rotate(-20deg);"></div>
+      <div class="molecule-line" style="width:100px; height:4px; top:52px; left:154px; transform:rotate(60deg);"></div>
+      <div class="molecule-node w-14 h-14 bg-slate-400 top-[52px] left-[52px]"></div>
+      <div class="molecule-node w-16 h-16 bg-slate-500 top-[22px] left-[122px]"></div>
+      <div class="molecule-node w-12 h-12 bg-slate-300 top-[102px] left-[142px]"></div>
+    </div>
+
+    <!-- 텍스트 영역 -->
+    <div class="relative z-20 w-full max-w-4xl text-center flex flex-col items-center">
+      
+      <p class="text-xl sm:text-2xl font-bold text-slate-800 tracking-wide mb-2">2023 ~ 2024</p>
+      <h1 class="text-[80px] sm:text-[140px] font-black text-[#111] leading-none tracking-tighter mb-8">1위</h1>
+      
+      <div class="ref1-black-badge text-sm sm:text-base mb-4 tracking-widest">
+        <span>⭐</span> 슈퍼메이커
+      </div>
+
+      <p class="text-lg sm:text-xl font-medium text-slate-500 mb-16 px-4">
+        EGF 앰플, 세럼군 펀딩 금액 1위 *<br>2023~2024
+      </p>
+
+      <!-- 라인 장식 -->
+      <div class="w-[1px] h-[80px] bg-black mb-16"></div>
+
+      <div class="bg-white/40 backdrop-blur-sm rounded-3xl p-8 mb-16">
+        <p class="text-lg sm:text-2xl font-bold text-slate-800 mb-2">까다로운 서포터님들도 인정한</p>
+        <h2 class="text-3xl sm:text-5xl font-black text-slate-900 mb-6">최고의 펀딩 EGF 1위 <span class="text-slate-500 text-3xl">*</span></h2>
+        <p class="text-[28px] sm:text-[44px] font-black text-slate-800 tracking-tight">
+          펀딩 금액 : 628,998,500<span class="text-2xl sm:text-3xl font-bold ml-1">원</span>
+        </p>
+      </div>
+
+      <!-- 제품 렌더링 영역 구멍 안쪽 느낌 -->
+      <div class="w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full border border-slate-200 bg-white/50 shadow-inner flex items-center justify-center text-slate-400 font-bold backdrop-blur-md">
+        제품 / 스포이드 연출컷
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==============================================
+       Ref 2. Vivid Pink Bubbly (시멘리트 핑크 스피큘 스타일)
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black">2. Vivid Pink Bubbly (안면부 꺼짐 케어 핑크 스피큘 레퍼런스)</h2></div>
+  <section class="hero-ref2 min-h-[90vh] flex flex-col relative pt-16">
+    
+    <!-- 거대 핑크 스피어 (풍선) 배경들 -->
+    <div class="pink-sphere w-[200px] h-[200px] -top-[50px] -left-[50px] opacity-40"></div>
+    <div class="pink-sphere w-[600px] h-[600px] top-[40%] right-[-300px]"></div>
+    <div class="pink-sphere w-[120vw] h-[600px] bottom-[-400px] left-1/2 -translate-x-1/2 rounded-[50%]"></div>
+
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-4 flex flex-col items-center text-center">
+      
+      <p class="text-xl sm:text-2xl font-bold text-[#e63971] mb-2 tracking-tight">피부 골조 케어 원리에</p>
+      <p class="text-2xl sm:text-3xl font-bold text-[#e63971] mb-4 tracking-tight">핑크 스피큘을 더해</p>
+      <h1 class="text-[36px] sm:text-[52px] font-black text-[#e63971] mb-12 tracking-[-0.04em]">안면부 전반의 꺼짐까지 케어</h1>
+
+      <div class="w-full max-w-2xl border-t border-b border-[#e63971]/30 py-6 mb-12">
+        <p class="text-lg sm:text-xl font-bold text-slate-800 mb-2">프리미엄 사이아노 핑크 스피큘 세럼 & 크림</p>
+        <p class="text-[22px] sm:text-[28px] font-black text-[#e63971]">핑크스피큘과 리보닉 특허성분의 시너지 효과</p>
+      </div>
+
+      <!-- 3개의 핑크 라인 원형 뱃지 -->
+      <div class="flex flex-wrap justify-center gap-6 mb-24">
+        
+        <div class="ref2-outline-badge">
+          <p class="text-[10px] text-[#e63971]/60 font-bold mb-1 w-full truncate px-3" style="border-bottom: 1px solid #e63971; padding-bottom:4px;">스피큘 라인</p>
+          <p class="text-[18px] font-black text-[#e63971] mt-2">주름개선<br>기능성 인증</p>
+        </div>
+        <div class="ref2-outline-badge">
+          <p class="text-[10px] text-[#e63971]/60 font-bold mb-1 w-full truncate px-3" style="border-bottom: 1px solid #e63971; padding-bottom:4px;">스피큘 라인</p>
+          <p class="text-[18px] font-black text-[#e63971] mt-2">미백<br>기능성 인증</p>
+        </div>
+        <div class="ref2-outline-badge">
+          <p class="text-[10px] text-[#e63971]/60 font-bold mb-1 w-full truncate px-3" style="border-bottom: 1px solid #e63971; padding-bottom:4px;">스피큘 라인</p>
+          <p class="text-[18px] font-black text-[#e63971] mt-2">리프팅 개선<br>임상 완료</p>
+        </div>
+
+      </div>
+
+      <!-- 제품 올려지는 가짜 박스 -->
+      <div class="w-[300px] h-[200px] border-2 border-dashed border-[#e63971]/40 rounded-3xl bg-white/20 backdrop-blur-md flex items-center justify-center font-bold text-[#e63971]/60 mb-20 relative top-10">
+        핑크 베이스 위에 제품 연출
+      </div>
+      
+    </div>
+
+    <!-- 하단 3분할 텍스트 표 -->
+    <div class="relative z-20 w-full bg-[#ffc2d8] border-t-2 border-white flex flex-col sm:flex-row mt-auto">
+      <div class="flex-1 p-6 text-center border-b sm:border-b-0 sm:border-r border-white/50 text-white">
+        <p class="text-xl font-bold mb-1">피부 칼슘</p>
+        <p class="text-2xl font-black">REBORNIC</p>
+      </div>
+      <div class="flex-1 p-6 text-center border-b sm:border-b-0 sm:border-r border-white/50 text-white">
+        <p class="text-xl font-bold mb-1">핑크 스피큘</p>
+        <p class="text-xl font-medium">고함량 함유</p>
+      </div>
+      <div class="flex-1 p-6 text-center text-white flex flex-col justify-center items-center">
+        <p class="text-xl font-black">저자극테스트</p>
+        <p class="text-xl font-bold">완료</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==============================================
+       Ref 3. Clean Tech Promo (K뱅크 아이폰 이벤트 스타일)
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black">3. Clean Tech Promo (단골 이벤트 아이폰 레퍼런스)</h2></div>
+  <section class="hero-ref3 min-h-[90vh] flex flex-col relative pt-12 pb-20">
+    
+    <div class="relative z-20 w-full max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
+      
+      <!-- 상단 로고용 -->
+      <div class="self-end mb-12 text-2xl font-black text-slate-500 font-sans tracking-tighter">
+        K<span class="font-normal border-l-2 border-slate-500 pl-1 ml-1">bank</span>
+      </div>
+
+      <div class="border-b border-slate-300 pb-1 px-4 mb-2 text-slate-500 font-bold tracking-widest text-sm">EVENT</div>
+      <p class="text-[18px] sm:text-[22px] text-slate-500 font-medium mb-12">주거래우대 정기예금 출시 기념 이벤트</p>
+
+      <h2 class="text-[32px] sm:text-[44px] font-medium text-slate-700 leading-tight mb-2 tracking-[-0.04em]">
+        케이뱅크 단골 고객이면
+      </h2>
+      <h1 class="text-[64px] sm:text-[88px] font-black leading-none tracking-tight mb-8">
+        <span class="text-[#e63f38]">iPhone X</span> <span class="text-slate-700 font-medium text-[48px] sm:text-[72px]">정도</span><br>
+        <span class="text-slate-800">들어줘야!</span>
+      </h1>
+
+      <p class="text-lg text-slate-500 font-bold tracking-widest mb-16">
+        2026.09.26 - 11.30
+      </p>
+
+      <!-- 제품 겹침 (Array) 전시 영역 -->
+      <div class="relative w-full max-w-3xl h-[350px] flex items-center justify-center mb-16">
+        
+        <!-- 뒤에 깔리는 가짜 기기들 -->
+        <div class="ghost-product left-[10%] w-[160px] bg-gradient-to-tr from-pink-200 to-yellow-100 rounded-3xl border border-slate-300"></div>
+        <div class="ghost-product left-[25%] w-[180px] bg-gradient-to-tr from-blue-100 to-pink-100 rounded-3xl border border-slate-300 z-1" style="opacity: 0.5; filter: blur(1px); transform: scale(0.95);"></div>
+        <div class="ghost-product right-[25%] w-[180px] bg-gradient-to-tr from-yellow-100 to-blue-100 rounded-3xl border border-slate-300 z-1" style="opacity: 0.5; filter: blur(1px); transform: scale(0.95);"></div>
+        <div class="ghost-product right-[10%] w-[160px] bg-gradient-to-tr from-pink-200 to-yellow-100 rounded-3xl border border-slate-300"></div>
+        
+        <!-- 메인 중앙 기기 박스 -->
+        <div class="relative w-[220px] h-[450px] bg-slate-900 rounded-[40px] border-8 border-slate-800 shadow-2xl z-10 flex flex-col p-2">
+          <!-- 액정 화면 디자인 -->
+          <div class="flex-1 bg-gradient-to-b from-blue-500 via-pink-400 to-yellow-200 rounded-[30px] w-full h-full relative overflow-hidden">
+            <!-- 노치(Notch) -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[100px] h-[20px] bg-slate-900 rounded-b-2xl"></div>
+          </div>
+          
+          <!-- 말풍선형 빨간 뱃지 -->
+          <div class="red-floating-badge">
+            <span class="text-sm font-bold">무려</span>
+            <span class="text-2xl font-black mt-[-4px]">10대</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 하단 CTA 텍스트 -->
+      <p class="text-[20px] sm:text-[24px] font-bold text-slate-800 mb-4 mt-8">
+        주거래우대 정기예금 가입하고 <span class="font-black">iPhone X</span> 받자!
+      </p>
+      <div class="flex flex-col gap-1 text-[#e63f38] font-bold text-sm sm:text-base">
+        <span>#급여이체 + 체크카드 = 금리우대</span>
+        <span>#금리비교자신 #1년기준 최고 연 2.2%</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==============================================
+       Ref 4. Dark Spotlight Light (Vie:serva 마사지기 스타일)
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black">4. Dark Spotlight Light (뷰티 디바이스 Vie:serva 레퍼런스)</h2></div>
+  <section class="hero-ref4 min-h-[100vh] flex flex-col justify-between relative text-center pt-24 pb-12">
+    
+    <!-- 천장 스포트라이트 조명 -->
+    <div class="top-spotlight"></div>
+
+    <div class="relative z-10 w-full max-w-4xl mx-auto px-6">
+      
+      <p class="text-[16px] sm:text-[18px] text-[#b3a69a] font-medium tracking-wide mb-6">
+        매일 아침 달라진 피부가<br>차이를 만들고, 확신을 더하니까
+      </p>
+
+      <!-- Vie:serva 느낌의 럭셔리 폰트 타이포 -->
+      <h1 class="text-[40px] sm:text-[60px] font-black text-[#e5b078] leading-tight mb-8 font-serif-kr tracking-[-0.03em]">
+        모두가 <span class="font-sans font-black tracking-normal">vie:serva</span>를<br>선택하는 이유입니다
+      </h1>
+
+      <p class="text-[14px] sm:text-[16px] text-white/50 mb-16">
+        '1위'라는 숫자를 만들어주신 고객님께 감사의 마음을 담아<br>압도적인 판매량을 당당히 증명합니다.
+      </p>
+
+      <div class="border-t border-[#4a4036] w-full max-w-xl mx-auto mb-16"></div>
+
+      <!-- 네이버 쇼핑 박스 -->
+      <div class="inline-flex flex-col items-center mb-16 gap-2">
+        <div class="bg-white w-12 h-12 flex items-center justify-center text-black font-black text-2xl">N</div>
+        <span class="text-sm font-bold tracking-widest text-[#e5b078]">네이버쇼핑</span>
+      </div>
+
+
+      <!-- SVG 얇은 라인 월계관 로고와 수상내역들 -->
+      <div class="flex flex-col gap-16 w-full items-center">
+        <!-- 1번 수상 -->
+        <div class="relative flex items-center justify-center w-full max-w-md">
+          <svg viewBox="0 0 100 100" class="svg-laurel absolute w-24 h-24 left-0">
+            <path d="M20,90 Q10,50 30,10" /><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45 M12,35 L22,35 M18,20 L26,25" />
+          </svg>
+          <div class="flex flex-col items-center w-full">
+            <span class="text-sm font-bold text-[#b3a69a] mb-2">'고주파마사지기'</span>
+            <span class="text-[32px] sm:text-[40px] font-black text-white">꾸준한 판매량 1위</span>
+          </div>
+          <svg viewBox="0 0 100 100" class="svg-laurel absolute w-24 h-24 right-0" style="transform: scaleX(-1);">
+             <path d="M20,90 Q10,50 30,10" /><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45 M12,35 L22,35 M18,20 L26,25" />
+          </svg>
+        </div>
+
+        <!-- 2번 수상 -->
+        <div class="relative flex items-center justify-center w-full max-w-md">
+          <svg viewBox="0 0 100 100" class="svg-laurel absolute w-24 h-24 left-0">
+            <path d="M20,90 Q10,50 30,10" /><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45 M12,35 L22,35 M18,20 L26,25" />
+          </svg>
+          <div class="flex flex-col items-center w-full">
+            <span class="text-sm font-bold text-[#b3a69a] mb-2">8,000개 후기</span>
+            <span class="text-[32px] sm:text-[40px] font-black text-white">독보적인 리뷰수 1위</span>
+          </div>
+          <svg viewBox="0 0 100 100" class="svg-laurel absolute w-24 h-24 right-0" style="transform: scaleX(-1);">
+             <path d="M20,90 Q10,50 30,10" /><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45 M12,35 L22,35 M18,20 L26,25" />
+          </svg>
+        </div>
+
+        <!-- 3번 평점 -->
+        <div class="relative flex items-center justify-center w-full max-w-[280px] mt-4">
+          <svg viewBox="0 0 100 100" class="svg-laurel absolute w-20 h-20 left-0">
+            <path d="M20,90 Q10,50 30,10" /><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45 M12,35 L22,35 M18,20 L26,25" />
+          </svg>
+          <div class="flex flex-col items-center w-full">
+            <span class="text-sm font-bold text-[#b3a69a] mb-1">사용자 총 평점</span>
+            <span class="text-[40px] sm:text-[48px] font-black text-white leading-none">4.7/5</span>
+          </div>
+          <svg viewBox="0 0 100 100" class="svg-laurel absolute w-20 h-20 right-0" style="transform: scaleX(-1);">
+             <path d="M20,90 Q10,50 30,10" /><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45 M12,35 L22,35 M18,20 L26,25" />
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 하단 라이팅을 듬뿍 받는 제품 거치대(Pedestal) -->
+    <div class="relative z-10 w-full flex justify-center mt-32">
+      <!-- 제품 가짜 렌더링 -->
+      <div class="absolute bottom-[60px] w-[60px] h-[200px] bg-white rounded-t-full rounded-b-md shadow-2xl flex flex-col items-center justify-between py-4 z-20 border border-slate-200">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-600 to-yellow-300 border border-yellow-500 flex items-center justify-center">
+           <div class="w-6 h-6 rounded-full border border-black/20 flex flex-col justify-center gap-[2px]"><div class="h-[2px] bg-black/60 w-full"></div><div class="h-[2px] bg-black/60 w-full"></div><div class="h-[2px] bg-black/60 w-full"></div></div>
+        </div>
+        <div class="w-6 h-8 bg-black rounded flex items-center justify-center text-[8px] text-white">18 Min</div>
+        <div class="text-[8px] font-serif-kr text-[#e5b078]">BELLO</div>
+      </div>
+      <!-- 대리석/큐빅 거치대 -->
+      <div class="cubic-pedestal z-10"></div>
+    </div>
+  </section>
+
+
+  <!-- ==============================================
+       Ref 5. Earthy Steps (Theralogic 레티놀 앰플 스타일)
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black">5. Earthy Steps (테라로직 레티놀 앰플 입체계단 레퍼런스)</h2></div>
+  <section class="hero-ref5 min-h-[90vh] flex flex-col items-center relative pt-20">
+    
+    <!-- 배경 거대 올리브 컬러 월계관 -->
+    <svg viewBox="0 0 100 100" class="svg-laurel huge-laurel-bg left-10" style="stroke: #7f7461;"><path d="M20,90 Q10,50 30,10" /><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45 M12,35 L22,35 M18,20 L26,25" /></svg>
+    <svg viewBox="0 0 100 100" class="svg-laurel huge-laurel-bg right-10" style="stroke: #7f7461; transform: scaleX(-1);"><path d="M20,90 Q10,50 30,10" /><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45 M12,35 L22,35 M18,20 L26,25" /></svg>
+
+    <div class="relative z-20 w-full max-w-5xl mx-auto px-6 text-center flex flex-col items-center mb-40">
+      
+      <h2 class="text-[32px] sm:text-[40px] font-bold text-[#4a4237] leading-tight mb-2 tracking-tight">
+        출시하자마자<br>
+        누적판매 <span class="text-[20px]">*</span><span class="text-[40px] sm:text-[52px]">5만 6천개!</span>
+      </h2>
+
+      <div class="my-10">
+        <h3 class="text-[28px] sm:text-[36px] font-bold text-[#3d362d] mb-2 tracking-tighter">결부터 남다른 모공앰플</h3>
+        <h1 class="text-[36px] sm:text-[48px] font-black text-[#2e2922] tracking-tight">레티놀 앰플 1위! 레틴A 앰플</h1>
+      </div>
+
+    </div>
+
+    <!-- 하단 거대 계단 형태 블록 (스텝) + 제품 여러개 배치 -->
+    <div class="step-pedestal flex items-end justify-center">
+      <!-- 앰플 Mockups (크기별로 계단에 맞춰 세팅) -->
+      <div class="absolute bottom-[40%] left-[10%] w-[80px] h-[160px] bg-[#222120] rounded-t-3xl border-b-[20px] border-[#111] shadow-xl flex items-center justify-center text-white/30 text-xs font-bold">Ampoule</div>
+      <div class="absolute bottom-[50%] left-[25%] w-[100px] h-[200px] bg-[#222120] rounded-t-3xl border-b-[20px] border-[#111] shadow-xl flex items-center justify-center text-white/30 text-xs font-bold">Ampoule</div>
+      <div class="absolute bottom-[60%] left-[50%] -translate-x-1/2 w-[140px] h-[280px] bg-[#222120] rounded-t-[40px] border-b-[30px] border-[#111] shadow-2xl flex flex-col items-center justify-center text-white/80 z-20">
+         <span class="text-sm italic font-serif-kr mb-2 text-[#bfaa95]">theralogic</span>
+         <span class="text-xl font-bold font-serif-kr">RetinA</span>
+         <span class="text-xs text-center mt-2 opacity-50 px-2">Anti Wrinkle 3D<br>Ampoule</span>
+      </div>
+      <div class="absolute bottom-[50%] right-[25%] w-[100px] h-[200px] bg-[#222120] rounded-t-3xl border-b-[20px] border-[#111] shadow-xl flex items-center justify-center text-white/30 text-xs font-bold">Ampoule</div>
+      <div class="absolute bottom-[40%] right-[10%] w-[80px] h-[160px] bg-[#222120] rounded-t-3xl border-b-[20px] border-[#111] shadow-xl flex items-center justify-center text-white/30 text-xs font-bold">Ampoule</div>
+    </div>
+
+    <!-- 스텝(계단)의 입체감을 살리는 꺾임선 -->
+    <div class="step-line w-[1px] h-[100%] left-[25%] top-[40%]"></div>
+    <div class="step-line w-[1px] h-[100%] left-[50%] top-[20%]"></div>
+    <div class="step-line w-[1px] h-[100%] right-[25%] top-[50%]"></div>
+
+    <!-- 최하단 각주 텍스트 -->
+    <div class="absolute bottom-4 left-6 z-30 opacity-40 text-[10px] text-[#2e2922] font-semibold text-left">
+      * 자사 전체 판매채널 누적판매량 기준 20.01~23.12<br>
+      * 자사 전체 라인 누적판매량 기준 20.01~23.12
+    </div>
+
+  </section>
+
+</body>
+</html>

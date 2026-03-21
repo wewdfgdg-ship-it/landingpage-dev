@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>레퍼런스(한정특가-카드) 1:1 완벽 클론 테스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Pretendard", sans-serif; overflow-x: hidden; background-color: #fcfcfc; }
+
+/* 템플릿 CSS */
+
+.soc-wrapper {
+    position: relative;
+    width: 100%;
+    /* 레퍼런스의 청량하고 밝은 블루 톤 기반 배경 */
+    background: linear-gradient(180deg, #4da4ff 0%, #b3dbff 100%);
+    font-family: "Pretendard", -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 8rem 0;
+    overflow: hidden;
+}
+
+/* 방울이나 물결 등 배경 데코 (간이 구현) */
+.soc-bg-decoration {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(circle at 15% 20%, rgba(255,255,255,0.2) 0%, transparent 10%),
+                      radial-gradient(circle at 80% 60%, rgba(255,255,255,0.1) 0%, transparent 15%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.soc-container {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    padding: 0 5%;
+}
+
+.soc-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: #ffffff;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.soc-headline {
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.05em;
+    word-break: keep-all;
+}
+
+.soc-subheadline {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 1rem 0 0 0;
+    letter-spacing: 0em;
+}
+
+/* 메인 특가 정보를 감싸는 화이트 카드 */
+.soc-card-box {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+/* 이미지 영역 (레퍼런스: 패키지 사진 + 기프트 점선 박스) */
+.soc-image-area {
+    width: 100%;
+    height: 350px;
+    background-color: #f7fbff; /* 옅은 하늘색 배경 */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.soc-main-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.soc-gift-badge {
+    position: absolute;
+    top: 2rem; right: 2rem;
+    background-color: #fff;
+    color: #4da4ff;
+    font-size: 1.2rem;
+    font-weight: 900;
+    border-radius: 50%;
+    width: 60px; height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* 제품 텍스트 및 가격 영역 */
+.soc-info-area {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.soc-product-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: flex-start;
+}
+
+.soc-p-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #111;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.soc-p-gift {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+}
+.soc-p-gift strong { color: #111; }
+
+.soc-p-tag {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border: 1px solid #99cfff;
+    border-radius: 30px;
+    color: #4da4ff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+/* 할인율과 가격 정보 가로 정렬 */
+.soc-price-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.soc-discount-rate {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #4da4ff;
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.soc-price-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.8rem;
+}
+
+.soc-original-price, .soc-special-price {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.soc-label {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.soc-strike {
+    font-size: 1.3rem;
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.soc-final {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #4da4ff;
+}
+
+/* CTA 구매 버튼 */
+.soc-cta-btn {
+    width: 100%;
+    background-color: #1e88e5; /* 짙고 쨍한 파란색 */
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 1.5rem 0;
+    font-size: 1.6rem;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(30,136,229,0.3);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.soc-cta-btn:hover {
+    background-color: #1565c0;
+    transform: translateY(-2px);
+}
+
+.soc-cart-icon {
+    width: 32px;
+    height: 32px;
+    fill: #fff;
+}
+
+/* 애니메이션 */
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+    .soc-wrapper { padding: 4rem 0; }
+    .soc-headline { font-size: 2.2rem; }
+    .soc-subheadline { font-size: 1.1rem; }
+    
+    .soc-image-area { height: 260px; padding: 1.5rem; }
+    
+    .soc-info-area { padding: 1.5rem; gap: 1.5rem; }
+    .soc-p-name { font-size: 1.4rem; }
+    .soc-p-gift { font-size: 1rem; }
+    .soc-p-tag { font-size: 0.9rem; }
+    
+    .soc-price-area { padding-top: 1.5rem; gap: 1rem; }
+    .soc-discount-rate { font-size: 3.5rem; }
+    .soc-final { font-size: 1.6rem; }
+    
+    .soc-cta-btn { font-size: 1.3rem; padding: 1.2rem 0; }
+    .soc-cart-icon { width: 24px; height: 24px; }
+}
+
+
+/* 와이드 랜딩페이지 래퍼 디자인 */
+.desktop-wrapper {
+    width: 100%;
+    margin: 0 auto;
+}
+</style>
+</head>
+<body>
+    <div style="text-align:center; padding: 20px 0; font-weight:bold; color:#777; background:#fff;">레퍼런스(23-한정특가/메디큐브) 데스크탑 모드 클론 뷰어</div>
+    
+    <div class="desktop-wrapper">
+        
+<section class="soc-wrapper">
+    <!-- 배경을 화려하게 채워줄 장식 요소들 (선택적) -->
+    <div class="soc-bg-decoration"></div>
+
+    <div class="soc-container">
+        
+        <!-- 상단 헤더 -->
+        <div class="soc-header hc-animate-fade-in-up">
+            <h2 class="soc-headline">에이지알 리프팅 세트 구매시<br>바디라인 잡아주는 바디샷 <strong>0원</strong></h2>
+            
+            <p class="soc-subheadline">9주년 기념 50% & 기기 정품 증정</p>
+            
+        </div>
+
+        <!-- 메인 특가 박스 -->
+        <div class="soc-card-box hc-animate-fade-in-up" style="animation-delay: 200ms;">
+            
+            <!-- 제품 이미지 영역 (메인 + 기프트 합치거나, 하나의 이미지 배너로) -->
+            <div class="soc-image-area">
+                <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=400" alt="Special Offer Items" class="soc-main-img" />
+                
+                <!-- 기프트/추가증정 뱃지 -->
+                <div class="soc-gift-badge">Gift</div>
+                
+            </div>
+
+            <!-- 제품 정보 영역 -->
+            <div class="soc-info-area">
+                <!-- 제목 및 설명 -->
+                <div class="soc-product-title">
+                    <h3 class="soc-p-name">에이지알 프리미엄 리프팅 2종 세트</h3>
+                    <p class="soc-p-gift"><strong>GIFT</strong> | 에이지알 석션 바디샷 증정</p>
+                    <span class="soc-p-tag"># 슬림바디 기술로 피하지방 자극</span>
+                </div>
+
+                <!-- 가격 정보 -->
+                <div class="soc-price-area">
+                    <!-- 엄청 큰 할인율 -->
+                    <div class="soc-discount-rate">50%</div>
+                    
+                    <div class="soc-price-details">
+                        <div class="soc-original-price">
+                            <span class="soc-label">소비자가</span>
+                            <span class="soc-strike">1,356,000원</span>
+                        </div>
+                        <div class="soc-special-price">
+                            <span class="soc-label">특별가</span>
+                            <span class="soc-final">678,000원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 하단 바로 구매 버튼 -->
+        
+        <button class="soc-cta-btn hc-animate-fade-in-up" style="animation-delay: 300ms;">
+            <!-- 쇼핑카트 아이콘 -->
+            <svg viewBox="0 0 24 24" class="soc-cart-icon"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            <span>{2종 세트 장바구니 바로 담기}</span>
+        </button>
+        
+
+    </div>
+</section>
+
+    </div>
+</body>
+</html>

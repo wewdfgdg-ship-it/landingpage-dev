@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { getOrgUsage } from '@/lib/billing';
-import { sendUsageWarning } from '@/lib/email';
+import { sendUsageWarning, getOrgOwnerEmail } from '@/lib/email';
 
 // ============================================================
 // 사용량 임계치 알림 크론 — 매일 실행
@@ -14,10 +14,11 @@ import { sendUsageWarning } from '@/lib/email';
 const THRESHOLD = 0.8; // 80%
 
 export async function GET(req: Request): Promise<NextResponse> {
+  const isVercelCron = req.headers.get('x-vercel-cron-signature') !== null;
   const authHeader = req.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
 
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (!isVercelCron && cronSecret && authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -92,10 +93,3 @@ export async function GET(req: Request): Promise<NextResponse> {
   });
 }
 
-async function getOrgOwnerEmail(orgId: string): Promise<string | null> {
-  const membership = await db.membership.findFirst({
-    where: { orgId, role: 'OWNER' },
-    include: { user: { select: { email: true } } },
-  });
-  return membership?.user?.email ?? null;
-}

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getUserId } from '@/lib/get-user-id';
 import { db } from '@/lib/db';
 
 // ============================================================
@@ -11,8 +11,8 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 

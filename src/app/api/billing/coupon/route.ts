@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getUserId } from '@/lib/get-user-id';
 import { db } from '@/lib/db';
 import { validateCoupon } from '@/lib/coupon';
 import type { PlanType } from '@/generated/prisma/client';
@@ -10,8 +10,8 @@ import type { PlanType } from '@/generated/prisma/client';
 // ============================================================
 
 export async function POST(req: Request): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
@@ -27,7 +27,7 @@ export async function POST(req: Request): Promise<NextResponse> {
 
   // 조직 찾기
   const membership = await db.membership.findFirst({
-    where: { userId: session.user.id },
+    where: { userId },
     select: { orgId: true },
   });
 

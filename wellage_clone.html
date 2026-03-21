@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>웰라쥬 앰플 하이브리드 자동화 클론</title>
+<!-- 애플식 CSS 무대 + 이미지 삽입구 (하이브리드 아키텍처) -->
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    /* 스카이블루/아이스블루 청량한 그라데이션 - 원본과 질감 1:1 매칭 */
+    background: linear-gradient(180deg, #1c72f5 0%, #4da5ff 40%, #aeddff 100%);
+    font-family: 'Pretendard', sans-serif;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    background-attachment: fixed;
+  }
+
+  /* 모바일 최적화 및 센터링 박스 */
+  .landing-container {
+    width: 100%;
+    max-width: 520px; /* 모바일 세로형 레이아웃 */
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    overflow: hidden;
+  }
+
+  /* 1. 상단 타이포그래피 (텍스트 계층 완벽 구현) */
+  .header-section {
+    width: 90%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .line {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .text-huge-black {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -2px;
+    line-height: 1.1;
+  }
+
+  .text-large-light {
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: #ffffff;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+  }
+
+  .text-large-bold {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+  }
+
+  /* 진한 파란색 강조 박스 */
+  .highlight-bg {
+    background-color: #0c38cc;
+    padding: 4px 14px;
+    margin-left: 10px;
+  }
+
+  .divider {
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0 10px;
+    font-size: 2.2rem;
+    font-weight: 300;
+  }
+
+  /* 우측 하단 미세 각주 텍스트 */
+  .sub-text-wrapper {
+    text-align: right;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .sub-text {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: -0.5px;
+  }
+
+  /* 2. 대형 백그라운드 텍스트 (피사체 뒤에 깔리는 3D 레이어) */
+  .giant-bg-text-container {
+    position: absolute;
+    top: 260px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1; /* 제품 이미지보다 뒤 (z-index: 5) */
+    pointer-events: none;
+    gap: 50px;
+  }
+
+  .giant-row {
+    display: flex;
+    justify-content: space-between;
+    width: 82%;
+    font-weight: 900;
+    color: #ffffff;
+    /* 제품 그림자가 텍스트에 떨어지는 듯한 자연스러운 뎁스(Depth) */
+    text-shadow: 0 20px 40px rgba(12, 56, 204, 0.2);
+  }
+
+  .giant-row.top {
+    font-size: 8rem;
+    line-height: 0.8;
+  }
+
+  .giant-row.bottom {
+    font-size: 15rem;
+    line-height: 0.8;
+    margin-top: 120px;
+    letter-spacing: -10px;
+  }
+
+  .giant-asterisk {
+    font-size: 5rem;
+    position: absolute;
+    top: -20px;
+    right: -40px;
+  }
+
+  .relative { position: relative; }
+
+  /* 3. [공통 규격] 피사체(투명 PNG)가 들어올 무대 중심 (CSS Filter로 조명 합성) */
+  .product-stage {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 5; /* 자막 텍스트(1)보다는 앞, 헤더(10)보다는 뒤 */
+    padding-bottom: 20px;
+  }
+
+  .product-image {
+    max-width: 95%;
+    height: auto;
+    /* CSS 필터의 기적: 이미지만 얹어도 배경에 그림자가 드리워지며 3D로 합성됨 */
+    filter: drop-shadow(0 30px 40px rgba(0, 40, 150, 0.4));
+    transform-origin: bottom;
+    animation: breathing 5s ease-in-out infinite;
+  }
+
+  @keyframes breathing {
+    0% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-10px) scale(1.02); }
+    100% { transform: translateY(0px) scale(1); }
+  }
+
+  /* 이미지가 없을 때 유저 가이드를 위한 점선 박스 (삽입구 역할) */
+  .image-placeholder {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 400px;
+    background: rgba(255,255,255,0.15);
+    border: 2px dashed rgba(255,255,255,0.8);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: breathing 4s ease-in-out infinite;
+    z-index: 10;
+  }
+  
+  .image-placeholder:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: #fff;
+  }
+
+  .image-placeholder svg {
+    margin-bottom: 15px;
+    opacity: 0.9;
+  }
+
+  .image-placeholder h3 { margin: 0 0 10px 0; font-size: 1.3rem; }
+  .image-placeholder p { font-size: 0.95rem; line-height: 1.4; color: #e0f0ff; margin: 0; }
+
+  /* 미디어 쿼리 (반응형) */
+  @media (max-width: 480px) {
+    .text-huge-black { font-size: 2.2rem; }
+    .text-large-light, .text-large-bold { font-size: 1.8rem; }
+    .divider { font-size: 1.8rem; margin: 0 6px; }
+    .giant-row.top { font-size: 6rem; }
+    .giant-row.bottom { font-size: 12rem; margin-top: 80px; }
+    .giant-asterisk { font-size: 4rem; right: -25px; }
+    .image-placeholder { width: 260px; height: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="landing-container">
+  
+  <!-- 1. 타이포그래피 (상단 헤더) - 완전한 CSS 타이포그래피 제어 -->
+  <div class="header-section">
+    <div class="line">
+      <span class="text-huge-black">웰라쥬 재구매율</span>
+      <div class="highlight-bg"><span class="text-huge-black">1위*</span></div>
+    </div>
+    <div class="line" style="margin-top: 5px;">
+      <span class="text-large-light">기존 앰플 대비</span>
+      <span class="divider">|</span>
+      <div class="highlight-bg" style="padding: 2px 10px; margin-left: 0;"><span class="text-large-bold">**100배</span></div>
+      <span class="text-large-light" style="margin-left: 10px;">대용량</span>
+    </div>
+    
+    <div class="sub-text-wrapper">
+      <span class="sub-text">*22년 07월 누계 웰라쥬 자사몰 에센스 카테고리 기준</span>
+      <span class="sub-text">**자사 원데이키트 솔루션 제품 용량 대비</span>
+    </div>
+  </div>
+
+  <!-- 2. 대형 앰비언트 텍스트 (제품 뒤 배경) -->
+  <div class="giant-bg-text-container">
+    <div class="giant-row top">
+      <span>앰</span>
+      <span>플</span>
+    </div>
+    <div class="giant-row bottom">
+      <span>1</span>
+      <span class="relative">위<span class="giant-asterisk">*</span></span>
+    </div>
+  </div>
+
+  <!-- 3. 하이브리드 이미지 삽입구 (진짜 피사체 자리) -->
+  <div class="product-stage">
+    <img 
+      src="" 
+      alt="앰플 본품 투명 이미지" 
+      class="product-image" 
+      id="productImg"
+      style="display: none;"
+    />
+    
+    <div class="image-placeholder" id="placeholder" onclick="document.getElementById('fileInput').click()">
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+      <h3>여기에 누끼(PNG) 넣기</h3>
+      <p>빛, 글자, 배경은 완벽합니다.<br>단상 위에 올려진 앰플 사진만 넣으면<br>애플/토스 수준으로 합성됩니다.</p>
+    </div>
+    
+    <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="loadFile(event)">
+  </div>
+
+</div>
+
+<script>
+  // 투명 이미지 등록 시 즉시 합성 (실시간 렌더링 확인용)
+  function loadFile(event) {
+    if (event.target.files.length > 0) {
+      var src = URL.createObjectURL(event.target.files[0]);
+      var preview = document.getElementById('productImg');
+      preview.src = src;
+      preview.style.display = 'block';
+      document.getElementById('placeholder').style.display = 'none';
+      
+      // 이미지가 로드된 후 자연스럽게 나타나는 애니메이션 효과
+      preview.style.opacity = 0;
+      setTimeout(() => {
+        preview.style.transition = "opacity 0.8s ease";
+        preview.style.opacity = 1;
+      }, 50);
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시원스쿨 독일어 인증 이벤트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; max-width: 720px; margin: 0 auto; }
+
+  .page {
+    background: linear-gradient(180deg, #FF8C00 0%, #FFB800 30%, #FFD000 50%, #F5F0E8 60%, #F5F0E8 100%);
+    padding: 32px 24px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+  }
+
+  /* 100% 당첨 */
+  .badge-100 span {
+    background: #FF3D00;
+    color: #fff;
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 18px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    transform: rotate(-8deg);
+    display: inline-block;
+  }
+
+  /* 메인 타이틀 */
+  h1 {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 48px;
+    color: #1a237e;
+    line-height: 1.2;
+    margin: 8px 0 4px;
+  }
+  h1 .line2 {
+    font-size: 56px;
+    color: #fff;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+  }
+
+  .hashtags {
+    margin: 12px 0 20px;
+    font-size: 14px;
+    color: #555;
+    font-weight: 700;
+  }
+
+  /* GO 뱃지 */
+  .go-badge {
+    position: absolute;
+    top: 24px;
+    right: 16px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-size: 12px;
+    font-weight: 900;
+    color: #333;
+    line-height: 1.4;
+  }
+  .go-badge .go-btn {
+    display: inline-block;
+    background: #FF6B35;
+    color: #fff;
+    font-weight: 900;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-top: 4px;
+    font-size: 13px;
+  }
+
+  /* +30일 뱃지 */
+  .bonus {
+    position: absolute;
+    top: 200px;
+    right: 40px;
+    background: #FF3D00;
+    color: #fff;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 13px;
+    line-height: 1.3;
+    box-shadow: 0 4px 16px rgba(255,61,0,0.4);
+    transform: rotate(5deg);
+  }
+  .bonus .big { font-size: 24px; }
+
+  /* 폰 + 말풍선 영역 */
+  .phone-area {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
+  }
+
+  .phone-frame {
+    width: 220px;
+    height: 280px;
+    background: #fff;
+    border-radius: 28px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    transform: rotate(-3deg);
+  }
+  .phone-frame .phone-header {
+    font-size: 11px;
+    color: #999;
+    padding: 8px 16px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .phone-frame .phone-screen {
+    padding: 16px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .bubble {
+    position: absolute;
+    background: #fff;
+    border-radius: 16px;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 3;
+    white-space: nowrap;
+  }
+  .bubble .tag {
+    display: inline-block;
+    background: #4CAF50;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+  }
+  .bubble.b1 { left: -60px; top: 20px; }
+  .bubble.b2 { left: -40px; top: 140px; }
+  .bubble.b3 { right: -80px; top: 60px; }
+  .bubble.b4 { right: -40px; bottom: 20px; }
+
+  .handwrite {
+    position: absolute;
+    font-family: 'Black Han Sans', sans-serif;
+    color: #333;
+    font-size: 14px;
+    transform: rotate(-12deg);
+  }
+  .handwrite.hw1 { left: 30px; top: 250px; }
+  .handwrite.hw2 { right: 80px; top: 420px; transform: rotate(8deg); }
+
+  /* MISSION 영역 (같은 page 안) */
+  .mission-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 32px;
+    font-style: italic;
+    color: #1a1a1a;
+    margin: 20px 0 28px;
+    letter-spacing: 3px;
+  }
+  .mission-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #333;
+    margin: 8px auto 0;
+  }
+
+  .mission-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 20px;
+    margin-bottom: 16px;
+    text-align: left;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .card-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .label-tag {
+    background: #1a237e;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+  }
+  .label-num {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1a237e;
+  }
+
+  .mission-card h3 {
+    font-size: 17px;
+    font-weight: 900;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .mission-card p {
+    font-size: 12px;
+    color: #999;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .input-row input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #999;
+    outline: none;
+    background: #fafafa;
+  }
+  .input-row .btn {
+    background: #4A6CF7;
+    color: #fff;
+    font-weight: 900;
+    font-size: 13px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* 실루엣 */
+  .silhouette {
+    position: absolute;
+    right: 24px;
+    bottom: 80px;
+    width: 100px;
+    height: 180px;
+    background: linear-gradient(180deg, rgba(200,180,140,0.25) 0%, rgba(200,180,140,0.05) 100%);
+    border-radius: 50px 50px 0 0;
+  }
+  .target-circle {
+    position: absolute;
+    right: 34px;
+    bottom: 180px;
+    width: 80px;
+    height: 80px;
+    border: 3px solid rgba(200,180,140,0.25);
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div class="badge-100"><span>100% 당첨</span></div>
+
+  <h1>
+    시원스쿨 독일어<br>
+    <span class="line2">인증해주시원</span>
+  </h1>
+
+  <p class="hashtags">#독일어 #진짜학습지 #시원스쿨독일어</p>
+
+  <div class="go-badge">
+    시원스쿨<br>독일어<br>
+    <span class="go-btn">인증하기 GO</span>
+  </div>
+
+  <div class="bonus">
+    <span>+30일</span>
+    <span class="big">수강권</span>
+  </div>
+
+  <div class="handwrite hw1">전쟁기<br>보긴다</div>
+  <div class="handwrite hw2">쓰는거<br>가집써야하면?</div>
+
+  <div class="phone-area">
+    <div class="bubble b1"><span class="tag">REVIEW</span> 사진과 똑같은 디자인 이뻐요♡</div>
+    <div class="bubble b2"><span class="tag">REVIEW</span> 품질이 너무 좋아요. 자랑하게 잘샀어요.</div>
+    <div class="bubble b3"><span class="tag">REVIEW</span> 내가 찾는 신발 모두 여기 있어요!</div>
+    <div class="bubble b4"><span class="tag">REVIEW</span> 가볍게 들고 다니기 좋아요 색상도 딱~</div>
+
+    <div class="phone-frame">
+      <div class="phone-header">
+        <span>KOLON MALL</span>
+        <span>🔍</span>
+      </div>
+      <div class="phone-screen">
+        시원스쿨 독일어와 함께<br>
+        독일어 공부를 시작하세요!<br><br>
+        📚 체계적인 커리큘럼<br>
+        🎯 원어민 발음 학습<br>
+        💡 실전 회화 중심<br>
+        ✅ 무제한 복습 가능
+      </div>
+    </div>
+  </div>
+
+  <!-- MISSION (같은 페이지, 배경 이어짐) -->
+  <div class="mission-title">MISSION</div>
+
+  <div class="mission-card">
+    <div class="card-label">
+      <span class="label-tag">MISSION</span>
+      <span class="label-num">01</span>
+    </div>
+    <h3>인스타그램, 블로그, 유튜브 등에<br>시원스쿨 독일어와 함께 공부하는 모습을 업로드해주세요</h3>
+    <p>(#독일어 #진짜학습지 #시원스쿨독일어 해시태그 포함)</p>
+  </div>
+
+  <div class="mission-card">
+    <div class="card-label">
+      <span class="label-tag">MISSION</span>
+      <span class="label-num">02</span>
+    </div>
+    <h3>올린 콘텐츠의 URL 복사 후, 하단 등록란에 남겨주세요</h3>
+    <p>(각 포스팅의 실제 주소로 제출)</p>
+    <div class="input-row">
+      <input type="text" placeholder="복사한 URL을 등록해주세요">
+      <button class="btn">URL 등록</button>
+    </div>
+  </div>
+
+  <div class="silhouette"></div>
+  <div class="target-circle"></div>
+</section>
+
+</body>
+</html>

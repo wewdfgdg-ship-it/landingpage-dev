@@ -107,21 +107,31 @@ export async function collectEvent(event: TrackingEvent): Promise<void> {
     }
   }
 
-  // scroll_depth → DailyAnalytics avgScrollDepth 업데이트
+  // scroll_depth → DailyAnalytics avgScrollDepth 증분 평균 업데이트
   if (event.eventType === 'scroll_depth' && event.payload.scrollPercent != null) {
-    await db.dailyAnalytics.upsert({
-      where: {
-        projectId_date: { projectId: event.projectId, date: today },
-      },
-      create: {
-        projectId: event.projectId,
-        date: today,
-        avgScrollDepth: event.payload.scrollPercent,
-      },
-      update: {
-        avgScrollDepth: event.payload.scrollPercent, // 마지막 값 (향후 평균 로직)
-      },
+    const scrollPercent = event.payload.scrollPercent;
+    const existing = await db.dailyAnalytics.findUnique({
+      where: { projectId_date: { projectId: event.projectId, date: today } },
+      select: { avgScrollDepth: true, totalVisits: true },
     });
+
+    if (existing) {
+      // 증분 평균: new_avg = old_avg + (new_value - old_avg) / n
+      const n = Math.max(existing.totalVisits, 1);
+      const newAvg = existing.avgScrollDepth + (scrollPercent - existing.avgScrollDepth) / n;
+      await db.dailyAnalytics.update({
+        where: { projectId_date: { projectId: event.projectId, date: today } },
+        data: { avgScrollDepth: Math.round(newAvg * 100) / 100 },
+      });
+    } else {
+      await db.dailyAnalytics.create({
+        data: {
+          projectId: event.projectId,
+          date: today,
+          avgScrollDepth: scrollPercent,
+        },
+      });
+    }
   }
 }
 
@@ -697,14 +707,26 @@ export async function runLearningLoop(projectId: string): Promise<LearningLoopOu
   const prescriptions = diagnoses.map((d) => generatePrescription(d));
   const activeTests = await getActiveTests(projectId);
 
-  // 샘플 사이즈 도달한 테스트 자동 종료
+  // 샘플 사이즈 도달 또는 조기종료 조건 충족 시 자동 종료
   for (const test of activeTests) {
     const dbTest = await db.aBTest.findUnique({ where: { id: test.testId } });
-    if (
-      dbTest &&
+    if (!dbTest) continue;
+
+    const totalSample = test.sampleSize.control + test.sampleSize.variant;
+    const requiredTotal = dbTest.minSampleSize * 2;
+    const fractionComplete = requiredTotal > 0 ? totalSample / requiredTotal : 0;
+
+    // 조건 1: 양쪽 모두 최소 샘플 도달
+    const sampleReached =
       test.sampleSize.control >= dbTest.minSampleSize &&
-      test.sampleSize.variant >= dbTest.minSampleSize
-    ) {
+      test.sampleSize.variant >= dbTest.minSampleSize;
+
+    // 조건 2: 조기종료 (O'Brien-Fleming 경계 초과)
+    const earlyStop =
+      fractionComplete >= 0.2 &&
+      test.confidence >= (1 - 0.05 * Math.exp(-Math.pow(1.96, 2) / (4 * fractionComplete)));
+
+    if (sampleReached || earlyStop) {
       await concludeTest(test.testId);
     }
   }
@@ -724,10 +746,22 @@ export async function runLearningLoop(projectId: string): Promise<LearningLoopOu
   // 갱신된 활성 테스트
   const updatedTests = await getActiveTests(projectId);
 
+  // 프로젝트의 산업/목표로 승리 패턴 조회
+  const project = await db.project.findUnique({
+    where: { id: projectId },
+    select: { inputData: true },
+  });
+  const inputData = project?.inputData as { basicInfo?: { industry?: string; pageGoal?: string } } | null;
+  const industry = inputData?.basicInfo?.industry ?? '';
+  const goal = inputData?.basicInfo?.pageGoal ?? '';
+  const winningPatterns = industry && goal
+    ? await getWinningPatterns(industry, goal)
+    : [];
+
   return {
     diagnoses,
     prescriptions,
     activeTests: updatedTests,
-    winningPatterns: [], // 현재 프로젝트의 산업/목표 필요 — API 레벨에서 주입
+    winningPatterns,
   };
 }

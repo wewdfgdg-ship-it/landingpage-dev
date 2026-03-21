@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PH-A 포토그리드 (20)</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.ph { position: relative; padding: 48px 20px 40px; --ph-brand: #4A90D9; }
+.ph__inner { max-width: 520px; margin: 0 auto; }
+.ph__header { text-align: center; margin-bottom: 24px; }
+.ph__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--ph-brand) 70%, #5f6980); }
+.ph__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; }
+.ph__sub { max-width: 420px; margin: 12px auto 0; font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.68); }
+.ph__count { font-size: 14px; color: var(--ph-brand); font-weight: 700; margin-top: 8px; }
+.ph__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.ph__card { border-radius: 14px; overflow: hidden; background: rgba(15,23,42,0.03); transition: transform 0.2s; }
+.ph__card:hover { transform: translateY(-3px); }
+.ph__card-img-wrap { }
+.ph__card-img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.ph__card-body { padding: 10px 12px; }
+.ph__stars { color: var(--ph-brand); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+.ph__quote { font-size: 12px; line-height: 1.5; color: rgba(15,23,42,0.65); margin: 0; }
+.ph__author { font-size: 11px; color: rgba(15,23,42,0.4); margin-top: 4px; display: block; }
+.ph__featured { margin-bottom: 16px; border-radius: 20px; overflow: hidden; background: rgba(15,23,42,0.03); }
+.ph__featured-img-wrap { }
+.ph__featured-img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.ph__featured-body { padding: 16px 20px; }
+.ph__featured-quote { font-size: 18px; font-weight: 700; line-height: 1.5; margin: 8px 0 0; }
+.ph__sub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+.ph__sub-grid .ph__card-body { padding: 8px; }
+.ph__cta { margin-top: 24px; text-align: center; }
+.ph__cta-btn { display: inline-block; padding: 14px 32px; border: 0; border-radius: 14px; background: var(--ph-brand); color: #fff; text-decoration: none; font-size: 15px; font-weight: 700; transition: transform 0.2s; }
+.ph__cta-btn:hover { transform: translateY(-2px); }
+.ph.mood--clean { background: #fff; color: #111827; }
+.ph.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.ph.mood--dark { background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.ph.mood--dark .ph__card, .ph.mood--dark .ph__featured { background: rgba(255,255,255,0.06); }
+.ph.mood--dark .ph__quote, .ph.mood--dark .ph__featured-quote { color: rgba(255,255,255,0.8); }
+.ph.mood--dark .ph__author { color: rgba(255,255,255,0.4); }
+.ph.mood--dark .ph__sub { color: rgba(255,255,255,0.55); }
+.ph.mood--navy { background: #0c1024; color: #fff; }
+@media (max-width: 480px) { .ph { padding: 36px 20px 32px; } .ph__headline { font-size: 28px; } .ph__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) { .ph { padding: 64px 28px 56px; } .ph__inner { max-width: 720px; } .ph__headline { font-size: 42px; } .ph__grid { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
+</style></head><body><div class="page"><!-- LAYOUT: PR-A -->
+<section class="ph ph--a mood--clean" data-section="20-photo-reviews" data-layout="PR-A" style="--ph-brand:#D97706;"><div class="ph__inner"><header class="ph__header"><h2 class="ph__headline">포토 리뷰</h2><p class="ph__count">3,200건의 포토리뷰</p></header><div class="ph__grid"><article class="ph__card"><div class="ph__card-img-wrap"><img class="ph__card-img" src="https://placehold.co/300x300/FEF3C7/D97706?text=1" alt="김○○" loading="lazy" /></div><div class="ph__card-body"><span class="ph__stars">★★★★★</span><p class="ph__quote">"피부결 좋아짐"</p><span class="ph__author">김○○</span></div></article><article class="ph__card"><div class="ph__card-img-wrap"><img class="ph__card-img" src="https://placehold.co/300x300/ECFDF5/059669?text=2" alt="이○○" loading="lazy" /></div><div class="ph__card-body"><span class="ph__stars">★★★★★</span><p class="ph__quote">"재구매 3번째"</p><span class="ph__author">이○○</span></div></article><article class="ph__card"><div class="ph__card-img-wrap"><img class="ph__card-img" src="https://placehold.co/300x300/EDE9FE/7C3AED?text=3" alt="박○○" loading="lazy" /></div><div class="ph__card-body"><span class="ph__stars">★★★★☆</span><p class="ph__quote">"선물용으로 최고"</p><span class="ph__author">박○○</span></div></article><article class="ph__card"><div class="ph__card-img-wrap"><img class="ph__card-img" src="https://placehold.co/300x300/FEE2E2/DC2626?text=4" alt="최○○" loading="lazy" /></div><div class="ph__card-body"><span class="ph__stars">★★★★★</span><p class="ph__quote">"향 좋아요"</p><span class="ph__author">최○○</span></div></article><article class="ph__card"><div class="ph__card-img-wrap"><img class="ph__card-img" src="https://placehold.co/300x300/E0F2FE/2563EB?text=5" alt="한○○" loading="lazy" /></div><div class="ph__card-body"><span class="ph__stars">★★★★★</span><p class="ph__quote">"촉촉함 오래감"</p><span class="ph__author">한○○</span></div></article><article class="ph__card"><div class="ph__card-img-wrap"><img class="ph__card-img" src="https://placehold.co/300x300/F0FDF4/059669?text=6" alt="정○○" loading="lazy" /></div><div class="ph__card-body"><span class="ph__stars">★★★★☆</span><span class="ph__author">정○○</span></div></article></div></div></section></div></body></html>

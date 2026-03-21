@@ -5,6 +5,9 @@ import { cancelRebill } from '@/lib/payapp';
 import {
   sendSubscriptionCancelled,
   sendPaymentFailed,
+  sendSubscriptionExpiring,
+  sendGracePeriodWarning,
+  getOrgOwnerEmail,
 } from '@/lib/email';
 
 // ============================================================
@@ -19,21 +22,47 @@ import {
 // ============================================================
 
 export async function GET(req: Request): Promise<NextResponse> {
+  const isVercelCron = req.headers.get('x-vercel-cron-signature') !== null;
   const authHeader = req.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
 
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (!isVercelCron && cronSecret && authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const now = new Date();
   const results = {
+    expiringWarned: 0, // 만료 3일 전 경고 발송
     trialExpired: 0,   // Trial 만료 → FREE 다운그레이드
     cancelled: 0,      // cancelAtPeriodEnd → 해지 완료
     pastDue: 0,        // 기간 만료 → PAST_DUE
     gracePeriod: 0,    // PAST_DUE 7일 초과 → GRACE_PERIOD
     terminated: 0,     // GRACE_PERIOD 14일 초과 → 강제 해지
   };
+
+  // ============================================================
+  // -1. 만료 3일 전 경고 이메일 (아직 ACTIVE인 구독)
+  // ============================================================
+  const threeDaysLater = new Date(now);
+  threeDaysLater.setDate(threeDaysLater.getDate() + 3);
+
+  const expiringSoon = await db.subscription.findMany({
+    where: {
+      status: 'ACTIVE',
+      cancelAtPeriodEnd: true,
+      isTrial: false,
+      currentPeriodEnd: { gt: now, lte: threeDaysLater },
+    },
+  });
+
+  for (const sub of expiringSoon) {
+    const email = await getOrgOwnerEmail(sub.orgId);
+    if (email) {
+      const planConfig = await getPlanConfig(sub.plan);
+      await sendSubscriptionExpiring(email, planConfig.name, sub.currentPeriodEnd).catch(() => {});
+    }
+    results.expiringWarned++;
+  }
 
   // ============================================================
   // 0. Trial 만료 → FREE 다운그레이드 (결제 없이 바로 해지)
@@ -159,6 +188,12 @@ export async function GET(req: Request): Promise<NextResponse> {
       where: { id: sub.id },
       data: { status: 'GRACE_PERIOD' },
     });
+
+    const email = await getOrgOwnerEmail(sub.orgId);
+    if (email) {
+      const planConfig = await getPlanConfig(sub.plan);
+      await sendGracePeriodWarning(email, planConfig.name, 14).catch(() => {});
+    }
     results.gracePeriod++;
   }
 
@@ -204,18 +239,7 @@ export async function GET(req: Request): Promise<NextResponse> {
   return NextResponse.json({
     processedAt: now.toISOString(),
     results,
-    total: results.trialExpired + results.cancelled + results.pastDue + results.gracePeriod + results.terminated,
+    total: results.expiringWarned + results.trialExpired + results.cancelled + results.pastDue + results.gracePeriod + results.terminated,
   });
 }
 
-// ============================================================
-// Org Owner 이메일 조회
-// ============================================================
-
-async function getOrgOwnerEmail(orgId: string): Promise<string | null> {
-  const membership = await db.membership.findFirst({
-    where: { orgId, role: 'OWNER' },
-    include: { user: { select: { email: true } } },
-  });
-  return membership?.user?.email ?? null;
-}

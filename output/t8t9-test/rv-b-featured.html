@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>RV-B 대표 후기 dark</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.rv { position: relative; overflow: hidden; padding: 40px 20px 32px; --rv-brand: #4A90D9; }
+.rv__inner { max-width: 520px; margin: 0 auto; }
+
+.rv__header { text-align: center; margin-bottom: 24px; }
+.rv__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--rv-brand) 70%, #5f6980); }
+.rv__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; word-break: keep-all; }
+.rv__sub { max-width: 420px; margin: 12px auto 0; font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.68); }
+
+.rv__summary { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+.rv__summary-num { font-size: 40px; font-weight: 900; color: var(--rv-brand); letter-spacing: -2px; }
+.rv__stars { color: var(--rv-brand); font-size: 18px; letter-spacing: 2px; }
+.rv__summary-count { font-size: 14px; color: rgba(15,23,42,0.5); }
+
+.rv__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+
+.rv__card { padding: 20px; border: 1px solid rgba(15,23,42,0.06); border-radius: 20px; background: rgba(255,255,255,0.92); box-shadow: 0 12px 36px rgba(15,23,42,0.05); backdrop-filter: blur(10px); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.rv__card:hover { transform: translateY(-4px); box-shadow: 0 18px 48px rgba(15,23,42,0.09); }
+.rv__card--featured { padding: 28px; border: 2px solid color-mix(in srgb, var(--rv-brand) 25%, transparent); box-shadow: 0 24px 64px rgba(15,23,42,0.1); }
+.rv__card .rv__stars { margin-bottom: 12px; }
+
+.rv__quote { margin: 0; font-size: 15px; font-weight: 400; line-height: 1.7; color: rgba(15,23,42,0.8); font-style: italic; }
+.rv__card--featured .rv__quote { font-size: 20px; font-weight: 700; font-style: normal; line-height: 1.5; color: inherit; }
+
+.rv__author { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+.rv__avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.rv__author-info { display: flex; flex-direction: column; }
+.rv__author-name { font-size: 14px; font-weight: 700; }
+.rv__author-meta { font-size: 12px; color: rgba(15,23,42,0.45); }
+
+.rv__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.rv__tag { padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--rv-brand) 10%, white); color: var(--rv-brand); font-size: 11px; font-weight: 700; }
+
+.rv__mini-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+.rv__mini-list .rv__card { padding: 16px; }
+.rv__mini-list .rv__quote { font-size: 13px; }
+
+.rv__photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.rv__photo-item { border-radius: 14px; overflow: hidden; background: rgba(15,23,42,0.04); }
+.rv__photo-img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.rv__photo-caption { padding: 10px 12px; }
+.rv__photo-author { font-size: 13px; font-weight: 700; display: block; }
+.rv__photo-quote { font-size: 12px; color: rgba(15,23,42,0.6); display: block; margin-top: 4px; }
+
+.rv__cta { margin-top: 24px; }
+.rv__cta-btn { display: block; width: 100%; padding: 18px 20px; border: 0; border-radius: 16px; background: var(--rv-brand); color: #fff; text-align: center; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 12px 30px color-mix(in srgb, var(--rv-brand) 26%, transparent); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.rv__cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px color-mix(in srgb, var(--rv-brand) 40%, transparent); }
+
+/* Moods */
+.rv.mood--clean { background: #ffffff; color: #111827; }
+.rv.mood--soft { background: radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--rv-brand) 12%, white), transparent 40%), linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.rv.mood--dark { background: radial-gradient(circle at top left, color-mix(in srgb, var(--rv-brand) 14%, transparent), transparent 42%), linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.rv.mood--navy { background: radial-gradient(circle at top left, color-mix(in srgb, var(--rv-brand) 14%, transparent), transparent 40%), #0c1024; color: #fff; }
+
+.rv.mood--dark .rv__sub, .rv.mood--dark .rv__quote, .rv.mood--navy .rv__sub, .rv.mood--navy .rv__quote { color: rgba(255,255,255,0.72); }
+.rv.mood--dark .rv__card, .rv.mood--navy .rv__card { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.2); backdrop-filter: blur(14px); }
+.rv.mood--dark .rv__card:hover, .rv.mood--navy .rv__card:hover { background: rgba(255,255,255,0.11); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
+.rv.mood--dark .rv__card--featured, .rv.mood--navy .rv__card--featured { border-color: color-mix(in srgb, var(--rv-brand) 40%, rgba(255,255,255,0.15)); }
+.rv.mood--dark .rv__headline, .rv.mood--navy .rv__headline, .rv.mood--dark .rv__eyebrow, .rv.mood--navy .rv__eyebrow { color: #fff; }
+.rv.mood--dark .rv__author-meta, .rv.mood--navy .rv__author-meta { color: rgba(255,255,255,0.4); }
+.rv.mood--dark .rv__summary-count, .rv.mood--navy .rv__summary-count { color: rgba(255,255,255,0.45); }
+.rv.mood--dark .rv__photo-item, .rv.mood--navy .rv__photo-item { background: rgba(255,255,255,0.06); }
+.rv.mood--dark .rv__photo-quote, .rv.mood--navy .rv__photo-quote { color: rgba(255,255,255,0.5); }
+.rv.mood--dark .rv__tag, .rv.mood--navy .rv__tag { background: color-mix(in srgb, var(--rv-brand) 18%, rgba(255,255,255,0.08)); }
+
+@media (max-width: 480px) { .rv { padding: 32px 20px 28px; } .rv__headline { font-size: 28px; } .rv__grid { grid-template-columns: 1fr; } .rv__photo-grid { grid-template-columns: repeat(2, 1fr); } .rv__summary-num { font-size: 32px; } }
+@media (min-width: 768px) { .rv { padding: 56px 28px 44px; } .rv__inner { max-width: 960px; } .rv__headline { font-size: 42px; } .rv__cta-btn { max-width: 320px; margin: 0 auto; } }
+</style></head><body><div class="page"><!-- LAYOUT: RV-B -->
+<section
+  class="rv rv--b mood--dark"
+  data-section="13-reviews"
+  data-layout="RV-B"
+  style="--rv-brand:#EC4899;"
+>
+  <div class="rv__inner">
+    
+      
+    <header class="rv__header">
+      
+      <h2 class="rv__headline">베스트 리뷰</h2>
+      
+    </header>
+  
+      
+    <article class="rv__card rv__card--featured">
+      <div class="rv__stars" aria-label="별점 5점">★★★★★</div>
+      <blockquote class="rv__quote">"3개월 사용 후 눈에 띄는 변화. 피부과 갈 일이 줄었어요."</blockquote>
+      <div class="rv__author">
+        
+        <div class="rv__author-info">
+          <span class="rv__author-name">정○○</span>
+          <span class="rv__author-meta">뷰티 에디터</span>
+        </div>
+      </div>
+      
+    </article>
+  
+      <div class="rv__mini-list">
+    <article class="rv__card">
+      <div class="rv__stars" aria-label="별점 5점">★★★★★</div>
+      <blockquote class="rv__quote">"재구매 3번째"</blockquote>
+      <div class="rv__author">
+        
+        <div class="rv__author-info">
+          <span class="rv__author-name">최○○</span>
+          
+        </div>
+      </div>
+      
+    </article>
+  
+    <article class="rv__card">
+      <div class="rv__stars" aria-label="별점 5점">★★★★★</div>
+      <blockquote class="rv__quote">"선물했더니 대만족"</blockquote>
+      <div class="rv__author">
+        
+        <div class="rv__author-info">
+          <span class="rv__author-name">한○○</span>
+          
+        </div>
+      </div>
+      
+    </article>
+  </div>
+      
+    
+  </div>
+</section></div></body></html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KF-B 이미지 mood-soft</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f0f0f0;
+    }
+    .page { width: 100%; max-width: 960px; }
+    
+/* ═══ T1 Feature Grid — Base ═══ */
+.kf {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 20px 32px;
+  --kf-brand: #4A90D9;
+}
+
+.kf__inner {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.kf__header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.kf__eyebrow {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--kf-brand) 70%, #5f6980);
+}
+
+.kf__headline {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.04em;
+  word-break: keep-all;
+}
+
+.kf__sub {
+  max-width: 420px;
+  margin: 12px auto 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(15, 23, 42, 0.68);
+  word-break: keep-all;
+}
+
+/* ── Card (공통) ── */
+.kf__card {
+  position: relative;
+  min-height: 100%;
+  padding: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kf__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 56px rgba(15, 23, 42, 0.1);
+}
+
+.kf__card--featured {
+  padding: 24px;
+  border: 2px solid color-mix(in srgb, var(--kf-brand) 30%, transparent);
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.12);
+  transform: scale(1.02);
+}
+
+.kf__card--featured:hover {
+  transform: scale(1.02) translateY(-4px);
+  box-shadow: 0 36px 90px rgba(15, 23, 42, 0.16);
+}
+
+.kf__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--kf-brand) 12%, white);
+  color: var(--kf-brand);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.kf__icon {
+  margin-bottom: 14px;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.kf__card-media {
+  margin-bottom: 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.kf__card-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.kf__card-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  word-break: keep-all;
+}
+
+.kf__card-desc {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.68;
+  color: rgba(15, 23, 42, 0.72);
+  word-break: keep-all;
+}
+
+/* ── KF-A: Grid ── */
+.kf__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+/* ── KF-B: Split ── */
+.kf__split {
+  display: grid;
+  gap: 14px;
+}
+
+.kf__split-main,
+.kf__split-side {
+  min-width: 0;
+}
+
+.kf__split-side .kf__grid {
+  grid-template-columns: 1fr;
+}
+
+.kf--b .kf__card--featured .kf__card-title {
+  font-size: 24px;
+}
+
+/* ── KF-C: List ── */
+.kf__list {
+  display: grid;
+  gap: 0;
+}
+
+.kf__list-item {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 18px 0;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  transition: background 0.15s ease;
+}
+
+.kf__list-item:last-child {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.kf__list-item:hover {
+  background: rgba(15, 23, 42, 0.02);
+}
+
+.kf__list-num {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--kf-brand);
+}
+
+.kf__list-body {
+  min-width: 0;
+}
+
+.kf__list-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.kf__list-top .kf__badge {
+  margin-bottom: 10px;
+}
+
+.kf--c .kf__header {
+  margin-bottom: 22px;
+}
+
+/* ── CTA ── */
+.kf__cta {
+  margin-top: 24px;
+}
+
+.kf__cta-btn {
+  display: block;
+  width: 100%;
+  padding: 18px 20px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--kf-brand);
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--kf-brand) 26%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kf__cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--kf-brand) 40%, transparent);
+}
+
+/* ═══ Moods ═══ */
+.kf.mood--clean {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--kf-brand) 12%, transparent), transparent 44%),
+    #ffffff;
+  color: #111827;
+}
+
+.kf.mood--soft {
+  background:
+    radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--kf-brand) 18%, white), transparent 38%),
+    linear-gradient(180deg, #fff9fc 0%, #ffffff 100%);
+  color: #111827;
+}
+
+.kf.mood--dark {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--kf-brand) 18%, transparent), transparent 42%),
+    linear-gradient(180deg, #17120d 0%, #0f0b07 100%);
+  color: #ffffff;
+}
+
+.kf.mood--navy {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--kf-brand) 18%, transparent), transparent 40%),
+    #0c1024;
+  color: #ffffff;
+}
+
+/* dark/navy 공통 오버라이드 */
+.kf.mood--dark .kf__sub,
+.kf.mood--dark .kf__card-desc,
+.kf.mood--navy .kf__sub,
+.kf.mood--navy .kf__card-desc {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.kf.mood--dark .kf__card,
+.kf.mood--navy .kf__card {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(14px);
+}
+
+.kf.mood--dark .kf__card:hover,
+.kf.mood--navy .kf__card:hover {
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
+.kf.mood--dark .kf__card--featured,
+.kf.mood--navy .kf__card--featured {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: color-mix(in srgb, var(--kf-brand) 40%, rgba(255,255,255,0.15));
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+}
+
+.kf.mood--dark .kf__card-media,
+.kf.mood--navy .kf__card-media {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.kf.mood--dark .kf__card-title,
+.kf.mood--navy .kf__card-title,
+.kf.mood--dark .kf__headline,
+.kf.mood--navy .kf__headline,
+.kf.mood--dark .kf__eyebrow,
+.kf.mood--navy .kf__eyebrow {
+  color: #ffffff;
+}
+
+.kf.mood--dark .kf__list-item,
+.kf.mood--navy .kf__list-item {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.kf.mood--dark .kf__list-item:hover,
+.kf.mood--navy .kf__list-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.kf.mood--dark .kf__badge,
+.kf.mood--navy .kf__badge {
+  background: color-mix(in srgb, var(--kf-brand) 18%, rgba(255,255,255,0.08));
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 480px) {
+  .kf {
+    padding: 32px 20px 28px;
+  }
+  .kf__headline {
+    font-size: 30px;
+  }
+  .kf__grid {
+    grid-template-columns: 1fr;
+  }
+  .kf__card,
+  .kf__card--featured {
+    padding: 18px;
+  }
+  .kf__list-item {
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
+  }
+  .kf__list-num {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .kf {
+    padding: 56px 28px 44px;
+  }
+  .kf__inner {
+    max-width: 960px;
+  }
+  .kf__headline {
+    font-size: 42px;
+  }
+  .kf--b .kf__split {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: stretch;
+  }
+  .kf--b .kf__split-side .kf__grid {
+    grid-template-columns: 1fr;
+  }
+  .kf--c .kf__list {
+    gap: 4px;
+  }
+  .kf--c .kf__list-item {
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 22px 0;
+  }
+  .kf--c .kf__list-num {
+    font-size: 28px;
+  }
+  .kf__cta {
+    margin-top: 28px;
+  }
+  .kf__cta-btn {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- LAYOUT: KF-B -->
+<section
+  class="kf kf--b mood--soft"
+  data-section="02-key-features"
+  data-layout="KF-B"
+  style="--kf-brand:#7C3AED;"
+>
+  <div class="kf__inner">
+    
+      
+    <header class="kf__header">
+      <p class="kf__eyebrow">PRODUCT FEATURES</p>
+      <h2 class="kf__headline">눈에 보이는 차이</h2>
+      <p class="kf__sub">직접 사용해보면 느낄 수 있습니다.</p>
+    </header>
+  
+      <div class="kf__split">
+        <div class="kf__split-main">
+          
+    <article class="kf__card kf__card--featured">
+      <span class="kf__badge">BEST</span>
+      
+      
+    <div class="kf__card-media">
+      <img
+        class="kf__card-img"
+        src="https://placehold.co/400x400/EDE9FE/7C3AED?text=Texture"
+        alt="프리미엄 소재"
+        loading="lazy"
+      />
+    </div>
+  
+      <h3 class="kf__card-title">프리미엄 소재</h3>
+      <p class="kf__card-desc">천연 원료만 사용한 부드러운 텍스처</p>
+    </article>
+  
+        </div>
+        <div class="kf__split-side">
+          
+    <div class="kf__grid">
+      
+    <article class="kf__card">
+      
+      
+      
+    <div class="kf__card-media">
+      <img
+        class="kf__card-img"
+        src="https://placehold.co/400x400/EDE9FE/7C3AED?text=Lasting"
+        alt="지속력"
+        loading="lazy"
+      />
+    </div>
+  
+      <h3 class="kf__card-title">지속력</h3>
+      <p class="kf__card-desc">12시간 이상 유지되는 밀착력</p>
+    </article>
+  
+    <article class="kf__card">
+      
+      
+      
+    <div class="kf__card-media">
+      <img
+        class="kf__card-img"
+        src="https://placehold.co/400x400/EDE9FE/7C3AED?text=Gentle"
+        alt="저자극"
+        loading="lazy"
+      />
+    </div>
+  
+      <h3 class="kf__card-title">저자극</h3>
+      <p class="kf__card-desc">민감성 피부 테스트 완료</p>
+    </article>
+  
+    </div>
+  
+        </div>
+      </div>
+      
+    <div class="kf__cta">
+      <a class="kf__cta-btn" href="#">
+        체험하기
+      </a>
+    </div>
+  
+    
+  </div>
+</section>
+  </div>
+</body>
+</html>

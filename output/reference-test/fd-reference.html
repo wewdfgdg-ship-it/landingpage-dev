@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03 Spec</title>
+  <style>
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+:root {
+  /* ── Font ── */
+  --s-font: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  --s-text-xs:   11px;
+  --s-text-sm:   13px;
+  --s-text-base: 15px;
+  --s-text-lg:   18px;
+  --s-text-xl:   24px;
+  --s-text-2xl:  34px;
+  --s-text-3xl:  42px;
+  --s-text-4xl:  56px;
+  --s-weight-light:   300;
+  --s-weight-regular: 400;
+  --s-weight-bold:    700;
+  --s-weight-black:   900;
+  --s-leading-tight:   1.14;
+  --s-leading-snug:    1.3;
+  --s-leading-normal:  1.5;
+  --s-leading-relaxed: 1.7;
+  --s-tracking-tight:  -0.04em;
+  --s-tracking-normal: 0;
+  --s-tracking-wide:   0.14em;
+
+  /* ── Space (8px grid) ── */
+  --s-space-1:  8px;
+  --s-space-2:  16px;
+  --s-space-3:  24px;
+  --s-space-4:  32px;
+  --s-space-5:  40px;
+  --s-space-6:  48px;
+  --s-space-8:  64px;
+
+  /* ── Section ── */
+  --s-section-max:   520px;
+  --s-section-pad-x: 20px;
+  --s-section-pad-y: 40px;
+
+  /* ── Radius ── */
+  --s-radius-sm:   8px;
+  --s-radius-md:   14px;
+  --s-radius-lg:   20px;
+  --s-radius-xl:   24px;
+  --s-radius-full: 999px;
+
+  /* ── Shadow ── */
+  --s-shadow-sm: 0 4px 12px rgba(15,23,42,0.04);
+  --s-shadow-md: 0 12px 36px rgba(15,23,42,0.06);
+  --s-shadow-lg: 0 24px 56px rgba(15,23,42,0.1);
+
+  /* ── Transition ── */
+  --s-ease: 0.2s ease;
+
+  /* ── Color (기본 = clean) ── */
+  --s-brand:      #4A90D9;
+  --s-bg:         #ffffff;
+  --s-bg-surface: #f8f9fa;
+  --s-text:       #111827;
+  --s-text-sub:   rgba(15,23,42,0.68);
+  --s-text-muted: rgba(15,23,42,0.4);
+  --s-border:     rgba(15,23,42,0.06);
+  --s-card-bg:    rgba(255,255,255,0.92);
+  --s-card-border: rgba(15,23,42,0.06);
+  --s-card-shadow: 0 12px 36px rgba(15,23,42,0.06);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--s-font); -webkit-font-smoothing: antialiased; color: var(--s-text); background: var(--s-bg); }
+
+/* ═══ MOOD: clean ═══ */
+.mood--clean {
+  --s-bg: #ffffff;
+  --s-bg-surface: #f8f9fa;
+  --s-text: #111827;
+  --s-text-sub: rgba(15,23,42,0.68);
+  --s-text-muted: rgba(15,23,42,0.4);
+  --s-border: rgba(15,23,42,0.06);
+  --s-card-bg: rgba(255,255,255,0.92);
+  --s-card-border: rgba(15,23,42,0.06);
+  --s-card-shadow: 0 12px 36px rgba(15,23,42,0.06);
+  background: var(--s-bg);
+  color: var(--s-text);
+}
+
+/* ═══ MOOD: soft ═══ */
+.mood--soft {
+  --s-bg: #fafafa;
+  --s-bg-surface: #f0f0f0;
+  --s-text: #111827;
+  --s-text-sub: rgba(15,23,42,0.68);
+  --s-text-muted: rgba(15,23,42,0.4);
+  --s-border: rgba(15,23,42,0.06);
+  --s-card-bg: rgba(255,255,255,0.95);
+  --s-card-border: rgba(15,23,42,0.05);
+  --s-card-shadow: 0 8px 24px rgba(15,23,42,0.05);
+  background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+  color: var(--s-text);
+}
+
+/* ═══ MOOD: dark (기본 다크 — 차분한 다크) ═══ */
+.mood--dark {
+  --s-bg: #0f0b07;
+  --s-bg-surface: #1a1510;
+  --s-text: #ffffff;
+  --s-text-sub: rgba(255,255,255,0.65);
+  --s-text-muted: rgba(255,255,255,0.35);
+  --s-border: rgba(255,255,255,0.08);
+  --s-card-bg: rgba(255,255,255,0.06);
+  --s-card-border: rgba(255,255,255,0.08);
+  --s-card-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%);
+  color: var(--s-text);
+}
+
+/* ═══ MOOD: navy ═══ */
+.mood--navy {
+  --s-bg: #0c1024;
+  --s-bg-surface: #141830;
+  --s-text: #ffffff;
+  --s-text-sub: rgba(255,255,255,0.65);
+  --s-text-muted: rgba(255,255,255,0.35);
+  --s-border: rgba(255,255,255,0.08);
+  --s-card-bg: rgba(255,255,255,0.06);
+  --s-card-border: rgba(255,255,255,0.08);
+  --s-card-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  background: #0c1024;
+  color: var(--s-text);
+}
+
+/* ═══ MODIFIER: promo (dark 위에 얹는 강조) ═══ */
+.mood--dark.is-promo,
+.mood--navy.is-promo {
+  background:
+    radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--s-brand) 18%, transparent), transparent 50%),
+    linear-gradient(180deg, #17120d 0%, #0f0b07 100%);
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 480px) {
+  :root {
+    --s-text-2xl: 28px;
+    --s-text-3xl: 34px;
+    --s-text-4xl: 44px;
+    --s-section-pad-y: 32px;
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --s-text-2xl: 42px;
+    --s-section-max: 960px;
+    --s-section-pad-x: 28px;
+    --s-section-pad-y: 56px;
+  }
+}
+
+
+/* ═══ Global CTA System ═══ */
+.s-cta-group {
+  margin-top: var(--s-space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-space-1);
+  width: 100%;
+}
+
+.s-cta {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  padding: 18px var(--s-space-3);
+  border-radius: var(--s-radius-lg);
+  font-family: var(--s-font);
+  font-size: 16px;
+  font-weight: var(--s-weight-bold);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--s-ease), box-shadow var(--s-ease), background var(--s-ease);
+}
+
+/* ── Primary: 강한 전환 ── */
+.s-cta--primary {
+  background: var(--s-brand);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--s-brand) 30%, transparent);
+}
+
+.s-cta--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 44px color-mix(in srgb, var(--s-brand) 45%, transparent);
+}
+
+/* ── Secondary: 보조 행동 ── */
+.s-cta--secondary {
+  background: transparent;
+  color: var(--s-brand);
+  border: 1.5px solid color-mix(in srgb, var(--s-brand) 25%, var(--s-border));
+}
+
+.s-cta--secondary:hover {
+  background: color-mix(in srgb, var(--s-brand) 6%, transparent);
+  transform: translateY(-1px);
+}
+
+/* ── Ghost: 최소 ── */
+.s-cta--ghost {
+  background: transparent;
+  color: var(--s-text-muted);
+  border: 1px solid var(--s-border);
+  padding: 14px var(--s-space-3);
+  font-size: var(--s-text-sm);
+}
+
+.s-cta--ghost:hover {
+  color: var(--s-text-sub);
+  border-color: var(--s-text-muted);
+}
+
+/* ── Micro copy ── */
+.s-cta-micro {
+  font-size: var(--s-text-xs);
+  color: var(--s-text-muted);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* ── Dark/Navy mood override ── */
+.mood--dark .s-cta--secondary,
+.mood--navy .s-cta--secondary {
+  border-color: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+}
+
+.mood--dark .s-cta--secondary:hover,
+.mood--navy .s-cta--secondary:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.mood--dark .s-cta--ghost,
+.mood--navy .s-cta--ghost {
+  border-color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.35);
+}
+
+.mood--dark .s-cta--ghost:hover,
+.mood--navy .s-cta--ghost:hover {
+  color: rgba(255,255,255,0.5);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.mood--dark .s-cta-micro,
+.mood--navy .s-cta-micro {
+  color: rgba(255,255,255,0.25);
+}
+
+
+/* ═══ T2 Feature Detail — 토큰 기반 ═══ */
+.fd {
+  position: relative;
+  padding: var(--s-section-pad-y) var(--s-section-pad-x);
+  background: var(--s-bg);
+  color: var(--s-text);
+}
+
+.fd__inner {
+  max-width: var(--s-section-max);
+  margin: 0 auto;
+}
+
+.fd__header { margin-bottom: var(--s-space-2); }
+
+.fd__eyebrow {
+  margin: 0 0 var(--s-space-1);
+  font-size: var(--s-text-xs);
+  font-weight: var(--s-weight-bold);
+  letter-spacing: var(--s-tracking-wide);
+  text-transform: uppercase;
+  color: var(--s-brand);
+}
+
+.fd__headline {
+  margin: 0;
+  font-size: var(--s-text-2xl);
+  font-weight: var(--s-weight-black);
+  line-height: var(--s-leading-tight);
+  letter-spacing: var(--s-tracking-tight);
+  word-break: keep-all;
+  color: var(--s-text);
+}
+
+.fd__body {
+  font-size: var(--s-text-base);
+  line-height: var(--s-leading-relaxed);
+  color: var(--s-text-sub);
+  margin-bottom: var(--s-space-2);
+}
+
+.fd__bullets {
+  padding-left: var(--s-space-2);
+  margin: 0 0 var(--s-space-2);
+  font-size: var(--s-text-sm);
+  line-height: var(--s-leading-relaxed);
+  color: var(--s-text-muted);
+}
+
+.fd__bullets li { margin-bottom: 4px; }
+
+/* Split */
+.fd__split { display: grid; gap: var(--s-space-3); }
+.fd__split-text { min-width: 0; }
+.fd__split-media { position: relative; min-width: 0; }
+.fd--img-right .fd__split { direction: ltr; }
+.fd--img-left .fd__split { direction: rtl; }
+.fd--img-left .fd__split > * { direction: ltr; }
+
+.fd__img-wrap {
+  border-radius: var(--s-radius-lg);
+  overflow: hidden;
+  background: var(--s-bg-surface);
+}
+
+.fd__img { display: block; width: 100%; height: auto; object-fit: cover; }
+
+.fd__img-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border: 2px dashed var(--s-border);
+  border-radius: var(--s-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--s-text-muted);
+  font-size: var(--s-text-sm);
+}
+
+.fd__annotations {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.fd__ann {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: var(--s-radius-sm);
+  background: var(--s-card-bg);
+  backdrop-filter: blur(8px);
+  font-size: var(--s-text-xs);
+  font-weight: var(--s-weight-bold);
+  color: var(--s-brand);
+  box-shadow: var(--s-shadow-sm);
+  top: calc(15% + var(--fd-ann-i) * 25%);
+  left: calc(5% + var(--fd-ann-i) * 18%);
+}
+
+.fd__stat { text-align: center; margin: var(--s-space-2) 0; }
+
+.fd__stat-num {
+  font-size: var(--s-text-4xl);
+  font-weight: var(--s-weight-black);
+  color: var(--s-brand);
+  letter-spacing: -3px;
+  line-height: 1;
+}
+
+.fd__stat-unit {
+  font-size: var(--s-text-lg);
+  font-weight: var(--s-weight-regular);
+  color: color-mix(in srgb, var(--s-brand) 60%, var(--s-text));
+  margin-left: 4px;
+}
+
+.fd__stat-label {
+  display: block;
+  font-size: var(--s-text-sm);
+  color: var(--s-text-muted);
+  margin-top: 4px;
+}
+
+.fd__visual {
+  position: relative;
+  margin-bottom: var(--s-space-3);
+  border-radius: var(--s-radius-lg);
+  overflow: hidden;
+}
+
+.fd__overlay-text { padding: 0 4px; }
+.fd__graphic { position: relative; margin: var(--s-space-3) 0; border-radius: var(--s-radius-lg); overflow: hidden; }
+
+.fd__footer { margin-top: var(--s-space-2); }
+.fd__caption { font-size: var(--s-text-sm); color: var(--s-text-muted); }
+.fd__source { font-size: var(--s-text-xs); color: var(--s-text-muted); margin-top: 4px; }
+
+.fd__cta { margin-top: var(--s-space-3); }
+
+.fd__cta-btn {
+  display: inline-block;
+  padding: var(--s-space-2) var(--s-space-4);
+  border: 0;
+  border-radius: var(--s-radius-md);
+  background: var(--s-brand);
+  color: #fff;
+  text-decoration: none;
+  font-size: var(--s-text-base);
+  font-weight: var(--s-weight-bold);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--s-brand) 25%, transparent);
+  transition: transform var(--s-ease);
+}
+
+.fd__cta-btn:hover { transform: translateY(-2px); }
+
+@media (min-width: 768px) {
+  .fd--a .fd__split {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-space-5);
+    align-items: center;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div style="max-width:960px;margin:0 auto;">
+    <!-- LAYOUT: FD-A -->
+<section class="fd fd--a mood--clean fd--img-right" data-section="03-feature-detail" data-layout="FD-A" style="--fd-brand:#2563EB;"><div class="fd__inner">
+    <div class="fd__split">
+      <div class="fd__split-text">
+    <header class="fd__header">
+      <p class="fd__eyebrow">POINT 01</p>
+      <h2 class="fd__headline">5중 보습 레이어 시스템</h2>
+    </header><div class="fd__text"><p class="fd__body">피부 깊숙이 침투하는 히알루론산 복합체가 5겹의 보습 장벽을 형성합니다. 외부 자극으로부터 피부를 보호하면서 24시간 촉촉함을 유지합니다.</p><ul class="fd__bullets"><li>표피층 즉각 수분 공급</li><li>진피층 장기 보습 유지</li><li>각질층 보호막 강화</li></ul></div></div>
+      <div class="fd__split-media"><div class="fd__img-wrap"><img class="fd__img" src="https://placehold.co/600x500/E0F2FE/2563EB?text=5-Layer+System" alt="5중 보습 레이어 시스템" loading="lazy" /></div></div>
+    </div></div></section>
+  </div>
+</body>
+</html>

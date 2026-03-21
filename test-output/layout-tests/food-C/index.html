@@ -1,0 +1,37 @@
+<!-- LAYOUT: C | MOOD: mood-red | FONT: SET-5 | COLOR: #DC2626 -->
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비비고 왕교자</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard',sans-serif;background:#0a0a0a;display:flex;justify-content:center}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero{width:100%;margin:0 auto;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:clamp(32px,4vw,64px) 0 40px;background:radial-gradient(ellipse at 50% 30%, #DC262630 0%, transparent 60%), linear-gradient(180deg, #1a1410, #120e08 40%, #0d0a07);color:#fff}
+.eyebrow{font-size:clamp(11px,1.1vw,16px);font-weight:300;letter-spacing:5px;color:#DC262680;animation:fadeInUp .7s ease .1s both}
+.headline{font-size:clamp(42px,7.2vw,100px);font-weight:900;letter-spacing:-4px;line-height:1.08;text-align:center;padding:20px 16px 0;word-break:keep-all;animation:fadeInUp .7s ease .2s both}
+.accent{color:#DC2626}
+.desc{font-size:clamp(14px,1.6vw,22px);font-weight:300;color:rgba(255,255,255,0.4);line-height:1.75;text-align:center;margin-top:clamp(12px,1.5vw,24px);padding:0 clamp(20px,3vw,48px);max-width:640px;animation:fadeInUp .7s ease .4s both}
+.product-zone{position:relative;margin-top:clamp(16px,2vw,32px);width:55%;max-width:340px;z-index:3;transform:rotate(-2deg);animation:fadeInUp .8s ease .5s both}
+.product-zone img{width:100%;height:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.5))}
+.stats{display:flex;justify-content:center;gap:clamp(24px,3.5vw,48px);margin-top:clamp(24px,3vw,48px);padding:0 clamp(20px,3vw,48px);animation:fadeInUp .7s ease .7s both}
+
+.price-block{text-align:center;margin-top:clamp(16px,2vw,32px);animation:fadeInUp .7s ease .6s both}
+.price-original{font-size:clamp(16px,1.7vw,24px);color:rgba(255,255,255,0.3);text-decoration:line-through}
+.price-sale{font-size:clamp(48px,8.5vw,120px);font-weight:900;color:#fff;letter-spacing:-4px}
+.discount-badge{display:inline-block;background:#DC2626;color:#fff;font-size:clamp(14px,1.4vw,20px);font-weight:900;padding:10px 28px;border-radius:999px;margin-bottom:clamp(12px,1.5vw,24px);animation:fadeInUp .7s ease .1s both}
+.cta-area{width:100%;padding:0 clamp(20px,3vw,48px);margin-top:clamp(20px,2.5vw,40px);animation:fadeInUp .7s ease 1s both}
+.cta-btn{display:block;width:100%;padding:22px 0;font-size:clamp(16px,1.7vw,24px);font-weight:700;border-radius:16px;text-align:center;text-decoration:none;border:none;cursor:pointer;background:linear-gradient(135deg,#DC2626,#DC2626dd);color:#0d0a07;box-shadow:0 8px 36px #DC262659;transition:all .3s}
+.cta-btn:hover{transform:translateY(-3px)}
+.micro{font-size:clamp(11px,0.9vw,13px);font-weight:300;color:rgba(255,255,255,0.15);margin-top:12px;text-align:center}
+</style></head><body>
+<section class="hero mood-red">
+<p class="eyebrow">식품 · 냉장</p>
+<div class="discount-badge">🔥 25% OFF</div>
+<h1 class="headline">비비고 왕교자의 새로운 <span class="accent">시작</span></h1>
+<div class="desc">2,000만개 판매 · 4.7점</div>
+<div class="product-zone"><img src="product.png" alt="비비고 왕교자"></div>
+<div class="price-block"><div class="price-original">12,900원</div><div class="price-sale">9,675원</div></div>
+<div class="stats"><div style="text-align:center"><div style="font-size:clamp(32px,4.8vw,72px);font-weight:900;color:#DC2626;letter-spacing:-2px">2,000만</div><div style="font-size:clamp(14px,1.4vw,20px);font-weight:300;color:#DC262666">개 판매</div></div><div style="text-align:center"><div style="font-size:clamp(32px,4.8vw,72px);font-weight:900;color:#DC2626;letter-spacing:-2px">4.7</div><div style="font-size:clamp(14px,1.4vw,20px);font-weight:300;color:#DC262666">점</div></div></div>
+
+<div class="cta-area"><a href="#" class="cta-btn">장바구니 담기</a><p class="micro">전 상품 무료배송 · 100% 안심 환불 보장</p></div>
+</section></body></html>

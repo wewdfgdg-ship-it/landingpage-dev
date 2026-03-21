@@ -29,6 +29,7 @@ interface EditorState {
   isDirty: boolean;
   isSaving: boolean;
   isRebuilding: boolean;
+  regeneratingSection: number | null;
 
   // 액션
   initialize: (
@@ -43,6 +44,9 @@ interface EditorState {
   changePattern: (order: number, patternId: string, patternName: string) => void;
   reorderSections: (fromIndex: number, toIndex: number) => void;
   deleteSection: (order: number) => void;
+  duplicateSection: (order: number) => void;
+  setImageUrl: (order: number, imageUrl: string) => void;
+  setRegeneratingSection: (order: number | null) => void;
   setPreviewHtml: (html: string) => void;
   setSaving: (saving: boolean) => void;
   setRebuilding: (rebuilding: boolean) => void;
@@ -63,8 +67,9 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   isDirty: false,
   isSaving: false,
   isRebuilding: false,
+  regeneratingSection: null,
 
-  initialize: (projectId, copyBlocks, layoutConfig, styleConfig, html) => {
+  initialize: (projectId, copyBlocks, layoutConfig, styleConfig, html): void => {
     const sections: EditorSection[] = layoutConfig.sections.map((layout) => {
       const sectionCopy = copyBlocks.sections.find(
         (s) => s.sectionOrder === layout.order,
@@ -98,9 +103,9 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     });
   },
 
-  selectSection: (order) => set({ selectedSectionOrder: order }),
+  selectSection: (order): void => set({ selectedSectionOrder: order }),
 
-  updateCopy: (order, field, value) =>
+  updateCopy: (order, field, value): void =>
     set((state) => ({
       isDirty: true,
       sections: state.sections.map((s) =>
@@ -110,7 +115,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       ),
     })),
 
-  changePattern: (order, patternId, patternName) =>
+  changePattern: (order, patternId, patternName): void =>
     set((state) => ({
       isDirty: true,
       sections: state.sections.map((s) =>
@@ -118,7 +123,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       ),
     })),
 
-  reorderSections: (fromIndex, toIndex) =>
+  reorderSections: (fromIndex, toIndex): void =>
     set((state) => {
       const newSections = [...state.sections];
       const [moved] = newSections.splice(fromIndex, 1);
@@ -128,7 +133,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       return { sections: reordered, isDirty: true };
     }),
 
-  deleteSection: (order) =>
+  deleteSection: (order): void =>
     set((state) => {
       const filtered = state.sections.filter((s) => s.order !== order);
       const reordered = filtered.map((s, i) => ({ ...s, order: i + 1 }));
@@ -140,12 +145,38 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       };
     }),
 
-  setPreviewHtml: (html) => set({ previewHtml: html }),
-  setSaving: (saving) => set({ isSaving: saving }),
-  setRebuilding: (rebuilding) => set({ isRebuilding: rebuilding }),
-  markClean: () => set({ isDirty: false }),
+  duplicateSection: (order): void =>
+    set((state) => {
+      const source = state.sections.find((s) => s.order === order);
+      if (!source) return state;
+      const idx = state.sections.findIndex((s) => s.order === order);
+      const newSections = [...state.sections];
+      newSections.splice(idx + 1, 0, {
+        ...source,
+        copy: { ...source.copy, bulletPoints: [...source.copy.bulletPoints] },
+      });
+      const reordered = newSections.map((s, i) => ({ ...s, order: i + 1 }));
+      return { sections: reordered, isDirty: true };
+    }),
 
-  toCopyBlocks: () => {
+  setImageUrl: (order, imageUrl): void =>
+    set((state) => ({
+      isDirty: true,
+      sections: state.sections.map((s) =>
+        s.order === order
+          ? { ...s, copy: { ...s.copy, imageUrl } }
+          : s,
+      ),
+    })),
+
+  setRegeneratingSection: (order): void => set({ regeneratingSection: order }),
+
+  setPreviewHtml: (html): void => set({ previewHtml: html }),
+  setSaving: (saving): void => set({ isSaving: saving }),
+  setRebuilding: (rebuilding): void => set({ isRebuilding: rebuilding }),
+  markClean: (): void => set({ isDirty: false }),
+
+  toCopyBlocks: (): CopyBlocks => {
     const sections: SectionCopy[] = get().sections.map((s) => ({
       sectionOrder: s.order,
       role: s.role,
@@ -155,7 +186,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     return { sections, tone: '', qualityScore: 0 };
   },
 
-  toLayoutSections: () =>
+  toLayoutSections: (): SectionLayout[] =>
     get().sections.map((s) => ({
       order: s.order,
       role: s.role,

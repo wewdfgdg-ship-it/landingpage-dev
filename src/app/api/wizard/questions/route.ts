@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getUserId } from '@/lib/get-user-id';
 import { askClaude } from '@/lib/ai/claude';
 
 interface QuestionInput {
@@ -30,8 +30,8 @@ JSON 형식:
 ]`;
 
 export async function POST(req: Request): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 

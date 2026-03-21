@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>레퍼런스(마이핏) 1:1 완벽 클론 테스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Pretendard", sans-serif; overflow-x: hidden; background-color: #111; padding-top:20px; }
+
+/* 템플릿의 CSS 렌더링 */
+
+.myfit-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #020015; /* Base dark color */
+    color: #ffffff;
+    overflow: hidden;
+    font-family: "Pretendard", -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+/* 1. Deep smooth gradient */
+.myfit-bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, 
+        #050821 0%, 
+        #12082b 35%, 
+        #3d0e1e 70%, 
+        #d12c00 100%);
+    z-index: 1;
+}
+
+/* 2. Light beams converging at the bottom center */
+.myfit-bg-beams {
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(
+        from 180deg at 50% 100%,
+        rgba(255, 150, 50, 0.0) 0deg,
+        rgba(255, 150, 50, 0.05) 5deg,
+        rgba(255, 150, 50, 0.0) 10deg
+    );
+    z-index: 2;
+    mix-blend-mode: color-dodge;
+}
+
+/* 3. Bottom intense flare */
+.myfit-bg-flare {
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: 40%;
+    background: radial-gradient(ellipse at bottom center, #ffaa00 0%, #ff3300 40%, transparent 70%);
+    z-index: 3;
+    opacity: 0.8;
+    filter: blur(20px);
+}
+
+.myfit-container {
+    padding: 3rem 1.5rem 0rem 1.5rem;
+    max-width: 480px; 
+    z-index: 10;
+}
+
+.myfit-header {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.myfit-hook {
+    font-size: 2.2rem;
+    font-weight: 900;
+    font-style: italic;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(100,200,255,0.8), 0 0 30px rgba(0,100,255,0.6);
+    margin-bottom: 0.75rem;
+    word-break: keep-all;
+    transform: skewX(-8deg); 
+    letter-spacing: -0.05em;
+}
+
+.myfit-subheadline {
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 0.5rem;
+    white-space: pre-line;
+    font-style: italic;
+    transform: skewX(-8deg);
+    letter-spacing: -0.04em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.myfit-headline-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: 0.25rem;
+    transform: skewX(-10deg) scaleY(1.1);
+}
+
+.myfit-headline {
+    font-size: 3.8rem;
+    font-weight: 950;
+    line-height: 1.0;
+    margin: 0;
+    background: linear-gradient(to bottom, #ff9370 0%, #ff5238 60%, #cc1b0e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: pre-line;
+    letter-spacing: -0.06em;
+    filter: drop-shadow(0px 1px 0px #700000)
+            drop-shadow(0px 2px 0px #700000)
+            drop-shadow(0px 3px 0px #700000)
+            drop-shadow(0px 4px 0px #700000)
+            drop-shadow(0px 5px 0px #700000)
+            drop-shadow(0px 6px 0px #700000)
+            drop-shadow(0px 15px 15px rgba(0,0,0,0.8));
+}
+/* Re-enable text fill if they use line breaks heavily, but fallback works okay */
+
+.myfit-divider {
+    width: 1px;
+    height: 1.8rem;
+    background-color: rgba(255,255,255,0.4);
+    margin: 1.5rem auto 1rem auto;
+}
+
+.myfit-body-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    white-space: pre-line;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.myfit-product-showcase {
+    position: relative;
+    width: 100%;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.myfit-product-img {
+    height: 400px; /* Long bottle look */
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9));
+    z-index: 2;
+    position: relative;
+    transform: translateY(10px);
+}
+
+/* Ensure no broken image icon ruins it if broken */
+.myfit-product-img:empty {
+    display: none;
+}
+
+.myfit-sticker-wrapper {
+    position: absolute;
+    bottom: 25%;
+    right: 5%;
+    z-index: 10;
+    filter: drop-shadow(3px 3px 0px #cc3300) drop-shadow(2px 2px 10px rgba(0,0,0,0.5));
+}
+
+.myfit-sticker {
+    transform: rotate(-10deg) skewX(-5deg);
+    display: flex;
+    flex-direction: column;
+}
+
+.myfit-sticker-line {
+    background-color: #000;
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 900;
+    padding: 0.1rem 0.6rem;
+    text-transform: uppercase;
+    display: inline-block;
+    align-self: flex-start;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* 모바일 래퍼 디자인 */
+.mobile-wrapper {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 40px auto;
+    background-color: #000;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+</style>
+</head>
+<body>
+    <div style="text-align:center; padding: 20px 0; font-weight:bold; color:#aaa;">레퍼런스(동국제약 마이핏) 1:1 완벽 클론 뷰어</div>
+    
+    <div class="mobile-wrapper">
+        
+<main class="myfit-wrapper">
+    <!-- Background layers -->
+    <div class="myfit-bg-gradient"></div>
+    <div class="myfit-bg-beams"></div>
+    <div class="myfit-bg-flare"></div>
+
+    <div class="myfit-container relative z-10 w-full flex flex-col items-center">
+        
+        <!-- Header Text Area -->
+        <div class="myfit-header hc-animate-fade-in-up">
+            <!-- First Hook -->
+            <div class="myfit-hook">하루한번 1초 섭취</div>
+            
+            <!-- Secondary Headings -->
+            
+            <div class="myfit-subheadline">간 건강 과 스트레스로 인한
+피로개선, 활력까지</div>
+            
+
+            <!-- Main Headline 3D effect -->
+            <div class="myfit-headline-wrapper">
+                <h1 class="myfit-headline">동시케어!</h1>
+            </div>
+            
+            <div class="myfit-divider"></div>
+            
+            <!-- Body Text / Sub copy -->
+            <div class="myfit-body-text">마이핏 V 멀티비타민 피로앤 리버샷</div>
+        </div>
+
+        <!-- Central Product Showcase -->
+        <div class="myfit-product-showcase hc-animate-fade-in-up" style="animation-delay: 200ms;">
+            
+            <img src="https://images.unsplash.com/photo-1550572017-edb7df089ea3?auto=format&fit=crop&q=80&w=400" alt="Product Image" class="myfit-product-img" />
+            
+            
+            
+            <div class="myfit-sticker-wrapper">
+                <div class="myfit-sticker">
+                    
+                    <div class="myfit-sticker-line">1day</div>
+                    
+                    <div class="myfit-sticker-line">1 shot</div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</main>
+
+    </div>
+</body>
+</html>

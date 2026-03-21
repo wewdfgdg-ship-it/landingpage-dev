@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>렌더러 테스트 — 7가지 패턴</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',-apple-system,sans-serif;color:#0F172A;background:#f1f5f9;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;height:auto;display:block;}
+a{color:inherit;text-decoration:none;}
+a:hover{opacity:0.85;}
+.label{text-align:center;padding:32px;background:#1e293b;color:#fff;font-size:1.5rem;font-weight:700;letter-spacing:0.05em;}
+@media(max-width:768px){
+  section{padding:48px 16px !important;}
+  h1{font-size:2rem !important;}
+  [style*="flex-wrap:wrap"]{flex-direction:column !important;}
+  [style*="min-height:100vh"]{min-height:auto !important;padding-top:80px !important;padding-bottom:80px !important;}
+}
+</style>
+</head>
+<body>
+<div class="label">1. Fullscreen Center — 이미지 오버레이</div>
+<section style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px;background-image:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.55) 100%),url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80');background-size:cover;background-position:center;color:#fff;">
+  <div style="max-width:860px;position:relative;z-index:1;">
+    <p style="font-size:1.1rem;opacity:0.85;margin-bottom:16px;font-weight:500;letter-spacing:0.02em;">매일 새벽 2-3시에 뒤척이며 허리 아픈 당신을 위한 해답</p>
+    <h1 style="font-size:clamp(2.5rem,6vw,4.5rem);font-weight:800;line-height:1.1;margin-bottom:24px;letter-spacing:-0.02em;text-shadow:0 2px 20px rgba(0,0,0,0.3);">아침이 다시 기대되는 밤</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:36px;"><span style="display:inline-block;padding:8px 20px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-size:0.9rem;font-weight:600;">7존 체압분산 기술</span><span style="display:inline-block;padding:8px 20px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-size:0.9rem;font-weight:600;">100일 무료 체험</span><span style="display:inline-block;padding:8px 20px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-size:0.9rem;font-weight:600;">100% 국내 제조</span><span style="display:inline-block;padding:8px 20px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-size:0.9rem;font-weight:600;">무료 배송 &amp; 설치</span></div>
+    <p style="font-size:1.05rem;opacity:0.9;max-width:600px;margin:0 auto 40px;line-height:1.7;">또 다시 뻐근한 허리로 잠에서 깬 아침. 커피 없이는 버틸 수 없는 하루의 시작. 이제 그 악순환을 끊을 시간입니다. 7존 맞춤 지지가 당신의 체형을 기억하고, 100일 동안 완전히 새로운 잠을 경험하세요.</p>
+    <a href="#cta" style="display:inline-block;padding:18px 48px;background:#fff;color:#2563EB;text-decoration:none;border-radius:999px;font-weight:700;font-size:1.15rem;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:transform .2s,box-shadow .2s;">100일 무료로 수면 혁명 시작하기</a>
+    <p style="margin-top:12px;font-size:0.85rem;opacity:0.75;">첫 달 무료, 만족하지 않으면 100% 환불</p>
+  </div>
+</section>
+
+<div class="label">2. Left-Right Split — 이미지 + 배지</div>
+<section style="display:flex;flex-wrap:wrap;min-height:90vh;align-items:center;padding:80px 24px;gap:40px;background:#FFFFFF;color:#0F172A;">
+  <div style="flex:1;min-width:320px;padding:20px 40px;">
+    <p style="font-size:0.95rem;color:#2563EB;font-weight:600;margin-bottom:12px;letter-spacing:0.05em;text-transform:uppercase;">매일 새벽 2-3시에 뒤척이며 허리 아픈 당신을 위한 해답</p>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:20px;letter-spacing:-0.02em;color:#0F172A;">아침이 다시 기대되는 밤</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;"><span style="display:inline-block;padding:6px 16px;background:#DBEAFE;color:#1E40AF;border-radius:999px;font-size:0.85rem;font-weight:600;">7존 체압분산 기술</span><span style="display:inline-block;padding:6px 16px;background:#DBEAFE;color:#1E40AF;border-radius:999px;font-size:0.85rem;font-weight:600;">100일 무료 체험</span><span style="display:inline-block;padding:6px 16px;background:#DBEAFE;color:#1E40AF;border-radius:999px;font-size:0.85rem;font-weight:600;">100% 국내 제조</span></div>
+    <p style="color:#475569;margin-bottom:32px;line-height:1.7;font-size:1.05rem;">또 다시 뻐근한 허리로 잠에서 깬 아침. 커피 없이는 버틸 수 없는 하루의 시작. 이제 그 악순환을 끊을 시간입니다. 7존 맞춤 지지가 당신의 체형을 기억하고, 100일 동안 완전히 새로운 잠을 경험하세요.</p>
+    <a href="#cta" style="display:inline-block;padding:16px 40px;background:#2563EB;color:#fff;text-decoration:none;border-radius:999px;font-weight:700;font-size:1.1rem;box-shadow:0 4px 16px #2563EB40;transition:transform .2s;">100일 무료로 수면 혁명 시작하기</a>
+    <p style="margin-top:10px;font-size:0.85rem;color:#94A3B8;">첫 달 무료, 만족하지 않으면 100% 환불</p>
+  </div>
+  <div style="flex:1;min-width:320px;display:flex;align-items:center;justify-content:center;padding:20px;">
+    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80" alt="아침이 다시 기대되는 밤" style="width:100%;max-width:560px;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.12);object-fit:cover;aspect-ratio:4/3;" loading="lazy">
+  </div>
+</section>
+
+<div class="label">3. Fullscreen Center — 이미지 없음 (그라데이션 fallback)</div>
+<section style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px;background:linear-gradient(135deg,#2563EB 0%,#1E40AF 100%);color:#fff;">
+  <div style="max-width:860px;position:relative;z-index:1;">
+    <p style="font-size:1.1rem;opacity:0.85;margin-bottom:16px;font-weight:500;letter-spacing:0.02em;">매일 새벽 2-3시에 뒤척이며 허리 아픈 당신을 위한 해답</p>
+    <h1 style="font-size:clamp(2.5rem,6vw,4.5rem);font-weight:800;line-height:1.1;margin-bottom:24px;letter-spacing:-0.02em;text-shadow:0 2px 20px rgba(0,0,0,0.3);">아침이 다시 기대되는 밤</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:36px;"><span style="display:inline-block;padding:8px 20px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-size:0.9rem;font-weight:600;">7존 체압분산 기술</span><span style="display:inline-block;padding:8px 20px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-size:0.9rem;font-weight:600;">100일 무료 체험</span><span style="display:inline-block;padding:8px 20px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-size:0.9rem;font-weight:600;">100% 국내 제조</span><span style="display:inline-block;padding:8px 20px;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-size:0.9rem;font-weight:600;">무료 배송 &amp; 설치</span></div>
+    <p style="font-size:1.05rem;opacity:0.9;max-width:600px;margin:0 auto 40px;line-height:1.7;">또 다시 뻐근한 허리로 잠에서 깬 아침. 커피 없이는 버틸 수 없는 하루의 시작. 이제 그 악순환을 끊을 시간입니다. 7존 맞춤 지지가 당신의 체형을 기억하고, 100일 동안 완전히 새로운 잠을 경험하세요.</p>
+    <a href="#cta" style="display:inline-block;padding:18px 48px;background:#fff;color:#2563EB;text-decoration:none;border-radius:999px;font-weight:700;font-size:1.15rem;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:transform .2s,box-shadow .2s;">100일 무료로 수면 혁명 시작하기</a>
+    <p style="margin-top:12px;font-size:0.85rem;opacity:0.75;">첫 달 무료, 만족하지 않으면 100% 환불</p>
+  </div>
+</section>
+
+<div class="label">4. Left-Right Split — 이미지 없음 (fallback)</div>
+<section style="display:flex;flex-wrap:wrap;min-height:90vh;align-items:center;padding:80px 24px;gap:40px;background:#FFFFFF;color:#0F172A;">
+  <div style="flex:1;min-width:320px;padding:20px 40px;">
+    <p style="font-size:0.95rem;color:#2563EB;font-weight:600;margin-bottom:12px;letter-spacing:0.05em;text-transform:uppercase;">매일 새벽 2-3시에 뒤척이며 허리 아픈 당신을 위한 해답</p>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:20px;letter-spacing:-0.02em;color:#0F172A;">아침이 다시 기대되는 밤</h1>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;"><span style="display:inline-block;padding:6px 16px;background:#DBEAFE;color:#1E40AF;border-radius:999px;font-size:0.85rem;font-weight:600;">7존 체압분산 기술</span><span style="display:inline-block;padding:6px 16px;background:#DBEAFE;color:#1E40AF;border-radius:999px;font-size:0.85rem;font-weight:600;">100일 무료 체험</span><span style="display:inline-block;padding:6px 16px;background:#DBEAFE;color:#1E40AF;border-radius:999px;font-size:0.85rem;font-weight:600;">100% 국내 제조</span></div>
+    <p style="color:#475569;margin-bottom:32px;line-height:1.7;font-size:1.05rem;">또 다시 뻐근한 허리로 잠에서 깬 아침. 커피 없이는 버틸 수 없는 하루의 시작. 이제 그 악순환을 끊을 시간입니다. 7존 맞춤 지지가 당신의 체형을 기억하고, 100일 동안 완전히 새로운 잠을 경험하세요.</p>
+    <a href="#cta" style="display:inline-block;padding:16px 40px;background:#2563EB;color:#fff;text-decoration:none;border-radius:999px;font-weight:700;font-size:1.1rem;box-shadow:0 4px 16px #2563EB40;transition:transform .2s;">100일 무료로 수면 혁명 시작하기</a>
+    <p style="margin-top:10px;font-size:0.85rem;color:#94A3B8;">첫 달 무료, 만족하지 않으면 100% 환불</p>
+  </div>
+  <div style="flex:1;min-width:320px;display:flex;align-items:center;justify-content:center;padding:20px;">
+    <div style="width:100%;max-width:560px;aspect-ratio:4/3;background:linear-gradient(135deg,#DBEAFE 0%,#2563EB 100%);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:3rem;font-weight:800;">아침이 다시</div>
+  </div>
+</section>
+
+<div class="label">5. 볼드 타이포 히어로 (우아한형제들 스타일)</div>
+<section style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;background:#FFFFFF;color:#0F172A;overflow:hidden;">
+  <div style="position:relative;width:100%;max-width:900px;margin-bottom:56px;">
+    <h1 style="font-size:clamp(4rem,14vw,9rem);font-weight:900;line-height:0.92;letter-spacing:-0.04em;color:#0F172A;margin:0;">다 때가<br>있다</h1>
+    <div style="position:absolute;top:-20px;right:0;z-index:2;"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80" alt="" style="width:280px;height:360px;object-fit:cover;border-radius:16px;filter:drop-shadow(0 12px 32px rgba(0,0,0,0.12));" loading="lazy"></div>
+  </div>
+  <div style="max-width:900px;width:100%;text-align:left;">
+    <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">우아한형제들 신입사원 모집</h2>
+    <p style="font-size:0.95rem;color:#94A3B8;margin-bottom:20px;">모집기간 | 2024.10.01(월) - 10.22(월) 16시</p>
+    <div style="display:flex;gap:16px;margin-bottom:10px;font-size:0.95rem;"><span style="flex-shrink:0;font-weight:700;color:#0F172A;min-width:80px;">전형단계</span><span style="color:#475569;">서류전형 &gt; 1차면접 &gt; 2차면접 &gt; 입사</span></div><div style="display:flex;gap:16px;margin-bottom:10px;font-size:0.95rem;"><span style="flex-shrink:0;font-weight:700;color:#0F172A;min-width:80px;">모집직무</span><span style="color:#475569;">전략 / 마케팅 / 디자인 / 영업 / 법무 / HR</span></div><div style="display:flex;gap:16px;margin-bottom:10px;font-size:0.95rem;"><span style="flex-shrink:0;font-weight:700;color:#0F172A;min-width:80px;">지원자격</span><span style="color:#475569;">학사학위 이상 소지, 입사 가능한 분</span></div><div style="display:flex;gap:16px;margin-bottom:10px;font-size:0.95rem;"><span style="flex-shrink:0;font-weight:700;color:#0F172A;min-width:80px;">지원방법</span><span style="color:#475569;">woowahan.com에서 온라인 입사지원서 제출</span></div>
+  </div>
+  <div style="margin-top:40px;text-align:center;"><a href="#cta" style="display:inline-block;padding:16px 48px;background:#0F172A;color:#FFFFFF;border-radius:999px;font-weight:700;font-size:1.1rem;text-decoration:none;">지금 지원하기</a></div>
+</section>
+
+<div class="label">6. 제품 상세 미니멀 (MADI 스타일)</div>
+<section style="padding:100px 24px 80px;background:#FFFFFF;color:#0F172A;text-align:center;">
+  <div style="max-width:720px;margin:0 auto;">
+    <p style="font-size:0.95rem;color:#94A3B8;margin-bottom:8px;letter-spacing:0.03em;">하늘 아래, 같은 파라핀베이스는 없다.</p>
+    <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:32px;letter-spacing:0.05em;color:#0F172A;">ONLY MADI</h2>
+    <div style="width:1px;height:48px;background:#E2E8F0;margin:0 auto 32px;"></div>
+    <p style="font-size:0.9rem;color:#94A3B8;margin-bottom:8px;">내열 소재는 기본, 안전을 한 번 더 레벨 업</p>
+    <h3 style="font-size:clamp(1.5rem,4vw,2.5rem);font-weight:800;line-height:1.3;margin-bottom:16px;color:#0F172A;">스테인리스에
+전면 테프론 코팅을</h3>
+    <p style="font-size:0.95rem;color:#475569;max-width:480px;margin:0 auto 48px;line-height:1.7;">열전도성이 뛰어난 스테인리스에 테프론 코팅을 적용해 접촉 시에도 안전합니다.</p>
+    <div style="display:flex;justify-content:center;">
+      <div style="position:relative;display:inline-block;">
+        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80" alt="스테인리스에
+전면 테프론 코팅을" style="max-width:480px;width:100%;object-fit:contain;filter:drop-shadow(0 12px 32px rgba(0,0,0,0.08));" loading="lazy">
+        <span style="position:absolute;top:20%;right:-10px;display:inline-block;padding:8px 20px;background:#2563EB;color:#fff;border-radius:999px;font-size:0.85rem;font-weight:600;box-shadow:0 4px 12px #2563EB40;">스테인리스 + 테프론 코팅</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="label">7. 프리미엄 제품 히어로 (쿠첸 brain 스타일)</div>
+<section style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 0;background:#2C2420;color:#fff;overflow:hidden;">
+  <div style="width:100%;max-width:1100px;display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;">
+    <span style="display:inline-block;padding:6px 16px;border:1px solid rgba(255,255,255,0.4);border-radius:4px;font-size:0.8rem;font-weight:600;color:rgba(255,255,255,0.9);letter-spacing:0.05em;">2024 NEW</span>
+    <span style="font-size:1.1rem;font-weight:700;letter-spacing:0.08em;opacity:0.9;">CUCHEN*</span>
+  </div>
+  <div style="text-align:center;max-width:700px;margin-bottom:40px;">
+    <p style="font-size:1.05rem;opacity:0.7;margin-bottom:16px;">연아가 선택한 똑똑한 밥솥</p>
+    <h1 style="font-size:clamp(3rem,8vw,6rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:16px;">brain</h1>
+    <p style="font-size:1rem;opacity:0.6;margin-bottom:8px;letter-spacing:0.02em;">For best taste of all grains</p>
+    <div style="width:40px;height:2px;background:rgba(255,255,255,0.3);margin:24px auto;"></div>
+    <p style="font-size:0.95rem;opacity:0.7;line-height:1.7;">최적의 취사 알고리즘으로 · 최적의 밥맛에 도전하다</p>
+  </div>
+  <div style="width:100%;max-width:600px;display:flex;justify-content:center;margin-top:auto;">
+    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="brain" style="width:100%;max-width:600px;object-fit:contain;filter:drop-shadow(0 16px 48px rgba(0,0,0,0.3));" loading="lazy">
+  </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,259 @@
+export const html = `
+<section class="frb-wrapper">
+    <!-- 배경 이미지 (or 단색 배경) -->
+    <div class="frb-bg" style="background-image: url('{{imageUrl}}');"></div>
+    
+    <div class="frb-container">
+        
+        <!-- 헤더 텍스트 -->
+        <div class="frb-header hc-animate-fade-in-up">
+            {{#if microCopy}}
+            <p class="frb-micro">{{{microCopy}}}</p>
+            {{/if microCopy}}
+            
+            <h2 class="frb-headline">{{{headline}}}</h2>
+            
+            {{#if subheadline}}
+            <p class="frb-subheadline">{{{subheadline}}}</p>
+            {{/if subheadline}}
+        </div>
+
+        <!-- 둥둥 떠다니는 말풍선 리뷰 영역 -->
+        <div class="frb-bubbles-area">
+            
+            <!-- 말풍선 1 (Top Left) -->
+            {{#if bullet.0}}
+            <div class="frb-bubble frb-pos-1 hc-animate-fade-in-up" style="animation-delay: 200ms;">
+                <div class="frb-stars">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <p class="frb-text">{{{bullet.0}}}</p>
+                <div class="frb-tail frb-tail-bottom"></div>
+            </div>
+            {{/if bullet.0}}
+
+            <!-- 말풍선 2 (Center Right) -->
+            {{#if bullet.1}}
+            <div class="frb-bubble frb-pos-2 hc-animate-fade-in-up" style="animation-delay: 400ms;">
+                <div class="frb-stars">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <p class="frb-text">{{{bullet.1}}}</p>
+                <div class="frb-tail frb-tail-left"></div>
+            </div>
+            {{/if bullet.1}}
+
+            <!-- 말풍선 3 (Bottom Center) -->
+            {{#if bullet.2}}
+            <div class="frb-bubble frb-pos-3 hc-animate-fade-in-up" style="animation-delay: 600ms;">
+                <div class="frb-stars">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <p class="frb-text">{{{bullet.2}}}</p>
+                <div class="frb-tail frb-tail-top"></div>
+            </div>
+            {{/if bullet.2}}
+            
+        </div>
+    </div>
+</section>
+`;
+
+export const css = `
+.frb-wrapper {
+    position: relative;
+    width: 100%;
+    /* 배경색은 레퍼런스와 비슷한 밝은 민트톤/스카이블루 (이미지 배경이 없더라도 예쁘게) */
+    background-color: #aaeee7; 
+    font-family: "Pretendard", -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 6rem 0;
+    overflow: hidden;
+    min-height: 800px;
+}
+
+/* 배경 이미지를 설정할 경우 전체를 덮도록 중앙 고정 */
+.frb-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    /* 만약 이미지 원본을 그대로 1:1로 중앙에 박고싶다면, 크기를 조절. */
+}
+
+.frb-container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    padding: 0 5%;
+}
+
+.frb-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    z-index: 10;
+}
+
+.frb-micro {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #0c9c9b; /* 진한 민트 */
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.05em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.frb-headline {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #111;
+    margin: 0;
+    letter-spacing: -0.05em;
+}
+
+.frb-bubbles-area {
+    position: relative;
+    width: 100%;
+    height: 500px; /* 말풍선을 띄울 가상 공간 */
+    margin-top: 2rem;
+}
+
+/* 말풍선 공통 디자인 */
+.frb-bubble {
+    position: absolute;
+    background-color: #ffffff;
+    border: 3px solid #13b5a7; /* 굵은 초록/민트색 테두리 */
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 4px 4px 0 rgba(19, 181, 167, 0.2); /* 입체감 도트/솔리드 그림자 */
+    max-width: 300px;
+    z-index: 10;
+    /* 둥둥 떠다니는 애니메이션 */
+    animation: frb-float 4s ease-in-out infinite alternate;
+}
+
+@keyframes frb-float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+/* 약간씩 타이밍을 다르게 해서 자연스럽게 */
+.frb-bubble.frb-pos-2 { animation-delay: -1.5s; }
+.frb-bubble.frb-pos-3 { animation-delay: -3s; }
+
+.frb-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.frb-stars svg {
+    width: 20px;
+    height: 20px;
+    fill: #13b5a7; /* 5스타 색상 동일화 */
+}
+
+.frb-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.4;
+    margin: 0;
+    word-break: keep-all;
+}
+
+/* 말풍선 꼬리 (디테일) */
+.frb-tail {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border-right: 3px solid #13b5a7;
+    border-bottom: 3px solid #13b5a7;
+}
+
+/* 위치별 말풍선 스타일 및 꼬리 */
+.frb-pos-1 {
+    top: 5%;
+    left: 0;
+}
+.frb-pos-1 .frb-tail-bottom {
+    bottom: -12px;
+    right: 30%;
+    transform: rotate(45deg);
+}
+
+.frb-pos-2 {
+    top: 40%;
+    right: 0;
+}
+.frb-pos-2 .frb-tail-left {
+    top: 40%;
+    left: -12px;
+    transform: rotate(135deg);
+}
+
+.frb-pos-3 {
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* 애니메이션이 덮어쓰므로 float와 충돌나지 않게 감싸는 방식이 좋지만 하드코딩 대체 */
+    animation: frb-float-center 4s ease-in-out infinite alternate !important;
+}
+@keyframes frb-float-center {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-10px); }
+}
+.frb-pos-3 .frb-tail-top {
+    top: -12px;
+    left: 50%;
+    margin-left: -10px;
+    transform: rotate(-135deg);
+}
+
+/* 애니메이션 */
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    /* transform: translateY(30px) 는 float와 겹치므로 주의 */
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .frb-wrapper { padding: 4rem 0; min-height: 600px; }
+    .frb-micro { font-size: 2.2rem; }
+    .frb-headline { font-size: 1.6rem; }
+    
+    .frb-bubbles-area { height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; margin-top: 3rem;}
+    
+    /* 모바일에서는 자유배치 버리고 위아래로 그냥 정렬해주는게 이쁨 */
+    .frb-bubble { position: relative !important; top: auto !important; left: auto !important; right: auto !important; transform: none !important; width: 100%; max-width: 90%; animation: none !important;}
+    .frb-tail { display: none; } /* 모바일에서는 꼬리 생략 */
+}
+`;

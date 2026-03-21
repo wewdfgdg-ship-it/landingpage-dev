@@ -55,3 +55,12 @@ export const analyticsQueue = new Queue('analytics-aggregate', {
     removeOnFail: 10,
   },
 });
+
+export const crawlQueue = new Queue('crawl', {
+  connection,
+  defaultJobOptions: {
+    removeOnComplete: 200,
+    removeOnFail: 50,
+    attempts: 2,
+  },
+});

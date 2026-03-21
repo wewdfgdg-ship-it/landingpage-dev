@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>비비고 왕교자</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquareNeo@1.0/nanumsquareneo.css" />
+<style>
+@font-face {
+  font-family: 'SBAggroB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+  font-weight: 1 999;
+  font-display: swap;
+}
+</style>
+  <style>
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      word-break: keep-all;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at 50% 80%, rgba(220,38,38,0.15) 0%, transparent 60%), linear-gradient(180deg, #1a0e08 0%, #120a06 50%, #0d0703 100%);
+      color: #ffffff;
+    }
+    .hero .headline {
+      font-family: 'SBAggroB', sans-serif;
+    }
+    .hero .eyebrow,
+    .hero .desc,
+    .hero .micro,
+    .hero .stat-label,
+    .hero .trust-badge {
+      font-family: 'NanumSquareNeo', sans-serif;
+    }
+    .hero .stat-number,
+    .hero .sale-price,
+    .hero .discount-badge,
+    .hero .big-badge,
+    .hero .big-stat {
+      font-family: 'SBAggroB', sans-serif;
+    }
+    .hero .cta-btn {
+      font-family: 'NanumSquareNeo', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero mood-red">
+    <div class="noise-overlay" style="
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+  "><svg width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg></div>
+    <div class="bg-ghost" style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(200px, 35vw, 500px);
+    font-weight: 900;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    line-height: 1;
+    user-select: none;
+  ">비</div>
+    <div class="hero-inner" style="
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+    ">
+      
+      <div style="text-align: center;">
+        <div style="
+          animation: fadeInUp 0.7s ease 0.1s both;
+          margin-bottom: clamp(16px, 2vw, 24px);
+        "><span class="discount-badge" style="
+          display: inline-block;
+          background: #DC2626;
+          color: #fff;
+          font-size: clamp(14px, 1.4vw, 20px);
+          font-weight: 900;
+          padding: 8px 24px;
+          border-radius: 999px;
+        ">25%</span></div>
+        <h1 class="headline" style="
+    font-size: clamp(42px, 7.2vw, 100px);
+    font-weight: 900;
+    letter-spacing: -4px;
+    line-height: 1.08;
+    word-break: keep-all;
+    color: #ffffff;
+    margin: 0 0 clamp(16px, 2vw, 32px) 0;
+    animation: fadeInUp 0.7s ease 0.2s both;
+  ">테스트 헤드라인 두 번째 <span class="accent" style="color:#DC3C1E;text-shadow:0 0 30px #DC3C1E40;">줄</span></h1>
+        <div style="display: flex; justify-content: center;">
+          <p class="desc" style="
+    font-size: clamp(14px, 1.6vw, 22px);
+    font-weight: 300;
+    line-height: 1.75;
+    max-width: 640px;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 clamp(24px, 3vw, 40px) 0;
+    animation: fadeInUp 0.7s ease 0.4s both;
+  ">설명 텍스트 · 4.8점</p>
+        </div>
+        <div style="
+          width: 55%;
+          max-width: 340px;
+          margin: 0 auto;
+          animation: fadeInUp 0.8s ease 0.5s both;
+        "><img src="product.png" alt="product" style="
+          width: 100%;
+          height: auto;
+          display: block;
+          filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)) drop-shadow(0 0 60px rgba(200,100,40,0.2));
+        " /></div>
+        <div class="price-block" style="
+    text-align: center;
+    animation: fadeInUp 0.7s ease 0.5s both;
+  ">
+    <span class="discount-badge" style="
+      display: inline-block;
+      background: #DC2626;
+      color: #fff;
+      font-size: clamp(14px, 1.4vw, 20px);
+      font-weight: 900;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    ">25%</span>
+    <span class="original-price" style="
+      display: block;
+      font-size: clamp(14px, 1.4vw, 20px);
+      font-weight: 300;
+      text-decoration: line-through;
+      opacity: 0.5;
+      margin-bottom: 4px;
+    ">12,900원</span>
+    <span class="sale-price" style="
+      display: block;
+      font-size: clamp(48px, 8.5vw, 120px);
+      font-weight: 900;
+      color: #DC2626;
+      line-height: 1.1;
+    ">서브헤드라인 텍스트</span>
+  </div>
+        <div style="margin: clamp(16px, 2vw, 24px) 0;">
+          
+        </div>
+        <div style="max-width: 480px; margin: clamp(16px, 2vw, 24px) auto 0;">
+          <button class="cta-btn" style="
+            width: 100%;
+            padding: 22px 0;
+            min-height: 64px;
+            font-size: clamp(16px, 1.7vw, 24px);
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(135deg, #DC3C1E, #FF4D2A);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 30px linear-gradient(135deg, #DC3C1E, #FF4D2A)59;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            animation: fadeInUp 0.7s ease 1.0s both;
+          " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">구매하기</button>
+          <p class="micro" style="
+    font-size: clamp(11px, 0.9vw, 13px);
+    font-weight: 300;
+    opacity: 0.6;
+    color: rgba(255,255,255,0.5);
+    margin: 8px 0 0 0;
+    text-align: center;
+  ">무료배송 · 안심 환불</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

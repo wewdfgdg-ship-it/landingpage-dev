@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vie:serva 상세페이지</title>
+    <style>
+/* 기본 스타일 초기화 및 배경 설정 */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at center 60%, #e0d0b0 0%, #3a2e25 70%);
+    color: #e6dcc8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.intro-text-1, .intro-text-2 {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.main-title {
+    color: #c0b090;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.main-title .highlight {
+    color: #ffffff;
+}
+
+.naver-badge {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    padding: 10px;
+    margin: 40px 0;
+}
+
+.naver-logo {
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 4px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.naver-badge span {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.achievements {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.achievement-item {
+    position: relative;
+}
+
+.achievement-item::before,
+.achievement-item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.achievement-item::before { left: -40px; }
+.achievement-item::after { right: -40px; }
+
+.sub-text {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.main-text {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.main-text.extra-large {
+    font-size: 36px;
+}
+
+.product-showcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.device {
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    bottom: -10px;
+    z-index: 1;
+}
+
+.device-head {
+    width: 50px;
+    height: 30px;
+    background-color: #c0b090;
+    border-radius: 25px 25px 0 0;
+    border-bottom: 4px solid #aa9070;
+}
+
+.device-body {
+    width: 50px;
+    background-color: #ffffff;
+    padding: 10px 0;
+    border-radius: 0 0 25px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #000000;
+}
+
+.display {
+    width: 35px;
+    height: 35px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 8px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.button {
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    border: 1px solid #cccccc;
+    border-radius: 50%;
+    font-size: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand {
+    font-size: 6px;
+    color: #888888;
+}
+
+.pedestal {
+    width: 100px;
+    height: 60px;
+    background-color: #dcdcdc;
+    box-shadow: inset 0 10px 10px rgba(0,0,0,0.1);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <p class="intro-text-1">매일 아침 달라진 피부가<br>차이를 만들고, 확신을 더하니까</p>
+            <h1 class="main-title">모두가 <span class="highlight">vie:serva</span>를<br>선택하는 이유입니다</h1>
+            <p class="intro-text-2">'1위'라는 숫자를 만들어주신 고객님께 감사의 마음을 담아<br>압도적인 판매량을 당당히 증명합니다.</p>
+        </header>
+
+        <div class="naver-badge">
+            <div class="naver-logo">N</div>
+            <span>네이버쇼핑</span>
+        </div>
+
+        <section class="achievements">
+            <div class="achievement-item">
+                <p class="sub-text">'고주파마사지기'</p>
+                <h2 class="main-text">꾸준한 판매량 1위</h2>
+            </div>
+            <div class="achievement-item">
+                <p class="sub-text">8,000개 후기</p>
+                <h2 class="main-text">독보적인 리뷰수 1위</h2>
+            </div>
+            <div class="achievement-item">
+                <p class="sub-text">사용자 총 평점</p>
+                <h2 class="main-text extra-large">4.7/5</h2>
+            </div>
+        </section>
+
+        <section class="product-showcase">
+            <div class="device">
+                <div class="device-head"></div>
+                <div class="device-body">
+                    <div class="display">18 Min<br>RF</div>
+                    <div class="buttons">
+                        <div class="button">POWER</div>
+                        <div class="button">LEVEL</div>
+                    </div>
+                    <div class="brand">BELLO CURE</div>
+                </div>
+            </div>
+            <div class="pedestal"></div>
+        </section>
+    </div>
+</body>
+</html>

@@ -38,6 +38,19 @@ export async function GET(req: Request): Promise<NextResponse> {
     return NextResponse.json(await getPayments({ status, skip, limit }));
   }
 
+  if (tab === 'revenue-trend') {
+    return NextResponse.json(await getRevenueTrend());
+  }
+
+  if (tab === 'system') {
+    return NextResponse.json(await getSystemStats());
+  }
+
+  if (tab === 'users') {
+    const search = url.searchParams.get('search') ?? '';
+    return NextResponse.json(await getUsers({ search, skip, limit }));
+  }
+
   return NextResponse.json({ error: '잘못된 탭' }, { status: 400 });
 }
 
@@ -159,6 +172,173 @@ async function getSubscriptions({ status, plan, skip, limit }: ListParams) {
       cancelAtPeriodEnd: s.cancelAtPeriodEnd,
       cancelReason: s.cancelReason,
       createdAt: s.createdAt,
+    })),
+    total,
+    page: Math.floor(skip / limit) + 1,
+    totalPages: Math.ceil(total / limit),
+  };
+}
+
+// ============================================================
+// 결제 내역
+// ============================================================
+
+// ============================================================
+// 매출 트렌드 (최근 12개월)
+// ============================================================
+
+async function getRevenueTrend(): Promise<{
+  monthly: { month: string; revenue: number; count: number }[];
+}> {
+  const months: { month: string; revenue: number; count: number }[] = [];
+  const now = new Date();
+
+  for (let i = 11; i >= 0; i--) {
+    const start = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const end = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
+
+    const result = await db.payment.aggregate({
+      where: {
+        status: 'COMPLETED',
+        createdAt: { gte: start, lt: end },
+      },
+      _sum: { amount: true },
+      _count: { id: true },
+    });
+
+    months.push({
+      month: `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}`,
+      revenue: result._sum.amount ?? 0,
+      count: result._count.id ?? 0,
+    });
+  }
+
+  return { monthly: months };
+}
+
+// ============================================================
+// 시스템 현황
+// ============================================================
+
+async function getSystemStats(): Promise<{
+  totalUsers: number;
+  totalOrgs: number;
+  totalProjects: number;
+  deployedProjects: number;
+  totalGenerations: number;
+  totalABTests: number;
+  concludedABTests: number;
+  avgConversionRate: number;
+  recentDiagnoses: number;
+  subscriptionBreakdown: { status: string; count: number }[];
+}> {
+  const [
+    totalUsers,
+    totalOrgs,
+    totalProjects,
+    deployedProjects,
+    totalGenerations,
+    totalABTests,
+    concludedABTests,
+    avgConversion,
+    recentDiagnoses,
+    subscriptionBreakdown,
+  ] = await Promise.all([
+    db.user.count(),
+    db.organization.count(),
+    db.project.count({ where: { deletedAt: null } }),
+    db.project.count({ where: { isDeployed: true, deletedAt: null } }),
+    db.project.count({ where: { status: { in: ['GENERATED', 'DEPLOYED'] }, deletedAt: null } }),
+    db.aBTest.count(),
+    db.aBTest.count({ where: { status: 'CONCLUDED' } }),
+    db.dailyAnalytics.aggregate({
+      _avg: { conversionRate: true },
+      where: { totalVisits: { gte: 10 } },
+    }),
+    db.diagnosisLog.count({
+      where: { createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } },
+    }),
+    db.subscription.groupBy({
+      by: ['status'],
+      _count: { id: true },
+    }),
+  ]);
+
+  return {
+    totalUsers,
+    totalOrgs,
+    totalProjects,
+    deployedProjects,
+    totalGenerations,
+    totalABTests,
+    concludedABTests,
+    avgConversionRate: avgConversion._avg.conversionRate ?? 0,
+    recentDiagnoses,
+    subscriptionBreakdown: subscriptionBreakdown.map((s) => ({
+      status: s.status,
+      count: s._count.id,
+    })),
+  };
+}
+
+// ============================================================
+// 사용자 관리
+// ============================================================
+
+async function getUsers({ search, skip, limit }: { search: string; skip: number; limit: number }): Promise<{
+  items: {
+    id: string;
+    email: string | null;
+    name: string | null;
+    isAdmin: boolean;
+    createdAt: Date;
+    orgName: string | null;
+    plan: string | null;
+  }[];
+  total: number;
+  page: number;
+  totalPages: number;
+}> {
+  const where: Record<string, unknown> = {};
+  if (search) {
+    where.OR = [
+      { email: { contains: search, mode: 'insensitive' } },
+      { name: { contains: search, mode: 'insensitive' } },
+    ];
+  }
+
+  const [items, total] = await Promise.all([
+    db.user.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        isAdmin: true,
+        createdAt: true,
+        memberships: {
+          take: 1,
+          select: {
+            org: { select: { name: true, plan: true } },
+          },
+        },
+      },
+    }),
+    db.user.count({ where }),
+  ]);
+
+  return {
+    items: items.map((u) => ({
+      id: u.id,
+      email: u.email,
+      name: u.name,
+      isAdmin: u.isAdmin,
+      createdAt: u.createdAt,
+      orgName: u.memberships[0]?.org.name ?? null,
+      plan: u.memberships[0]?.org.plan ?? null,
     })),
     total,
     page: Math.floor(skip / limit) + 1,

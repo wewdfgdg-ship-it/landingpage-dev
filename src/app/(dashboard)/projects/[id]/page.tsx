@@ -7,6 +7,8 @@ import { Loading } from '@/components/ui/loading';
 import { ErrorState } from '@/components/ui/error-state';
 import { AnalyticsDashboard } from '@/components/analytics/analytics-dashboard';
 import { ExportPanel } from '@/components/export/export-panel';
+import { SectionSelector } from '@/components/manual-mode/SectionSelector';
+import type { SectionKey } from '@/engine/sections/types';
 
 interface Project {
   id: string;
@@ -22,6 +24,7 @@ interface Project {
 }
 
 type TabId = 'overview' | 'preview' | 'engines' | 'analytics' | 'export';
+type GenerateMode = 'auto' | 'manual' | null;
 
 interface ProgressStep {
   id: string;
@@ -59,10 +62,15 @@ export default function ProjectDetailPage(): React.ReactElement {
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'mobile'>('desktop');
   const [progressSteps, setProgressSteps] = useState<ProgressStep[]>([]);
   const [progressPercent, setProgressPercent] = useState(0);
+  const [generateMode, setGenerateMode] = useState<GenerateMode>(null);
 
   const fetchProject = useCallback(async (): Promise<void> => {
     try {
       const res = await fetch(`/api/projects/${id}`);
+      if (res.status === 401) {
+        router.push('/login');
+        return;
+      }
       if (!res.ok) throw new Error('프로젝트 로딩 실패');
       const data = (await res.json()) as { project: Project };
       setProject(data.project);
@@ -71,10 +79,69 @@ export default function ProjectDetailPage(): React.ReactElement {
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, router]);
 
   useEffect(() => {
     void fetchProject();
+  }, [fetchProject]);
+
+  const readSSEStream = useCallback(async (response: Response): Promise<void> => {
+    const reader = response.body?.getReader();
+    if (!reader) throw new Error('스트림을 열 수 없습니다');
+
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() ?? '';
+
+      let eventType = '';
+      for (const line of lines) {
+        if (line.startsWith('event: ')) {
+          eventType = line.slice(7).trim();
+        } else if (line.startsWith('data: ') && eventType) {
+          try {
+            const data = JSON.parse(line.slice(6)) as Record<string, unknown>;
+
+            if (eventType === 'progress') {
+              const stepId = data.step as string;
+              const status = data.status as 'start' | 'done';
+              const label = data.label as string;
+              const emoji = data.emoji as string;
+              const percent = data.percent as number;
+
+              setProgressPercent(percent);
+              setProgressSteps((prev) => {
+                const existing = prev.find((s) => s.id === stepId);
+                if (existing) {
+                  return prev.map((s) =>
+                    s.id === stepId
+                      ? { ...s, status: status === 'done' ? 'done' : 'running' }
+                      : s,
+                  );
+                }
+                return [...prev, { id: stepId, label, emoji, status: status === 'done' ? 'done' : 'running' }];
+              });
+            } else if (eventType === 'complete') {
+              await fetchProject();
+              setActiveTab('preview');
+            } else if (eventType === 'error') {
+              throw new Error(data.message as string);
+            }
+          } catch (parseErr) {
+            if (parseErr instanceof Error && parseErr.message !== 'Unexpected end of JSON input') {
+              throw parseErr;
+            }
+          }
+          eventType = '';
+        }
+      }
+    }
   }, [fetchProject]);
 
   const handleGenerate = async (): Promise<void> => {
@@ -85,68 +152,37 @@ export default function ProjectDetailPage(): React.ReactElement {
 
     try {
       const res = await fetch(`/api/projects/${id}/generate-stream`, { method: 'POST' });
-
       if (!res.ok) {
         const data = (await res.json()) as { error: string };
         throw new Error(data.error);
       }
+      await readSSEStream(res);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '생성 실패');
+    } finally {
+      setGenerating(false);
+    }
+  };
 
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error('스트림을 열 수 없습니다');
+  const handleManualGenerate = async (
+    sections: { sectionKey: SectionKey; order: number }[],
+  ): Promise<void> => {
+    setGenerating(true);
+    setError('');
+    setProgressSteps([]);
+    setProgressPercent(0);
 
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() ?? '';
-
-        let eventType = '';
-        for (const line of lines) {
-          if (line.startsWith('event: ')) {
-            eventType = line.slice(7).trim();
-          } else if (line.startsWith('data: ') && eventType) {
-            try {
-              const data = JSON.parse(line.slice(6)) as Record<string, unknown>;
-
-              if (eventType === 'progress') {
-                const stepId = data.step as string;
-                const status = data.status as 'start' | 'done';
-                const label = data.label as string;
-                const emoji = data.emoji as string;
-                const percent = data.percent as number;
-
-                setProgressPercent(percent);
-                setProgressSteps((prev) => {
-                  const existing = prev.find((s) => s.id === stepId);
-                  if (existing) {
-                    return prev.map((s) =>
-                      s.id === stepId
-                        ? { ...s, status: status === 'done' ? 'done' : 'running' }
-                        : s,
-                    );
-                  }
-                  return [...prev, { id: stepId, label, emoji, status: status === 'done' ? 'done' : 'running' }];
-                });
-              } else if (eventType === 'complete') {
-                await fetchProject();
-                setActiveTab('preview');
-              } else if (eventType === 'error') {
-                throw new Error(data.message as string);
-              }
-            } catch (parseErr) {
-              if (parseErr instanceof Error && parseErr.message !== 'Unexpected end of JSON input') {
-                throw parseErr;
-              }
-            }
-            eventType = '';
-          }
-        }
+    try {
+      const res = await fetch(`/api/projects/${id}/generate-manual`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sections }),
+      });
+      if (!res.ok) {
+        const data = (await res.json()) as { error: string };
+        throw new Error(data.error);
       }
+      await readSSEStream(res);
     } catch (err) {
       setError(err instanceof Error ? err.message : '생성 실패');
     } finally {
@@ -178,11 +214,15 @@ export default function ProjectDetailPage(): React.ReactElement {
     );
   }
 
-  if (error || !project) {
+  if (!project) {
     return (
       <ErrorState
         message={error || '프로젝트를 찾을 수 없습니다'}
-        onRetry={fetchProject}
+        onRetry={() => {
+          setError('');
+          setLoading(true);
+          void fetchProject();
+        }}
       />
     );
   }
@@ -192,6 +232,31 @@ export default function ProjectDetailPage(): React.ReactElement {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
+      {/* 에러 배너 */}
+      {error && (
+        <div className="flex items-center justify-between rounded-lg border border-red-200 bg-red-50 px-4 py-3">
+          <p className="text-sm text-red-700">{error}</p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setError('')}
+              className="text-sm font-medium text-red-600 hover:text-red-800"
+            >
+              닫기
+            </button>
+            <button
+              onClick={async () => {
+                setError('');
+                await fetchProject();
+                void handleGenerate();
+              }}
+              className="rounded bg-red-600 px-3 py-1 text-sm font-medium text-white hover:bg-red-700"
+            >
+              다시 시도
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 헤더 */}
       <div className="flex items-start justify-between">
         <div>
@@ -213,11 +278,6 @@ export default function ProjectDetailPage(): React.ReactElement {
           <Button variant="outline" onClick={() => router.push('/projects')}>
             목록
           </Button>
-          {(project.status === 'DRAFT' || project.status === 'GENERATED') && (
-            <Button onClick={handleGenerate} disabled={generating}>
-              {generating ? '분석 중...' : project.status === 'GENERATED' ? '재분석' : 'AI 분석 시작'}
-            </Button>
-          )}
           {hasGenerated && (
             <Button variant="outline" onClick={() => router.push(`/projects/${id}/editor`)}>
               에디터
@@ -311,17 +371,72 @@ export default function ProjectDetailPage(): React.ReactElement {
             </div>
           )}
 
-          {project.status === 'DRAFT' && !project.productBrief && (
-            <div className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed border-gray-200 py-16">
-              <svg className="h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
-              </svg>
-              <div className="text-center">
-                <p className="font-medium text-gray-700">아직 분석이 시작되지 않았습니다</p>
-                <p className="mt-1 text-sm text-gray-400">
-                  &quot;AI 분석 시작&quot; 버튼을 눌러 제품 분석을 시작하세요
-                </p>
+          {(project.status === 'DRAFT' || project.status === 'GENERATED') && !generating && generateMode === null && (
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold text-gray-900">
+                {project.status === 'GENERATED' ? '페이지 재생성' : '랜딩페이지 생성 방식 선택'}
+              </h2>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* 자동 모드 카드 */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setGenerateMode('auto');
+                    void handleGenerate();
+                  }}
+                  className="group rounded-xl border-2 border-gray-200 bg-white p-6 text-left transition-all hover:border-blue-400 hover:shadow-md"
+                >
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-2xl group-hover:bg-blue-100">
+                    🤖
+                  </div>
+                  <h3 className="text-base font-bold text-gray-900">AI 자동 생성</h3>
+                  <p className="mt-1 text-sm text-gray-500">
+                    AI가 제품을 분석하고 최적의 섹션 구성, 카피, 디자인을 자동으로 결정합니다
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    <span className="rounded-full bg-blue-50 px-2 py-0.5 text-xs text-blue-600">전략 분석</span>
+                    <span className="rounded-full bg-blue-50 px-2 py-0.5 text-xs text-blue-600">섹션 자동 배치</span>
+                    <span className="rounded-full bg-blue-50 px-2 py-0.5 text-xs text-blue-600">10단계 파이프라인</span>
+                  </div>
+                </button>
+
+                {/* 수동 모드 카드 */}
+                <button
+                  type="button"
+                  onClick={() => setGenerateMode('manual')}
+                  className="group rounded-xl border-2 border-gray-200 bg-white p-6 text-left transition-all hover:border-purple-400 hover:shadow-md"
+                >
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-50 text-2xl group-hover:bg-purple-100">
+                    🎯
+                  </div>
+                  <h3 className="text-base font-bold text-gray-900">수동 섹션 선택</h3>
+                  <p className="mt-1 text-sm text-gray-500">
+                    26개 섹션 중 원하는 것만 골라 순서를 지정하세요. AI가 카피와 디자인을 생성합니다
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    <span className="rounded-full bg-purple-50 px-2 py-0.5 text-xs text-purple-600">섹션 직접 선택</span>
+                    <span className="rounded-full bg-purple-50 px-2 py-0.5 text-xs text-purple-600">순서 커스텀</span>
+                    <span className="rounded-full bg-purple-50 px-2 py-0.5 text-xs text-purple-600">7단계 파이프라인</span>
+                  </div>
+                </button>
               </div>
+            </div>
+          )}
+
+          {/* 수동 모드: 섹션 선택기 */}
+          {generateMode === 'manual' && !generating && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-900">섹션 선택</h2>
+                <Button variant="outline" size="sm" onClick={() => setGenerateMode(null)}>
+                  ← 모드 선택으로
+                </Button>
+              </div>
+              <SectionSelector
+                projectId={id}
+                onGenerate={handleManualGenerate}
+                isGenerating={generating}
+              />
             </div>
           )}
         </>

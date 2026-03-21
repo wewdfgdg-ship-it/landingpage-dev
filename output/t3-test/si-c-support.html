@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SI-C 고객지원 navy (25)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Pretendard', sans-serif; display: flex; justify-content: center; min-height: 100vh; background: #f0f0f0; }
+    .page { width: 100%; max-width: 960px; }
+    
+/* ═══ T3 Spec/Info — Base ═══ */
+.si {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 20px 32px;
+  --si-brand: #4A90D9;
+}
+
+.si__inner {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.si__header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.si__eyebrow {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--si-brand) 70%, #5f6980);
+}
+
+.si__headline {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.04em;
+  word-break: keep-all;
+}
+
+.si__sub {
+  max-width: 420px;
+  margin: 12px auto 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(15, 23, 42, 0.68);
+  word-break: keep-all;
+}
+
+/* ── Badge ── */
+.si__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--si-brand) 12%, white);
+  color: var(--si-brand);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ═══ SI-A: Spec Rows ═══ */
+.si__hero-wrap {
+  position: relative;
+  margin-bottom: 24px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.si__hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.si__annotations {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.si__annotation {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--si-brand);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  top: calc(20% + var(--si-ann-i) * 22%);
+  left: calc(8% + var(--si-ann-i) * 15%);
+}
+
+.si__metric {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.si__metric-num {
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: -3px;
+  color: var(--si-brand);
+  line-height: 1;
+}
+
+.si__metric-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(15, 23, 42, 0.5);
+  margin-top: 6px;
+}
+
+.si__rows {
+  display: grid;
+  gap: 0;
+}
+
+.si__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  transition: background 0.15s ease;
+}
+
+.si__row:hover {
+  background: rgba(15, 23, 42, 0.02);
+}
+
+.si__row-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(15, 23, 42, 0.55);
+  white-space: nowrap;
+}
+
+.si__row-icon {
+  font-size: 16px;
+}
+
+.si__row-value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.si__row-desc {
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(15, 23, 42, 0.45);
+  margin-top: 2px;
+}
+
+.si__row-note {
+  display: block;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(15, 23, 42, 0.35);
+}
+
+/* ═══ SI-B: Steps ═══ */
+.si__steps {
+  display: grid;
+  gap: 0;
+}
+
+.si__step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.si__step:first-child {
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.si__step-num {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--si-brand);
+}
+
+.si__step-icon {
+  font-size: 24px;
+}
+
+.si__step-body {
+  min-width: 0;
+}
+
+.si__step-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.si__step-desc {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.68;
+  color: rgba(15, 23, 42, 0.65);
+}
+
+.si__step-media {
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.si__step-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.si__step-note {
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(15, 23, 42, 0.4);
+}
+
+/* ═══ SI-C: Info Cards ═══ */
+.si__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.si__card {
+  padding: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.05);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.si__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.09);
+}
+
+.si__card-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.si__card-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.si__card-value {
+  margin-top: 6px;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--si-brand);
+  letter-spacing: -1px;
+}
+
+.si__card-desc {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+/* ── CTA ── */
+.si__cta {
+  margin-top: 24px;
+}
+
+.si__cta-btn {
+  display: block;
+  width: 100%;
+  padding: 18px 20px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--si-brand);
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--si-brand) 26%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.si__cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--si-brand) 40%, transparent);
+}
+
+.si__footnote {
+  margin-top: 16px;
+  font-size: 11px;
+  color: rgba(15, 23, 42, 0.35);
+  text-align: center;
+}
+
+/* ═══ Moods ═══ */
+.si.mood--clean {
+  background: #ffffff;
+  color: #111827;
+}
+
+.si.mood--soft {
+  background:
+    radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--si-brand) 12%, white), transparent 40%),
+    linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+  color: #111827;
+}
+
+.si.mood--dark {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--si-brand) 14%, transparent), transparent 42%),
+    linear-gradient(180deg, #17120d 0%, #0f0b07 100%);
+  color: #ffffff;
+}
+
+.si.mood--navy {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--si-brand) 14%, transparent), transparent 40%),
+    #0c1024;
+  color: #ffffff;
+}
+
+/* dark/navy overrides */
+.si.mood--dark .si__sub,
+.si.mood--dark .si__card-desc,
+.si.mood--dark .si__step-desc,
+.si.mood--dark .si__row-value,
+.si.mood--navy .si__sub,
+.si.mood--navy .si__card-desc,
+.si.mood--navy .si__step-desc,
+.si.mood--navy .si__row-value {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.si.mood--dark .si__row-label,
+.si.mood--navy .si__row-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.si.mood--dark .si__row,
+.si.mood--navy .si__row {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.si.mood--dark .si__row:hover,
+.si.mood--navy .si__row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.si.mood--dark .si__step,
+.si.mood--navy .si__step {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.si.mood--dark .si__card,
+.si.mood--navy .si__card {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(14px);
+}
+
+.si.mood--dark .si__card:hover,
+.si.mood--navy .si__card:hover {
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
+.si.mood--dark .si__headline,
+.si.mood--navy .si__headline,
+.si.mood--dark .si__eyebrow,
+.si.mood--navy .si__eyebrow,
+.si.mood--dark .si__step-title,
+.si.mood--navy .si__step-title,
+.si.mood--dark .si__card-title,
+.si.mood--navy .si__card-title {
+  color: #ffffff;
+}
+
+.si.mood--dark .si__annotation,
+.si.mood--navy .si__annotation {
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+}
+
+.si.mood--dark .si__badge,
+.si.mood--navy .si__badge {
+  background: color-mix(in srgb, var(--si-brand) 18%, rgba(255,255,255,0.08));
+}
+
+.si.mood--dark .si__step-media,
+.si.mood--navy .si__step-media {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.si.mood--dark .si__metric-label,
+.si.mood--navy .si__metric-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.si.mood--dark .si__footnote,
+.si.mood--navy .si__footnote {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.si.mood--dark .si__row-desc,
+.si.mood--navy .si__row-desc {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.si.mood--dark .si__row-note,
+.si.mood--navy .si__row-note,
+.si.mood--dark .si__step-note,
+.si.mood--navy .si__step-note {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 480px) {
+  .si { padding: 32px 20px 28px; }
+  .si__headline { font-size: 28px; }
+  .si__metric-num { font-size: 44px; }
+  .si__grid { grid-template-columns: 1fr 1fr; }
+  .si__step { grid-template-columns: 40px 1fr; gap: 12px; }
+  .si__step-num { font-size: 22px; }
+}
+
+@media (min-width: 768px) {
+  .si { padding: 56px 28px 44px; }
+  .si__inner { max-width: 960px; }
+  .si__headline { font-size: 42px; }
+  .si__metric-num { font-size: 64px; }
+  .si--b .si__step { grid-template-columns: 56px 1fr; gap: 20px; padding: 28px 0; }
+  .si--b .si__step-num { font-size: 32px; }
+  .si__cta { margin-top: 28px; }
+  .si__cta-btn { max-width: 320px; margin: 0 auto; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="page"><!-- LAYOUT: SI-C -->
+<section
+  class="si si--c mood--navy"
+  data-section="25-customer-service"
+  data-layout="SI-C"
+  style="--si-brand:#3B82F6;"
+>
+  <div class="si__inner">
+    
+      
+    <header class="si__header">
+      <p class="si__eyebrow">SUPPORT</p>
+      <h2 class="si__headline">고객 지원</h2>
+      
+    </header>
+  
+      
+      <div class="si__grid">
+        
+    <article class="si__card">
+      <div class="si__card-icon" aria-hidden="true">💬</div>
+      
+      <h3 class="si__card-title">1:1 채팅</h3>
+      <div class="si__card-value">24시간</div>
+      
+    </article>
+  
+    <article class="si__card">
+      <div class="si__card-icon" aria-hidden="true">📞</div>
+      
+      <h3 class="si__card-title">전화 상담</h3>
+      <div class="si__card-value">1588-0000</div>
+      <p class="si__card-desc">평일 09:00~18:00</p>
+    </article>
+  
+    <article class="si__card">
+      <div class="si__card-icon" aria-hidden="true">📧</div>
+      
+      <h3 class="si__card-title">이메일</h3>
+      <div class="si__card-value">support@brand.com</div>
+      
+    </article>
+  
+    <article class="si__card">
+      <div class="si__card-icon" aria-hidden="true">💛</div>
+      
+      <h3 class="si__card-title">카카오톡</h3>
+      <div class="si__card-value">@브랜드명</div>
+      
+    </article>
+  
+      </div>
+      
+      
+    <div class="si__cta">
+      <a class="si__cta-btn" href="#">1:1 문의하기</a>
+    </div>
+  
+    
+  </div>
+</section></div>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>레퍼런스(Zoom AI 다크모드) 1:1 완벽 클론 테스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Pretendard", sans-serif; overflow-x: hidden; background-color: #0b0c10; }
+
+/* 템플릿 CSS */
+
+.dg-wrapper {
+    position: relative;
+    width: 100%;
+    background-color: #0b0c10; /* 극도로 어두운 네이비/블랙 배경 (Zoom 참조) */
+    font-family: "Pretendard", -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 6rem 0 8rem 0;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.dg-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    padding: 0 5%;
+}
+
+/* 상단 메인 히어로 박스 */
+.dg-hero-box {
+    width: 100%;
+    background: linear-gradient(180deg, rgba(20,22,30,1) 0%, rgba(10,12,18,1) 100%);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 5rem;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+/* 내부를 밝히는 네온 그라데이션 빛 */
+.dg-hero-gradient {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 150%;
+    background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+}
+
+.dg-hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.dg-hero-title {
+    font-size: 5.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin: 0 0 1rem 0;
+    /* 흰색에서 살짝 투명해지는 그라데이션 텍스트 */
+    background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dg-hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #a0aab2;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.dg-hero-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 5;
+    opacity: 0.8;
+}
+
+/* 3열 그리드 */
+.dg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    width: 100%;
+}
+
+.dg-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* 아이콘 박스와 빛 번짐(Glow) 효과 */
+.dg-icon-box {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 2rem;
+    border-radius: 16px;
+}
+
+.dg-icon-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+}
+
+.dg-icon-bg svg {
+    width: 32px;
+    height: 32px;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* 백그라운드 글로우 */
+.dg-icon-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%; height: 120%;
+    border-radius: 50%;
+    filter: blur(20px);
+    z-index: 1;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.dg-col:hover .dg-icon-glow {
+    opacity: 0.8;
+}
+
+.dg-glow-blue { background-color: #3b82f6; }
+.dg-glow-cyan { background-color: #06b6d4; }
+.dg-glow-purple { background-color: #8b5cf6; }
+
+.dg-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    line-height: 1.3;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+}
+
+.dg-desc {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin: 0;
+    word-break: keep-all;
+}
+
+/* 우측 상단이나 하단에 작게 들어가는 참고 문구 */
+.dg-footer-asterisk {
+    width: 100%;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: right;
+    margin-top: 3rem;
+    font-style: italic;
+}
+
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+    .dg-grid { grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+    .dg-hero-title { font-size: 4rem; }
+}
+
+@media (max-width: 600px) {
+    .dg-wrapper { padding: 4rem 0 5rem 0; }
+    .dg-hero-title { font-size: 2.8rem; }
+    .dg-hero-box { min-height: 250px; margin-bottom: 3rem; }
+    
+    .dg-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .dg-footer-asterisk { text-align: center; }
+}
+
+
+/* 와이드 랜딩페이지 래퍼 디자인 */
+.desktop-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #0b0c10;
+}
+</style>
+</head>
+<body>
+    <div style="text-align:center; padding: 20px 0; font-weight:bold; color:#777; background:#000;">레퍼런스(05-특징3-다크글로우 SaaS) 데스크탑 모드 클론 뷰어</div>
+    
+    <div class="desktop-wrapper">
+        
+<section class="dg-wrapper">
+    <div class="dg-container">
+        
+        <!-- 상단 대형 메인 비주얼 영역 (비디오 또는 대형 이미지) -->
+        <div class="dg-hero-box hc-animate-fade-in-up">
+            <div class="dg-hero-gradient"></div>
+            <!-- 큰 텍스트 또는 이미지/비디오 컨텐츠가 들어갈 수 있는 공간 -->
+            <div class="dg-hero-content">
+                
+                
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1611162618479-ee44e99f5cb8?auto=format&fit=crop&q=80&w=1200" alt="Main Feature" class="dg-hero-img" />
+            
+        </div>
+
+        <!-- 하단 3열 Dark Glow Features -->
+        <div class="dg-grid">
+            
+            <!-- Item 1 -->
+            
+            <div class="dg-col hc-animate-fade-in-up" style="animation-delay: 100ms;">
+                <div class="dg-icon-box">
+                    <div class="dg-icon-glow dg-glow-blue"></div>
+                    <div class="dg-icon-bg">
+                        <svg viewBox="0 0 24 24"><path d="M9 21h6v-1H9v1zm3-19C7.58 2 4 5.58 4 10c0 2.82 1.48 5.28 3.73 6.64l.27.16V19h8v-2.2l.27-.16C18.52 15.28 20 12.82 20 10c0-4.42-3.58-8-8-8zm0 14h-2v-1h2v1zm2 0h-2v-1h2v1zm1.16-2.5l-.16.1V15H9v-1.4l-.16-.1C6.9 12.38 6 11.24 6 10c0-3.31 2.69-6 6-6s6 2.69 6 6c0 1.24-.9 2.38-1.84 3.5z"/></svg>
+                    </div>
+                </div>
+                <h3 class="dg-title">아이디어를 생성하고 초안을 작성하세요</h3>
+                <p class="dg-desc">채팅 답변, 이메일, 화이트보드 세션에서 사용할 브레인스토밍 아이디어를 제안받아 보세요. (기존 데이터와 통합)</p>
+            </div>
+            
+
+            <!-- Item 2 -->
+            
+            <div class="dg-col hc-animate-fade-in-up" style="animation-delay: 200ms;">
+                <div class="dg-icon-box">
+                    <div class="dg-icon-glow dg-glow-cyan"></div>
+                    <div class="dg-icon-bg">
+                        <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                    </div>
+                </div>
+                <h3 class="dg-title">미팅 내용을 요약하세요</h3>
+                <p class="dg-desc">AI Companion이 미팅, 채팅 스레드를 요약하여 핵심 질문에 답을 제공해 중요한 내용을 놓치지 않게 합니다.</p>
+            </div>
+            
+
+            <!-- Item 3 -->
+            
+            <div class="dg-col hc-animate-fade-in-up" style="animation-delay: 300ms;">
+                <div class="dg-icon-box">
+                    <div class="dg-icon-glow dg-glow-purple"></div>
+                    <div class="dg-icon-bg">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l6.5 14h-13L12 6z"/></svg>
+                    </div>
+                </div>
+                <h3 class="dg-title">스킬을 다듬고 속도를 높이세요</h3>
+                <p class="dg-desc">AI 기반 피드백을 통해 협업 능력을 개선하고 더욱 원활하게 소통할 수 있도록 개인 코칭을 받으세요.</p>
+            </div>
+            
+
+        </div>
+
+        
+        <div class="dg-footer-asterisk hc-animate-fade-in-up" style="animation-delay: 400ms;">
+            * AI Companion은 Zoom 사용자 계정에 할당된 유료 서비스에 추가 비용 없이 포함될 수 있습니다.
+        </div>
+        
+        
+    </div>
+</section>
+
+    </div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getUserId } from '@/lib/get-user-id';
 import { db } from '@/lib/db';
 import { resolve } from 'dns/promises';
 import { addDomainToVercel, removeDomainFromVercel, checkDomainConfig } from '@/lib/vercel';
@@ -36,13 +36,13 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   const { id } = await params;
-  const project = await getProjectWithAuth(session.user.id, id);
+  const project = await getProjectWithAuth(userId, id);
 
   if (!project) {
     return NextResponse.json({ error: '프로젝트 없음' }, { status: 404 });
@@ -65,12 +65,25 @@ export async function GET(
     })),
   ]);
 
+  // 종합 상태: ready | dns_pending | ssl_pending | error
+  let status: 'ready' | 'dns_pending' | 'ssl_pending' | 'error' = 'error';
+  if (verification.verified && sslStatus.ssl === 'active') {
+    status = 'ready';
+  } else if (verification.verified && sslStatus.ssl !== 'active') {
+    status = 'ssl_pending';
+  } else {
+    status = 'dns_pending';
+  }
+
   return NextResponse.json({
     domain: project.customDomain,
+    status,
     verified: verification.verified,
     ssl: sslStatus.ssl,
     dnsRecords: verification.records,
     instructions: getDnsInstructions(project.customDomain),
+    // 클라이언트 폴링 가이드: status가 ready가 아니면 10초 후 재조회
+    pollIntervalMs: status === 'ready' ? null : 10_000,
   });
 }
 
@@ -82,13 +95,13 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   const { id } = await params;
-  const project = await getProjectWithAuth(session.user.id, id);
+  const project = await getProjectWithAuth(userId, id);
 
   if (!project) {
     return NextResponse.json({ error: '프로젝트 없음' }, { status: 404 });
@@ -139,13 +152,13 @@ export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
   const { id } = await params;
-  const project = await getProjectWithAuth(session.user.id, id);
+  const project = await getProjectWithAuth(userId, id);
 
   if (!project) {
     return NextResponse.json({ error: '프로젝트 없음' }, { status: 404 });

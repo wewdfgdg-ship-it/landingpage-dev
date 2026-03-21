@@ -11,8 +11,9 @@ import {
   MAX_RETRIES,
   type QualityGateResult,
 } from './quality-gate';
-export type { CopyBlocks } from './types';
+export type { CopyBlocks, CopyBlock, SectionCopy } from './types';
 export type { QualityGateResult } from './quality-gate';
+export { refineCopy } from './refine';
 
 // ============================================================
 // Psychological Copy Engine — AI 1회

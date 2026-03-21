@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>BA-A 좌우비교 (09)</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.ba { position: relative; padding: 48px 20px 40px; --ba-brand: #4A90D9; }
+.ba__inner { max-width: 520px; margin: 0 auto; }
+.ba__header { text-align: center; margin-bottom: 24px; }
+.ba__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--ba-brand) 70%, #5f6980); }
+.ba__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; }
+.ba__compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; }
+.ba__arrow { font-size: 24px; font-weight: 900; color: var(--ba-brand); }
+.ba__img-wrap { position: relative; border-radius: 16px; overflow: hidden; background: rgba(15,23,42,0.04); }
+.ba__img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.ba__label { position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 8px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; font-weight: 700; backdrop-filter: blur(4px); }
+.ba__placeholder { width: 100%; aspect-ratio: 1/1; border: 2px dashed rgba(15,23,42,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: rgba(15,23,42,0.25); font-size: 13px; }
+.ba__slider { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 16px; overflow: hidden; }
+.ba__slider-handle { position: absolute; top: 0; left: 50%; width: 4px; height: 100%; background: var(--ba-brand); transform: translateX(-50%); z-index: 2; }
+.ba__stack { display: grid; gap: 16px; }
+.ba__body { font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.65); text-align: center; margin-top: 16px; }
+.ba__stat { text-align: center; margin-top: 12px; }
+.ba__stat-num { font-size: 48px; font-weight: 900; color: var(--ba-brand); letter-spacing: -2px; }
+.ba__stat-unit { font-size: 18px; margin-left: 4px; }
+.ba__stat-label { display: block; font-size: 13px; color: rgba(15,23,42,0.5); margin-top: 4px; }
+.ba__caption { font-size: 11px; color: rgba(15,23,42,0.35); text-align: center; margin-top: 12px; }
+.ba__cta { margin-top: 24px; text-align: center; }
+.ba__cta-btn { display: inline-block; padding: 14px 32px; border: 0; border-radius: 14px; background: var(--ba-brand); color: #fff; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 8px 24px color-mix(in srgb, var(--ba-brand) 25%, transparent); transition: transform 0.2s; }
+.ba__cta-btn:hover { transform: translateY(-2px); }
+.ba.mood--clean { background: #fff; color: #111827; }
+.ba.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.ba.mood--dark { background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.ba.mood--navy { background: #0c1024; color: #fff; }
+.ba.mood--dark .ba__body, .ba.mood--navy .ba__body { color: rgba(255,255,255,0.6); }
+.ba.mood--dark .ba__headline, .ba.mood--dark .ba__eyebrow, .ba.mood--navy .ba__headline, .ba.mood--navy .ba__eyebrow { color: #fff; }
+.ba.mood--dark .ba__img-wrap, .ba.mood--navy .ba__img-wrap { background: rgba(255,255,255,0.06); }
+.ba.mood--dark .ba__placeholder, .ba.mood--navy .ba__placeholder { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.2); }
+.ba.mood--dark .ba__stat-label, .ba.mood--navy .ba__stat-label { color: rgba(255,255,255,0.45); }
+.ba.mood--dark .ba__caption, .ba.mood--navy .ba__caption { color: rgba(255,255,255,0.25); }
+@media (max-width: 480px) { .ba { padding: 36px 20px 32px; } .ba__headline { font-size: 28px; } .ba__stat-num { font-size: 40px; } .ba--a .ba__compare { grid-template-columns: 1fr; } .ba--a .ba__arrow { transform: rotate(90deg); justify-self: center; } }
+@media (min-width: 768px) { .ba { padding: 64px 28px 56px; } .ba__inner { max-width: 720px; } .ba__headline { font-size: 42px; } }
+</style></head><body><div class="page"><!-- LAYOUT: BA-A -->
+<section class="ba ba--a mood--clean" data-section="09-before-after" data-layout="BA-A" style="--ba-brand:#059669;"><div class="ba__inner"><header class="ba__header"><h2 class="ba__headline">사용 전후 비교</h2></header><div class="ba__compare"><div class="ba__img-wrap"><img class="ba__img" src="https://placehold.co/400x400/FEE2E2/DC2626?text=BEFORE" alt="BEFORE" loading="lazy" /><span class="ba__label">BEFORE</span></div><div class="ba__arrow">→</div><div class="ba__img-wrap"><img class="ba__img" src="https://placehold.co/400x400/DCFCE7/059669?text=AFTER" alt="AFTER" loading="lazy" /><span class="ba__label">AFTER</span></div></div><p class="ba__body">4주 사용 후 눈에 띄는 변화</p></div></section></div></body></html>

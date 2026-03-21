@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { requireAdmin } from '@/lib/admin';
 import { cancelPayment } from '@/lib/payapp';
 import { getPlanConfig } from '@/lib/billing';
-import { sendRefundCompleted } from '@/lib/email';
+import { sendRefundCompleted, getOrgOwnerEmail } from '@/lib/email';
 
 // ============================================================
 // 관리자 환불 처리 API
@@ -105,14 +105,10 @@ export async function POST(req: Request): Promise<NextResponse> {
   });
 
   // 이메일 알림
-  const ownerMembership = await db.membership.findFirst({
-    where: { orgId, role: 'OWNER' },
-    include: { user: { select: { email: true } } },
-  });
-
-  if (ownerMembership?.user?.email) {
+  const ownerEmail = await getOrgOwnerEmail(orgId);
+  if (ownerEmail) {
     const planName = (payment.metadata as Record<string, string> | null)?.plan ?? '유료';
-    await sendRefundCompleted(ownerMembership.user.email, payment.amount, planName).catch(() => {});
+    await sendRefundCompleted(ownerEmail, payment.amount, planName).catch(() => {});
   }
 
   return NextResponse.json({

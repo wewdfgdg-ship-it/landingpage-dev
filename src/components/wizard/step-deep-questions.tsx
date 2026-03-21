@@ -47,7 +47,7 @@ export function StepDeepQuestions(): React.ReactElement {
         });
         if (!cancelled) {
           setDeepQuestions(
-            questions.map((q) => ({ ...q, answer: '' })),
+            questions.map((q) => ({ ...q, answer: q.placeholder || '' })),
           );
         }
       } catch {
@@ -125,6 +125,16 @@ export function StepDeepQuestions(): React.ReactElement {
     (q) => q.answer.trim().length >= 10,
   ).length;
 
+  const handleFillExamples = (): void => {
+    deepQuestions.forEach((q) => {
+      if (!q.answer.trim() && q.placeholder) {
+        updateAnswer(q.id, q.placeholder);
+      }
+    });
+  };
+
+  const allFilled = deepQuestions.every((q) => q.answer.trim().length >= 10);
+
   return (
     <div className="space-y-6">
       <div className="flex items-start justify-between">
@@ -134,9 +144,20 @@ export function StepDeepQuestions(): React.ReactElement {
             상세히 답변할수록 더 높은 품질의 랜딩페이지가 생성됩니다
           </p>
         </div>
-        <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">
-          {answeredCount}/{deepQuestions.length}
-        </span>
+        <div className="flex items-center gap-2">
+          {!allFilled && (
+            <button
+              type="button"
+              onClick={handleFillExamples}
+              className="rounded-lg border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            >
+              예시로 자동 입력
+            </button>
+          )}
+          <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">
+            {answeredCount}/{deepQuestions.length}
+          </span>
+        </div>
       </div>
 
       <div className="space-y-5">

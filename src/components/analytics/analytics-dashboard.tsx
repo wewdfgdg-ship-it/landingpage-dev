@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { LineChart } from './line-chart';
 import { BarChart } from './bar-chart';
 import { SectionHeatmap } from './section-heatmap';
+import ABTestPanel from './ab-test-panel';
 
 // ============================================================
 // 타입
@@ -283,6 +284,11 @@ export function AnalyticsDashboard({ projectId }: AnalyticsDashboardProps): Reac
           <p className="text-sm text-gray-400">배포 후 방문자가 쌓이면 여기에 분석 결과가 표시됩니다</p>
         </div>
       )}
+
+      {/* A/B 테스트 */}
+      <ChartCard title="A/B 테스트">
+        <ABTestPanel projectId={projectId} />
+      </ChartCard>
 
       {/* 진단 로그 */}
       {data.diagnoses.length > 0 && (

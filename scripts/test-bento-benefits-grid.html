@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>레퍼런스(혜택-벤토그리드) 1:1 완벽 클론 테스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Pretendard", sans-serif; overflow-x: hidden; background-color: #f0f0f0; }
+
+/* 템플릿 CSS */
+
+.bb-wrapper {
+    position: relative;
+    width: 100%;
+    background-color: #ffffff;
+    font-family: "Pretendard", -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.bb-container {
+    width: 100%;
+    max-width: 900px; /* 벤토 그리드 폭 제한 (레퍼런스에 맞게) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    padding: 0 5%;
+}
+
+.bb-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.bb-micro {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #444;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.02em;
+}
+
+.bb-headline {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #111;
+    margin: 0;
+    letter-spacing: -0.05em;
+    word-break: keep-all;
+}
+
+/* 텍스트 내 강조 컬러 (레퍼런스는 쨍한 블루) */
+.bb-hl-color {
+    color: #0066ff;
+}
+
+/* 벤토 그리드 레이아웃 */
+.bb-grid {
+    display: grid;
+    /* 전체를 6칸으로 나누어, 위쪽은 3칸씩 2개, 아래쪽은 2칸씩 3개 차지하도록 설계 */
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* 공통 카드 스타일 */
+.bb-card {
+    background: linear-gradient(135deg, #eef5ff 0%, #e2eeff 100%); /* 연한 블루 그라데이션 */
+    border-radius: 20px;
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+}
+
+.bb-card:hover {
+    transform: translateY(-5px);
+}
+
+.bb-card-large {
+    grid-column: span 3; /* 6칸 중 3칸씩 차지 (2열) */
+    min-height: 320px;
+}
+
+.bb-card-small {
+    grid-column: span 2; /* 6칸 중 2칸씩 차지 (3열) */
+    min-height: 280px;
+    padding: 2.5rem 1rem 2rem 1rem;
+}
+
+/* 카드 내부 이미지 박스 */
+.bb-card-img-box {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.bb-card-img {
+    max-width: 80%;
+    max-height: 140px;
+    object-fit: contain;
+    /* 3D 에셋 그림자 효과 (이미 이미지가 3D면 제외해도 됨) */
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+}
+
+.bb-img-small {
+    max-width: 90%;
+    max-height: 100px;
+}
+
+/* 텍스트 영역 */
+.bb-card-text {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: auto; /* 하단 고정 */
+}
+
+.bb-card-sub {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #6d7f96; /* 레퍼런스의 회갈색 느낌나는 차분한 텍스트 */
+    margin: 0;
+    letter-spacing: -0.03em;
+    word-break: keep-all;
+}
+
+.bb-card-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #112233;
+    margin: 0;
+    letter-spacing: -0.04em;
+    word-break: keep-all;
+}
+
+.bb-card-small .bb-card-sub { font-size: 1rem; }
+.bb-card-small .bb-card-title { font-size: 1.35rem; }
+
+/* 애니메이션 */
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 반응형 (태블릿/모바일) */
+@media (max-width: 768px) {
+    .bb-wrapper { padding: 5rem 0; }
+    .bb-micro { font-size: 1.2rem; }
+    .bb-headline { font-size: 2.2rem; }
+    
+    /* 모바일에서는 상단 1열, 하단은 작은카드인데도 1열이 될 수도 있고, 2열(1, 2) 배치도 가능. 
+       일단 전체 1열로 떨어지게 하는게 가장 가독성이 좋음 */
+    .bb-grid {
+        grid-template-columns: 1fr 1fr; /* 2열 구조로 변경 */
+        gap: 1rem;
+    }
+    
+    /* 모바일은 2칸 구조에서 어떻게 될지 */
+    .bb-card-large { grid-column: span 2; min-height: auto; padding: 2rem; } /* 1열 차지 */
+    .bb-card-small { grid-column: span 1; min-height: 220px; padding: 1.5rem 0.5rem; } /* 2열 보장 */
+    /* 다만 3번째 작은 카드는 가운데 정렬되도록 span 2 하거나, 그냥 CSS Grid 자동배치에 맡김 (span 1 유지 시 왼쪽 빈자리 남을 수 있음, 레퍼런스는 보통 다 쌓아버림) */
+    
+    .bb-card-title { font-size: 1.4rem; }
+    .bb-card-small .bb-card-title { font-size: 1.15rem; }
+}
+
+@media (max-width: 500px) {
+    /* 아주 작은 모바일에서는 전부 1열로 쌓기 */
+    .bb-grid { grid-template-columns: 1fr; }
+    .bb-card-large, .bb-card-small { grid-column: span 1 !important; min-height: auto; padding: 2rem 1.5rem; }
+    .bb-img-small { max-height: 120px; }
+    .bb-card-small .bb-card-title { font-size: 1.4rem; }
+    .bb-card-small .bb-card-sub { font-size: 1.15rem; }
+}
+
+
+/* 와이드 랜딩페이지 래퍼 디자인 */
+.desktop-wrapper {
+    width: 100%;
+    margin: 0 auto;
+}
+</style>
+</head>
+<body>
+    <div style="text-align:center; padding: 20px 0; font-weight:bold; color:#777;">레퍼런스(14-배송안내/혜택-슬리피노) 데스크탑 모드 클론 뷰어</div>
+    
+    <div class="desktop-wrapper">
+        
+<section class="bb-wrapper">
+    <div class="bb-container">
+        
+        <!-- 헤더: 혜택 안내 타이틀 -->
+        <div class="bb-header hc-animate-fade-in-up">
+            
+            <p class="bb-micro">이정돈, 슬리피노에선</p>
+            
+            
+            <h2 class="bb-headline">혜택이 아니라 <span class="bb-hl-color">기본이예요!</span></h2>
+        </div>
+
+        <!-- Bento Grid 구조 (상단 2개, 하단 3개) -->
+        <div class="bb-grid">
+            
+            <!-- 큰 카드 1 -->
+            
+            <div class="bb-card bb-card-large hc-animate-fade-in-up" style="animation-delay: 100ms;">
+                <div class="bb-card-img-box">
+                    <!-- 3D 일러스트나 아이콘 이미지 비율 유지하며 중앙 정렬 -->
+                    <img src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="" class="bb-card-img" />
+                </div>
+                <div class="bb-card-text">
+                    <p class="bb-card-sub">1개만 주문해도</p>
+                    <h3 class="bb-card-title">배송비는 0원</h3>
+                </div>
+            </div>
+            
+
+            <!-- 큰 카드 2 -->
+            
+            <div class="bb-card bb-card-large hc-animate-fade-in-up" style="animation-delay: 200ms;">
+                <div class="bb-card-img-box">
+                    <img src="https://images.unsplash.com/photo-1600857062241-98e5dba7f214?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="" class="bb-card-img" />
+                </div>
+                <div class="bb-card-text">
+                    <p class="bb-card-sub">슬리피노 쿨쿨이불</p>
+                    <h3 class="bb-card-title">전용 보관백 증정</h3>
+                </div>
+            </div>
+            
+
+            <!-- 작은 카드 1 -->
+            
+            <div class="bb-card bb-card-small hc-animate-fade-in-up" style="animation-delay: 300ms;">
+                <div class="bb-card-img-box">
+                    <img src="https://via.placeholder.com/150x80/0066ff/ffffff?text=30,000+COUPON" alt="" class="bb-card-img bb-img-small" />
+                </div>
+                <div class="bb-card-text">
+                    <p class="bb-card-sub">신규 회원가입 시</p>
+                    <h3 class="bb-card-title">웰컴쿠폰팩<br>3만원 지급</h3>
+                </div>
+            </div>
+            
+
+            <!-- 작은 카드 2 -->
+            
+            <div class="bb-card bb-card-small hc-animate-fade-in-up" style="animation-delay: 400ms;">
+                <div class="bb-card-img-box">
+                    <img src="https://via.placeholder.com/150x80/0066ff/ffffff?text=10,000+POINT" alt="" class="bb-card-img bb-img-small" />
+                </div>
+                <div class="bb-card-text">
+                    <p class="bb-card-sub">리뷰 작성시</p>
+                    <h3 class="bb-card-title">최대 10,000<br>포인트 지급</h3>
+                </div>
+            </div>
+            
+
+            <!-- 작은 카드 3 -->
+            
+            <div class="bb-card bb-card-small hc-animate-fade-in-up" style="animation-delay: 500ms;">
+                <div class="bb-card-img-box">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;q=80&amp;w=300" alt="" class="bb-card-img bb-img-small" />
+                </div>
+                <div class="bb-card-text">
+                    <p class="bb-card-sub">블로그 포스팅시</p>
+                    <h3 class="bb-card-title">스벅 기프티콘<br>+ 포인트 지급</h3>
+                </div>
+            </div>
+            
+
+        </div>
+
+    </div>
+</section>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>테스트 제품 — 랜딩 페이지</title>
+<meta name="description" content="편리함을 위한 새로운 선택">
+<meta property="og:title" content="테스트 제품 — 랜딩 페이지">
+<meta property="og:description" content="편리함을 위한 새로운 선택">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{font-family:'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;color:#1E293B;background:#FFFFFF;line-height:1.6;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;height:auto;display:block;}
+a{color:inherit;text-decoration:none;}
+@media(max-width:768px){
+  section{padding:48px 16px !important;}
+  h1{font-size:2rem !important;}
+  h2{font-size:1.5rem !important;}
+  [style*="flex-direction:row"],[style*="flex-direction: row"]{flex-direction:column !important;}
+  [style*="min-height:100vh"]{min-height:auto !important;padding-top:80px !important;padding-bottom:80px !important;}
+}
+
+@font-face {
+  font-family: 'GodoB';
+  src: url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoB.woff2') format('woff2');
+  font-weight: 1 999;
+  font-display: swap;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      word-break: keep-all;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      color: #1a1a1a;
+    }
+    .hero .headline {
+      font-family: 'GodoB', sans-serif;
+    }
+    .hero .eyebrow,
+    .hero .desc,
+    .hero .micro,
+    .hero .stat-label,
+    .hero .trust-badge {
+      font-family: 'Pretendard', sans-serif;
+    }
+    .hero .stat-number,
+    .hero .sale-price,
+    .hero .discount-badge,
+    .hero .big-badge,
+    .hero .big-stat {
+      font-family: 'GodoB', sans-serif;
+    }
+    .hero .cta-btn {
+      font-family: 'Pretendard', sans-serif;
+    }
+  </style>
+</head>
+<body>
+<div data-section-id="s1" data-section-order="1"><!-- v4-font-links -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" />
+
+  <section class="hero mood-clean">
+    <div class="noise-overlay" style="
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+  "><svg width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg></div>
+    <div class="bg-ghost" style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(200px, 35vw, 500px);
+    font-weight: 900;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    line-height: 1;
+    user-select: none;
+  ">테</div>
+    <div class="hero-inner" style="
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+    ">
+      
+      <div style="text-align: center;">
+        <p class="eyebrow" style="
+    font-size: clamp(11px, 1.1vw, 16px);
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #555555;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    animation: fadeInUp 0.7s ease 0.1s both;
+  "></p>
+        <h1 class="headline" style="
+    font-size: clamp(42px, 7.2vw, 100px);
+    font-weight: 900;
+    letter-spacing: -4px;
+    line-height: 1.08;
+    word-break: keep-all;
+    color: #1a1a1a;
+    margin: 0 0 clamp(16px, 2vw, 32px) 0;
+    animation: fadeInUp 0.7s ease 0.2s both;
+  ">핵심 <span class="accent" style="color:#0369A1;text-shadow:0 0 30px #0369A140;">가치</span></h1>
+        <div style="display: flex; justify-content: center;">
+          <p class="desc" style="
+    font-size: clamp(14px, 1.6vw, 22px);
+    font-weight: 300;
+    line-height: 1.75;
+    max-width: 640px;
+    color: #555555;
+    margin: 0 0 clamp(24px, 3vw, 40px) 0;
+    animation: fadeInUp 0.7s ease 0.4s both;
+  ">빠른 배송. 지금 바로 경험하세요.</p>
+        </div>
+        <div class="product-zone" style="
+      position: relative;
+      width: 55%;
+      max-width: 340px;
+      margin: 0 auto;
+      transform: rotate(-2deg);
+      animation: fadeInUp 0.8s ease 0.5s both;
+    "><img src="product.png" alt="product" style="
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)) drop-shadow(0 0 60px rgba(200,100,40,0.2));
+    " /></div>
+        <div style="margin: clamp(24px, 3vw, 40px) 0;">
+          <div class="stats-row" style="
+    display: flex;
+    justify-content: center;
+    gap: clamp(24px, 3.5vw, 48px);
+    animation: fadeInUp 0.7s ease 0.7s both;
+  "></div>
+        </div>
+        <div class="trust-badge" style="
+    border: 1px solid #0369A11A;
+    border-radius: 16px;
+    background: #0369A106;
+    padding: clamp(16px, 2vw, 24px) clamp(24px, 3vw, 40px);
+    text-align: center;
+    animation: fadeInUp 0.7s ease 0.9s both;
+  ">
+    <span style="
+      display: block;
+      font-size: clamp(24px, 3.5vw, 42px);
+      font-weight: 900;
+      color: #0369A1;
+      margin-bottom: 8px;
+    ">빠른 배송</span>
+    <span style="font-size:clamp(11px,1vw,14px);font-weight:300;opacity:0.7;">높은 만족도</span><br/><span style="font-size:clamp(11px,1vw,14px);font-weight:300;opacity:0.7;">프리미엄 품질</span>
+  </div>
+        <div style="max-width: 480px; margin: clamp(24px, 3vw, 40px) auto 0;">
+          <button class="cta-btn" style="
+    width: 100%;
+    padding: 22px 0;
+    font-size: clamp(16px, 1.7vw, 24px);
+    font-weight: 700;
+    color: #ffffff;
+    background: #0369A1;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 30px #0369A159;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeInUp 0.7s ease 1.0s both;
+  " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">지금 시작하기</button>
+          <p class="micro" style="
+    font-size: clamp(11px, 0.9vw, 13px);
+    font-weight: 300;
+    opacity: 0.6;
+    color: #555555;
+    margin: 8px 0 0 0;
+    text-align: center;
+  ">가입 즉시 혜택</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+</body>
+</html>

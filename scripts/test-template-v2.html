@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>렌더러 v2 템플릿 미리보기</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Pretendard','Noto Sans KR',sans-serif;}
+img{max-width:100%;height:auto;display:block;}
+a{color:inherit;text-decoration:none;}
+.label{text-align:center;padding:12px;background:#0f172a;color:#fff;font-weight:700;font-size:0.9rem;letter-spacing:0.05em;}
+:root {
+  --color-primary: #2563EB;
+  --color-primary-light: #DBEAFE;
+  --color-primary-dark: #1E40AF;
+  --color-secondary: #7C3AED;
+  --color-accent: #F59E0B;
+  --color-bg: #FFFFFF;
+  --color-surface: #F8FAFC;
+  --color-text: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-border: #E2E8F0;
+  --color-error: #EF4444;
+  --font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+  --font-display: 4.5rem;
+  --font-h1: 3rem;
+  --font-h2: 2.25rem;
+  --font-h3: 1.5rem;
+  --font-body: 1rem;
+  --font-small: 0.875rem;
+  --font-caption: 0.75rem;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+</style>
+</head>
+<body>
+
+<div class="label">hero_fullscreen_center</div>
+<style>:root {
+  --color-primary: #2563EB;
+  --color-primary-light: #DBEAFE;
+  --color-primary-dark: #1E40AF;
+  --color-secondary: #7C3AED;
+  --color-accent: #F59E0B;
+  --color-bg: #FFFFFF;
+  --color-surface: #F8FAFC;
+  --color-text: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-border: #E2E8F0;
+  --color-error: #EF4444;
+  --font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+  --font-display: 4.5rem;
+  --font-h1: 3rem;
+  --font-h2: 2.25rem;
+  --font-h3: 1.5rem;
+  --font-body: 1rem;
+  --font-small: 0.875rem;
+  --font-caption: 0.75rem;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+
+.hero-high-converting {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background grid effect */
+.hero-high-converting::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-size: 40px 40px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.hero-high-converting .headline-sm {
+    display: block;
+    font-size: 0.6em;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.hero-high-converting h1 {
+    position: relative;
+    z-index: 10;
+}
+
+.hero-high-converting .headline-lg {
+    background: linear-gradient(to right, var(--color-text), var(--color-primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hc-glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Custom animations prefixed with hc- to avoid conflicts */
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+.hc-animation-delay-100 { animation-delay: 100ms; }
+.hc-animation-delay-200 { animation-delay: 200ms; }
+.hc-animation-delay-300 { animation-delay: 300ms; }
+.hc-animation-delay-1000 { animation-delay: 1000ms; }
+.hc-animation-delay-2000 { animation-delay: 2000ms; }
+
+.hc-animate-float {
+    animation: hc-float 6s ease-in-out infinite;
+}
+
+.hc-animate-pulse-slow {
+    animation: hc-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hc-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes hc-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+}
+</style>
+
+<main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-32 w-full max-w-7xl mx-auto hero-high-converting">
+    
+    <!-- 1. Trust Badge (Social Proof) -->
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8 hc-animate-fade-in-up">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        <span class="text-xs font-medium text-gray-300">최근 24시간 동안 <span class="text-white font-bold">142명</span>이 경험했습니다.</span>
+    </div>
+
+    <!-- 2. Main Title (Pain Hook + Benefit) -->
+    <div class="text-center max-w-4xl mx-auto space-y-6 hc-animate-fade-in-up hc-animation-delay-100">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.2]">
+            <span class="headline-sm">피부 본연의 빛을</span><br><span class="headline-lg">되찾다</span>
+        </h1>
+        
+        <!-- 3. Sub Copy (Specific explanation) -->
+        <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
+            더마 사이언스 연구소
+            <span class="block mt-2">10년 연구 끝에 완성된 레티놀 앰플. 28일 사용 후 주름 개선 효과가 임상으로 입증되었습니다.</span>
+        </p>
+    </div>
+
+    <!-- 4. Glowing CTA / Primary actions -->
+    <div class="mt-12 flex flex-col sm:flex-row gap-4 items-center justify-center hc-animate-fade-in-up hc-animation-delay-200">
+        <!-- Primary Button with glow effect -->
+        <div class="relative group cursor-pointer w-full sm:w-auto">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-600 to-purple-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500 hc-animate-pulse-slow"></div>
+            <a href="#cta" class="relative w-full sm:w-auto px-8 py-4 bg-[var(--color-primary)] hover:opacity-90 rounded-full text-white font-bold text-lg shadow-2xl transform transition-all active:scale-95 flex items-center justify-center gap-2">
+                지금 구매하기
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+        </div>
+        
+    </div>
+
+    <!-- 5. Objection Killer (Removing Friction) -->
+    
+    <div class="mt-6 flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-sm text-gray-500 font-medium hc-animate-fade-in-up hc-animation-delay-300">
+        <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            첫 구매 30% 할인 · 무료배송
+        </div>
+    </div>
+    
+
+    <!-- Visual Hero Product / UI Mockup Shell -->
+    <div class="mt-20 w-full max-w-5xl relative hc-animate-float">
+        <!-- Decorative border gradient -->
+        <div class="absolute -inset-[1px] bg-gradient-to-b from-white/20 to-transparent rounded-2xl z-0 pointer-events-none"></div>
+        <!-- Main Mockup Container -->
+        <div class="relative w-full aspect-video rounded-2xl bg-black/50 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden hc-glass flex flex-col">
+            <!-- Browser Header Mockup -->
+            <div class="h-10 border-b border-white/10 bg-white/5 flex items-center px-4 gap-2">
+                <div class="flex gap-1.5">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                </div>
+                <div class="mx-auto w-1/3 h-5 bg-white/5 rounded-md"></div>
+            </div>
+            <!-- Mockup Content Area -->
+            
+            <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://placehold.co/600x800/1a1a2e/ffffff?text=PRODUCT')"></div>
+            
+            <div class="flex-grow p-8 flex items-center justify-center flex-col gap-4 bg-gradient-to-br from-gray-900 to-black relative z-10" style="display:none;">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary-500 to-purple-500 flex items-center justify-center mb-4 shadow-lg shadow-primary-500/20">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <div class="text-2xl font-bold text-white tracking-tight">피부 본연의 빛을 되찾다</div>
+            </div>
+        </div>
+        
+        <!-- Floating Elements for depth -->
+        <div class="absolute -left-12 top-1/4 p-4 rounded-xl hc-glass border border-white/10 shadow-2xl backdrop-blur-xl hc-animate-float hc-animation-delay-2000 hidden md:flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+            </div>
+            <div>
+                <div class="text-xs text-gray-400">만족도</div>
+                <div class="text-lg font-bold text-white">4.9/5.0</div>
+            </div>
+        </div>
+        
+        <div class="absolute -right-8 bottom-1/4 p-4 rounded-xl hc-glass border border-white/10 shadow-2xl backdrop-blur-xl hc-animate-float hc-animation-delay-1000 hidden md:flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+                <div class="text-xs text-gray-400">즉각적 효과</div>
+                <div class="text-lg font-bold text-white">확인 완료</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<div class="label">hero_split_left</div>
+<style>:root {
+  --color-primary: #2563EB;
+  --color-primary-light: #DBEAFE;
+  --color-primary-dark: #1E40AF;
+  --color-secondary: #7C3AED;
+  --color-accent: #F59E0B;
+  --color-bg: #FFFFFF;
+  --color-surface: #F8FAFC;
+  --color-text: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-border: #E2E8F0;
+  --color-error: #EF4444;
+  --font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+  --font-display: 4.5rem;
+  --font-h1: 3rem;
+  --font-h2: 2.25rem;
+  --font-h3: 1.5rem;
+  --font-body: 1rem;
+  --font-small: 0.875rem;
+  --font-caption: 0.75rem;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+
+.sp{display:grid;grid-template-columns:1fr 1fr;min-height:92vh;align-items:center;background:#fff;color:#111;}
+.sp__copy{padding:80px 40px 80px 8vw;}
+.sp__kicker{font-size:0.88rem;color:var(--color-primary,#2563EB);font-weight:700;margin-bottom:14px;letter-spacing:0.06em;text-transform:uppercase;}
+.sp__title{font-size:clamp(2rem,5vw,3.4rem);font-weight:900;line-height:1.12;letter-spacing:-0.025em;margin-bottom:20px;word-break:keep-all;color:#111;}
+.sp__title .headline-sm{display:block;font-size:0.5em;font-weight:500;color:#666;letter-spacing:0.02em;margin-bottom:6px;}
+.sp__title .headline-lg{font-size:1.12em;}
+.sp__badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.sp__badge{padding:6px 16px;background:var(--color-primary-light,#DBEAFE);color:var(--color-primary-dark,#1E40AF);border-radius:999px;font-size:0.82rem;font-weight:600;}
+.sp__body{color:#555;line-height:1.75;font-size:1rem;margin-bottom:28px;max-width:440px;}
+.sp__cta{display:inline-block;padding:16px 40px;background:var(--color-primary,#2563EB);color:#fff;border-radius:999px;font-weight:700;font-size:1.05rem;text-decoration:none;box-shadow:0 4px 16px rgba(37,99,235,0.25);transition:transform .2s,box-shadow .2s;}
+.sp__cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,0.35);}
+.sp__micro{margin-top:10px;font-size:0.82rem;color:#999;}
+.sp__visual{display:flex;align-items:center;justify-content:center;padding:20px;}
+.sp__img{width:100%;max-width:600px;border-radius:16px;object-fit:cover;aspect-ratio:4/3;box-shadow:0 16px 48px rgba(0,0,0,0.1);}
+@media(max-width:768px){.sp{grid-template-columns:1fr;padding:48px 16px;}.sp__copy{padding:0 8px;}.sp__title{font-size:1.8rem;}}
+</style>
+
+<section class="sp">
+  <div class="sp__copy">
+    <p class="sp__kicker">더마 사이언스 연구소</p>
+    <h1 class="sp__title"><span class="headline-sm">피부 본연의 빛을</span><br><span class="headline-lg">되찾다</span></h1>
+    
+    <div class="sp__badges">
+      <span class="sp__badge">누적 판매 5만개</span><span class="sp__badge">피부과 전문의 추천</span><span class="sp__badge">28일 임상 완료</span>
+    </div>
+    
+    <p class="sp__body">10년 연구 끝에 완성된 레티놀 앰플. 28일 사용 후 주름 개선 효과가 임상으로 입증되었습니다.</p>
+    <a href="#cta" class="sp__cta">지금 구매하기</a>
+    <p class="sp__micro">첫 구매 30% 할인 · 무료배송</p>
+  </div>
+  <div class="sp__visual">
+    
+    <img src="https://placehold.co/600x800/1a1a2e/ffffff?text=PRODUCT" alt="피부 본연의 빛을 되찾다" class="sp__img" loading="lazy">
+    
+  </div>
+</section>
+
+
+<div class="label">hero_minimal_typo</div>
+<style>:root {
+  --color-primary: #2563EB;
+  --color-primary-light: #DBEAFE;
+  --color-primary-dark: #1E40AF;
+  --color-secondary: #7C3AED;
+  --color-accent: #F59E0B;
+  --color-bg: #FFFFFF;
+  --color-surface: #F8FAFC;
+  --color-text: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-border: #E2E8F0;
+  --color-error: #EF4444;
+  --font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+  --font-display: 4.5rem;
+  --font-h1: 3rem;
+  --font-h2: 2.25rem;
+  --font-h3: 1.5rem;
+  --font-body: 1rem;
+  --font-small: 0.875rem;
+  --font-caption: 0.75rem;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+
+.sc{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#fafafa;color:#111;padding:80px 24px;gap:16px;}
+.sc__trust{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.sc__trust-item{padding:8px 20px;background:#fff;border:1.5px solid #e0e0e0;border-radius:8px;font-size:0.82rem;font-weight:700;color:#333;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.sc__kicker{font-size:0.85rem;color:#888;font-weight:500;letter-spacing:0.08em;margin-top:8px;}
+.sc__title{font-size:clamp(2.8rem,8vw,5.5rem);font-weight:900;line-height:1.0;letter-spacing:-0.04em;word-break:keep-all;color:#111;}
+.sc__title .headline-sm{display:block;font-size:0.35em;font-weight:500;color:#888;letter-spacing:0.04em;margin-bottom:12px;}
+.sc__title .headline-lg{font-size:1.2em;color:var(--color-primary,#2563EB);}
+.sc__body{font-size:0.95rem;color:#777;line-height:1.7;max-width:500px;}
+.sc__cta{display:inline-block;padding:16px 48px;background:var(--color-primary,#2563EB);color:#fff;border-radius:999px;font-weight:700;font-size:1.05rem;text-decoration:none;margin-top:8px;transition:opacity .2s;}
+.sc__cta:hover{opacity:0.85;}
+.sc__micro{font-size:0.78rem;color:#aaa;}
+.sc__img{margin-top:24px;width:100%;max-width:400px;object-fit:contain;max-height:40vh;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.08));}
+@media(max-width:768px){.sc{padding:60px 20px;}.sc__title{font-size:2.4rem;}}
+</style>
+
+<section class="sc">
+  
+  <div class="sc__trust">
+    <span class="sc__trust-item">누적 판매 5만개</span><span class="sc__trust-item">피부과 전문의 추천</span><span class="sc__trust-item">28일 임상 완료</span>
+  </div>
+  
+  <p class="sc__kicker">더마 사이언스 연구소</p>
+  <h1 class="sc__title"><span class="headline-sm">피부 본연의 빛을</span><br><span class="headline-lg">되찾다</span></h1>
+  <p class="sc__body">10년 연구 끝에 완성된 레티놀 앰플. 28일 사용 후 주름 개선 효과가 임상으로 입증되었습니다.</p>
+  <a href="#cta" class="sc__cta">지금 구매하기</a>
+  <p class="sc__micro">첫 구매 30% 할인 · 무료배송</p>
+  
+  <img src="https://placehold.co/600x800/1a1a2e/ffffff?text=PRODUCT" alt="피부 본연의 빛을 되찾다" class="sc__img" loading="lazy">
+  
+</section>
+
+
+<div class="label">hero_video_bg</div>
+<style>:root {
+  --color-primary: #2563EB;
+  --color-primary-light: #DBEAFE;
+  --color-primary-dark: #1E40AF;
+  --color-secondary: #7C3AED;
+  --color-accent: #F59E0B;
+  --color-bg: #FFFFFF;
+  --color-surface: #F8FAFC;
+  --color-text: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-border: #E2E8F0;
+  --color-error: #EF4444;
+  --font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+  --font-display: 4.5rem;
+  --font-h1: 3rem;
+  --font-h2: 2.25rem;
+  --font-h3: 1.5rem;
+  --font-body: 1rem;
+  --font-small: 0.875rem;
+  --font-caption: 0.75rem;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+
+.cb{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:var(--color-primary,#2563EB);color:#fff;overflow:hidden;position:relative;}
+.cb__content{display:flex;flex-direction:column;justify-content:center;padding:80px 48px 80px 8vw;gap:16px;z-index:2;}
+.cb__kicker{font-size:0.8rem;font-weight:600;opacity:0.65;letter-spacing:0.1em;text-transform:uppercase;}
+.cb__title{font-size:clamp(2.4rem,5.5vw,4rem);font-weight:900;line-height:1.08;letter-spacing:-0.02em;word-break:keep-all;}
+.cb__title .headline-sm{display:block;font-size:0.45em;font-weight:500;opacity:0.7;letter-spacing:0.03em;margin-bottom:8px;}
+.cb__title .headline-lg{font-size:1.15em;}
+.cb__tags{display:flex;flex-wrap:wrap;gap:8px;}
+.cb__tag{padding:6px 14px;background:rgba(255,255,255,0.15);border-radius:6px;font-size:0.78rem;font-weight:600;backdrop-filter:blur(4px);}
+.cb__body{font-size:0.92rem;opacity:0.75;line-height:1.7;max-width:380px;}
+.cb__cta{display:inline-block;width:fit-content;padding:16px 40px;background:#fff;color:var(--color-primary,#2563EB);border-radius:999px;font-weight:700;font-size:1.05rem;text-decoration:none;transition:opacity .2s;}
+.cb__cta:hover{opacity:0.9;}
+.cb__micro{font-size:0.75rem;opacity:0.5;}
+.cb__product{display:flex;align-items:center;justify-content:center;padding:40px;z-index:1;}
+.cb__img{width:100%;max-width:480px;object-fit:contain;max-height:75vh;filter:drop-shadow(0 16px 48px rgba(0,0,0,0.25));}
+@media(max-width:768px){
+  .cb{grid-template-columns:1fr;min-height:auto;}
+  .cb__content{padding:80px 24px 40px;text-align:center;align-items:center;}
+  .cb__tags{justify-content:center;}
+  .cb__product{padding:0 24px 60px;}
+  .cb__title{font-size:2rem;}
+  .cb__img{max-height:50vh;}
+}
+</style>
+
+<section class="cb">
+  <div class="cb__content">
+    <p class="cb__kicker">더마 사이언스 연구소</p>
+    <h1 class="cb__title"><span class="headline-sm">피부 본연의 빛을</span><br><span class="headline-lg">되찾다</span></h1>
+    
+    <div class="cb__tags">
+      <span class="cb__tag">누적 판매 5만개</span><span class="cb__tag">피부과 전문의 추천</span><span class="cb__tag">28일 임상 완료</span>
+    </div>
+    
+    <p class="cb__body">10년 연구 끝에 완성된 레티놀 앰플. 28일 사용 후 주름 개선 효과가 임상으로 입증되었습니다.</p>
+    <a href="#cta" class="cb__cta">지금 구매하기</a>
+    <p class="cb__micro">첫 구매 30% 할인 · 무료배송</p>
+  </div>
+  
+  <div class="cb__product">
+    <img src="https://placehold.co/600x800/1a1a2e/ffffff?text=PRODUCT" alt="피부 본연의 빛을 되찾다" class="cb__img" loading="lazy">
+  </div>
+  
+</section>
+
+</body></html>

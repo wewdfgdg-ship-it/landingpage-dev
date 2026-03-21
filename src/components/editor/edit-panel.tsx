@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { useEditorStore } from '@/stores/editor-store';
+import { Button } from '@/components/ui/button';
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 
 // ============================================================
@@ -136,9 +138,16 @@ function BulletEditor({
 
 export function EditPanel(): React.ReactElement {
   const sections = useEditorStore((s) => s.sections);
+  const projectId = useEditorStore((s) => s.projectId);
   const selectedOrder = useEditorStore((s) => s.selectedSectionOrder);
   const updateCopy = useEditorStore((s) => s.updateCopy);
   const changePattern = useEditorStore((s) => s.changePattern);
+  const duplicateSection = useEditorStore((s) => s.duplicateSection);
+  const setImageUrl = useEditorStore((s) => s.setImageUrl);
+  const regeneratingSection = useEditorStore((s) => s.regeneratingSection);
+  const setRegeneratingSection = useEditorStore((s) => s.setRegeneratingSection);
+
+  const [imageError, setImageError] = useState('');
 
   const section = sections.find((s) => s.order === selectedOrder);
 
@@ -151,6 +160,41 @@ export function EditPanel(): React.ReactElement {
       </div>
     );
   }
+
+  const isRegenerating = regeneratingSection === section.order;
+
+  const handleRegenerateImage = async (): Promise<void> => {
+    if (!section.copy.imageDirection || section.copy.imageDirection.length < 5) {
+      setImageError('이미지 지시문을 5자 이상 입력하세요');
+      return;
+    }
+
+    setImageError('');
+    setRegeneratingSection(section.order);
+
+    try {
+      const res = await fetch(`/api/projects/${projectId}/regenerate-image`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sectionOrder: section.order,
+          imageDirection: section.copy.imageDirection,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = (await res.json()) as { error: string };
+        throw new Error(data.error);
+      }
+
+      const data = (await res.json()) as { cdnUrl: string; cost: number };
+      setImageUrl(section.order, data.cdnUrl);
+    } catch (err) {
+      setImageError(err instanceof Error ? err.message : '이미지 생성 실패');
+    } finally {
+      setRegeneratingSection(null);
+    }
+  };
 
   const patterns = PATTERN_OPTIONS[section.sectionType] ?? [];
   const copyFields: { key: keyof CopyBlock; label: string; multiline?: boolean }[] = [
@@ -165,10 +209,21 @@ export function EditPanel(): React.ReactElement {
     <div className="flex h-full flex-col">
       {/* 헤더 */}
       <div className="border-b border-gray-200 px-4 py-3">
-        <h3 className="text-sm font-bold text-gray-700">
-          섹션 {section.order} 편집
-        </h3>
-        <p className="text-xs text-gray-400 mt-0.5">{section.sectionType}</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-sm font-bold text-gray-700">
+              섹션 {section.order} 편집
+            </h3>
+            <p className="text-xs text-gray-400 mt-0.5">{section.sectionType}</p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => duplicateSection(section.order)}
+          >
+            복제
+          </Button>
+        </div>
       </div>
 
       {/* 편집 폼 */}
@@ -217,13 +272,41 @@ export function EditPanel(): React.ReactElement {
           onChange={(items) => updateCopy(section.order, 'bulletPoints', items)}
         />
 
-        {/* 이미지 지시문 */}
-        <FieldInput
-          label="이미지 지시문"
-          value={section.copy.imageDirection}
-          onChange={(v) => updateCopy(section.order, 'imageDirection', v)}
-          multiline
-        />
+        {/* 이미지 지시문 + 재생성 */}
+        <div className="space-y-2">
+          <FieldInput
+            label="이미지 지시문"
+            value={section.copy.imageDirection}
+            onChange={(v) => updateCopy(section.order, 'imageDirection', v)}
+            multiline
+          />
+
+          {/* 현재 이미지 미리보기 */}
+          {section.copy.imageUrl && (
+            <div className="overflow-hidden rounded-lg border border-gray-200">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={section.copy.imageUrl}
+                alt={`섹션 ${section.order} 이미지`}
+                className="h-32 w-full object-cover"
+              />
+            </div>
+          )}
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full"
+            onClick={() => void handleRegenerateImage()}
+            disabled={isRegenerating}
+          >
+            {isRegenerating ? '이미지 생성 중...' : '이미지 재생성'}
+          </Button>
+
+          {imageError && (
+            <p className="text-xs text-red-500">{imageError}</p>
+          )}
+        </div>
       </div>
     </div>
   );

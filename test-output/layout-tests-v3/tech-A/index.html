@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>에어팟 프로 2세대</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap" />
+<style>
+@font-face {
+  font-family: 'NEXON Lv1 Gothic OTF Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON%20Lv1%20Gothic%20OTF%20Bold.woff') format('woff');
+  font-weight: 1 999;
+  font-display: swap;
+}
+</style>
+  <style>
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      word-break: keep-all;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0c1024;
+      color: #ffffff;
+    }
+    .hero .headline {
+      font-family: 'NEXON Lv1 Gothic OTF Bold', sans-serif;
+    }
+    .hero .eyebrow,
+    .hero .desc,
+    .hero .micro,
+    .hero .stat-label,
+    .hero .trust-badge {
+      font-family: 'Pretendard', sans-serif;
+    }
+    .hero .stat-number,
+    .hero .sale-price,
+    .hero .discount-badge,
+    .hero .big-badge,
+    .hero .big-stat {
+      font-family: 'NEXON Lv1 Gothic OTF Bold', sans-serif;
+    }
+    .hero .cta-btn {
+      font-family: 'Pretendard', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero mood-navy">
+    <div class="noise-overlay" style="
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+  "><svg width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg></div>
+    <div class="bg-ghost" style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(200px, 35vw, 500px);
+    font-weight: 900;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    line-height: 1;
+    user-select: none;
+  ">에</div>
+    <div class="hero-inner" style="
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+    ">
+      
+      <div style="text-align: center;">
+        <p class="eyebrow" style="
+    font-size: clamp(11px, 1.1vw, 16px);
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    animation: fadeInUp 0.7s ease 0.1s both;
+  ">테크 · 가전</p>
+        <h1 class="headline" style="
+    font-size: clamp(42px, 7.2vw, 100px);
+    font-weight: 900;
+    letter-spacing: -4px;
+    line-height: 1.08;
+    word-break: keep-all;
+    color: #ffffff;
+    margin: 0 0 clamp(16px, 2vw, 32px) 0;
+    animation: fadeInUp 0.7s ease 0.2s both;
+  ">소음은 사라지고 음악만 <span class="accent" style="color:#0EA5E9;text-shadow:0 0 30px #0EA5E940;">남다</span></h1>
+        <div style="display: flex; justify-content: center;">
+          <p class="desc" style="
+    font-size: clamp(14px, 1.6vw, 22px);
+    font-weight: 300;
+    line-height: 1.75;
+    max-width: 640px;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 clamp(24px, 3vw, 40px) 0;
+    animation: fadeInUp 0.7s ease 0.4s both;
+  ">49dB 노이즈캔슬링 · 6시간 재생</p>
+        </div>
+        <div class="product-zone" style="
+      position: relative;
+      width: 55%;
+      max-width: 340px;
+      margin: 0 auto;
+      transform: rotate(-2deg);
+      animation: fadeInUp 0.8s ease 0.5s both;
+    "><img src="product.png" alt="product" style="
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)) drop-shadow(0 0 60px rgba(200,100,40,0.2));
+    " /></div>
+        <div style="margin: clamp(24px, 3vw, 40px) 0;">
+          <div class="stats-row" style="
+    display: flex;
+    justify-content: center;
+    gap: clamp(24px, 3.5vw, 48px);
+    animation: fadeInUp 0.7s ease 0.7s both;
+  "><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(32px, 4.8vw, 72px);
+        font-weight: 900;
+        color: #0EA5E9;
+        line-height: 1.1;
+      ">49<span class="stat-unit" style="
+        font-size: clamp(14px, 1.4vw, 20px);
+        font-weight: 300;
+        margin-left: 4px;
+      ">dB</span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(11px, 1vw, 14px);
+          font-weight: 300;
+          opacity: 0.6;
+          margin-top: 4px;
+        ">노이즈캔슬링</span>
+    </div><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(32px, 4.8vw, 72px);
+        font-weight: 900;
+        color: #0EA5E9;
+        line-height: 1.1;
+      ">6<span class="stat-unit" style="
+        font-size: clamp(14px, 1.4vw, 20px);
+        font-weight: 300;
+        margin-left: 4px;
+      ">시간</span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(11px, 1vw, 14px);
+          font-weight: 300;
+          opacity: 0.6;
+          margin-top: 4px;
+        ">연속 재생</span>
+    </div><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(32px, 4.8vw, 72px);
+        font-weight: 900;
+        color: #0EA5E9;
+        line-height: 1.1;
+      ">IP54<span class="stat-unit" style="
+        font-size: clamp(14px, 1.4vw, 20px);
+        font-weight: 300;
+        margin-left: 4px;
+      "></span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(11px, 1vw, 14px);
+          font-weight: 300;
+          opacity: 0.6;
+          margin-top: 4px;
+        ">방수 등급</span>
+    </div></div>
+        </div>
+        
+        <div style="max-width: 480px; margin: clamp(24px, 3vw, 40px) auto 0;">
+          <button class="cta-btn" style="
+    width: 100%;
+    padding: 22px 0;
+    font-size: clamp(16px, 1.7vw, 24px);
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1D4ED8, #2563EB);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 30px linear-gradient(135deg, #1D4ED8, #2563EB)59;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeInUp 0.7s ease 1.0s both;
+  " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">구매하기</button>
+          <p class="micro" style="
+    font-size: clamp(11px, 0.9vw, 13px);
+    font-weight: 300;
+    opacity: 0.6;
+    color: rgba(255,255,255,0.5);
+    margin: 8px 0 0 0;
+    text-align: center;
+  ">무료 각인 서비스 · Apple 공식 리셀러</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

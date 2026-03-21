@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>레퍼런스(B2B 3열그리드) 1:1 완벽 클론 테스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Pretendard", sans-serif; overflow-x: hidden; background-color: #f0f0f0; }
+
+/* 템플릿 CSS */
+
+.btc-wrapper {
+    position: relative;
+    width: 100%;
+    background-color: #f7f5f2; /* 살짝 웜톤 도는 밝은 베이지/그레이 배경 (트렌디한 SaaS/IT 느낌) */
+    font-family: "Pretendard", -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 6rem 0 8rem 0;
+}
+
+.btc-container {
+    width: 100%;
+    max-width: 1140px; /* 3열 그리드가 안정적으로 보이는 폭 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    padding: 0 5%;
+}
+
+.btc-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 800px;
+}
+
+.btc-headline {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.03em;
+    line-height: 1.3;
+}
+
+.btc-subheadline {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: #555555;
+    line-height: 1.6;
+    margin: 0;
+    letter-spacing: -0.02em;
+    word-break: keep-all;
+}
+
+/* 텍스트 내 강조될 밑줄 링크 스타일 (옵션) */
+.btc-link-text {
+    color: #1a1a1a;
+    text-decoration: underline;
+    text-decoration-color: #b0b0b0;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+}
+
+.btc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    width: 100%;
+}
+
+.btc-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+/* 이미지 및 일러스트가 들어가는 옅은 박스 */
+.btc-img-box {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 깔끔한 1:1 정방형 박스 구조 */
+    background-color: #ededed; /* 레퍼런스 특유의 웜그레이 톤 이미지 배경 */
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* 모서리 없음 (각진 박스) */
+    transition: transform 0.3s ease;
+}
+
+.btc-col:hover .btc-img-box {
+    transform: translateY(-5px); /* 마우스 올렸을 때 살짝 들리기 */
+}
+
+/* 새로 추가: SVG 일러스트가 들어갈 때의 비율/정렬 */
+.btc-img-box svg {
+    width: 60%;
+    height: 60%;
+}
+
+.btc-img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain; /* 외부 이미지가 들어올 경우를 대비한 렌더링 */
+}
+
+.btc-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #222222;
+    margin: 0 0 0.8rem 0;
+    letter-spacing: -0.03em;
+}
+
+.btc-desc {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #555555;
+    line-height: 1.6;
+    margin: 0;
+    letter-spacing: -0.02em;
+    word-break: keep-all;
+}
+
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 900px) {
+    .btc-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+}
+
+@media (max-width: 600px) {
+    .btc-wrapper { padding: 4rem 0 5rem 0; }
+    .btc-headline { font-size: 2rem; }
+    .btc-subheadline { font-size: 1rem; }
+    .btc-grid { grid-template-columns: 1fr; gap: 3rem; }
+    
+    .btc-col { align-items: center; text-align: center; }
+    .btc-img-box {
+        width: 100%;
+        max-width: 400px;
+        aspect-ratio: 4 / 3; /* 모바일에서는 살짝 직사각형으로 */
+    }
+}
+
+
+/* 와이드 랜딩페이지 래퍼 디자인 */
+.desktop-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body>
+    <div style="text-align:center; padding: 20px 0; font-weight:bold; color:#777;">레퍼런스(04-특징2-B2B 3열) 데스크탑 모드 클론 뷰어</div>
+    
+    <div class="desktop-wrapper">
+        
+<section class="btc-wrapper">
+    <div class="btc-container">
+        
+        <!-- Header -->
+        <div class="btc-header hc-animate-fade-in-up">
+            <h2 class="btc-headline">체계성 유지</h2>
+            
+            
+            <p class="btc-subheadline">기존의 파일, 클라우드 콘텐츠, Dropbox Paper 문서, 웹 바로 가기를 모두 한 공간으로 불러 모아 업무를 체계적이고<br>효율적으로 진행하세요.</p>
+            
+        </div>
+
+        <!-- 3-Column Grid -->
+        <div class="btc-grid">
+            
+            <!-- Column 1 -->
+            
+            <div class="btc-col hc-animate-fade-in-up" style="animation-delay: 100ms;">
+                <div class="btc-img-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+       <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+     </svg>
+                </div>
+                <h3 class="btc-title">장소의 구애 없는 파일 저장과 액세스</h3>
+                <p class="btc-desc">하나의 안전한 공간에 <span class="btc-link-text">파일을 저장</span>해 컴퓨터, 휴대폰, 태블릿 등 원하는 장치로 액세스하세요. "바탕 화면" 등의 중요한 폴더를 백업하면 변경 사항이 계정 전체에 <span class="btc-link-text">동기화</span>됩니다.</p>
+            </div>
+            
+
+            <!-- Column 2 -->
+            
+            <div class="btc-col hc-animate-fade-in-up" style="animation-delay: 200ms;">
+                <div class="btc-img-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+       <polyline points="14 2 14 8 20 8"/>
+       <line x1="16" y1="13" x2="8" y2="13"/>
+       <line x1="16" y1="17" x2="8" y2="17"/>
+       <polyline points="10 9 9 9 8 9"/>
+     </svg>
+                </div>
+                <h3 class="btc-title">모든 콘텐츠를 한 곳에</h3>
+                <p class="btc-desc">클라우드 콘텐츠, <span class="btc-link-text">Microsoft Office 파일</span> 등의 업무 파일을 Dropbox에서 바로 만들고 수정하세요. 이 앱 저 앱을 왔다 갔다 하거나 파일을 찾는 데 걸리는 시간이 절약됩니다.</p>
+            </div>
+            
+
+            <!-- Column 3 -->
+            
+            <div class="btc-col hc-animate-fade-in-up" style="animation-delay: 300ms;">
+                <div class="btc-img-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+       <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+       <line x1="8" y1="21" x2="16" y2="21"/>
+       <line x1="12" y1="17" x2="12" y2="21"/>
+     </svg>
+                </div>
+                <h3 class="btc-title">데스크톱으로 더 스마트하게</h3>
+                <p class="btc-desc"><span class="btc-link-text">데스크톱</span>에서는 지능형 콘텐츠 추천 기능이 제공됩니다. 체계적으로 정리된 단일 공간으로 팀, 콘텐츠, 도구를 불러 모으세요.</p>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+</section>
+
+    </div>
+</body>
+</html>

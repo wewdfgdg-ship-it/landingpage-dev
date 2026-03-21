@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>마뗑킴 크로스백</title>
+  <style>
+@font-face {
+  font-family: 'SOGANGUNIVERSITY';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/SOGANGUNIVERSITYTTF.woff2') format('woff2');
+  font-weight: 1 999;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'A2G Light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/%EC%97%90%EC%9D%B4%ED%88%AC%EC%A7%80%EC%B2%B4-3Light.woff2') format('woff2');
+  font-weight: 1 999;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Daehan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Daehan-Regular.woff') format('woff');
+  font-weight: 1 999;
+  font-display: swap;
+}
+</style>
+  <style>
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      word-break: keep-all;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+      color: #1a1a1a;
+    }
+    .hero .headline {
+      font-family: 'SOGANGUNIVERSITY', serif;
+    }
+    .hero .eyebrow,
+    .hero .desc,
+    .hero .micro,
+    .hero .stat-label,
+    .hero .trust-badge {
+      font-family: 'A2G Light', sans-serif;
+    }
+    .hero .stat-number,
+    .hero .sale-price,
+    .hero .discount-badge,
+    .hero .big-badge,
+    .hero .big-stat {
+      font-family: 'SOGANGUNIVERSITY', serif;
+    }
+    .hero .cta-btn {
+      font-family: 'A2G Light', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero mood-mono">
+    <div class="noise-overlay" style="
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+  "><svg width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg></div>
+    <div class="bg-ghost" style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(200px, 35vw, 500px);
+    font-weight: 900;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    line-height: 1;
+    user-select: none;
+  ">마</div>
+    <div class="hero-inner" style="
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+    ">
+      
+      <div style="text-align: center;">
+        <p class="eyebrow" style="
+    font-size: clamp(10px, 2.5vw, 18px);
+    font-weight: 400;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: #6b6b6b;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    animation: fadeInUp 0.7s ease 0.1s both;
+  ">패션 가방</p>
+        <h1 class="headline" style="
+    font-size: clamp(36px, 10.5vw, 72px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    word-break: keep-all;
+    color: #1a1a1a;
+    margin: 0 0 clamp(16px, 2vw, 32px) 0;
+    animation: fadeInUp 0.7s ease 0.2s both;
+  ">미니멀의 <span class="accent" style="color:#2D2D2D;text-shadow:0 0 30px #2D2D2D40;">정석</span></h1>
+        <div style="display: flex; justify-content: center;">
+          <p class="desc" style="
+    font-size: clamp(13px, 3.5vw, 24px);
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: 640px;
+    color: #6b6b6b;
+    margin: 0 0 clamp(24px, 3vw, 40px) 0;
+    animation: fadeInUp 0.7s ease 0.4s both;
+  ">100% 양가죽. 지금 바로 경험하세요.</p>
+        </div>
+        <div class="product-zone" style="
+      position: relative;
+      width: 50%;
+      max-width: 320px;
+      margin: 0 auto;
+      transform: rotate(-2deg);
+      animation: fadeInUp 0.8s ease 0.5s both;
+    "><img src="product.png" alt="product" style="
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.15));
+    " /></div>
+        <div style="margin: clamp(24px, 3vw, 40px) 0;">
+          <div class="stats-row" style="
+    display: flex;
+    justify-content: center;
+    gap: clamp(24px, 3.5vw, 48px);
+    animation: fadeInUp 0.7s ease 0.7s both;
+  "><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(20px, 5.5vw, 48px);
+        font-weight: 900;
+        color: #2D2D2D;
+        line-height: 1.1;
+      "><span class="stat-unit" style="
+        font-size: clamp(9px, 2.2vw, 18px);
+        font-weight: 300;
+        margin-left: 4px;
+      "></span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(9px, 2.2vw, 16px);
+          font-weight: 400;
+          line-height: 1.4;
+          margin-top: 4px;
+        ">100% 양가죽</span>
+    </div><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(20px, 5.5vw, 48px);
+        font-weight: 900;
+        color: #2D2D2D;
+        line-height: 1.1;
+      "><span class="stat-unit" style="
+        font-size: clamp(9px, 2.2vw, 18px);
+        font-weight: 300;
+        margin-left: 4px;
+      "></span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(9px, 2.2vw, 16px);
+          font-weight: 400;
+          line-height: 1.4;
+          margin-top: 4px;
+        ">이탈리아 태닝</span>
+    </div><div class="stat-item" style="text-align:center;">
+      <span class="stat-number" style="
+        display: block;
+        font-size: clamp(20px, 5.5vw, 48px);
+        font-weight: 900;
+        color: #2D2D2D;
+        line-height: 1.1;
+      "><span class="stat-unit" style="
+        font-size: clamp(9px, 2.2vw, 18px);
+        font-weight: 300;
+        margin-left: 4px;
+      "></span></span><span class="stat-label" style="
+          display: block;
+          font-size: clamp(9px, 2.2vw, 16px);
+          font-weight: 400;
+          line-height: 1.4;
+          margin-top: 4px;
+        ">3년 AS</span>
+    </div></div>
+        </div>
+        
+        <div style="max-width: 480px; margin: clamp(24px, 3vw, 40px) auto 0;">
+          <button class="cta-btn" style="
+    width: 100%;
+    padding: 22px 0;
+    font-size: clamp(14px, 4.0vw, 22px);
+    font-weight: 900;
+    color: #ffffff;
+    background: #2D2D2D;
+    border: none;
+    border-radius: 0px;
+    box-shadow: 0 0 30px #2D2D2D59;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeInUp 0.7s ease 1.0s both;
+  " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">지금 시작하기</button>
+          <p class="micro" style="
+    font-size: clamp(9px, 2.2vw, 16px);
+    font-weight: 300;
+    line-height: 1.4;
+    color: #6b6b6b;
+    margin: 8px 0 0 0;
+    text-align: center;
+  ">상세 스펙 보기</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

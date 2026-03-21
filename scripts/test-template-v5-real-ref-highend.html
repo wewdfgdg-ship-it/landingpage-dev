@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>실제 레퍼런스 + 하이엔드 3D/글래스모피즘(V5)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=Noto+Serif+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: "Pretendard", -apple-system, sans-serif; background: #111; }
+    .font-serif-kr { font-family: "Noto Serif KR", serif; }
+    .title-banner { background: #1e293b; padding: 24px; text-align: center; border-top: 4px solid #64748b; color: white; }
+
+    /* =========================================================
+       [공통] 하이엔드 텍스처 & 유틸리티
+       ========================================================= */
+    /* 1. 은은한 노이즈/질감 (모든 템플릿의 심심함 제거) */
+    .noise-overlay {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.04; mix-blend-mode: multiply; z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+    
+    /* 2. 글래스모피즘 (유리 질감 반사) */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    }
+    .dark-glass-panel {
+      background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+
+    /* =========================================================
+       Ref 1. White Clinical (EGF 앰플 스타일) - 깊이감 & 입체 분자 극대화
+       ========================================================= */
+    .hero-ref1 { 
+      background: radial-gradient(circle at center, #ffffff 0%, #f0f0f5 100%); 
+      position: relative; overflow: hidden; 
+    }
+    /* 건축 도면 같은 얇은 그리드 (Blueprint) 깔기 */
+    .hero-ref1::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.4;
+      background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: 40px 40px; z-index: 0;
+    }
+    /* 분자 구조의 완벽한 3D 구체화 (Sphere) */
+    .molecule-node { 
+      position: absolute; border-radius: 50%; 
+      /* 하얀색 구슬의 입체 텍스처 (하이라이트 + 쉐도우) */
+      background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e6e6e6 40%, #b3b3b3 100%);
+      box-shadow: 10px 10px 20px rgba(0,0,0,0.1), inset -5px -5px 15px rgba(0,0,0,0.05); 
+    }
+    .molecule-line { position: absolute; background: linear-gradient(90deg, #d4d4d4, #f0f0f0); height: 4px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); transform-origin: left center; z-index: 0; }
+    
+    .ref1-black-badge { 
+      background: linear-gradient(135deg, #333 0%, #000 100%); 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15), inset 0 2px 2px rgba(255,255,255,0.2); 
+    }
+    /* 제품이 들어갈 구멍을 단순 흰 원이 아닌 깊게 파인 '터널'처럼 입체 시공 */
+    .ref1-circle-cutout { 
+      position: absolute; bottom: -150px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px; border-radius: 50%; background: #ffffff;
+      box-shadow: inset 15px 15px 40px rgba(0,0,0,0.08), inset -15px -15px 40px rgba(255,255,255,1), 0 0 0 15px rgba(255,255,255,0.5); z-index: 0;
+    }
+
+    /* =========================================================
+       Ref 2. Vivid Pink Bubbly (시멘리트 핑크) - 글래스모피즘 & 3D 젤리볼
+       ========================================================= */
+    .hero-ref2 { background: linear-gradient(180deg, #fffafa 0%, #ffe0e9 40%, #ff9ebc 100%); position: relative; overflow: hidden; }
+    /* 평면 분홍 원 -> 3D 젤리 스피어(구슬)로 변환 */
+    .pink-sphere-3d {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffccd8 0%, #ff528a 35%, #cc0044 80%, #660022 100%);
+      box-shadow: inset -10px -10px 40px rgba(0,0,0,0.3), inset 10px 10px 20px rgba(255,255,255,0.5), 0 30px 60px rgba(204,0,68,0.4); 
+      z-index: 0;
+    }
+    /* 뱃지에 유리 질감(Glassmorphism) 세게 적용 */
+    .ref2-glass-badge {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 140px; height: 140px; border-radius: 50%; 
+      background: rgba(255,255,255,0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 20px 40px rgba(204,0,68,0.15), inset 0 4px 10px rgba(255,255,255,0.6);
+      line-height: 1.2; text-shadow: 0 2px 5px rgba(255,255,255,0.8);
+    }
+    /* 하단 표도 통유리판(Glass Panel)처럼 공중에 띄움 */
+    .ref2-glass-table {
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 -10px 30px rgba(204,0,68,0.2);
+    }
+
+    /* =========================================================
+       Ref 3. Clean Tech Promo (K뱅크) - 메탈릭 & 후광 라이팅
+       ========================================================= */
+    /* 사선 그라데이션 대신 방사형 라이팅으로 고급감 부여 */
+    .hero-ref3 { background: radial-gradient(circle at 50% -20%, #ffffff 0%, #e2e2e8 100%); position: relative; overflow: hidden; }
+    
+    /* 입체감이 살아있는 레드 말풍선 뱃지 */
+    .red-floating-badge-3d {
+      position: absolute; right: -25px; top: -35px; width: 100px; height: 100px; border-radius: 50%; 
+      display: flex; flex-direction: column; align-items: center; justify-content: center; color: white;
+      background: radial-gradient(circle at 30% 30%, #ff7b75 0%, #e63f38 50%, #b31d17 100%);
+      box-shadow: 0 25px 50px rgba(230,63,56,0.4), inset -4px -4px 15px rgba(0,0,0,0.2), inset 4px 4px 15px rgba(255,255,255,0.6); z-index: 10;
+    }
+    .red-floating-badge-3d::after {
+      content: ""; position: absolute; bottom: -8px; left: 20px; border-width: 12px 12px 0;
+      border-style: solid; border-color: #b31d17 transparent transparent transparent; transform: rotate(30deg);
+      filter: drop-shadow(0 10px 10px rgba(230,63,56,0.3));
+    }
+    /* 겹쳐있는 폰들 유리/메탈 질감 부여 */
+    .phone-glass-ghost {
+      position: absolute; top: 0; bottom: 0; 
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.1));
+      backdrop-filter: blur(5px); border: 2px solid rgba(255,255,255,0.8);
+      border-radius: 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    /* =========================================================
+       Ref 4. Dark Spotlight (Vie:serva) - 다차원 광원 & 금빛 발광
+       ========================================================= */
+    .hero-ref4 { background: radial-gradient(ellipse at 50% 0%, #3a3028 0%, #171310 80%); color: #fff; position: relative; overflow: hidden; }
+    /* 위에서 쏟아지는 극적인 볼륨 스포트라이트 */
+    .top-spotlight-volume {
+      position: absolute; top: -10vw; left: 50%; transform: translateX(-50%);
+      width: 100vw; max-width: 900px; height: 130vh;
+      background: radial-gradient(ellipse at top, rgba(255,245,230,0.3) 0%, rgba(229,176,120,0.1) 40%, transparent 70%);
+      pointer-events: none; z-index: 1; mix-blend-mode: screen;
+    }
+    /* SVG 로고나 월계관이 스스로 빛나도록 (Glow Filter) */
+    .glowing-laurel { filter: drop-shadow(0 0 10px rgba(229,176,120,0.6)); }
+    /* 넙데데했던 박스를 진짜 3D 형태의 대리석 받침대로! */
+    .cubic-pedestal-true-3d {
+      width: 200px; height: 60px; position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, #f5f5f5 0%, #d0d0d0 100%);
+      box-shadow: 0 -5px 20px rgba(255,255,255,0.2), 0 40px 60px rgba(0,0,0,0.9); z-index: 10;
+    }
+    /* 입체감 앞면/옆면 추가 */
+    .cubic-pedestal-true-3d::before { 
+      content: ""; position: absolute; top: 100%; left: -15px; width: 100%; height: 30px; 
+      background: linear-gradient(to right, #888, #bbb); transform: skewX(-45deg); box-shadow: inset 0 10px 20px rgba(0,0,0,0.3);
+    }
+    .cubic-pedestal-true-3d::after { 
+      content: ""; position: absolute; top: 15px; right: -30px; width: 30px; height: 100%; 
+      background: linear-gradient(to bottom, #bbb, #555); transform: skewY(-45deg); box-shadow: inset 10px 0 20px rgba(0,0,0,0.4);
+    }
+
+    /* =========================================================
+       Ref 5. Earthy Steps (테라로직) - 건축학적 그림자 & 리얼 입체 모듈
+       ========================================================= */
+    .hero-ref5 { background: radial-gradient(circle at 50% top, #d9cabd 0%, #b0a191 100%); position: relative; overflow: hidden; }
+    /* 바닥에 깔리는 종이/모래 텍스처 노이즈 */
+    .earthy-noise {
+      position: absolute; inset: 0; opacity: 0.08; pointer-events: none; mix-blend-mode: color-burn; z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+    
+    /* 평면 다각형이 아닌 '진짜 입체 육면체 모듈' 기반의 계단 세트 */
+    .stepped-stage { position: absolute; bottom: 0; width: 100%; height: 40vh; z-index: 10; display: flex; align-items: flex-end; }
+    .step-block { position: relative; height: 100%; flex: 1; }
+    
+    /* 각 블록의 앞면 (그라데이션과 내부 그림자로 덩어리감) */
+    .step-front { 
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(180deg, #877765 0%, #635443 100%);
+      box-shadow: inset 5px 0 15px rgba(0,0,0,0.05), inset -5px 0 15px rgba(0,0,0,0.1); border-left: 1px solid rgba(255,255,255,0.05);
+    }
+    /* 각 블록의 윗면 (조명을 받는 밝은 면, 원근감 적용) */
+    .step-top { 
+      position: absolute; top: -30px; left: 15px; width: 100%; height: 30px;
+      background: linear-gradient(to bottom, #a39380 0%, #877765 100%);
+      transform: skewX(-45deg); border-top: 1px solid rgba(255,255,255,0.2); border-left: 1px solid rgba(255,255,255,0.1);
+      box-shadow: inset 0 5px 10px rgba(255,255,255,0.1);
+    }
+
+  </style>
+</head>
+<body class="bg-black">
+
+  <!-- ==============================================
+       Ref 1. White Clinical (EGF 앰플 스타일) [3D 업그레이드]
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black text-[#60a5fa]">1. White Clinical (1위 펀딩 EGF 앰플) - 글래스모피즘 & 3D 구체</h2></div>
+  <section class="hero-ref1 min-h-[90vh] flex flex-col items-center pt-24 pb-12 relative">
+    
+    <div class="noise-overlay"></div> <!-- 텍스처 추가 -->
+    <div class="ref1-circle-cutout"></div> <!-- 입체적으로 깊게 파인 컷아웃 -->
+    
+    <!-- 3D 광원이 적용된 분자 장식 1 -->
+    <div class="absolute z-10 w-[300px] h-[300px] top-[40%] right-[10%] opacity-90 pointer-events-none hidden lg:block">
+      <div class="molecule-line" style="width:100px; top:100px; left:50px; transform:rotate(30deg);"></div>
+      <div class="molecule-line" style="width:120px; top:150px; left:136px; transform:rotate(-45deg);"></div>
+      <div class="molecule-node w-12 h-12 top-[76px] left-[26px]"></div>
+      <!-- 구슬 중심광 강조 -->
+      <div class="molecule-node w-16 h-16 top-[118px] left-[104px]" style="background: radial-gradient(circle at 20% 20%, #fff 0%, #ccc 50%, #888 100%);"></div>
+      <div class="molecule-node w-10 h-10 top-[40px] left-[184px]"></div>
+    </div>
+    <!-- 3D 광원이 적용된 분자 장식 2 -->
+    <div class="absolute z-10 w-[300px] h-[300px] bottom-[20%] left-[10%] opacity-100 pointer-events-none hidden lg:block">
+      <div class="molecule-line" style="width:80px; top:80px; left:80px; transform:rotate(-20deg);"></div>
+      <div class="molecule-line" style="width:100px; top:52px; left:154px; transform:rotate(60deg);"></div>
+      <div class="molecule-node w-14 h-14 top-[52px] left-[52px]" style="background: radial-gradient(circle at 30% 30%, #e2e8f0 0%, #94a3b8 50%, #475569 100%);"></div>
+      <div class="molecule-node w-16 h-16 top-[22px] left-[122px]" style="background: radial-gradient(circle at 30% 30%, #cbd5e1 0%, #64748b 50%, #334155 100%);"></div>
+      <div class="molecule-node w-12 h-12 top-[102px] left-[142px]"></div>
+    </div>
+
+    <!-- 텍스트/유리 질감 영역 -->
+    <div class="relative z-20 w-full max-w-4xl text-center flex flex-col items-center">
+      <p class="text-xl sm:text-2xl font-bold text-slate-800 tracking-wide mb-2">2023 ~ 2024</p>
+      <!-- 글씨에도 미세한 입체 그림자(Drop-shadow) -->
+      <h1 class="text-[80px] sm:text-[140px] font-black text-[#111] leading-none tracking-tighter mb-8 drop-shadow-lg">1위</h1>
+      
+      <div class="ref1-black-badge text-sm sm:text-base mb-4 tracking-widest text-white px-6 py-2 rounded">
+        <span class="text-yellow-400">★</span> 슈퍼메이커
+      </div>
+
+      <p class="text-lg sm:text-xl font-medium text-slate-500 mb-16 px-4">
+        EGF 앰플, 세럼군 펀딩 금액 1위 *<br>2023~2024
+      </p>
+
+      <div class="w-[1px] h-[80px] bg-gradient-to-b from-black to-transparent mb-16 opacity-30"></div>
+
+      <!-- 평면 흰색 박스 -> 반투명 글래스 패널로 업그레이드 -->
+      <div class="glass-panel rounded-3xl p-10 mb-16">
+        <p class="text-lg sm:text-2xl font-bold text-slate-800 mb-2">까다로운 서포터님들도 인정한</p>
+        <h2 class="text-3xl sm:text-5xl font-black text-slate-900 mb-6 drop-shadow-sm">최고의 펀딩 EGF 1위 <span class="text-slate-500 text-3xl">*</span></h2>
+        <p class="text-[28px] sm:text-[44px] font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 tracking-tight">
+          펀딩 금액 : 628,998,500<span class="text-2xl sm:text-3xl font-bold ml-1 text-slate-800">원</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==============================================
+       Ref 2. Vivid Pink Bubbly (시멘리트 핑크 스피큘) [3D 업그레이드]
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black text-[#f472b6]">2. Vivid Pink Bubbly (안면부 꺼짐 케어) - 메탈릭 스피어 & 프로스티드 글래스</h2></div>
+  <section class="hero-ref2 min-h-[90vh] flex flex-col relative pt-16">
+    
+    <div class="noise-overlay opacity-10"></div>
+    
+    <!-- 평면원형에서 완전한 3D 하이라이트/쉐도우 구체(Sphere)로 변경 -->
+    <div class="pink-sphere-3d w-[250px] h-[250px] -top-[50px] -left-[50px] opacity-80 backdrop-blur-md"></div>
+    <div class="pink-sphere-3d w-[600px] h-[600px] top-[30%] right-[-250px]"></div>
+    <div class="pink-sphere-3d w-[150vw] h-[800px] bottom-[-600px] left-1/2 -translate-x-1/2"></div>
+
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-4 flex flex-col items-center text-center">
+      <p class="text-xl sm:text-2xl font-bold text-[#cc0044] mb-2 tracking-tight">피부 골조 케어 원리에</p>
+      <p class="text-2xl sm:text-3xl font-bold text-[#cc0044] mb-4 tracking-tight">핑크 스피큘을 더해</p>
+      <h1 class="text-[36px] sm:text-[52px] font-black text-transparent bg-clip-text bg-gradient-to-r from-[#e6004c] to-[#990033] mb-12 tracking-[-0.04em] drop-shadow-sm">안면부 전반의 꺼짐까지 케어</h1>
+
+      <div class="w-full max-w-2xl border-t border-b border-[#e63971]/30 py-6 mb-12 relative">
+        <div class="absolute inset-0 bg-white/20 backdrop-blur-sm -z-10"></div> <!-- 텍스트 배경에도 옅은 블러 -->
+        <p class="text-lg sm:text-xl font-bold text-slate-800 mb-2">프리미엄 사이아노 핑크 스피큘 세럼 & 크림</p>
+        <p class="text-[22px] sm:text-[28px] font-black text-[#cc0044] drop-shadow-sm">핑크스피큘과 리보닉 특허성분의 시너지 효과</p>
+      </div>
+
+      <!-- 플랫한 흰색 선 뱃지 대신, 글래스모피즘 뱃지로 변경 -->
+      <div class="flex flex-wrap justify-center gap-6 mb-24">
+        <div class="ref2-glass-badge">
+          <p class="text-[10px] text-white font-bold mb-1 w-full truncate px-3 border-b border-white/40 pb-1">스피큘 라인</p>
+          <p class="text-[18px] font-black text-[#990033] mt-2">주름개선<br>기능성 인증</p>
+        </div>
+        <div class="ref2-glass-badge">
+          <p class="text-[10px] text-white font-bold mb-1 w-full truncate px-3 border-b border-white/40 pb-1">스피큘 라인</p>
+          <p class="text-[18px] font-black text-[#990033] mt-2">미백<br>기능성 인증</p>
+        </div>
+        <div class="ref2-glass-badge">
+          <p class="text-[10px] text-white font-bold mb-1 w-full truncate px-3 border-b border-white/40 pb-1">스피큘 라인</p>
+          <p class="text-[18px] font-black text-[#990033] mt-2">리프팅 개선<br>임상 완료</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단바 통유리판(Glassmorphism) 효과 -->
+    <div class="relative z-20 w-full ref2-glass-table flex flex-col sm:flex-row mt-auto">
+      <div class="flex-1 p-6 text-center border-b sm:border-b-0 sm:border-r border-white/30">
+        <p class="text-xl font-bold mb-1 text-[#800020]">피부 칼슘</p>
+        <p class="text-2xl font-black text-white drop-shadow-md">REBORNIC</p>
+      </div>
+      <div class="flex-1 p-6 text-center border-b sm:border-b-0 sm:border-r border-white/30">
+        <p class="text-xl font-bold mb-1 text-[#800020]">핑크 스피큘</p>
+        <p class="text-xl font-medium text-white drop-shadow-md">고함량 함유</p>
+      </div>
+      <div class="flex-1 p-6 text-center flex flex-col justify-center items-center">
+        <p class="text-xl font-black text-[#800020]">저자극테스트</p>
+        <p class="text-xl font-bold text-white drop-shadow-md">완료</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==============================================
+       Ref 3. Clean Tech Promo (K뱅크) [3D 업그레이드]
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black text-[#fca5a5]">3. Clean Tech Promo (단골 이벤트 아이폰) - 내부 쉐도우 & 다중 질감</h2></div>
+  <section class="hero-ref3 min-h-[90vh] flex flex-col relative pt-12 pb-20">
+    <div class="noise-overlay opacity-[0.05]"></div>
+
+    <div class="relative z-20 w-full max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
+      
+      <div class="self-end mb-12 text-2xl font-black text-slate-500 font-sans tracking-tighter drop-shadow-sm">
+        K<span class="font-normal border-l-2 border-slate-500 pl-1 ml-1">bank</span>
+      </div>
+
+      <div class="border-b border-slate-300 pb-1 px-4 mb-2 text-slate-500 font-bold tracking-widest text-sm">EVENT</div>
+      <p class="text-[18px] sm:text-[22px] text-slate-500 font-medium mb-12 drop-shadow-sm">주거래우대 정기예금 출시 기념 이벤트</p>
+
+      <h2 class="text-[32px] sm:text-[44px] font-bold text-slate-700 leading-tight mb-2 drop-shadow-sm">케이뱅크 단골 고객이면</h2>
+      <h1 class="text-[64px] sm:text-[88px] font-black leading-none tracking-tight mb-8">
+        <!-- 텍스트에도 메탈릭/은은한 파임 구조 추가 -->
+        <span class="text-transparent bg-clip-text bg-gradient-to-b from-[#ff5e57] to-[#cc241d]" style="text-shadow: 0 4px 10px rgba(204,36,29,0.3);">iPhone X</span> 
+        <span class="text-slate-700 font-medium text-[48px] sm:text-[72px]">정도</span><br>
+        <span class="text-slate-800 drop-shadow-lg">들어줘야!</span>
+      </h1>
+
+      <!-- 제품 겹침 (Array) 전시 영역 유리 질감 극대화 -->
+      <div class="relative w-full max-w-3xl h-[450px] flex items-center justify-center mb-16 mt-8">
+        
+        <!-- 뒤에 깔리는 가짜 기기들을 블러먹인 유리 패널로! -->
+        <div class="phone-glass-ghost left-[10%] w-[160px] h-[340px] z-[1]"></div>
+        <div class="phone-glass-ghost left-[25%] w-[180px] h-[380px] z-[2] bg-gradient-to-tr from-blue-300/40 to-pink-300/40"></div>
+        <div class="phone-glass-ghost right-[25%] w-[180px] h-[380px] z-[2] bg-gradient-to-tr from-yellow-300/40 to-blue-300/40"></div>
+        <div class="phone-glass-ghost right-[10%] w-[160px] h-[340px] z-[1]"></div>
+        
+        <!-- 메인 중앙 기기 박스 (메탈 림 + 곡면 반사) -->
+        <div class="relative w-[230px] h-[460px] bg-slate-900 rounded-[45px] p-[10px] shadow-[0_30px_60px_rgba(0,0,0,0.5),inset_0_5px_15px_rgba(255,255,255,0.4)] z-10 flex flex-col">
+           <!-- 측면 베젤 반사 빔 -->
+          <div class="absolute inset-0 rounded-[45px] border-2 border-white/20 pointer-events-none"></div>
+          
+          <div class="flex-1 bg-gradient-to-b from-blue-500 via-pink-500 to-yellow-300 rounded-[35px] w-full h-full relative overflow-hidden shadow-inner">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[110px] h-[25px] bg-slate-900 rounded-b-2xl shadow-md"></div>
+            <!-- 화면 위 광택 반사 -->
+            <div class="absolute top-0 right-0 w-[150%] h-[100%] bg-gradient-to-bl from-white/30 to-transparent skew-x-12 translate-x-10 pointer-events-none"></div>
+          </div>
+          
+          <!-- 말풍선형 빨간 뱃지 3D 볼륨화 -->
+          <div class="red-floating-badge-3d text-white">
+            <span class="text-sm font-bold opacity-90">무려</span>
+            <span class="text-[28px] font-black mt-[-4px] drop-shadow-md">10대</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==============================================
+       Ref 4. Dark Spotlight (Vie:serva 마사지기) [3D 업그레이드]
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black text-[#eab308]">4. Dark Spotlight Light (Vie:serva 마사지기) - 쏟아지는 빛줄기와 거대한 대리석상</h2></div>
+  <section class="hero-ref4 min-h-[100vh] flex flex-col justify-between relative text-center pt-24 pb-12">
+    <!-- SVG 그라데이션 소스 -->
+    <svg width="0" height="0" class="absolute">
+      <defs>
+        <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fef08a" />
+          <stop offset="50%" stop-color="#e5b078" />
+          <stop offset="100%" stop-color="#a16207" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="noise-overlay opacity-[0.06]"></div>
+    <div class="top-spotlight-volume"></div> <!-- 극적인 부피감의 스포트라이트 -->
+
+    <div class="relative z-10 w-full max-w-4xl mx-auto px-6">
+      <p class="text-[16px] sm:text-[18px] text-[#b3a69a] font-medium tracking-wide mb-6 drop-shadow-md">매일 아침 달라진 피부가<br>차이를 만들고, 확신을 더하니까</p>
+      
+      <!-- 텍스트 자체 빛 발산 -->
+      <h1 class="text-[40px] sm:text-[60px] font-black text-transparent bg-clip-text bg-gradient-to-b from-[#fef08a] to-[#cbd5e1] leading-tight mb-8 font-serif-kr tracking-[-0.03em]" style="filter: drop-shadow(0 0 20px rgba(229,176,120,0.3));">
+        모두가 <span class="font-sans font-black tracking-normal">vie:serva</span>를<br>선택하는 이유입니다
+      </h1>
+
+      <p class="text-[14px] sm:text-[16px] text-white/60 mb-16">
+        '1위'라는 숫자를 만들어주신 고객님께 감사의 마음을 담아<br>압도적인 판매량을 당당히 증명합니다.
+      </p>
+
+      <div class="border-t border-[#4a4036]/50 w-full max-w-xl mx-auto mb-16 shadow-[0_2px_10px_rgba(229,176,120,0.1)]"></div>
+
+      <div class="inline-flex flex-col items-center mb-16 gap-2 dark-glass-panel px-8 py-4 rounded-2xl">
+        <div class="bg-white/90 w-12 h-12 flex items-center justify-center text-black font-black text-2xl rounded shadow-[0_0_15px_rgba(255,255,255,0.4)]">N</div>
+        <span class="text-sm font-bold tracking-widest text-[#e5b078]">네이버쇼핑</span>
+      </div>
+
+      <div class="flex flex-col gap-16 w-full items-center">
+        <!-- 자체발광 글로우 월계관 추가 -->
+        <div class="relative flex items-center justify-center w-full max-w-md">
+          <svg viewBox="0 0 100 100" class="svg-laurel glowing-laurel absolute w-24 h-24 left-0"><path d="M20,90 Q10,50 30,10" fill="none" stroke-width="2"/><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45" fill="none" stroke-width="2"/></svg>
+          <div class="flex flex-col items-center w-full z-10 dark-glass-panel px-10 py-5 rounded-full">
+            <span class="text-sm font-bold text-[#e5b078] mb-2 drop-shadow-md">'고주파마사지기'</span>
+            <span class="text-[28px] sm:text-[36px] font-black text-white drop-shadow-md">꾸준한 판매량 1위</span>
+          </div>
+          <svg viewBox="0 0 100 100" class="svg-laurel glowing-laurel absolute w-24 h-24 right-0" style="transform: scaleX(-1);"><path d="M20,90 Q10,50 30,10" fill="none" stroke-width="2"/><path d="M15,80 L25,75 M12,65 L22,60 M10,50 L20,45" fill="none" stroke-width="2"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative z-10 w-full flex justify-center mt-32 h-[100px]">
+      <div class="absolute bottom-[60px] w-[60px] h-[200px] bg-gradient-to-b from-white to-slate-300 rounded-t-full rounded-b-md shadow-[0_30px_60px_rgba(0,0,0,0.9)] flex flex-col items-center justify-between py-4 z-20">
+        <!-- 생략된 제품 묘사 대신 조명과 그림자 추가 -->
+      </div>
+      <!-- 평면 상자 -> "진짜 단상(Pedestal)" 3D 조형물로 변경 -->
+      <div class="cubic-pedestal-true-3d"></div>
+    </div>
+  </section>
+
+
+  <!-- ==============================================
+       Ref 5. Earthy Steps (테라로직 레티놀 앰플) [3D 업그레이드]
+       ============================================== -->
+  <div class="title-banner"><h2 class="text-xl font-black text-[#a16207]">5. Earthy Steps (테라로직 앰플) - 완전한 3D 건축 블록(Stepped Stage)</h2></div>
+  <section class="hero-ref5 min-h-[90vh] flex flex-col items-center relative pt-20">
+    <div class="earthy-noise"></div>
+
+    <svg viewBox="0 0 100 100" class="absolute top-[10%] left-[5%] w-[300px] opacity-10" style="stroke: #5c4e3f; fill:none; filter:blur(2px);"><path d="M20,90 Q10,50 30,10" stroke-width="3"/></svg>
+
+    <div class="relative z-20 w-full max-w-5xl mx-auto px-6 text-center flex flex-col items-center mb-40">
+      <h2 class="text-[32px] sm:text-[40px] font-bold text-[#4a4237] leading-tight mb-2 tracking-tight drop-shadow-md">
+        출시하자마자<br>누적판매 <span class="text-[20px]">*</span><span class="text-[40px] sm:text-[52px] font-black text-transparent bg-clip-text bg-gradient-to-r from-[#5c4e3f] to-[#3d362d]">5만 6천개!</span>
+      </h2>
+      <div class="my-10">
+        <h3 class="text-[28px] sm:text-[36px] font-bold text-[#3d362d] mb-2 tracking-tighter">결부터 남다른 모공앰플</h3>
+        <h1 class="text-[36px] sm:text-[48px] font-black text-[#1a1714] tracking-tight drop-shadow-lg">레티놀 앰플 1위! 레틴A 앰플</h1>
+      </div>
+    </div>
+
+    <!-- 밋밋했던 다각형 대신 입체 모듈 4개를 조립한 진짜 Stepped Stage -->
+    <div class="stepped-stage">
+      
+      <!-- 블록 1 -->
+      <div class="step-block" style="height: 40%;">
+        <div class="step-front"></div>
+        <div class="step-top"></div>
+        <div class="absolute bottom-[20px] left-1/2 -translate-x-1/2 w-[80px] h-[160px] bg-gradient-to-b from-[#333] to-[#111] rounded-t-2xl shadow-2xl z-20 flex outline outline-1 outline-white/20"></div>
+      </div>
+      
+      <!-- 블록 2 -->
+      <div class="step-block" style="height: 60%; z-index:-1;">
+        <div class="step-front"></div>
+        <div class="step-top"></div>
+        <div class="absolute bottom-[20px] left-1/2 -translate-x-1/2 w-[100px] h-[200px] bg-gradient-to-b from-[#2a2a2a] to-[#0a0a0a] rounded-t-3xl shadow-2xl z-20 outline outline-1 outline-white/20"></div>
+      </div>
+      
+      <!-- 블록 3 (중앙 최고봉) -->
+      <div class="step-block" style="height: 80%; z-index:-2;">
+        <div class="step-front"></div>
+        <div class="step-top"></div>
+        <div class="absolute bottom-[20px] left-1/2 -translate-x-1/2 w-[140px] h-[280px] bg-gradient-to-b from-[#222] to-[#000] rounded-t-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_2px_10px_rgba(255,255,255,0.2)] z-20 flex flex-col items-center justify-center outline outline-1 outline-white/20">
+           <span class="text-sm italic font-serif-kr mb-2 text-[#b0a191]">theralogic</span>
+           <span class="text-xl font-bold font-serif-kr text-white drop-shadow-md">RetinA</span>
+        </div>
+      </div>
+      
+      <!-- 블록 4 -->
+      <div class="step-block" style="height: 50%; z-index:-3;">
+        <div class="step-front"></div>
+        <div class="step-top"></div>
+        <div class="absolute bottom-[20px] left-1/2 -translate-x-1/2 w-[100px] h-[200px] bg-gradient-to-b from-[#2a2a2a] to-[#0a0a0a] rounded-t-3xl shadow-2xl z-20 outline outline-1 outline-white/20"></div>
+      </div>
+      
+    </div>
+
+    <div class="absolute bottom-4 left-6 z-30 opacity-60 text-[10px] text-[#2e2922] font-semibold text-left drop-shadow-sm">
+      * 자사 전체 누적판매량 기준<br>* 피부과 테스트 완료
+    </div>
+  </section>
+
+</body>
+</html>

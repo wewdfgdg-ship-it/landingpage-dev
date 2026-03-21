@@ -1,0 +1,346 @@
+export const html = `
+<main class="vv-wrapper">
+    <!-- 바닥의 은은한 골드 빛반사 -->
+    <div class="vv-floor-light"></div>
+    
+    <div class="vv-container">
+        
+        <!-- Header Section -->
+        <div class="vv-header-area hc-animate-fade-in-up">
+            
+            <!-- 최상단 VVIP (골드 그라데이션) -->
+            {{#if microCopy}}
+            <div class="vv-top-title">{{{microCopy}}}</div>
+            {{/if microCopy}}
+            
+            <!-- 고객에게 드리는 -->
+            {{#if subheadline}}
+            <div class="vv-sub-title">{{{subheadline}}}</div>
+            {{/if subheadline}}
+            
+            <!-- 신·라·면·세·점·의 -->
+            {{#if body}}
+            <div class="vv-brand-text">{{{body}}}</div>
+            {{/if body}}
+            
+            <!-- 한정판 혜택 (사선 슬래시 효과 포함) -->
+            <div class="vv-main-title-wrap">
+                <h1 class="vv-main-title">{{{headline}}}</h1>
+                <!-- 장식용 사선 (Slash) -->
+                <div class="vv-slash vv-slash-1"></div>
+                <div class="vv-slash vv-slash-2"></div>
+                <div class="vv-slash vv-slash-3"></div>
+                <div class="vv-slash vv-slash-4"></div>
+            </div>
+            
+            <!-- 기간 및 기타 Info -->
+            <div class="vv-info-row">
+                {{#if bullet.0}}
+                <div class="vv-info-item">{{{bullet.0}}}</div>
+                {{/if bullet.0}}
+                
+                {{#if bullet.1}}
+                <div class="vv-info-item">{{{bullet.1}}}</div>
+                {{/if bullet.1}}
+            </div>
+            
+        </div>
+
+        <!-- 하단 대형 Visual Showcase (Giant V & Card) -->
+        <div class="vv-showcase hc-animate-fade-in-up" style="animation-delay: 200ms;">
+            
+            <!-- 빛 번짐 (Lens Flare) -->
+            <div class="vv-flare"></div>
+
+            <!-- CSS로 그려낸 대형 골드 'V' -->
+            <div class="vv-v-shape">
+                <!-- 좌측 두꺼운 기둥 -->
+                <div class="vv-v-left"></div>
+                <!-- 우측 얇은 기둥 -->
+                <div class="vv-v-right"></div>
+                <!-- 위쪽 수평 날개 -->
+                <div class="vv-v-bar-left"></div>
+                <div class="vv-v-bar-right"></div>
+            </div>
+
+            <!-- 세워진 입체 VVIP 카드 -->
+            <div class="vv-card-prop">
+                <div class="vv-card-content">
+                    <span class="vv-card-text">VVIP</span>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</main>
+`;
+
+export const css = `
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+.vv-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 900px; /* 세로로 긴 프리미엄 레이아웃 */
+    background-color: #030303; /* 완전한 블랙 */
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    /* 프리미엄 명조체 강제 적용 */
+    font-family: "Nanum Myeongjo", "Playfair Display", serif;
+}
+
+/* 바닥 반사 빛 */
+.vv-floor-light {
+    position: absolute;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 300px;
+    background: radial-gradient(ellipse at top, rgba(166, 116, 45, 0.4) 0%, rgba(0,0,0,0) 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.vv-container {
+    width: 100%;
+    max-width: 1280px; /* 데스크탑 와이드 최적화 */
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4rem;
+}
+
+.vv-header-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 3rem;
+    z-index: 10;
+}
+
+/* VVIP 골드 그라데이션 타이틀 */
+.vv-top-title {
+    font-family: inherit;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.8rem;
+    
+    /* 골드 메탈 그라데이션 텍스트 */
+    background: linear-gradient(to bottom, #f3db91 0%, #d8ae5e 40%, #a27231 60%, #ce9d4f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.05em;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8));
+}
+
+.vv-sub-title {
+    color: #aeaeae;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 1.5rem;
+    width: 250px;
+}
+
+.vv-brand-text {
+    color: #dedede;
+    font-size: 1.1rem;
+    letter-spacing: 0.4em; /* 글자 사이를 넓게 */
+    margin-bottom: 1rem;
+}
+
+/* 한정판 혜택 메인 타이틀 래퍼 */
+.vv-main-title-wrap {
+    position: relative;
+    display: inline-block;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.vv-main-title {
+    color: #ffffff;
+    font-size: 4.5rem;
+    font-weight: 400; /* 명조체는 두꺼운 것보다 얇고 우아한게 맛 */
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* 디자인 장식용 사선 (텍스트를 쪼개는 듯한 이펙트) */
+.vv-slash {
+    position: absolute;
+    width: 1.5px;
+    height: 120%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.1) 80%, transparent 100%);
+    top: -10%;
+    transform: rotate(25deg);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* 사선 위치 조정 */
+.vv-slash-1 { left: 5%; height: 140%; top: -20%; }
+.vv-slash-2 { left: 45%; }
+.vv-slash-3 { left: 60%; height: 130%; top: -15%; }
+.vv-slash-4 { left: 85%; }
+
+
+.vv-info-row {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    color: #888888;
+    font-size: 1rem;
+    font-family: "Pretendard", sans-serif; /* 정보는 고딕(산세리프)으로 가독성 확보 */
+}
+.vv-info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+/* 하단 거대한 골드 V와 카드 렌더링 영역 */
+.vv-showcase {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 500px;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+/* 거대한 V 골격 */
+.vv-v-shape {
+    position: relative;
+    width: 500px;
+    height: 450px;
+    z-index: 2;
+}
+
+/* V - 좌측 두꺼운 뼈대 */
+.vv-v-left {
+    position: absolute;
+    left: 20%;
+    top: 0;
+    width: 120px;
+    height: 110%;
+    background: linear-gradient(to right, #f2d88d 0%, #b8863f 50%, #462c10 100%);
+    transform-origin: top left;
+    transform: skewX(-25deg);
+    box-shadow: inset -5px 0 20px rgba(0,0,0,0.5);
+}
+
+/* V - 우측 얇은 뼈대 */
+.vv-v-right {
+    position: absolute;
+    right: 20%;
+    top: 0;
+    width: 40px;
+    height: 110%;
+    background: linear-gradient(to right, #795221 0%, #ce9e4b 50%, #fcecbe 100%);
+    transform-origin: top right;
+    transform: skewX(25deg);
+}
+
+/* V - 상단 수평 날개선 (좌/우) */
+.vv-v-bar-left {
+    position: absolute;
+    left: -15%;
+    top: 0;
+    width: 180px;
+    height: 8px;
+    background: linear-gradient(to bottom, #f3db91 0%, #a27231 100%);
+}
+.vv-v-bar-right {
+    position: absolute;
+    right: -15%;
+    top: 0;
+    width: 180px;
+    height: 8px;
+    background: linear-gradient(to bottom, #f3db91 0%, #a27231 100%);
+}
+
+/* 렌즈 플레어 빛나는 효과 (왼쪽 기둥 상단) */
+.vv-flare {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-140px);
+    width: 250px;
+    height: 60px;
+    background: radial-gradient(ellipse at center, #ffffff 0%, rgba(255,200,100,0.8) 20%, rgba(255,100,50,0) 70%);
+    z-index: 5;
+    border-radius: 50%;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+/* 앞으로 세워진 VVIP 카드 소품 */
+.vv-card-prop {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%) rotate(5deg);
+    width: 220px;
+    height: 320px;
+    z-index: 10;
+    perspective: 1000px;
+}
+
+.vv-card-content {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2a2a 0%, #111111 60%, #050505 100%);
+    transform: rotateY(15deg) rotateX(10deg);
+    box-shadow: -15px 30px 40px rgba(0,0,0,0.9), inset 1px 1px 2px rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 카드 안의 텍스트가 위로 올라가게 회전 */
+.vv-card-text {
+    font-family: inherit;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #c1964f;
+    transform: rotate(-90deg);
+    background: linear-gradient(to bottom, #d8ae5e 0%, #875e25 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.1em;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+}
+
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 768px) {
+    .vv-top-title { font-size: 2.8rem; }
+    .vv-main-title { font-size: 3rem; }
+    .vv-sub-title { width: 180px; font-size: 0.95rem; }
+    .vv-info-row { flex-direction: column; gap: 0.5rem; align-items: center; }
+    
+    .vv-showcase { height: 350px; transform: scale(0.7); margin-top: 0; }
+}
+`;

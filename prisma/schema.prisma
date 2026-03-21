@@ -158,7 +158,8 @@ model Project {
   // 배포
   isDeployed    Boolean @default(false)
   deployedAt    DateTime?
-  customDomain  String?
+  customDomain  String?  @unique
+  previewToken  String?  @unique  // 배포 전 공유 미리보기 토큰
 
   org            Organization     @relation(fields: [orgId], references: [id], onDelete: Cascade)
   sections       Section[]
@@ -575,4 +576,81 @@ enum CreditTxType {
   REFUND      // 환불 복구
   ADMIN       // 관리자 수동 조정
   PROMO       // 프로모션 지급
+}
+
+// ============================================================
+// 섹션 레퍼런스 (26섹션 × 18업종 × 4트리트먼트)
+// ============================================================
+
+model SectionReference {
+  id        String          @id @default(cuid())
+
+  sectionType String        // HEADER_BANNER, KEY_FEATURES, ...
+  industry    String        // beauty, food, fashion, ...
+  treatment   String        // photo, text, graphic, animation
+  status      ReferenceStatus @default(PENDING)
+
+  imageUrl    String        // 스크린샷 URL
+  sourceUrl   String?       // 원본 페이지 URL
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sectionType])
+  @@index([industry])
+  @@index([status])
+  @@index([sectionType, industry])
+}
+
+enum ReferenceStatus {
+  PENDING   // 대기중
+  APPROVED  // 승인 (O)
+  REJECTED  // 거절 (X)
+}
+
+// ============================================================
+// 크롤링 작업 관리
+// ============================================================
+
+model CrawlJob {
+  id          String      @id @default(cuid())
+
+  sectionType String        // 요청 섹션 타입
+  industry    String        // 요청 업종
+  treatment   String        // 요청 트리트먼트 (photo, text 등)
+  count       Int           // 요청 수량
+  status      CrawlStatus   @default(QUEUED)
+
+  sourceSites String[]      // 검색 대상 사이트 (옵션)
+  keywords    String[]      // 검색 키워드 목록
+  memo        String?       // 관리자 메모
+
+  collected   Int           @default(0)  // 수집된 수량
+  errorMsg    String?       // 에러 메시지
+
+  createdAt   DateTime      @default(now())
+  startedAt   DateTime?     // 크롤링 시작 시각
+  completedAt DateTime?     // 크롤링 완료 시각
+
+  @@index([status])
+  @@index([sectionType, industry])
+}
+
+enum CrawlStatus {
+  QUEUED      // 대기
+  RUNNING     // 진행중
+  COMPLETED   // 완료
+  FAILED      // 실패
+  CANCELLED   // 취소
+}
+
+// ============================================================
+// 업종별 키워드 프리셋
+// ============================================================
+
+model IndustryKeywordPreset {
+  id        String   @id @default(cuid())
+  industry  String   @unique  // beauty, food, fashion, ...
+  keywords  String[]          // 검색 키워드 목록
+  updatedAt DateTime @updatedAt
 }

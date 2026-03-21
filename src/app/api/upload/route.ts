@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { getUserId } from '@/lib/get-user-id';
 import { getUploadUrl } from '@/lib/r2';
 
 export async function POST(req: Request): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return NextResponse.json({ error: '인증 필요' }, { status: 401 });
   }
 
@@ -19,7 +19,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     return NextResponse.json({ error: '이미지만 업로드 가능' }, { status: 400 });
   }
 
-  const storageKey = `uploads/${session.user.id}/${Date.now()}_${filename}`;
+  const storageKey = `uploads/${userId}/${Date.now()}_${filename}`;
   const uploadUrl = await getUploadUrl(storageKey, contentType);
 
   return NextResponse.json({ uploadUrl, storageKey });

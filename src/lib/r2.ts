@@ -37,6 +37,16 @@ export async function deleteObject(key: string): Promise<void> {
   await r2.send(command);
 }
 
+export async function uploadBuffer(key: string, body: Buffer, contentType: string): Promise<void> {
+  const command = new PutObjectCommand({
+    Bucket: BUCKET,
+    Key: key,
+    Body: body,
+    ContentType: contentType,
+  });
+  await r2.send(command);
+}
+
 export function getCdnUrl(key: string): string {
   return `${process.env.R2_CDN_URL}/${key}`;
 }

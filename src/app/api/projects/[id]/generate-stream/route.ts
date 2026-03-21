@@ -1,5 +1,5 @@
-import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { getUserId } from '@/lib/get-user-id';
 import { createSSEStream, sseHeaders } from '@/lib/sse';
 import { getOrgUsage, checkGenerateQuota } from '@/lib/billing';
 import { runPipeline } from '@/engine/pipeline';
@@ -15,8 +15,8 @@ export async function POST(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<Response> {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const userId = await getUserId();
+  if (!userId) {
     return new Response(JSON.stringify({ error: '인증 필요' }), {
       status: 401,
       headers: { 'Content-Type': 'application/json' },
@@ -26,7 +26,7 @@ export async function POST(
   const { id } = await params;
 
   const membership = await db.membership.findFirst({
-    where: { userId: session.user.id },
+    where: { userId },
     select: { orgId: true },
   });
 

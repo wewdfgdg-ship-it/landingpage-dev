@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ST-A 수평 나열 dark</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.st { position: relative; padding: 48px 20px 40px; --st-brand: #4A90D9; }
+.st__inner { max-width: 520px; margin: 0 auto; }
+.st__header { text-align: center; margin-bottom: 32px; }
+.st__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--st-brand) 70%, #5f6980); }
+.st__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; word-break: keep-all; }
+.st__sub { max-width: 420px; margin: 12px auto 0; font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.68); }
+
+.st__row { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+.st__item { text-align: center; }
+.st__num { display: block; font-size: 48px; font-weight: 900; color: var(--st-brand); letter-spacing: -2px; line-height: 1; text-shadow: 0 0 20px color-mix(in srgb, var(--st-brand) 20%, transparent); }
+.st__unit { display: block; font-size: 16px; font-weight: 300; color: color-mix(in srgb, var(--st-brand) 50%, currentColor); margin-top: 4px; }
+.st__label { display: block; font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.3); margin-top: 6px; }
+
+.st__big { text-align: center; margin-bottom: 28px; }
+.st__big-num { display: block; font-size: 96px; font-weight: 900; color: var(--st-brand); letter-spacing: -6px; line-height: 1; text-shadow: 0 0 40px color-mix(in srgb, var(--st-brand) 25%, transparent); }
+.st__big-unit { display: block; font-size: 24px; font-weight: 400; color: color-mix(in srgb, var(--st-brand) 60%, currentColor); margin-top: 4px; }
+.st__big-label { display: block; font-size: 18px; font-weight: 700; margin-top: 8px; }
+.st__big-desc { margin: 8px auto 0; max-width: 360px; font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.5); }
+.st__row--sub { margin-top: 8px; gap: 36px; }
+.st__row--sub .st__num { font-size: 28px; letter-spacing: -1px; }
+
+.st__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+.st__card { padding: 24px 20px; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; background: rgba(255,255,255,0.06); text-align: center; transition: transform 0.2s ease; backdrop-filter: blur(10px); }
+.st__card:hover { transform: translateY(-4px); }
+.st__card-num { display: block; font-size: 36px; font-weight: 900; color: var(--st-brand); letter-spacing: -2px; }
+.st__card-unit { font-size: 16px; font-weight: 400; color: color-mix(in srgb, var(--st-brand) 50%, currentColor); }
+.st__card-label { margin: 8px 0 0; font-size: 14px; font-weight: 700; }
+.st__card-desc { margin: 6px 0 0; font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+.st__source { margin-top: 16px; font-size: 11px; color: rgba(255,255,255,0.25); text-align: center; }
+.st__cta { margin-top: 24px; }
+.st__cta-btn { display: block; width: 100%; padding: 18px 20px; border: 0; border-radius: 16px; background: var(--st-brand); color: #fff; text-align: center; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 12px 30px color-mix(in srgb, var(--st-brand) 26%, transparent); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.st__cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px color-mix(in srgb, var(--st-brand) 40%, transparent); }
+
+.st.mood--clean { background: #fff; color: #111827; }
+.st.mood--clean .st__num, .st.mood--clean .st__big-num, .st.mood--clean .st__card-num { text-shadow: none; }
+.st.mood--clean .st__label { color: rgba(15,23,42,0.4); }
+.st.mood--clean .st__big-desc { color: rgba(15,23,42,0.55); }
+.st.mood--clean .st__card { background: rgba(15,23,42,0.03); border-color: rgba(15,23,42,0.06); }
+.st.mood--clean .st__card-desc { color: rgba(15,23,42,0.5); }
+.st.mood--clean .st__source { color: rgba(15,23,42,0.35); }
+
+.st.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.st.mood--soft .st__label { color: rgba(15,23,42,0.4); }
+.st.mood--soft .st__card { background: rgba(255,255,255,0.9); border-color: rgba(15,23,42,0.06); box-shadow: 0 8px 24px rgba(15,23,42,0.05); }
+
+.st.mood--dark { background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--st-brand) 15%, transparent), transparent 50%), linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.st.mood--navy { background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--st-brand) 15%, transparent), transparent 50%), #0c1024; color: #fff; }
+
+@media (max-width: 480px) { .st { padding: 36px 20px 32px; } .st__headline { font-size: 28px; } .st__num { font-size: 40px; } .st__big-num { font-size: 72px; } .st__row { gap: 32px; } .st__grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 768px) { .st { padding: 64px 28px 56px; } .st__inner { max-width: 960px; } .st__headline { font-size: 42px; } .st__big-num { font-size: 120px; } .st__cta-btn { max-width: 320px; margin: 0 auto; } }
+</style></head><body><div class="page"><!-- LAYOUT: ST-A -->
+<section class="st st--a mood--dark" data-section="16-stats" data-layout="ST-A" style="--st-brand:#D97706;"><div class="st__inner">
+    <header class="st__header">
+      <p class="st__eyebrow">PROVEN RESULTS</p>
+      <h2 class="st__headline">숫자로 증명합니다</h2>
+      
+    </header><div class="st__row">
+    <div class="st__item">
+      <span class="st__num">72</span>
+      <span class="st__unit">시간</span>
+      <span class="st__label">보습 지속력</span>
+    </div>
+    <div class="st__item">
+      <span class="st__num">4.8</span>
+      <span class="st__unit">점</span>
+      <span class="st__label">고객 평점</span>
+    </div>
+    <div class="st__item">
+      <span class="st__num">2,847</span>
+      <span class="st__unit">건</span>
+      <span class="st__label">실구매 리뷰</span>
+    </div></div><p class="st__source">※ 2024년 자체 임상 기준</p></div></section></div></body></html>

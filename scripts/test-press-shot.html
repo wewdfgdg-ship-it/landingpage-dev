@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>레퍼런스(프레스샷) 1:1 완벽 클론 테스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Pretendard", sans-serif; overflow-x: hidden; background-color: #f7f7f7; padding-top:20px; }
+
+/* 템플릿 CSS */
+
+.ps-wrapper {
+    width: 100%;
+    background-color: #ffffff;
+    font-family: "Pretendard", -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* 중앙 정렬 1280px 와이드 데스크탑 레이아웃 */
+.ps-top-section {
+    width: 100%;
+    max-width: 1280px; /* 데스크탑 와이드 */
+    padding: 3rem 5%; /* 양쪽 양호한 여백 추가 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    z-index: 10;
+}
+
+.ps-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    width: 100%;
+}
+
+.ps-subheadline {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #222222;
+    margin-bottom: 0.5rem;
+    white-space: pre-line;
+    letter-spacing: -0.03em;
+}
+
+.ps-subheadline .accent-pink {
+    color: #f13c8f;
+}
+
+.ps-headline {
+    font-size: 4rem;
+    font-weight: 950;
+    color: #111111;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin: 0;
+    transform: scaleY(1.1); /* 약간 길쭉한 폰트 느낌 */
+    white-space: pre-line;
+}
+
+.ps-showcase {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.ps-oval-bg {
+    position: absolute;
+    width: 180px;
+    height: 420px;
+    background: linear-gradient(180deg, #ec1e79 0%, #aa238c 50%, #2f2585 100%);
+    border-radius: 90px;
+    z-index: 1;
+}
+
+.ps-product-img {
+    height: 320px;
+    width: auto;
+    object-fit: contain;
+    z-index: 3;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+    transform: rotate(15deg); /* 기울어짐 */
+}
+
+/* 앰플 우하단 ONE SHOT 화살표 모양 */
+.ps-arrow-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    background-color: #ff3a91;
+    color: #ffffff;
+    z-index: 4;
+    padding: 1rem;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.0;
+    text-align: center;
+    transform: rotate(-10deg);
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(255, 58, 145, 0.4);
+    /* 아래 방향 화살표 형태 부여를 위한 가상 요소 */
+}
+.ps-arrow-badge::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 10px;
+    border-width: 15px 15px 0 0;
+    border-style: solid;
+    border-color: #ff3a91 transparent transparent transparent;
+}
+
+.ps-arrow-text {
+    white-space: pre-line;
+}
+
+.ps-features-grid {
+    position: absolute;
+    width: 100%;
+    max-width: 600px; /* 데스크탑 환경에서 좌우 간격이 너무 벌어지지 않게 고정 폭 */
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.ps-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 140px; /* 데스크탑에서 글자 여백 확보 */
+}
+.ps-col-left { align-items: flex-end; text-align: right; }
+.ps-col-right { align-items: flex-start; text-align: left; }
+
+.ps-feature-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ps-feature-text {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #222222;
+    line-height: 1.2;
+}
+.ps-feat-en {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ff3a91;
+}
+
+/* 선 연결 (가상 선) */
+.ps-line-left {
+    display: block;
+    width: 20px;
+    height: 1px;
+    border-bottom: 2px dotted rgba(236, 30, 121, 0.5);
+    margin-left: 8px;
+    position: absolute;
+    right: -25px;
+    top: 10px;
+}
+.ps-line-right {
+    display: block;
+    width: 20px;
+    height: 1px;
+    border-bottom: 2px dotted rgba(236, 30, 121, 0.5);
+    margin-right: 8px;
+    position: absolute;
+    left: -25px;
+    top: 10px;
+}
+
+.ps-feature-item::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #ffffff;
+    border: 2px solid #ec1e79;
+    border-radius: 50%;
+    top: 7px;
+}
+.ps-col-left .ps-feature-item::after { right: -30px; }
+.ps-col-right .ps-feature-item::after { left: -30px; }
+
+
+/* Bottom Purple Banner */
+.ps-bottom-banner {
+    position: relative;
+    width: 100%;
+    max-width: 1280px; /* 데스크탑 사이즈 일치 */
+    background: linear-gradient(135deg, #7c0fe6 0%, #300c82 100%);
+    color: #ffffff;
+    padding: 3.5rem 5%;
+    text-align: center;
+    overflow: hidden;
+    z-index: 10;
+    margin-bottom: 3rem; /* 하단 찐 여백 확보 */
+}
+
+.ps-banner-text {
+    font-size: 1.8rem;
+    font-weight: 900;
+    white-space: pre-line;
+    line-height: 1.2;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 2;
+}
+
+/* 월계수잎 모조 가상 디자인 */
+.ps-laurel-left, .ps-laurel-right {
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    height: 80px;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23ffffff" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z" opacity="0.3"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+.ps-laurel-left { left: 10px; }
+.ps-laurel-right { right: 10px; transform: translateY(-50%) scaleX(-1); }
+
+
+/* Optional CTA (추가 여백 포함 데스크탑형) */
+.ps-cta-area {
+    width: 100%;
+    max-width: 500px; /* 버튼은 무작정 크면 이상하므로 적당히 제한 */
+    margin: 0 auto 5rem auto; /* 아래쪽에 여유공간 줌 */
+    padding: 0 1.5rem;
+}
+
+.ps-cta-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 1.25rem;
+    background-color: #ec1e79;
+    color: #ffffff !important;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 900;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.hc-animate-fade-in-up {
+    animation: hc-fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+@keyframes hc-fadeInUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* 데스크탑(PC) 와이드 랜딩페이지 래퍼 디자인 */
+.desktop-wrapper {
+    width: 100%;
+    margin: 0 auto 40px auto;
+    background-color: #fff;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body>
+    <div style="text-align:center; padding: 20px 0; font-weight:bold; color:#777;">레퍼런스(프레스샷) 데스크탑 와이드(1280px) 모드 클론 뷰어</div>
+    
+    <div class="desktop-wrapper">
+        
+<main class="ps-wrapper">
+    <!-- Top White Section -->
+    <div class="ps-top-section">
+        
+        <!-- Headers -->
+        <div class="ps-header hc-animate-fade-in-up">
+            
+            <div class="ps-subheadline">원 샷으로 한번에
+올인원 토탈 <span class="accent-pink">영양앰플</span></div>
+            
+            <h1 class="ps-headline">프레스샷!</h1>
+        </div>
+
+        <!-- Central Product Oval & Features -->
+        <div class="ps-showcase hc-animate-fade-in-up" style="animation-delay: 150ms;">
+            
+            <!-- The pink oval background -->
+            <div class="ps-oval-bg"></div>
+
+            <!-- The product image -->
+            
+            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=400" class="ps-product-img" alt="Product" />
+            
+
+            <!-- The ONE SHOT arrow badge -->
+            
+            <div class="ps-arrow-badge">
+                <div class="ps-arrow-text">ONE
+SHOT</div>
+            </div>
+            
+
+            <!-- Connecting lines and texts (Bullets) -->
+            
+            <div class="ps-features-grid">
+                <!-- Left column -->
+                <div class="ps-col ps-col-left">
+                    <div class="ps-feature-item"><span class="ps-line-left"></span><div class="ps-feature-text">비타민B12<br><span class="ps-feat-en">Vitamin</span></div></div>
+                    <div class="ps-feature-item"><span class="ps-line-left"></span><div class="ps-feature-text">비타민E<br><span class="ps-feat-en">Vitamin</span></div></div>
+                    <div class="ps-feature-item"><span class="ps-line-left"></span><div class="ps-feature-text">아연<br><span class="ps-feat-en">Mineral</span></div></div>
+                </div>
+                <!-- Right column -->
+                <div class="ps-col ps-col-right">
+                    <div class="ps-feature-item"><span class="ps-line-right"></span><div class="ps-feature-text">나이아신<br><span class="ps-feat-en">Niacin</span></div></div>
+                    <div class="ps-feature-item"><span class="ps-line-right"></span><div class="ps-feature-text">비타민D<br><span class="ps-feat-en">Vitamin</span></div></div>
+                    <div class="ps-feature-item"><span class="ps-line-right"></span><div class="ps-feature-text">엽산<br><span class="ps-feat-en">Folic</span></div></div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <!-- Bottom Purple Section (Awards / Banner) -->
+    
+    <div class="ps-bottom-banner hc-animate-fade-in-up" style="animation-delay: 300ms;">
+        <div class="ps-laurel-left"></div>
+        <div class="ps-banner-content">
+            <div class="ps-banner-text"><span style="font-size: 2rem; font-weight: 600; letter-spacing: -0.03em;">온누리 Store</span>
+<span style="font-size: 4.5rem; font-weight: 950; letter-spacing: -0.05em; display: inline-block; margin: 5px 0 15px 0; text-shadow: 0 5px 15px rgba(0,0,0,0.4);">비타민B 1위!</span>
+<span style="font-size:0.9rem; font-weight:400; opacity:0.6; display:block;">*온누리스토어 2022년 2월 ~ 2023년 1월 매출 기준</span></div>
+        </div>
+        <div class="ps-laurel-right"></div>
+    </div>
+    
+
+    <!-- CTA Button -->
+    
+    <div class="ps-cta-area hc-animate-fade-in-up" style="animation-delay: 450ms;">
+        <a href="#cta" class="ps-cta-button">지금 바로 구매하기</a>
+    </div>
+    
+
+</main>
+
+    </div>
+</body>
+</html>

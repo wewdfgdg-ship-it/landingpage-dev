@@ -13,15 +13,18 @@ import {
 } from '@/components/ui/select';
 
 const INDUSTRY_OPTIONS: { value: Industry; label: string }[] = [
-  { value: 'saas', label: 'SaaS / 소프트웨어' },
-  { value: 'ecommerce', label: '이커머스 / 쇼핑몰' },
-  { value: 'education', label: '교육 / 강의' },
-  { value: 'health', label: '건강 / 의료' },
   { value: 'beauty', label: '뷰티 / 화장품' },
   { value: 'food', label: '식품 / F&B' },
+  { value: 'electronics', label: '전자기기 / 가전' },
+  { value: 'fashion', label: '패션 / 의류' },
+  { value: 'living', label: '리빙 / 생활용품' },
+  { value: 'saas', label: 'SaaS / 소프트웨어' },
+  { value: 'education', label: '교육 / 강의' },
+  { value: 'b2b', label: 'B2B / 기업서비스' },
+  { value: 'ecommerce', label: '이커머스 / 쇼핑몰' },
+  { value: 'health', label: '건강 / 의료' },
   { value: 'finance', label: '금융 / 보험' },
   { value: 'lifestyle', label: '라이프스타일' },
-  { value: 'b2b', label: 'B2B / 기업서비스' },
   { value: 'other', label: '기타' },
 ];
 

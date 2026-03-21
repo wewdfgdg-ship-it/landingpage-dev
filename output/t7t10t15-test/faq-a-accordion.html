@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FAQ-A 아코디언</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.fq { position: relative; padding: 40px 20px 32px; --fq-brand: #4A90D9; }
+.fq__inner { max-width: 520px; margin: 0 auto; }
+.fq__header { text-align: center; margin-bottom: 28px; }
+.fq__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--fq-brand) 70%, #5f6980); }
+.fq__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; word-break: keep-all; }
+.fq__sub { max-width: 420px; margin: 12px auto 0; font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.68); }
+
+.fq__list { display: grid; gap: 0; }
+
+/* FAQ-A Accordion */
+.fq__accordion { border-bottom: 1px solid rgba(15,23,42,0.08); }
+.fq__accordion:first-child { border-top: 1px solid rgba(15,23,42,0.08); }
+.fq__question { padding: 18px 0; font-size: 16px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.fq__question::after { content: '+'; font-size: 20px; color: var(--fq-brand); transition: transform 0.2s; }
+.fq__accordion[open] .fq__question::after { content: '−'; }
+.fq__answer { padding: 0 0 18px; }
+.fq__answer p { font-size: 14px; line-height: 1.7; color: rgba(15,23,42,0.65); }
+
+/* FAQ-B Inline */
+.fq__inline { padding: 18px 0; border-bottom: 1px solid rgba(15,23,42,0.08); }
+.fq__inline:first-child { border-top: 1px solid rgba(15,23,42,0.08); }
+.fq__q-text { margin: 0; font-size: 16px; font-weight: 700; }
+.fq__a-text { margin: 8px 0 0; font-size: 14px; line-height: 1.7; color: rgba(15,23,42,0.65); }
+
+/* FAQ-C Cards */
+.fq__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.fq__card { padding: 20px; border: 1px solid rgba(15,23,42,0.06); border-radius: 20px; background: rgba(255,255,255,0.92); box-shadow: 0 12px 36px rgba(15,23,42,0.05); transition: transform 0.2s ease; }
+.fq__card:hover { transform: translateY(-4px); }
+.fq__card .fq__q-text { font-size: 15px; }
+.fq__card .fq__a-text { font-size: 13px; }
+
+.fq__cta { margin-top: 24px; }
+.fq__cta-btn { display: block; width: 100%; padding: 18px 20px; border: 0; border-radius: 16px; background: var(--fq-brand); color: #fff; text-align: center; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 12px 30px color-mix(in srgb, var(--fq-brand) 26%, transparent); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.fq__cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px color-mix(in srgb, var(--fq-brand) 40%, transparent); }
+
+.fq.mood--clean { background: #fff; color: #111827; }
+.fq.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.fq.mood--dark { background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.fq.mood--navy { background: #0c1024; color: #fff; }
+.fq.mood--dark .fq__sub, .fq.mood--dark .fq__a-text, .fq.mood--dark .fq__answer p, .fq.mood--navy .fq__sub, .fq.mood--navy .fq__a-text, .fq.mood--navy .fq__answer p { color: rgba(255,255,255,0.65); }
+.fq.mood--dark .fq__headline, .fq.mood--dark .fq__eyebrow, .fq.mood--dark .fq__q-text, .fq.mood--dark .fq__question, .fq.mood--navy .fq__headline, .fq.mood--navy .fq__eyebrow, .fq.mood--navy .fq__q-text, .fq.mood--navy .fq__question { color: #fff; }
+.fq.mood--dark .fq__accordion, .fq.mood--dark .fq__inline, .fq.mood--navy .fq__accordion, .fq.mood--navy .fq__inline { border-color: rgba(255,255,255,0.1); }
+.fq.mood--dark .fq__card, .fq.mood--navy .fq__card { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); box-shadow: none; }
+
+@media (max-width: 480px) { .fq { padding: 32px 20px 28px; } .fq__headline { font-size: 28px; } .fq__grid { grid-template-columns: 1fr; } }
+@media (min-width: 768px) { .fq { padding: 56px 28px 44px; } .fq__inner { max-width: 720px; } .fq__headline { font-size: 42px; } .fq__cta-btn { max-width: 320px; margin: 0 auto; } }
+</style></head><body><div class="page"><!-- LAYOUT: FAQ-A -->
+<section class="fq fq--a mood--clean" data-section="12-faq" data-layout="FAQ-A" style="--fq-brand:#059669;"><div class="fq__inner">
+    <header class="fq__header">
+      
+      <h2 class="fq__headline">자주 묻는 질문</h2>
+      
+    </header><div class="fq__list">
+    <details class="fq__accordion" id="faq-1">
+      <summary class="fq__question">배송은 얼마나 걸리나요?</summary>
+      <div class="fq__answer"><p>결제 완료 후 1~2영업일 내 출고, 출고 후 1~2일 소요됩니다.</p></div>
+    </details>
+    <details class="fq__accordion" id="faq-2">
+      <summary class="fq__question">교환/환불은 어떻게 하나요?</summary>
+      <div class="fq__answer"><p>수령 후 30일 이내 무조건 교환/반품 가능합니다. 고객센터로 문의해주세요.</p></div>
+    </details>
+    <details class="fq__accordion" id="faq-3">
+      <summary class="fq__question">사이즈가 안 맞으면?</summary>
+      <div class="fq__answer"><p>동일 상품 1회 무료 교환 가능합니다.</p></div>
+    </details>
+    <details class="fq__accordion" id="faq-4">
+      <summary class="fq__question">성분이 피부에 안 맞으면?</summary>
+      <div class="fq__answer"><p>전액 환불해드립니다. 사용 후에도 가능합니다.</p></div>
+    </details>
+    <details class="fq__accordion" id="faq-5">
+      <summary class="fq__question">해외 배송 되나요?</summary>
+      <div class="fq__answer"><p>현재 국내 배송만 지원합니다.</p></div>
+    </details></div></div></section></div></body></html>

@@ -9,11 +9,12 @@ import { runLearningLoop } from '@/engine/12-learning-loop';
 // ============================================================
 
 export async function GET(req: Request): Promise<NextResponse> {
-  // 크론 시크릿 검증
+  // 크론 시크릿 검증 — Vercel Cron 또는 외부 스케줄러
+  const isVercelCron = req.headers.get('x-vercel-cron-signature') !== null;
   const authHeader = req.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
 
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (!isVercelCron && cronSecret && authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

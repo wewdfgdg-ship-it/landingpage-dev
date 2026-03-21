@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아쿠아 딥 수분크림</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css" />
+<style>
+  :root {
+    --color-bg-primary: #0d0a07;
+    --color-bg-surface: #1a1410;
+    --color-bg-elevated: #261f17;
+    --color-accent-gold: #C9A96E;
+    --color-accent-gold-bright: #D4A853;
+    --color-accent-gold-light: #d8b88d;
+    --color-text-primary: #FFFFFF;
+    --color-text-muted: rgba(255,255,255,0.45);
+    --color-text-ghost: rgba(255,255,255,0.25);
+    --color-divider: #3b2b1d;
+    --color-naver-green: #03C75A;
+    
+    --font-hero-size: 72px;
+    --font-hero-weight: 900;
+    --font-hero-spacing: -3px;
+    --font-hero-lh: 1;
+    --font-hero-color: #FFFFFF;
+    --font-hero-shadow: 0 2px 30px rgba(0,0,0,0.3);
+    
+    --font-display-size: 36px;
+    --font-display-weight: 800;
+    --font-display-spacing: -1.5px;
+    --font-display-lh: 1.3;
+    --font-display-color: #FFFFFF;
+    
+    --font-eyebrow-size: 15px;
+    --font-eyebrow-weight: 300;
+    --font-eyebrow-spacing: -0.5px;
+    --font-eyebrow-lh: 1.7;
+    --font-eyebrow-color: rgba(255,255,255,0.45);
+    
+    --font-body-size: 13px;
+    --font-body-weight: 300;
+    --font-body-spacing: -0.3px;
+    --font-body-lh: 1.7;
+    --font-body-color: rgba(255,255,255,0.35);
+    
+    --font-highlight_gold-color: #D4A853;
+    --font-highlight_gold-shadow: 0 0 30px rgba(212,168,83,0.5), 0 0 60px rgba(212,168,83,0.2);
+    
+    --gradient-bg_main: linear-gradient(180deg, #1a1410 0%, #120f0a 40%, #0d0a07 100%);
+    --gradient-bg_warm: linear-gradient(180deg, #261f17 0%, #1a1410 50%, #0d0a07 100%);
+    --gradient-gold_text: linear-gradient(135deg, #c9a96e 0%, #f0d898 50%, #c9a96e 100%);
+    --gradient-dark_fade: linear-gradient(180deg, #0a0a0a 0%, #1a1510 100%);
+    
+    --shadow-card: 0 24px 80px rgba(0,0,0,0.7), 0 2px 6px rgba(201,169,110,0.12);
+    --shadow-card_luxury: 0 30px 100px rgba(0,0,0,0.75), 0 2px 8px rgba(201,169,110,0.2), inset 0 1px 0 rgba(201,169,110,0.1);
+    --shadow-glow_gold: 0 0 40px rgba(201,169,110,0.25);
+    --shadow-glow_gold_strong: 0 0 60px rgba(201,169,110,0.4);
+    --shadow-product_drop: drop-shadow(0 20px 40px rgba(0,0,0,0.5)) drop-shadow(0 0 60px rgba(200,100,40,0.2));
+    --shadow-inset_gold: inset 0 1px 0 rgba(201,169,110,0.15);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--color-bg-primary);
+    display: flex;
+    justify-content: center;
+    font-family: 'Pretendard Variable', Pretendard, sans-serif;
+  }
+
+  .hero-section {
+    width: 100%;
+    max-width: 500px;
+    min-height: 100vh;
+    background: var(--gradient-bg_main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .eyebrow {
+    font-size: var(--font-eyebrow-size);
+    font-weight: var(--font-eyebrow-weight);
+    letter-spacing: var(--font-eyebrow-spacing);
+    line-height: var(--font-eyebrow-lh);
+    color: var(--font-eyebrow-color);
+    margin-bottom: 16px;
+  }
+
+  .headline {
+    font-size: var(--font-hero-size);
+    font-weight: 900;
+    letter-spacing: var(--font-hero-spacing);
+    line-height: var(--font-hero-lh);
+    color: var(--font-hero-color);
+    text-shadow: var(--font-hero-shadow);
+    margin-bottom: 48px;
+  }
+
+  .highlight-gold {
+    color: var(--font-highlight_gold-color);
+    text-shadow: var(--font-highlight_gold-shadow);
+  }
+
+  .product-container {
+    border: 2px dashed var(--color-divider);
+    padding: 24px;
+    margin-bottom: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .floating-product {
+    width: 240px;
+    height: 320px;
+    object-fit: cover;
+    filter: var(--shadow-product_drop);
+  }
+
+  .sub-headline {
+    font-size: var(--font-body-size);
+    font-weight: 700;
+    letter-spacing: var(--font-body-spacing);
+    line-height: var(--font-body-lh);
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+  }
+
+  .description {
+    font-size: var(--font-body-size);
+    font-weight: var(--font-body-weight);
+    letter-spacing: var(--font-body-spacing);
+    line-height: var(--font-body-lh);
+    color: var(--font-body-color);
+    margin-bottom: 40px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background-color: var(--color-accent-gold);
+    color: var(--color-bg-primary);
+    padding: 16px 32px;
+    font-size: var(--font-body-size);
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: var(--shadow-glow_gold);
+  }
+</style>
+</head>
+<body>
+  <section class="hero-section">
+    <p class="eyebrow">깊은 보습, 빛나는 피부</p>
+    <h1 class="headline">48시간 수분 장벽<br><span class="highlight-gold">아쿠아 딥 수분크림</span></h1>
+
+    <div class="product-container">
+      <img src="https://via.placeholder.com/240x320/1a1410/FFFFFF?text=Product+Image+(240x320)" alt="아쿠아 딥 수분크림 (권장 사이즈: 240x320)" class="floating-product">
+    </div>
+
+    <p class="sub-headline">히알루론산 + 세라마이드 듀얼 포뮬러</p>
+    <p class="description">50ml · 38,000원</p>
+
+    <a href="#" class="cta-button">지금 구매하기</a>
+  </section>
+</body>
+</html>

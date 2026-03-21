@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PR-C 혜택 계산 dark</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.pc { position: relative; padding: 48px 20px 40px; --pc-brand: #4A90D9; }
+.pc__inner { max-width: 520px; margin: 0 auto; text-align: center; }
+.pc__header { margin-bottom: 24px; }
+.pc__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--pc-brand) 70%, #5f6980); }
+.pc__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; word-break: keep-all; }
+.pc__sub { max-width: 420px; margin: 12px auto 0; font-size: 15px; line-height: 1.7; color: rgba(15,23,42,0.68); }
+
+.pc__discount { display: inline-block; margin-bottom: 16px; padding: 8px 18px; border-radius: 999px; background: color-mix(in srgb, var(--pc-brand) 15%, transparent); color: var(--pc-brand); font-size: 16px; font-weight: 900; }
+
+.pc__price { margin-bottom: 20px; }
+.pc__price-original { font-size: 18px; color: rgba(15,23,42,0.4); text-decoration: line-through; margin-right: 8px; }
+.pc__price-sale { font-size: 48px; font-weight: 900; letter-spacing: -2px; color: var(--pc-brand); }
+
+.pc__benefits { list-style: none; padding: 0; margin: 0 0 24px; display: inline-flex; flex-direction: column; gap: 10px; text-align: left; }
+.pc__benefit { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.pc__benefit-icon { font-size: 16px; }
+.pc__benefit-check { color: var(--pc-brand); font-weight: 700; }
+
+/* PR-B Plans */
+.pc--b .pc__inner { max-width: 720px; }
+.pc__plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.pc__plan { padding: 28px 24px; border: 1px solid rgba(15,23,42,0.08); border-radius: 24px; background: rgba(255,255,255,0.92); text-align: center; transition: transform 0.2s ease; }
+.pc__plan:hover { transform: translateY(-4px); }
+.pc__plan--rec { border: 2px solid var(--pc-brand); box-shadow: 0 16px 48px color-mix(in srgb, var(--pc-brand) 15%, transparent); position: relative; }
+.pc__plan-badge { display: inline-block; margin-bottom: 12px; padding: 4px 12px; border-radius: 999px; background: var(--pc-brand); color: #fff; font-size: 11px; font-weight: 700; }
+.pc__plan-name { margin: 0; font-size: 18px; font-weight: 800; }
+.pc__plan-price { margin: 12px 0 16px; }
+.pc__plan-price .pc__price-sale { font-size: 32px; }
+.pc__plan-period { font-size: 14px; color: rgba(15,23,42,0.5); margin-left: 4px; }
+.pc__plan .pc__benefits { margin-bottom: 20px; }
+.pc__plan-btn { display: block; width: 100%; padding: 14px; border: 1.5px solid rgba(15,23,42,0.1); border-radius: 14px; background: transparent; color: inherit; text-align: center; text-decoration: none; font-size: 15px; font-weight: 700; transition: background 0.2s; }
+.pc__plan-btn:hover { background: rgba(15,23,42,0.04); }
+.pc__plan-btn--rec { background: var(--pc-brand); color: #fff; border-color: var(--pc-brand); box-shadow: 0 8px 24px color-mix(in srgb, var(--pc-brand) 25%, transparent); }
+.pc__plan-btn--rec:hover { opacity: 0.9; }
+
+/* PR-C Calc */
+.pc__calc { max-width: 360px; margin: 0 auto 24px; text-align: left; }
+.pc__calc-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(15,23,42,0.06); font-size: 15px; }
+.pc__calc-gift { color: var(--pc-brand); }
+.pc__calc-total { font-size: 20px; font-weight: 900; border-bottom: none; border-top: 2px solid var(--pc-brand); padding-top: 14px; margin-top: 4px; }
+
+.pc__cta { margin-top: 24px; }
+.pc__cta-btn { display: block; width: 100%; padding: 20px; border: 0; border-radius: 16px; background: var(--pc-brand); color: #fff; text-align: center; text-decoration: none; font-size: 17px; font-weight: 700; box-shadow: 0 12px 36px color-mix(in srgb, var(--pc-brand) 30%, transparent); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.pc__cta-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 48px color-mix(in srgb, var(--pc-brand) 45%, transparent); }
+.pc__micro { margin-top: 12px; font-size: 12px; color: rgba(15,23,42,0.35); }
+
+/* Moods */
+.pc.mood--clean { background: #fff; color: #111827; }
+.pc.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.pc.mood--dark { background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.pc.mood--navy { background: #0c1024; color: #fff; }
+.pc.mood--dark .pc__sub, .pc.mood--navy .pc__sub { color: rgba(255,255,255,0.6); }
+.pc.mood--dark .pc__headline, .pc.mood--dark .pc__eyebrow, .pc.mood--navy .pc__headline, .pc.mood--navy .pc__eyebrow { color: #fff; }
+.pc.mood--dark .pc__price-original, .pc.mood--navy .pc__price-original { color: rgba(255,255,255,0.35); }
+.pc.mood--dark .pc__benefit, .pc.mood--navy .pc__benefit { color: rgba(255,255,255,0.75); }
+.pc.mood--dark .pc__plan, .pc.mood--navy .pc__plan { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+.pc.mood--dark .pc__plan-btn, .pc.mood--navy .pc__plan-btn { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
+.pc.mood--dark .pc__plan-btn:hover, .pc.mood--navy .pc__plan-btn:hover { background: rgba(255,255,255,0.05); }
+.pc.mood--dark .pc__calc-row, .pc.mood--navy .pc__calc-row { border-color: rgba(255,255,255,0.08); }
+.pc.mood--dark .pc__calc-total, .pc.mood--navy .pc__calc-total { border-top-color: var(--pc-brand); }
+.pc.mood--dark .pc__micro, .pc.mood--navy .pc__micro { color: rgba(255,255,255,0.25); }
+
+@media (max-width: 480px) { .pc { padding: 36px 20px 32px; } .pc__headline { font-size: 28px; } .pc__price-sale { font-size: 40px; } .pc__plans { grid-template-columns: 1fr; } }
+@media (min-width: 768px) { .pc { padding: 64px 28px 56px; } .pc__inner { max-width: 720px; } .pc--b .pc__inner { max-width: 960px; } .pc__headline { font-size: 42px; } .pc__cta-btn { max-width: 380px; margin: 0 auto; } }
+</style></head><body><div class="page"><!-- LAYOUT: PR-C -->
+<section class="pc pc--c mood--dark" data-section="26-pricing" data-layout="PR-C" style="--pc-brand:#D97706;"><div class="pc__inner">
+    <header class="pc__header">
+      
+      <h2 class="pc__headline">혜택 총 정리</h2>
+      
+    </header>
+    <div class="pc__calc">
+      <div class="pc__calc-row"><span>정가</span><span>89,000원</span></div>
+      <div class="pc__calc-row pc__calc-gift"><span>+ 할인</span><span>+-30,000원</span></div><div class="pc__calc-row pc__calc-gift"><span>+ 미니세트 증정</span><span>++15,000원 상당</span></div>
+      <div class="pc__calc-row pc__calc-total"><span>실질가</span><span>44,000원</span></div>
+    </div><ul class="pc__benefits"><li class="pc__benefit"><span class="pc__benefit-check">✓</span><span>무료배송</span></li><li class="pc__benefit"><span class="pc__benefit-check">✓</span><span>적립 5%</span></li></ul><div class="pc__cta"><a class="pc__cta-btn" href="#">혜택 받고 구매</a></div><p class="pc__micro">실질 구매가 44,000원</p></div></section></div></body></html>

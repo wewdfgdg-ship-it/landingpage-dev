@@ -31,6 +31,13 @@ export interface SectionLayout {
   patternName: string;
   score: number; // 선택 점수 (0~100)
   reasoning: string;
+  /** v4 Header-Banner 렌더링 메타데이터 (code-engine에서 renderHeroBanner 호출 시 사용) */
+  v4Meta?: {
+    layoutId: string;
+    mood: string;
+    fontSet: string;
+    brandColor: string;
+  };
 }
 
 export interface LayoutConfig {

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+@font-face {
+  font-family: 'Dokrip';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Dokrip.woff') format('woff');
+  font-weight: 1 999;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Daehan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Daehan-Regular.woff') format('woff');
+  font-weight: 1 999;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KBIZHanmaumMyungjo';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/KBIZHanmaumMyungjo.woff') format('woff');
+  font-weight: 1 999;
+  font-display: swap;
+}
+</style>
+<style>
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+<body style="margin:0;padding:0;">
+<section class="hero-mb" style="
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: transparent;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+">
+  <div class="noise-overlay" style="
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+  "><svg width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg></div>
+  <div class="hero-top" style="
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: clamp(40px, 5vw, 72px) 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  ">
+    <p class="eyebrow" style="
+        font-family: 'KBIZHanmaumMyungjo', serif;
+        font-size: clamp(11px, 1.1vw, 16px);
+        font-weight: 300;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: #256428;
+        margin: 0 0 clamp(12px, 1.5vw, 20px) 0;
+        text-align: center;
+        animation: fadeInUp 0.7s ease 0.1s both;
+      ">테스트</p>
+    <h1 class="headline" style="
+    font-family: 'Dokrip', serif;
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: 900;
+    letter-spacing: -4px;
+    line-height: 1.05;
+    word-break: keep-all;
+    color: #1a1a1a;
+    width: 90%;
+    max-width: 960px;
+    text-align: center;
+    margin: 0 auto clamp(16px, 2vw, 32px);
+    animation: fadeInUp 0.7s ease 0.2s both;
+  ">테스트 헤드라인
+두 번째 줄</h1>
+  </div>
+  <div class="model-zone" style="
+        position: relative;
+        width: 100%;
+        height: 45vh;
+        min-height: 320px;
+        max-height: 560px;
+        overflow: hidden;
+        animation: fadeInUp 0.8s ease 0.4s both;
+      "><div class="model-placeholder" style="
+        width: 100%;
+        height: 100%;
+        background: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-size: 24px;
+      ">모델 이미지</div></div>
+  <div class="hero-bottom" style="
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 24px clamp(40px, 5vw, 64px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  ">
+    <p class="subheadline" style="
+        font-family: 'Daehan', sans-serif;
+        font-size: clamp(14px, 1.6vw, 22px);
+        font-weight: 300;
+        line-height: 1.6;
+        color: #555555;
+        text-align: center;
+        margin: clamp(16px, 2vw, 24px) 0 clamp(16px, 2vw, 24px) 0;
+        animation: fadeInUp 0.7s ease 0.5s both;
+      ">서브헤드라인 텍스트</p>
+    <div style="
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+    animation: fadeInUp 0.7s ease 0.7s both;
+  "><button class="cta-btn" style="
+    width: 100%;
+    padding: 22px 0;
+    font-family: 'Daehan', sans-serif;
+    font-size: clamp(16px, 1.7vw, 24px);
+    font-weight: 700;
+    color: #ffffff;
+    background: #2E7D32;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 30px #2E7D3259;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">구매하기</button></div>
+    <p class="micro" style="
+        font-family: 'KBIZHanmaumMyungjo', serif;
+        font-size: clamp(11px, 0.9vw, 13px);
+        font-weight: 300;
+        opacity: 0.6;
+        color: #555555;
+        margin: 8px 0 0 0;
+        text-align: center;
+      ">무료배송 · 안심 환불</p>
+  </div>
+</section>
+</body>
+</html>

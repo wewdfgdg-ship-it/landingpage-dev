@@ -1,6 +1,6 @@
 // ============================================================
-// Pipeline Orchestrator — 12엔진 순차 실행
-// generate/route.ts, generate-stream/route.ts, worker.ts 공용
+// Pipeline Orchestrator — 섹션 에이전트 기반 파이프라인
+// ①②③④ 전략 → 26개 섹션 에이전트 → ⑤카피 리파인 → ⑨스타일 → ⑩이미지 → ⑪코드 → ⑫저장
 // ============================================================
 
 import { db } from '@/lib/db';
@@ -9,14 +9,12 @@ import type { ProductIntelligenceInput } from '@/engine/01-product-intelligence'
 import { runWhyNow } from '@/engine/02-why-now';
 import { runConversionStrategy } from '@/engine/03-conversion-strategy';
 import { runObjectionKiller } from '@/engine/04-objection-killer';
-import { runPsychologicalCopy } from '@/engine/05-psychological-copy';
-import { runTrustArchitecture } from '@/engine/06-trust-architecture';
-import { runAttentionArchitecture } from '@/engine/07-attention-architecture';
-import { runLayoutIntelligence } from '@/engine/08-layout-intelligence';
+import { refineCopy } from '@/engine/05-psychological-copy';
 import { runVisualStyle } from '@/engine/09-visual-style';
 import { runCodeEngine } from '@/engine/10-code-engine';
 import { runImageGeneration } from '@/engine/image-generation';
-import { runCrossEngineBridge, injectZoneAttributes } from '@/engine/cross-engine-bridge';
+import { dispatchSections } from '@/engine/sections/dispatcher';
+import { toCopyBlocks, toLayoutConfig, toAttentionConfig } from '@/engine/sections/adapter';
 
 // ============================================================
 // 타입 정의
@@ -33,10 +31,8 @@ export const PIPELINE_STEPS: PipelineStep[] = [
   { id: 'whynow', label: '긴급성 분석', emoji: '⏰' },
   { id: 'cs', label: '전환 전략 수립', emoji: '🎯' },
   { id: 'objection', label: '반론 방어 설계', emoji: '🛡️' },
-  { id: 'copy', label: '설득 카피 작성', emoji: '✍️' },
-  { id: 'trust', label: '신뢰 구조 설계', emoji: '🤝' },
-  { id: 'attention', label: '주목도 설계', emoji: '👁️' },
-  { id: 'layout', label: '레이아웃 구성', emoji: '📐' },
+  { id: 'sections', label: '섹션 에이전트 실행', emoji: '🧩' },
+  { id: 'copy', label: 'AI 카피 리파인', emoji: '✍️' },
   { id: 'style', label: '비주얼 스타일', emoji: '🎨' },
   { id: 'image', label: '이미지 생성', emoji: '🖼️' },
   { id: 'code', label: 'HTML 코드 생성', emoji: '💻' },
@@ -136,68 +132,48 @@ export async function runPipeline(
   const objectionMap = runObjectionKiller(brief, strategyBlueprint);
   emitProgress(onProgress, 3, 'done');
 
-  // ⑤ Psychological Copy (AI 1회 + 품질 게이트 재생성)
+  // ⑤~⑧ 대체: 26개 섹션 에이전트 디스패치 (규칙 엔진, AI 호출 없음)
   emitProgress(onProgress, 4, 'start');
-  const copyResult = await runPsychologicalCopy(
+  const dispatchResult = dispatchSections({
     brief,
-    urgencyBrief,
-    strategyBlueprint,
+    blueprint: strategyBlueprint,
     objectionMap,
-    inputData.basicInfo.industry,
-    (attempt, failedCount) => {
-      emitProgress(onProgress, 4, 'start', {
-        retry: attempt,
-        failedSections: failedCount,
-        message: `카피 품질 개선 중 (${attempt}차 재생성, ${failedCount}개 섹션)`,
-      });
-    },
-  );
-  let copyBlocks = copyResult.copyBlocks;
-  totalCost += copyResult.cost;
+    productName: inputData.basicInfo.productName,
+    industry: inputData.basicInfo.industry,
+  });
+
+  // 섹션 에이전트 출력 → 기존 엔진 포맷으로 변환
+  const rawCopyBlocks = toCopyBlocks(dispatchResult.sections);
+  const layoutConfig = toLayoutConfig(dispatchResult.sections);
+  const attentionConfig = toAttentionConfig(dispatchResult.sections);
   emitProgress(onProgress, 4, 'done', {
+    dispatched: dispatchResult.dispatched,
+    sections: rawCopyBlocks.sections.length,
+  });
+
+  // ⑤ AI 카피 리파인 (Claude 1회 + 품질게이트 재시도 최대 2회)
+  emitProgress(onProgress, 5, 'start');
+  const copyResult = await refineCopy(
+    brief,
+    rawCopyBlocks,
+    inputData.basicInfo.productName,
+    inputData.basicInfo.industry,
+  );
+  const copyBlocks = copyResult.refined;
+  totalCost += copyResult.cost;
+  emitProgress(onProgress, 5, 'done', {
     cost: copyResult.cost,
-    sections: copyBlocks.sections.length,
     qualityScore: copyResult.qualityGate.overallScore,
     retries: copyResult.retryCount,
   });
 
-  // ⑥ Trust Architecture (규칙)
-  emitProgress(onProgress, 5, 'start');
-  const trustConfig = runTrustArchitecture(brief, strategyBlueprint);
-  emitProgress(onProgress, 5, 'done');
-
-  // ⑦ Attention Architecture (규칙)
+  // ⑨ Visual Style (규칙) — 글로벌 디자인 토큰
   emitProgress(onProgress, 6, 'start');
-  const attentionConfig = runAttentionArchitecture(
-    brief,
-    strategyBlueprint,
-    inputData.basicInfo.industry,
-  );
+  const styleConfig = runVisualStyle(brief, inputData.basicInfo.industry);
   emitProgress(onProgress, 6, 'done');
 
-  // ⑧ Layout Intelligence (규칙)
-  emitProgress(onProgress, 7, 'start');
-  let layoutConfig = runLayoutIntelligence(brief, strategyBlueprint, attentionConfig);
-  emitProgress(onProgress, 7, 'done');
-
-  // ⑨ Visual Style (규칙)
-  emitProgress(onProgress, 8, 'start');
-  const styleConfig = runVisualStyle(brief, inputData.basicInfo.industry);
-  emitProgress(onProgress, 8, 'done');
-
-  // 엔진 간 교차 반영 (Objection→Copy, Trust→Layout, Attention→Zone)
-  const bridgeResult = runCrossEngineBridge(
-    copyBlocks,
-    objectionMap,
-    trustConfig,
-    attentionConfig,
-    layoutConfig,
-  );
-  copyBlocks = bridgeResult.copyBlocks;
-  layoutConfig = bridgeResult.layoutConfig;
-
   // ⑩ Image Generation (AI N회)
-  emitProgress(onProgress, 9, 'start');
+  emitProgress(onProgress, 7, 'start');
   const imageResult = await runImageGeneration(
     projectId,
     inputData.basicInfo.productName,
@@ -217,14 +193,14 @@ export async function runPipeline(
       section.copy.imageUrl = img.cdnUrl;
     }
   }
-  emitProgress(onProgress, 9, 'done', {
+  emitProgress(onProgress, 7, 'done', {
     images: imageResult.totalImages,
     failed: imageResult.failedSections.length,
     cost: imageResult.totalCost,
   });
 
   // ⑪ Code Engine (규칙)
-  emitProgress(onProgress, 10, 'start');
+  emitProgress(onProgress, 8, 'start');
   const generatedPage = runCodeEngine(
     inputData.basicInfo.productName,
     copyBlocks,
@@ -233,19 +209,12 @@ export async function runPipeline(
     attentionConfig.stickyCtaEnabled,
     projectId,
   );
-
-  // Zone 어노테이션을 HTML에 주입
-  generatedPage.fullHtml = injectZoneAttributes(
-    generatedPage.fullHtml,
-    bridgeResult.zoneAnnotations,
-  );
-  emitProgress(onProgress, 10, 'done', {
+  emitProgress(onProgress, 8, 'done', {
     totalSections: generatedPage.totalSections,
-    bridge: bridgeResult.stats,
   });
 
   // ⑫ 결과 저장
-  emitProgress(onProgress, 11, 'start');
+  emitProgress(onProgress, 9, 'start');
   const toJson = <T>(data: T): ReturnType<typeof JSON.parse> =>
     JSON.parse(JSON.stringify(data));
 
@@ -257,7 +226,6 @@ export async function runPipeline(
       strategyBlueprint: toJson(strategyBlueprint),
       objectionMap: toJson(objectionMap),
       copyBlocks: toJson(copyBlocks),
-      trustConfig: toJson(trustConfig),
       attentionConfig: toJson(attentionConfig),
       layoutConfig: toJson(layoutConfig),
       styleConfig: toJson(styleConfig),
@@ -266,7 +234,7 @@ export async function runPipeline(
       status: 'GENERATED',
     },
   });
-  emitProgress(onProgress, 11, 'done');
+  emitProgress(onProgress, 9, 'done');
 
   return {
     totalCost,

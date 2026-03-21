@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { db } from '@/lib/db';
 import { authConfig } from '@/lib/auth.config';
+import { sendWelcome } from '@/lib/email';
 
 // ============================================================
 // 서버 전용 인증 설정 (API routes, Server Components용)
@@ -26,6 +27,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             },
           },
         });
+
+        // 환영 이메일 (비동기, 실패해도 무시)
+        if (user.email) {
+          sendWelcome(user.email, user.name ?? '사용자').catch(() => {});
+        }
       }
     },
   },

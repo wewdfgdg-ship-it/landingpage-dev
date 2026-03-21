@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TR-A 배지그리드 dark (11)</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Pretendard',sans-serif;display:flex;justify-content:center;min-height:100vh;background:#f0f0f0}.page{width:100%;max-width:960px}
+.tr { position: relative; padding: 48px 20px 40px; --tr-brand: #C9A96E; }
+.tr__inner { max-width: 520px; margin: 0 auto; text-align: center; }
+.tr__header { margin-bottom: 28px; }
+.tr__eyebrow { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--tr-brand) 70%, #5f6980); }
+.tr__headline { margin: 0; font-size: 34px; font-weight: 800; line-height: 1.14; letter-spacing: -0.04em; }
+.tr__sub { max-width: 420px; margin: 12px auto 0; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.6); }
+.tr__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+.tr__badge { padding: 20px 14px; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; background: rgba(255,255,255,0.06); text-align: center; transition: transform 0.2s; backdrop-filter: blur(8px); }
+.tr__badge:hover { transform: translateY(-3px); }
+.tr__badge-icon { display: block; font-size: 28px; margin-bottom: 8px; }
+.tr__badge-img { display: block; width: 48px; height: 48px; margin: 0 auto 8px; border-radius: 8px; object-fit: contain; }
+.tr__badge-name { display: block; font-size: 14px; font-weight: 700; }
+.tr__badge-desc { display: block; font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+.tr__featured { padding: 32px 24px; border: 2px solid color-mix(in srgb, var(--tr-brand) 30%, transparent); border-radius: 24px; background: color-mix(in srgb, var(--tr-brand) 5%, transparent); margin-bottom: 20px; }
+.tr__featured-icon { font-size: 40px; display: block; margin-bottom: 12px; }
+.tr__featured-name { font-size: 24px; font-weight: 900; margin: 0; }
+.tr__featured-desc { font-size: 14px; color: rgba(255,255,255,0.6); margin-top: 8px; }
+.tr__strip { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.tr__strip .tr__badge { min-width: 100px; }
+.tr__logos { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; align-items: center; }
+.tr__media { text-align: center; }
+.tr__media-logo { height: 32px; width: auto; object-fit: contain; filter: brightness(0) invert(0.7); transition: filter 0.2s; }
+.tr__media-logo:hover { filter: brightness(0) invert(1); }
+.tr__media-name { font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.5); }
+.tr__media-quote { display: block; font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 6px; font-style: italic; }
+.tr__cta { margin-top: 24px; }
+.tr__cta-btn { display: inline-block; padding: 14px 32px; border: 1.5px solid color-mix(in srgb, var(--tr-brand) 30%, transparent); border-radius: 14px; background: transparent; color: var(--tr-brand); text-decoration: none; font-size: 15px; font-weight: 700; transition: background 0.2s; }
+.tr__cta-btn:hover { background: color-mix(in srgb, var(--tr-brand) 8%, transparent); }
+.tr.mood--clean { background: #fff; color: #111827; }
+.tr.mood--clean .tr__badge { background: rgba(15,23,42,0.03); border-color: rgba(15,23,42,0.06); }
+.tr.mood--clean .tr__sub, .tr.mood--clean .tr__badge-desc, .tr.mood--clean .tr__featured-desc { color: rgba(15,23,42,0.55); }
+.tr.mood--clean .tr__media-logo { filter: none; }
+.tr.mood--clean .tr__media-name { color: rgba(15,23,42,0.5); }
+.tr.mood--soft { background: linear-gradient(180deg, #fafafa 0%, #fff 100%); color: #111827; }
+.tr.mood--soft .tr__badge { background: rgba(255,255,255,0.9); border-color: rgba(15,23,42,0.06); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+.tr.mood--dark { background: linear-gradient(180deg, #17120d 0%, #0f0b07 100%); color: #fff; }
+.tr.mood--navy { background: #0c1024; color: #fff; }
+@media (max-width: 480px) { .tr { padding: 36px 20px 32px; } .tr__headline { font-size: 28px; } .tr__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) { .tr { padding: 64px 28px 56px; } .tr__inner { max-width: 720px; } .tr__headline { font-size: 42px; } }
+</style></head><body><div class="page"><!-- LAYOUT: TR-A -->
+<section class="tr tr--a mood--dark" data-section="11-trust" data-layout="TR-A" style="--tr-brand:#C9A96E;"><div class="tr__inner"><header class="tr__header"><h2 class="tr__headline">인증 및 수상</h2></header><div class="tr__grid"><article class="tr__badge"><span class="tr__badge-icon">🏅</span><span class="tr__badge-name">식약처 인증</span></article><article class="tr__badge"><span class="tr__badge-icon">🏭</span><span class="tr__badge-name">GMP 제조</span></article><article class="tr__badge"><span class="tr__badge-icon">✅</span><span class="tr__badge-name">ISO 22716</span></article><article class="tr__badge"><span class="tr__badge-icon">🏆</span><span class="tr__badge-name">뷰티어워드</span></article></div></div></section></div></body></html>

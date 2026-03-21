@@ -1,0 +1,122 @@
+<!-- LAYOUT: C | MOOD: mood-red | FONT: SET-5 | MODE: hero-flow -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로보락 S8 MaxV Ultra</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Pretendard', sans-serif; background: #0a0a0a; display: flex; justify-content: center; }
+
+    .hero {
+      width: 100%; margin: 0 auto; min-height: 100vh;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center;
+      padding: clamp(32px, 4vw, 64px) 0 40px;
+      background: radial-gradient(ellipse at 50% 30%, #0EA5E930 0%, transparent 60%),
+     linear-gradient(180deg, #1a1410 0%, #120e08 40%, #0d0a07 100%);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    
+
+    .eyebrow {
+      font-size: clamp(11px, 1.1vw, 16px); font-weight: 300; letter-spacing: 5px;
+      color: #0EA5E980; text-align: center; z-index: 5;
+      animation: fadeInUp 0.7s ease 0.1s both;
+    }
+
+    .headline {
+      font-size: clamp(42px, 7.2vw, 100px); font-weight: 900; color: #FFFFFF;
+      letter-spacing: -4px; line-height: 1.08; text-align: center;
+      padding: 20px 16px 0; word-break: keep-all; z-index: 5;
+      animation: fadeInUp 0.7s ease 0.2s both;
+    }
+    .headline .accent { color: #0EA5E9; }
+
+    .desc {
+      font-size: clamp(14px, 1.6vw, 22px); font-weight: 300; color: rgba(255,255,255,0.4);
+      line-height: 1.75; text-align: center; margin-top: clamp(12px, 1.5vw, 24px);
+      padding: 0 clamp(20px, 3vw, 48px); z-index: 5; max-width: 640px;
+      animation: fadeInUp 0.7s ease 0.4s both;
+    }
+
+    .product-zone {
+      position: relative; margin-top: clamp(16px, 2vw, 32px);
+      width: 55%; max-width: 340px; z-index: 3;
+      transform: rotate(-2deg);
+      animation: fadeInUp 0.8s ease 0.5s both;
+    }
+    .product-zone img {
+      width: 100%; height: auto;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+    }
+
+    .stats {
+      display: flex; justify-content: center; gap: clamp(24px, 3.5vw, 48px);
+      margin-top: clamp(24px, 3vw, 48px); padding: 0 clamp(20px, 3vw, 48px); z-index: 5;
+      animation: fadeInUp 0.7s ease 0.7s both;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-size: clamp(32px, 4.8vw, 72px); font-weight: 900; color: #0EA5E9;
+      letter-spacing: -2px;
+    }
+    .stat-unit { font-size: clamp(14px, 1.4vw, 20px); font-weight: 300; color: #0EA5E966; margin-top: 2px; }
+
+    .cta-area {
+      width: 100%; padding: 0 clamp(20px, 3vw, 48px);
+      margin-top: clamp(20px, 2.5vw, 40px); z-index: 5;
+      animation: fadeInUp 0.7s ease 1.0s both;
+    }
+    .cta-btn {
+      display: block; width: 100%; padding: 22px 0;
+      font-size: clamp(16px, 1.7vw, 24px); font-weight: 700;
+      border-radius: 16px; text-align: center; text-decoration: none; border: none; cursor: pointer;
+      background: linear-gradient(135deg, #0EA5E9, #0EA5E9dd);
+      color: #0d0a07;
+      box-shadow: 0 8px 36px #0EA5E959;
+      transition: all 0.3s ease;
+    }
+    .cta-btn:hover { transform: translateY(-3px); }
+
+    .micro {
+      font-size: clamp(11px, 0.9vw, 13px); font-weight: 300; color: rgba(255,255,255,0.4);
+      margin-top: 12px; text-align: center; opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero mood-red">
+
+    
+
+    <p class="eyebrow">테크 · 가전</p>
+    <h1 class="headline">로보락 S8 MaxV Ultra의 새로운 <span class="accent">시작</span></h1>
+
+    <div class="desc">
+      11,000Pa 흡입력 · 5100mAh 배터리
+    </div>
+
+    <div class="product-zone">
+      <img src="product.png" alt="로보락 S8 MaxV Ultra">
+    </div>
+
+    
+    <div class="stats">
+      <div class="stat-item"><div class="stat-number">11,000</div><div class="stat-unit">Pa 흡입력</div></div><div class="stat-item"><div class="stat-number">5100</div><div class="stat-unit">mAh 배터리</div></div><div class="stat-item"><div class="stat-number">60</div><div class="stat-unit">일 자동비움</div></div>
+    </div>
+
+    <div class="cta-area">
+      <a href="#" class="cta-btn">최저가 확인하기</a>
+      <p class="micro">전 상품 무료배송 · 100% 안심 환불 보장</p>
+    </div>
+  </section>
+</body>
+</html>
