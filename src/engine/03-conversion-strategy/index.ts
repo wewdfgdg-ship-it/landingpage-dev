@@ -2,23 +2,24 @@ import { askClaude } from '@/lib/ai/claude';
 import type { ProductBrief } from '@/engine/01-product-intelligence/types';
 import type { UrgencyBrief } from '@/engine/02-why-now/types';
 import type { StrategyBlueprint, StrategyType, StructureSection } from './types';
+import {
+  STRATEGY_MAP,
+  SECTION_COUNT_BY_DECISION_TIME,
+  DEFAULT_SECTION_COUNT,
+  PRICE_RESISTANCE_BONUS_THRESHOLD,
+  PRICE_RESISTANCE_BONUS_SECTIONS,
+  MIN_SECTIONS,
+  MAX_SECTIONS,
+  SCROLL_DEPTH_PER_SECTION,
+  READ_TIME_PER_SECTION,
+  STRUCTURE_SYSTEM_PROMPT,
+} from './rules';
 export type { StrategyBlueprint } from './types';
 
 // ============================================================
 // Conversion Strategy Engine — AI 1회 + 규칙 엔진
 // 페이지 전체 구조(섹션 배열)를 결정
 // ============================================================
-
-// --- 규칙: 전략 유형 선택 ---
-
-const STRATEGY_MAP: Record<string, StrategyType> = {
-  purchase: 'direct_sale',
-  signup: 'free_trial',
-  inquiry: 'lead_generation',
-  download: 'content_hook',
-  registration: 'event_registration',
-  newsletter: 'content_hook',
-};
 
 function selectStrategy(pageGoal: string, industry: string): StrategyType {
   // SaaS는 free_trial 우선
@@ -35,60 +36,17 @@ function selectStrategy(pageGoal: string, industry: string): StrategyType {
 // --- 규칙: 섹션 수 결정 ---
 
 function decideSectionCount(brief: ProductBrief): number {
-  let base: number;
+  let base = SECTION_COUNT_BY_DECISION_TIME[brief.marketContext.decisionTime] ?? DEFAULT_SECTION_COUNT;
 
-  switch (brief.marketContext.decisionTime) {
-    case 'instant':
-      base = 6;
-      break;
-    case '1_day':
-      base = 9;
-      break;
-    case '1_week':
-      base = 12;
-      break;
-    case '1_month_plus':
-      base = 14;
-      break;
-    default:
-      base = 9;
+  // 가격 저항 높으면 섹션 추가 (신뢰 보강 필요)
+  if (brief.resistanceMap.price.level >= PRICE_RESISTANCE_BONUS_THRESHOLD) {
+    base += PRICE_RESISTANCE_BONUS_SECTIONS;
   }
 
-  // 가격 저항 높으면 +2 (신뢰 보강 필요)
-  if (brief.resistanceMap.price.level >= 4) {
-    base += 2;
-  }
-
-  return Math.min(16, Math.max(5, base));
+  return Math.min(MAX_SECTIONS, Math.max(MIN_SECTIONS, base));
 }
 
 // --- AI: 섹션 구조 생성 ---
-
-const SYSTEM_PROMPT = `당신은 랜딩페이지 전환 전략가입니다.
-주어진 전략 유형과 섹션 수에 맞춰 최적의 페이지 섹션 구조를 설계합니다.
-
-각 섹션의 역할(role):
-- HOOK: 시선 잡기 (1개, 최상단)
-- PAIN: 문제 인식 (1~2개)
-- SOLUTION: 해결책 제시 (1~2개)
-- PROOF: 증거/신뢰 (2~3개)
-- OBJECTION: 저항 해소 (1~2개)
-- URGENCY: 긴급성 (1개)
-- CTA: 행동 촉구 (1~2개)
-
-sectionType 예시: hero_visual, hero_text, pain_point, problem_agitation,
-benefit_highlight, feature_showcase, how_it_works, social_proof,
-testimonials, logo_bar, pricing, faq, guarantee, before_after,
-comparison, urgency_counter, final_cta, mini_cta
-
-JSON으로 응답:
-{
-  "structure": [
-    { "order": 1, "role": "HOOK", "sectionType": "hero_visual", "purpose": "설명" },
-    ...
-  ],
-  "ctaPositions": [5, 8, 10]
-}`;
 
 function buildStrategyMessage(
   strategyType: StrategyType,
@@ -121,15 +79,15 @@ export async function runConversionStrategy(
   const result = await askClaude<{
     structure: StructureSection[];
     ctaPositions: number[];
-  }>(SYSTEM_PROMPT, userMessage);
+  }>(STRUCTURE_SYSTEM_PROMPT, userMessage);
 
   const blueprint: StrategyBlueprint = {
     strategyType,
     totalSections,
     structure: result.data.structure,
     ctaPositions: result.data.ctaPositions,
-    estimatedScrollDepth: `${totalSections * 600}px`,
-    targetReadTime: `${Math.ceil(totalSections * 0.5)}분`,
+    estimatedScrollDepth: `${totalSections * SCROLL_DEPTH_PER_SECTION}px`,
+    targetReadTime: `${Math.ceil(totalSections * READ_TIME_PER_SECTION)}분`,
   };
 
   return { blueprint, cost: result.cost };
