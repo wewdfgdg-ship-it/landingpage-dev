@@ -14,7 +14,10 @@ import type { StyleConfig } from '@/engine/09-visual-style/types';
 // ============================================================
 // 에디터 페이지 — 3패널 레이아웃
 // 좌: 섹션 리스트 | 중: 미리보기 | 우: 편집 패널
+// 편집 후 2초 디바운스로 자동 미리보기 갱신
 // ============================================================
+
+const AUTO_REBUILD_DELAY_MS = 2000;
 
 interface ProjectData {
   id: string;
@@ -33,11 +36,13 @@ export default function EditorPage(): React.ReactElement {
   const [error, setError] = useState('');
   const [projectName, setProjectName] = useState('');
   const initRef = useRef(false);
+  const rebuildTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const {
     isDirty,
     isSaving,
     isRebuilding,
+    editVersion,
     initialize,
     setSaving,
     setRebuilding,
@@ -76,7 +81,7 @@ export default function EditorPage(): React.ReactElement {
   }, [fetchAndInit]);
 
   // 저장 + Code Engine 재실행
-  const handleSave = async (): Promise<void> => {
+  const handleSave = useCallback(async (): Promise<void> => {
     setSaving(true);
     setRebuilding(true);
 
@@ -104,7 +109,26 @@ export default function EditorPage(): React.ReactElement {
       setSaving(false);
       setRebuilding(false);
     }
-  };
+  }, [id, setSaving, setRebuilding, toCopyBlocks, toLayoutSections, setPreviewHtml, markClean]);
+
+  // 편집 후 디바운스 자동 리빌드 (2초 후 자동 저장 + 미리보기 갱신)
+  useEffect(() => {
+    if (editVersion === 0 || !isDirty) return;
+
+    if (rebuildTimerRef.current) {
+      clearTimeout(rebuildTimerRef.current);
+    }
+
+    rebuildTimerRef.current = setTimeout(() => {
+      void handleSave();
+    }, AUTO_REBUILD_DELAY_MS);
+
+    return () => {
+      if (rebuildTimerRef.current) {
+        clearTimeout(rebuildTimerRef.current);
+      }
+    };
+  }, [editVersion, isDirty, handleSave]);
 
   // 페이지 떠날 때 저장 안 된 변경 경고
   useEffect(() => {
@@ -154,7 +178,7 @@ export default function EditorPage(): React.ReactElement {
           <h1 className="text-sm font-semibold text-gray-900">{projectName}</h1>
           {isDirty && (
             <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-700">
-              수정됨
+              수정됨 · 자동 저장 대기
             </span>
           )}
         </div>

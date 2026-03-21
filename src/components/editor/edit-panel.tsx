@@ -1,11 +1,13 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useEditorStore } from '@/stores/editor-store';
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 
 // ============================================================
 // 편집 패널 — 우측 사이드바
 // 선택된 섹션의 카피 수정 + 레이아웃 패턴 변경
+// 섹션 선택 시 자동 스크롤, 변경 상태 표시
 // ============================================================
 
 /** 카테고리별 패턴 목록 */
@@ -55,6 +57,16 @@ const PATTERN_OPTIONS: Record<string, { id: string; name: string }[]> = {
     { id: 'misc_process_flow', name: '프로세스 플로우' },
     { id: 'misc_footer', name: '푸터' },
   ],
+};
+
+const SECTION_ICONS: Record<string, string> = {
+  hero: '🎯',
+  feature: '⭐',
+  social_proof: '💬',
+  pricing: '💰',
+  cta: '🔘',
+  faq: '❓',
+  misc: '📎',
 };
 
 function FieldInput({
@@ -139,6 +151,17 @@ export function EditPanel(): React.ReactElement {
   const selectedOrder = useEditorStore((s) => s.selectedSectionOrder);
   const updateCopy = useEditorStore((s) => s.updateCopy);
   const changePattern = useEditorStore((s) => s.changePattern);
+  const selectSection = useEditorStore((s) => s.selectSection);
+  const isDirty = useEditorStore((s) => s.isDirty);
+
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // 섹션 변경 시 패널 상단으로 스크롤
+  useEffect(() => {
+    if (selectedOrder !== null && panelRef.current) {
+      panelRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [selectedOrder]);
 
   const section = sections.find((s) => s.order === selectedOrder);
 
@@ -146,13 +169,16 @@ export function EditPanel(): React.ReactElement {
     return (
       <div className="flex h-full items-center justify-center p-6">
         <div className="text-center">
-          <p className="text-sm text-gray-400">좌측에서 섹션을 선택하세요</p>
+          <p className="text-2xl mb-2">✏️</p>
+          <p className="text-sm text-gray-400">좌측에서 섹션을 선택하거나</p>
+          <p className="text-sm text-gray-400">미리보기에서 클릭하세요</p>
         </div>
       </div>
     );
   }
 
   const patterns = PATTERN_OPTIONS[section.sectionType] ?? [];
+  const icon = SECTION_ICONS[section.sectionType] ?? '📎';
   const copyFields: { key: keyof CopyBlock; label: string; multiline?: boolean }[] = [
     { key: 'headline', label: '헤드라인' },
     { key: 'subheadline', label: '서브 헤드라인' },
@@ -161,18 +187,64 @@ export function EditPanel(): React.ReactElement {
     { key: 'microCopy', label: '마이크로 카피' },
   ];
 
+  // 이전/다음 섹션 네비게이션
+  const currentIndex = sections.findIndex((s) => s.order === selectedOrder);
+  const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
+  const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
+
   return (
     <div className="flex h-full flex-col">
-      {/* 헤더 */}
+      {/* 헤더 — 섹션 정보 + 네비게이션 */}
       <div className="border-b border-gray-200 px-4 py-3">
-        <h3 className="text-sm font-bold text-gray-700">
-          섹션 {section.order} 편집
-        </h3>
-        <p className="text-xs text-gray-400 mt-0.5">{section.sectionType}</p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-base">{icon}</span>
+            <div>
+              <h3 className="text-sm font-bold text-gray-700">
+                섹션 {section.order} 편집
+              </h3>
+              <p className="text-xs text-gray-400 mt-0.5">{section.sectionType}</p>
+            </div>
+          </div>
+          {isDirty && (
+            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-700">
+              수정됨
+            </span>
+          )}
+        </div>
+
+        {/* 섹션 네비게이션 */}
+        <div className="flex items-center justify-between mt-2">
+          <button
+            onClick={() => prevSection && selectSection(prevSection.order)}
+            disabled={!prevSection}
+            className={`text-xs px-2 py-1 rounded ${
+              prevSection
+                ? 'text-gray-600 hover:bg-gray-100'
+                : 'text-gray-300 cursor-not-allowed'
+            }`}
+          >
+            ← 이전
+          </button>
+          <span className="text-xs text-gray-400">
+            {currentIndex + 1} / {sections.length}
+          </span>
+          <button
+            onClick={() => nextSection && selectSection(nextSection.order)}
+            disabled={!nextSection}
+            className={`text-xs px-2 py-1 rounded ${
+              nextSection
+                ? 'text-gray-600 hover:bg-gray-100'
+                : 'text-gray-300 cursor-not-allowed'
+            }`}
+          >
+            다음 →
+          </button>
+        </div>
       </div>
 
       {/* 편집 폼 */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div ref={panelRef} className="flex-1 overflow-y-auto p-4 space-y-4">
         {/* 레이아웃 패턴 선택 */}
         {patterns.length > 0 && (
           <div>
