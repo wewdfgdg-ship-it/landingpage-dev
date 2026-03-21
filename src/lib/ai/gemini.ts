@@ -1,7 +1,12 @@
 import { GoogleGenAI } from '@google/genai';
 import type { GeneratedImageResult } from './types';
 
-const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+const geminiApiKey = process.env.GEMINI_API_KEY;
+if (!geminiApiKey) {
+  throw new Error('GEMINI_API_KEY must be set');
+}
+
+const genai = new GoogleGenAI({ apiKey: geminiApiKey });
 
 const IMAGE_MODEL = 'gemini-2.0-flash-exp';
 
@@ -40,7 +45,7 @@ export async function generateImage(
   }
 
   return {
-    imageData: Buffer.from(part.inlineData.data!, 'base64'),
+    imageData: Buffer.from(part.inlineData.data ?? '', 'base64'),
     mimeType: part.inlineData.mimeType ?? 'image/jpeg',
     prompt,
     model: IMAGE_MODEL,

@@ -18,7 +18,10 @@ export type { ImageGenerationOutput, SectionImageResult } from './types';
 // 섹션 imageDirection → Gemini 이미지 생성 → R2 업로드 → CDN URL
 // ============================================================
 
-const BUCKET = process.env.R2_BUCKET_NAME!;
+const BUCKET = process.env.R2_BUCKET_NAME;
+if (!BUCKET) {
+  throw new Error('R2_BUCKET_NAME must be set');
+}
 const MAX_CONCURRENT = 3;
 
 /** imageDirection을 Gemini 프롬프트로 변환 */
@@ -192,6 +195,7 @@ export async function runImageGeneration(
       totalCost += result.value.cost;
     } else {
       failedSections.push(requests[idx].sectionOrder);
+      // eslint-disable-next-line no-console
       console.error(
         `[ImageGen] 섹션 ${requests[idx].sectionOrder} 실패:`,
         result.reason,

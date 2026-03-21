@@ -114,7 +114,7 @@ export default function EditorPage(): React.ReactElement {
       }
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    return (): void => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [isDirty]);
 
   if (loading) {

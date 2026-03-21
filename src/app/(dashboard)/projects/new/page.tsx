@@ -148,7 +148,7 @@ export default function NewProjectPage(): React.ReactElement {
       <div className="mt-6 flex items-center justify-between">
         <Button
           variant="outline"
-          onClick={currentStep === 1 ? () => router.push('/projects') : prevStep}
+          onClick={currentStep === 1 ? (): void => { router.push('/projects'); } : prevStep}
         >
           {currentStep === 1 ? '취소' : '이전'}
         </Button>
