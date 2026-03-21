@@ -10,9 +10,36 @@ const eslintConfig = defineConfig([
   {
     rules: {
       "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/explicit-function-return-type": "warn",
+      "@typescript-eslint/explicit-function-return-type": ["warn", {
+        "allowExpressions": true,
+        "allowHigherOrderFunctions": true,
+        "allowConciseArrowFunctionExpressionsStartingWithVoid": true,
+      }],
+      "@typescript-eslint/no-unused-vars": ["warn", {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+      }],
       "no-console": "warn",
       "prefer-const": "error",
+    },
+  },
+  {
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/explicit-function-return-type": "off",
+    },
+  },
+  {
+    files: ["scripts/**/*.{ts,js}"],
+    rules: {
+      "no-console": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+    },
+  },
+  {
+    files: ["src/stores/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/explicit-function-return-type": "off",
     },
   },
   globalIgnores([

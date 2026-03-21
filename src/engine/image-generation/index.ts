@@ -152,10 +152,8 @@ export async function runImageGeneration(
       totalCost += result.value.cost;
     } else {
       failedSections.push(requests[idx].sectionOrder);
-      console.error(
-        `[ImageGen] 섹션 ${requests[idx].sectionOrder} 실패:`,
-        result.reason,
-      );
+      // eslint-disable-next-line no-console
+      console.error(`[ImageGen] 섹션 ${requests[idx].sectionOrder} 실패:`, result.reason);
     }
   });
 
