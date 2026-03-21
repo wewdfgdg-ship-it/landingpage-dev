@@ -4,14 +4,14 @@
 
 const VERCEL_API = 'https://api.vercel.com';
 
-function getHeaders() {
+function getHeaders(): Record<string, string> {
   return {
     Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
     'Content-Type': 'application/json',
   };
 }
 
-function teamQuery() {
+function teamQuery(): string {
   return process.env.VERCEL_TEAM_ID ? `?teamId=${process.env.VERCEL_TEAM_ID}` : '';
 }
 
