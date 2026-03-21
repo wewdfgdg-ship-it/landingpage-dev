@@ -334,7 +334,7 @@ function createZip(files: Record<string, string>): Buffer {
 // CRC-32 계산
 // ============================================================
 
-const CRC_TABLE = (() => {
+const CRC_TABLE = ((): Uint32Array => {
   const table = new Uint32Array(256);
   for (let i = 0; i < 256; i++) {
     let c = i;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useRef } from 'react';
+import Image from 'next/image';
 import { useWizardStore, type UploadedImage } from '@/stores/wizard-store';
 
 function generateId(): string {
@@ -45,11 +46,11 @@ function ImageCard({
 }): React.ReactElement {
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white">
-      <div className="aspect-square">
-        {/* eslint-disable-next-line @next/next/no-img-element -- blob URL 프리뷰, next/image 불필요 */}
-        <img
+      <div className="relative aspect-square">
+        <Image
           src={image.previewUrl}
           alt="업로드된 이미지"
+          fill
           className="h-full w-full object-cover"
         />
         {image.uploading && (

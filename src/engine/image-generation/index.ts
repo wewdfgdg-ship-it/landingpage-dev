@@ -10,7 +10,6 @@ import type {
   ImageGenerationOutput,
 } from './types';
 import { IMAGE_REQUIRED_PATTERNS } from './types';
-import { buildImagePrompt } from './prompts';
 
 export type { ImageGenerationOutput, SectionImageResult } from './types';
 
@@ -19,8 +18,52 @@ export type { ImageGenerationOutput, SectionImageResult } from './types';
 // 섹션 imageDirection → Gemini 이미지 생성 → R2 업로드 → CDN URL
 // ============================================================
 
-const BUCKET = process.env.R2_BUCKET_NAME!;
+const BUCKET = process.env.R2_BUCKET_NAME;
+if (!BUCKET) {
+  throw new Error('R2_BUCKET_NAME must be set');
+}
 const MAX_CONCURRENT = 3;
+
+/** imageDirection을 Gemini 프롬프트로 변환 */
+function buildImagePrompt(
+  req: SectionImageRequest,
+  productName: string,
+  industry: string,
+  moodPreset: string,
+): string {
+  const sectionContext = getSectionContext(req.sectionType);
+
+  return `당신은 전문 상업용 제품 사진작가입니다.
+
+제품: ${productName}
+산업: ${industry}
+분위기: ${moodPreset}
+섹션 용도: ${sectionContext}
+
+다음 지시에 따라 고품질 상업용 이미지를 생성하세요:
+${req.imageDirection}
+
+요구사항:
+- 깨끗하고 전문적인 상업 사진 스타일
+- 텍스트나 글자를 이미지에 포함하지 마세요
+- 제품과 관련된 시각적 요소만 포함
+- 4:3 가로 비율
+- 밝고 선명한 색감
+- 배경은 심플하게`;
+}
+
+/** 섹션 타입별 컨텍스트 설명 */
+function getSectionContext(sectionType: string): string {
+  const contextMap: Record<string, string> = {
+    hero: '랜딩페이지 메인 히어로 영역 — 시선을 사로잡는 대표 이미지',
+    feature: '기능/특징 소개 영역 — 제품의 핵심 가치를 보여주는 이미지',
+    benefit: '혜택 설명 영역 — 사용자가 얻는 이점을 시각화',
+    social_proof: '사회적 증거 영역 — 신뢰를 구축하는 이미지',
+    how_it_works: '사용 방법 영역 — 단계별 프로세스를 설명하는 이미지',
+    comparison: '비교 영역 — 제품의 차별점을 보여주는 이미지',
+  };
+  return contextMap[sectionType] ?? '제품과 관련된 전문적인 이미지';
+}
 
 /** 이미지가 필요한 섹션 필터링 */
 function extractImageRequests(
@@ -153,7 +196,10 @@ export async function runImageGeneration(
     } else {
       failedSections.push(requests[idx].sectionOrder);
       // eslint-disable-next-line no-console
-      console.error(`[ImageGen] 섹션 ${requests[idx].sectionOrder} 실패:`, result.reason);
+      console.error(
+        `[ImageGen] 섹션 ${requests[idx].sectionOrder} 실패:`,
+        result.reason,
+      );
     }
   });
 

@@ -4,7 +4,7 @@
 
 const VERCEL_API = 'https://api.vercel.com';
 
-function getHeaders(): Record<string, string> {
+function getHeaders(): { Authorization: string; 'Content-Type': string } {
   return {
     Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
     'Content-Type': 'application/json',

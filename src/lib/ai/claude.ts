@@ -1,9 +1,12 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { AIResponse } from './types';
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!,
-});
+const apiKey = process.env.ANTHROPIC_API_KEY;
+if (!apiKey) {
+  throw new Error('ANTHROPIC_API_KEY must be set');
+}
+
+const anthropic = new Anthropic({ apiKey });
 
 const MODEL = 'claude-sonnet-4-20250514';
 

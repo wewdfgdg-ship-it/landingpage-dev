@@ -20,7 +20,7 @@ const DEFAULT_COLORS = ['#2563eb', '#7c3aed', '#059669', '#d97706', '#dc2626', '
 export function BarChart({
   data,
   height = 180,
-  formatValue = (v) => String(v),
+  formatValue = (v: number): string => String(v),
   showPercent = false,
 }: BarChartProps): React.ReactElement {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

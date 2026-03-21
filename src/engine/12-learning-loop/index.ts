@@ -453,7 +453,7 @@ export async function autoSwapWinner(projectId: string): Promise<{
   return {
     swapped: true,
     testId: test.id,
-    winner: test.winner!,
+    winner: test.winner ?? 'control',
     improvement,
   };
 }

@@ -19,7 +19,7 @@ export function LineChart({
   data,
   color = '#2563eb',
   height = 200,
-  formatValue = (v) => String(v),
+  formatValue = (v: number): string => String(v),
   unit = '',
 }: LineChartProps): React.ReactElement {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

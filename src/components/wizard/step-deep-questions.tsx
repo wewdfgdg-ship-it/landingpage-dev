@@ -95,7 +95,7 @@ export function StepDeepQuestions(): React.ReactElement {
 
     void loadQuestions();
 
-    return () => {
+    return (): void => {
       cancelled = true;
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

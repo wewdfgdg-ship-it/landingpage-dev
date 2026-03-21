@@ -1,7 +1,12 @@
 import { Queue } from 'bullmq';
 import IORedis from 'ioredis';
 
-const connection = new IORedis(process.env.REDIS_URL!, {
+const redisUrl = process.env.REDIS_URL;
+if (!redisUrl) {
+  throw new Error('REDIS_URL must be set');
+}
+
+const connection = new IORedis(redisUrl, {
   maxRetriesPerRequest: null,
 });
 

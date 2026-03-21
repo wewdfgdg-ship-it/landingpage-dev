@@ -90,6 +90,7 @@ function estimateContentAmount(role: string): number {
 export function runLayoutIntelligence(
   brief: ProductBrief,
   blueprint: StrategyBlueprint,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _attention: AttentionConfig,
 ): LayoutConfig {
   const usedPatterns = new Set<string>();
