@@ -1,14 +1,22 @@
 import type { ProductBrief } from '@/engine/01-product-intelligence/types';
 import type { UrgencyBrief, UrgencyType, UrgencyElement, UrgencyPlacement } from './types';
+import {
+  HIGH_PRICE_INDUSTRIES,
+  LIFESTYLE_INDUSTRIES,
+  HIGH_PRICE_THRESHOLD,
+  COMPOUND_URGENCY_THRESHOLD,
+  URGENCY_FALLBACKS,
+  NEED_RESISTANCE_THRESHOLD,
+  MID_PAGE_URGENCY_THRESHOLD,
+  CTA_URGENCY_MIN,
+  CTA_URGENCY_MAX,
+} from './rules';
 export type { UrgencyBrief } from './types';
 
 // ============================================================
 // Why Now Engine — 규칙 엔진 (AI 호출 없음)
 // Product Brief의 저항/시장 데이터 기반으로 긴급성 전략 결정
 // ============================================================
-
-const HIGH_PRICE_INDUSTRIES = ['saas', 'b2b', 'finance'];
-const LIFESTYLE_INDUSTRIES = ['lifestyle', 'beauty', 'education'];
 
 function extractPriceNumber(priceRange: string): number {
   const nums = priceRange.replace(/[^0-9]/g, '');
@@ -23,17 +31,17 @@ function selectPrimaryType(
   const price = extractPriceNumber(priceRange);
 
   // 문제 해결형 제품 → 상황 기반
-  if (brief.customerFear.problem && brief.resistanceMap.need.level >= 3) {
+  if (brief.customerFear.problem && brief.resistanceMap.need.level >= NEED_RESISTANCE_THRESHOLD) {
     return 'situational';
   }
 
   // 고가 제품 또는 SaaS → 가격 앵커링
-  if (price >= 100000 || HIGH_PRICE_INDUSTRIES.includes(industry)) {
+  if (price >= HIGH_PRICE_THRESHOLD || (HIGH_PRICE_INDUSTRIES as readonly string[]).includes(industry)) {
     return 'price_anchor';
   }
 
   // 라이프스타일/뷰티/교육 → 감정 기반
-  if (LIFESTYLE_INDUSTRIES.includes(industry)) {
+  if ((LIFESTYLE_INDUSTRIES as readonly string[]).includes(industry)) {
     return 'emotional';
   }
 
@@ -45,18 +53,10 @@ function selectSecondaryType(
   primary: UrgencyType,
   brief: ProductBrief,
 ): UrgencyType | null {
-  // urgency 저항이 5면 복합 적용
-  if (brief.resistanceMap.urgency.level < 5) return null;
+  // urgency 저항이 임계값 미만이면 복합 적용 안 함
+  if (brief.resistanceMap.urgency.level < COMPOUND_URGENCY_THRESHOLD) return null;
 
-  const fallbacks: Record<UrgencyType, UrgencyType> = {
-    time_based: 'quantity_based',
-    quantity_based: 'time_based',
-    situational: 'emotional',
-    emotional: 'situational',
-    price_anchor: 'situational',
-  };
-
-  return fallbacks[primary] ?? null;
+  return URGENCY_FALLBACKS[primary] ?? null;
 }
 
 function generateElements(
@@ -105,7 +105,7 @@ function decidePlacement(
 ): UrgencyPlacement[] {
   const placements: UrgencyPlacement[] = ['final_cta'];
 
-  if (brief.resistanceMap.urgency.level >= 4) {
+  if (brief.resistanceMap.urgency.level >= MID_PAGE_URGENCY_THRESHOLD) {
     placements.unshift('mid_page');
   }
 
@@ -130,8 +130,8 @@ export function runWhyNow(
 
   const urgencyElements = generateElements(primaryType, secondaryType, brief, priceRange);
   const ctaUrgencyLevel = Math.min(
-    5,
-    Math.max(1, brief.resistanceMap.urgency.level),
+    CTA_URGENCY_MAX,
+    Math.max(CTA_URGENCY_MIN, brief.resistanceMap.urgency.level),
   );
   const placement = decidePlacement(primaryType, brief);
 
