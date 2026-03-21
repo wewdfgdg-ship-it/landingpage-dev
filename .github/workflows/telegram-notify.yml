@@ -29,14 +29,19 @@ jobs:
               -d "$(jq -n --arg chat "$TG_CHAT" --arg text "$SESSIONS" '{chat_id: $chat, text: $text, disable_web_page_preview: true}')"
           fi
 
-          # Regular push/PR notification
+          # 한국어 알림
+          REPO="${{ github.repository }}"
+          PROJECT=$(echo "$REPO" | sed 's|.*/||')
+
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            MSG=$(printf "PR: ${{ github.event.pull_request.title }}\n${{ github.repository }}\n${{ github.event.pull_request.html_url }}")
+            TITLE="${{ github.event.pull_request.title }}"
+            URL="${{ github.event.pull_request.html_url }}"
+            MSG=$(printf "📋 PR 생성: ${TITLE}\n프로젝트: ${PROJECT}\n${URL}")
           else
-            REPO="${{ github.repository }}"
             BRANCH="${{ github.ref_name }}"
+            SESSION=$(echo "$BRANCH" | sed 's|session/||')
             COMMIT_MSG=$(echo '${{ github.event.head_commit.message }}' | head -c 500)
-            MSG=$(printf "Push: ${REPO}\nBranch: ${BRANCH}\n${COMMIT_MSG}")
+            MSG=$(printf "🚀 푸시 완료\n프로젝트: ${PROJECT}\n세션: ${SESSION}\n내용: ${COMMIT_MSG}")
           fi
           curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
             -H "Content-Type: application/json" \
