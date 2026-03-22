@@ -3,6 +3,8 @@ import type { DesignTokens, ColorPalette } from '@/engine/09-visual-style/types'
 
 // ============================================================
 // Section Renderers — 패턴별 HTML 생성
+// @deprecated v2 템플릿 시스템으로 대체됨 (templates/ + template-engine.ts)
+// fallback 전용으로 유지. 신규 패턴은 templates/ 디렉토리에 추가할 것.
 // ============================================================
 
 // --- 유틸리티 ---

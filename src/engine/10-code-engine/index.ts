@@ -2,7 +2,7 @@ import type { CopyBlocks } from '@/engine/05-psychological-copy/types';
 import type { LayoutConfig } from '@/engine/08-layout-intelligence/types';
 import type { StyleConfig } from '@/engine/09-visual-style/types';
 import type { GeneratedPage, RenderedSection } from './types';
-import { renderByPatternId } from './renderers';
+import { renderSection } from './template-engine';
 import { generateTrackingScript } from '@/engine/12-learning-loop/tracking-script';
 import {
   FONT_FAMILY_MAP,
@@ -108,7 +108,7 @@ export function runCodeEngine(
       imageDirection: '',
     };
 
-    const html = renderByPatternId(
+    const html = renderSection(
       sectionLayout.selectedPattern,
       copy,
       tokens,
