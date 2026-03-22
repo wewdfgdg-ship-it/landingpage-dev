@@ -107,12 +107,15 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .pricing__btn{display:block;padding:16px;background:var(--green);color:var(--cream);font-family:var(--josefin);font-size:1rem;font-weight:600;letter-spacing:.05em;border-radius:8px;transition:all .3s;}
 .pricing__btn:hover{background:var(--green-d);}
 
-.rev__item{display:grid;grid-template-columns:120px 1fr;gap:clamp(20px,3vw,36px);align-items:center;padding:clamp(28px,3vw,44px) 0;border-bottom:1px solid var(--gl);}
-.rev__item:first-child{border-top:1px solid var(--gl);}
-.rev__avatar{width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;}
-.rev__stars{color:var(--brown);font-size:.8rem;letter-spacing:3px;margin-bottom:10px;}
-.rev__text{font-family:var(--lora);font-style:italic;font-size:clamp(1.15rem,1.6vw,1.4rem);line-height:1.55;margin-bottom:12px;}
-.rev__name{font-family:var(--josefin);font-size:.8rem;font-weight:500;color:var(--gy);letter-spacing:.05em;}
+.rev__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,24px);}
+.rev-card{background:var(--cream);border-radius:14px;padding:clamp(24px,3vw,36px);transition:box-shadow .4s,transform .4s;}
+.rev-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.08);transform:translateY(-4px);}
+.rev-card__top{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.rev-card__avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--green);}
+.rev-card__name{font-family:var(--josefin);font-weight:600;font-size:.9rem;}
+.rev-card__meta{font-size:.75rem;color:var(--gy);}
+.rev-card__stars{color:var(--brown);font-size:.75rem;letter-spacing:3px;margin-bottom:12px;}
+.rev-card__text{font-family:var(--lora);font-style:italic;font-size:clamp(1rem,1.3vw,1.1rem);line-height:1.65;color:var(--bk);}
 
 .process__list{max-width:600px;margin:0 auto;position:relative;}
 .process__list::before{content:'';position:absolute;top:24px;bottom:24px;left:23px;width:2px;background:linear-gradient(180deg,var(--green),var(--green-l));}
@@ -137,7 +140,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .cta__p{font-size:1rem;color:rgba(255,255,255,.65);margin-bottom:36px;}
 .cta__btn{display:inline-block;padding:16px 56px;background:var(--cream);color:var(--green);font-family:var(--josefin);font-size:.95rem;font-weight:600;letter-spacing:.05em;border-radius:8px;transition:all .3s;}
 .cta__btn:hover{background:var(--brown);color:var(--cream);}
-.cta__micro{margin-top:14px;font-size:.8rem;color:rgba(255,255,255,.4);}
+.cta__micro{margin-top:14px;font-size:.8rem;color:rgba(255,255,255,.65);}
+footer{padding:40px clamp(20px,3vw,40px);text-align:center;border-top:1px solid var(--gl);}
+footer p{font-size:.75rem;color:var(--gy);}
 
 .stag{font-family:var(--josefin);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:12px;}
 .stitle{font-family:var(--lora);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;margin-bottom:36px;}
@@ -148,7 +153,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
   .gallery__grid{grid-template-columns:1fr;height:auto;}
   .gallery__item:first-child{grid-row:auto;}
   .gallery__item{height:240px;}
-  .rev__item{grid-template-columns:80px 1fr;gap:16px;}
+  .rev__grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -234,9 +239,28 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 <section class="sec">
   <p class="stag rv">Reviews</p>
   <h2 class="stitle rv">실제 고객 후기</h2>
-  <div class="rev__item rv"><img class="rev__avatar" src="https://i.pravatar.cc/240?img=32" alt=""><div><p class="rev__stars">★★★★★</p><p class="rev__text">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p><p class="rev__name">김○○ · 35세</p></div></div>
-  <div class="rev__item rv"><img class="rev__avatar" src="https://i.pravatar.cc/240?img=47" alt=""><div><p class="rev__stars">★★★★★</p><p class="rev__text">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p><p class="rev__name">이○○ · 42세</p></div></div>
-  <div class="rev__item rv"><img class="rev__avatar" src="https://i.pravatar.cc/240?img=12" alt=""><div><p class="rev__stars">★★★★★</p><p class="rev__text">"호텔보다 우리 집 침대가 더 좋아졌어요."</p><p class="rev__name">박○○ · 28세</p></div></div>
+  <div class="rev__grid">
+    <div class="rev-card rv">
+      <div class="rev-card__top"><img class="rev-card__avatar" src="https://i.pravatar.cc/120?img=32" alt=""><div><p class="rev-card__name">김서윤</p><p class="rev-card__meta">35세 · 서울</p></div></div>
+      <p class="rev-card__stars">★★★★★</p>
+      <p class="rev-card__text">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p>
+    </div>
+    <div class="rev-card rv" data-d="1">
+      <div class="rev-card__top"><img class="rev-card__avatar" src="https://i.pravatar.cc/120?img=47" alt=""><div><p class="rev-card__name">이하은</p><p class="rev-card__meta">42세 · 부산</p></div></div>
+      <p class="rev-card__stars">★★★★★</p>
+      <p class="rev-card__text">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p>
+    </div>
+    <div class="rev-card rv" data-d="2">
+      <div class="rev-card__top"><img class="rev-card__avatar" src="https://i.pravatar.cc/120?img=12" alt=""><div><p class="rev-card__name">박준혁</p><p class="rev-card__meta">28세 · 대전</p></div></div>
+      <p class="rev-card__stars">★★★★★</p>
+      <p class="rev-card__text">"호텔보다 우리 집 침대가 더 좋아졌어요. 진작 바꿀걸."</p>
+    </div>
+    <div class="rev-card rv" data-d="3">
+      <div class="rev-card__top"><img class="rev-card__avatar" src="https://i.pravatar.cc/120?img=60" alt=""><div><p class="rev-card__name">정민수</p><p class="rev-card__meta">31세 · 제주</p></div></div>
+      <p class="rev-card__stars">★★★★★</p>
+      <p class="rev-card__text">"수면 질이 올라가니까 업무 집중도가 확 달라졌어요. 최고의 투자입니다."</p>
+    </div>
+  </div>
 </section>
 
 <section class="sec">
@@ -268,5 +292,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.05,rootMargin:'0px 0px 50px 0px'});
 document.querySelectorAll('.rv:not(.on)').forEach(el=>io.observe(el));
 </script>
+
+<footer><p>&copy; 2026 SleepWell. All rights reserved.</p></footer>
 </body>
 </html>

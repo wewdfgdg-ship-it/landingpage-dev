@@ -797,75 +797,62 @@ body::before {
 }
 .reviews {
   padding: 20px 24px 100px;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
+}
+.reviews__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 .review {
   position: relative;
-  text-align: center;
-  padding: 60px 0;
+  padding: 36px;
+  border: 1px solid var(--gold-dim);
+  transition: border-color .4s, transform .4s;
 }
-.review + .review::before {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 1px;
-  background: var(--gold);
-  margin: 0 auto 60px;
-  opacity: .5;
+.review:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
 }
-.review__deco {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-70%);
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(6rem, 10vw, 8rem);
-  font-style: italic;
-  color: var(--gold);
-  opacity: .08;
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-}
-.review__quote {
-  font-family: 'Cormorant', serif;
-  font-weight: 300;
-  font-style: italic;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  line-height: 1.6;
-  color: var(--cream);
-  max-width: 600px;
-  margin: 0 auto 36px;
-  position: relative;
-  z-index: 1;
-}
-.review__stars {
-  font-size: 14px;
-  letter-spacing: 4px;
-  color: var(--gold);
-  margin-bottom: 16px;
-}
-.review__author {
+.review__top {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 14px;
+  margin-bottom: 20px;
 }
 .review__avatar {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: 1.5px solid var(--gold);
   object-fit: cover;
 }
+.review__info {}
 .review__name {
   font-family: 'Playfair Display', serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
-  letter-spacing: .18em;
-  text-transform: uppercase;
+  color: var(--cream);
+}
+.review__meta {
+  font-family: 'Cormorant', serif;
+  font-size: 13px;
+  color: var(--mist);
+}
+.review__stars {
+  font-size: 13px;
+  letter-spacing: 4px;
   color: var(--gold);
+  margin-bottom: 16px;
+}
+.review__quote {
+  font-family: 'Cormorant', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--cream);
 }
 
 /* ============================================================
@@ -1398,37 +1385,28 @@ body::before {
      ============================================================ -->
 <div class="section-heading rv"><span>Customer Reviews</span></div>
 <section class="reviews">
-
-  <div class="review rv">
-    <div class="review__deco">&ldquo;</div>
-    <div class="review__quote">&ldquo;허리 통증이 사라졌어요. 매일 아침이 달라졌습니다.&rdquo;</div>
-    <div class="review__stars">&starf;&starf;&starf;&starf;&starf;</div>
-    <div class="review__author">
-      <img class="review__avatar" src="https://i.pravatar.cc/88?img=32" alt="김OO" loading="lazy">
-      <span class="review__name">김OO &middot; 35세</span>
+  <div class="reviews__grid">
+    <div class="review rv">
+      <div class="review__top"><img class="review__avatar" src="https://i.pravatar.cc/120?img=32" alt="" loading="lazy"><div class="review__info"><div class="review__name">김서윤</div><div class="review__meta">35세 &middot; 서울</div></div></div>
+      <div class="review__stars">&starf;&starf;&starf;&starf;&starf;</div>
+      <div class="review__quote">&ldquo;허리 통증이 사라졌어요. 매일 아침이 달라졌습니다.&rdquo;</div>
+    </div>
+    <div class="review rv">
+      <div class="review__top"><img class="review__avatar" src="https://i.pravatar.cc/120?img=47" alt="" loading="lazy"><div class="review__info"><div class="review__name">이하은</div><div class="review__meta">42세 &middot; 부산</div></div></div>
+      <div class="review__stars">&starf;&starf;&starf;&starf;&starf;</div>
+      <div class="review__quote">&ldquo;남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다.&rdquo;</div>
+    </div>
+    <div class="review rv">
+      <div class="review__top"><img class="review__avatar" src="https://i.pravatar.cc/120?img=12" alt="" loading="lazy"><div class="review__info"><div class="review__name">박준혁</div><div class="review__meta">28세 &middot; 대전</div></div></div>
+      <div class="review__stars">&starf;&starf;&starf;&starf;&starf;</div>
+      <div class="review__quote">&ldquo;호텔보다 우리 집 침대가 더 좋아졌어요. 진작 바꿀걸.&rdquo;</div>
+    </div>
+    <div class="review rv">
+      <div class="review__top"><img class="review__avatar" src="https://i.pravatar.cc/120?img=60" alt="" loading="lazy"><div class="review__info"><div class="review__name">정민수</div><div class="review__meta">29세 &middot; 제주</div></div></div>
+      <div class="review__stars">&starf;&starf;&starf;&starf;&starf;</div>
+      <div class="review__quote">&ldquo;수면 질이 올라가니까 업무 집중도가 달라졌어요. 최고의 투자.&rdquo;</div>
     </div>
   </div>
-
-  <div class="review rv">
-    <div class="review__deco">&ldquo;</div>
-    <div class="review__quote">&ldquo;남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다.&rdquo;</div>
-    <div class="review__stars">&starf;&starf;&starf;&starf;&starf;</div>
-    <div class="review__author">
-      <img class="review__avatar" src="https://i.pravatar.cc/88?img=47" alt="이OO" loading="lazy">
-      <span class="review__name">이OO &middot; 42세</span>
-    </div>
-  </div>
-
-  <div class="review rv">
-    <div class="review__deco">&ldquo;</div>
-    <div class="review__quote">&ldquo;호텔보다 우리 집 침대가 더 좋아졌어요.&rdquo;</div>
-    <div class="review__stars">&starf;&starf;&starf;&starf;&starf;</div>
-    <div class="review__author">
-      <img class="review__avatar" src="https://i.pravatar.cc/88?img=12" alt="박OO" loading="lazy">
-      <span class="review__name">박OO &middot; 28세</span>
-    </div>
-  </div>
-
 </section>
 
 <!-- ============================================================

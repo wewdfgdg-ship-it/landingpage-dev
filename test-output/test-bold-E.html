@@ -134,9 +134,12 @@ a{color:inherit;text-decoration:none;}
 /* ============================================================
    §10 REVIEWS — 대형 인용 (1단)
    ============================================================ */
-.rev__item{padding:clamp(40px,5vw,64px) clamp(20px,3vw,40px);border-bottom:1px solid var(--gl);position:relative;}
+.rev__grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.rev__item{padding:clamp(40px,5vw,64px) clamp(20px,3vw,40px);border-bottom:1px solid var(--gl);border-right:1px solid var(--gl);position:relative;}
+.rev__item:nth-child(2n){border-right:none;}
+.rev__item:nth-last-child(-n+2){border-bottom:none;}
 .rev__quote-mark{font-family:var(--bebas);font-size:8rem;color:rgba(255,255,255,.04);position:absolute;top:20px;left:20px;line-height:1;}
-.rev__text{font-family:var(--bebas);font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.15;letter-spacing:.02em;text-transform:uppercase;margin-bottom:20px;position:relative;z-index:1;}
+.rev__text{font-family:var(--bebas);font-size:clamp(1.4rem,2.5vw,2.2rem);line-height:1.15;letter-spacing:.02em;text-transform:uppercase;margin-bottom:20px;position:relative;z-index:1;}
 .rev__who{font-size:.8rem;color:var(--gy);font-weight:400;display:flex;align-items:center;gap:16px;}
 .rev__avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;filter:grayscale(1);border:1px solid var(--gl);}
 .rev__stars{color:var(--ye);font-size:.7rem;letter-spacing:3px;margin-left:auto;}
@@ -189,6 +192,10 @@ a{color:inherit;text-decoration:none;}
   .gallery__item{height:240px;}
   .ba{grid-template-columns:1fr;}
   .ba__col--b{border-right:none;border-bottom:1px solid var(--gl);}
+  .rev__grid{grid-template-columns:1fr;}
+  .rev__item{border-right:none!important;}
+  .rev__item:nth-last-child(-n+2){border-bottom:1px solid var(--gl);}
+  .rev__item:last-child{border-bottom:none;}
   .process__grid{grid-template-columns:1fr;}
 }
 </style>
@@ -316,31 +323,42 @@ a{color:inherit;text-decoration:none;}
 
 <!-- §10 REVIEWS -->
 <section>
-  <div class="rev__item rv">
-    <div class="rev__quote-mark">"</div>
-    <p class="rev__text">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p>
-    <div class="rev__who">
-      <img class="rev__avatar" src="https://i.pravatar.cc/88?img=32" alt="">
-      <span>김○○ · 35세</span>
-      <span class="rev__stars">★★★★★</span>
+  <div class="rev__grid">
+    <div class="rev__item rv">
+      <div class="rev__quote-mark">"</div>
+      <p class="rev__text">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p>
+      <div class="rev__who">
+        <img class="rev__avatar" src="https://i.pravatar.cc/88?img=32" alt="">
+        <span>김○○ · 35세</span>
+        <span class="rev__stars">★★★★★</span>
+      </div>
     </div>
-  </div>
-  <div class="rev__item rv">
-    <div class="rev__quote-mark">"</div>
-    <p class="rev__text">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p>
-    <div class="rev__who">
-      <img class="rev__avatar" src="https://i.pravatar.cc/88?img=47" alt="">
-      <span>이○○ · 42세</span>
-      <span class="rev__stars">★★★★★</span>
+    <div class="rev__item rv" data-d="1">
+      <div class="rev__quote-mark">"</div>
+      <p class="rev__text">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p>
+      <div class="rev__who">
+        <img class="rev__avatar" src="https://i.pravatar.cc/88?img=47" alt="">
+        <span>이○○ · 42세</span>
+        <span class="rev__stars">★★★★★</span>
+      </div>
     </div>
-  </div>
-  <div class="rev__item rv">
-    <div class="rev__quote-mark">"</div>
-    <p class="rev__text">"호텔보다 우리 집 침대가 더 좋아졌어요."</p>
-    <div class="rev__who">
-      <img class="rev__avatar" src="https://i.pravatar.cc/88?img=12" alt="">
-      <span>박○○ · 28세</span>
-      <span class="rev__stars">★★★★★</span>
+    <div class="rev__item rv" data-d="2">
+      <div class="rev__quote-mark">"</div>
+      <p class="rev__text">"호텔보다 우리 집 침대가 더 좋아졌어요."</p>
+      <div class="rev__who">
+        <img class="rev__avatar" src="https://i.pravatar.cc/88?img=12" alt="">
+        <span>박○○ · 28세</span>
+        <span class="rev__stars">★★★★★</span>
+      </div>
+    </div>
+    <div class="rev__item rv" data-d="3">
+      <div class="rev__quote-mark">"</div>
+      <p class="rev__text">"수면 질이 올라가니까 업무 집중도가 달라졌어요. 최고의 투자입니다."</p>
+      <div class="rev__who">
+        <img class="rev__avatar" src="https://i.pravatar.cc/120?img=60" alt="">
+        <span>정민수 · 29세 · 제주</span>
+        <span class="rev__stars">★★★★★</span>
+      </div>
     </div>
   </div>
 </section>

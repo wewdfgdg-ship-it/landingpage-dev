@@ -132,11 +132,11 @@ a{color:inherit;text-decoration:none;}
 /* ============================================================
    §10 REVIEWS — 큰 인용 + 이미지 옆
    ============================================================ */
-.rev__item{display:grid;grid-template-columns:200px 1fr;gap:clamp(24px,3vw,48px);align-items:center;padding:clamp(32px,4vw,48px) 0;border-bottom:1px solid var(--gl);}
-.rev__item:first-child{border-top:1px solid var(--gl);}
+.rev__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,40px);}
+.rev__item{display:grid;grid-template-columns:120px 1fr;gap:clamp(16px,2vw,24px);align-items:center;padding:clamp(24px,3vw,36px);border:1px solid var(--gl);}
 .rev__avatar{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(1);}
 .rev__stars{color:var(--red);font-size:.8rem;letter-spacing:3px;margin-bottom:12px;}
-.rev__text{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,2vw,1.7rem);line-height:1.5;margin-bottom:16px;}
+.rev__text{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,1.6vw,1.4rem);line-height:1.5;margin-bottom:16px;}
 .rev__name{font-size:.8rem;font-weight:600;color:var(--gy);letter-spacing:.05em;}
 
 /* ============================================================
@@ -187,7 +187,8 @@ a{color:inherit;text-decoration:none;}
   .gallery img{height:200px;}
   .ba{grid-template-columns:1fr;gap:0;}
   .ba__divider{height:2px;width:100%;}
-  .rev__item{grid-template-columns:1fr;gap:16px;}
+  .rev__grid{grid-template-columns:1fr;}
+  .rev__item{grid-template-columns:80px 1fr;gap:16px;}
   .rev__avatar{width:80px;height:80px;border-radius:50%;}
   .process__grid{grid-template-columns:1fr;}
 }
@@ -346,28 +347,38 @@ a{color:inherit;text-decoration:none;}
   <div class="w">
     <p class="stag rv">Reviews</p>
     <h2 class="stitle rv">실제 고객 후기</h2>
-    <div class="rev__item rv">
-      <img class="rev__avatar" src="https://i.pravatar.cc/400?img=32" alt="">
-      <div>
-        <p class="rev__stars">★★★★★</p>
-        <p class="rev__text">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p>
-        <p class="rev__name">김○○ · 35세</p>
+    <div class="rev__grid">
+      <div class="rev__item rv">
+        <img class="rev__avatar" src="https://i.pravatar.cc/400?img=32" alt="">
+        <div>
+          <p class="rev__stars">★★★★★</p>
+          <p class="rev__text">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p>
+          <p class="rev__name">김○○ · 35세</p>
+        </div>
       </div>
-    </div>
-    <div class="rev__item rv">
-      <img class="rev__avatar" src="https://i.pravatar.cc/400?img=47" alt="">
-      <div>
-        <p class="rev__stars">★★★★★</p>
-        <p class="rev__text">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p>
-        <p class="rev__name">이○○ · 42세</p>
+      <div class="rev__item rv">
+        <img class="rev__avatar" src="https://i.pravatar.cc/400?img=47" alt="">
+        <div>
+          <p class="rev__stars">★★★★★</p>
+          <p class="rev__text">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p>
+          <p class="rev__name">이○○ · 42세</p>
+        </div>
       </div>
-    </div>
-    <div class="rev__item rv">
-      <img class="rev__avatar" src="https://i.pravatar.cc/400?img=12" alt="">
-      <div>
-        <p class="rev__stars">★★★★★</p>
-        <p class="rev__text">"호텔보다 우리 집 침대가 더 좋아졌어요."</p>
-        <p class="rev__name">박○○ · 28세</p>
+      <div class="rev__item rv">
+        <img class="rev__avatar" src="https://i.pravatar.cc/400?img=12" alt="">
+        <div>
+          <p class="rev__stars">★★★★★</p>
+          <p class="rev__text">"호텔보다 우리 집 침대가 더 좋아졌어요."</p>
+          <p class="rev__name">박○○ · 28세</p>
+        </div>
+      </div>
+      <div class="rev__item rv">
+        <img class="rev__avatar" src="https://i.pravatar.cc/120?img=60" alt="">
+        <div>
+          <p class="rev__stars">★★★★★</p>
+          <p class="rev__text">"수면 질이 올라가니까 업무 집중도가 달라졌어요. 최고의 투자입니다."</p>
+          <p class="rev__name">정민수 · 29세 · 제주</p>
+        </div>
       </div>
     </div>
   </div>
