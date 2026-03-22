@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLEEPWELL MATTRESS - Impact Variants A/B/C</title>
+
+<!-- Variant A Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Variant B Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Variant C Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   RESET & GLOBAL
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; padding: 0; background: #111; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* Variant badges */
+.variant-badge {
+  position: sticky;
+  top: 16px;
+  z-index: 1000;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 16px;
+  pointer-events: none;
+}
+
+/* Separator between variants */
+.variant-separator {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  color: #555;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  position: relative;
+}
+.variant-separator::before,
+.variant-separator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  width: calc(50% - 120px);
+  background: #333;
+}
+.variant-separator::before { left: 0; }
+.variant-separator::after { right: 0; }
+
+/* Scroll reveal base */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+
+
+/* ============================================================
+   VARIANT A — LUXURY EDITORIAL (Dark + Gold)
+   ============================================================ */
+.variant-a {
+  --a-bg: #080604;
+  --a-gold: #C6A44E;
+  --a-cream: #F5EFE0;
+  --a-gold-dim: rgba(198, 164, 78, 0.15);
+  background: var(--a-bg);
+  color: var(--a-cream);
+  position: relative;
+  font-family: 'Noto Serif KR', serif;
+}
+
+/* Grain overlay */
+.variant-a::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.variant-a .variant-badge {
+  background: var(--a-gold);
+  color: var(--a-bg);
+  font-family: 'Playfair Display', serif;
+}
+
+/* — A: HERO — */
+.a-hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 2;
+}
+
+.a-hero__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px 80px 80px;
+  position: relative;
+}
+
+.a-hero__brand {
+  font-family: 'Cormorant', serif;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--a-gold);
+  margin-bottom: 48px;
+}
+
+.a-hero__headline {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  line-height: 1.1;
+  color: var(--a-cream);
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+.a-hero__sub {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(245, 239, 224, 0.6);
+  max-width: 400px;
+  margin-bottom: 48px;
+}
+
+.a-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Cormorant', serif;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--a-gold);
+  cursor: pointer;
+  position: relative;
+}
+.a-hero__cta::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--a-gold);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.a-hero__cta:hover::after {
+  width: 120px;
+}
+
+/* Gold decorative vertical line at bottom-left */
+.a-hero__text::after {
+  content: '';
+  position: absolute;
+  bottom: 60px;
+  left: 80px;
+  width: 1px;
+  height: 80px;
+  background: var(--a-gold);
+  opacity: 0.4;
+}
+
+.a-hero__image {
+  position: relative;
+  overflow: hidden;
+}
+.a-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Gold border frame that overlaps image 60px left */
+.a-hero__image::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: -60px;
+  right: 40px;
+  bottom: 40px;
+  border: 1px solid var(--a-gold);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* — A: FULLBLEED — */
+.a-fullbleed {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.a-fullbleed__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.a-fullbleed__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.2);
+}
+
+.a-fullbleed__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 80px 40px;
+}
+
+/* Thin gold horizontal divider */
+.a-fullbleed__divider {
+  width: 80px;
+  height: 1px;
+  background: var(--a-gold);
+  margin: 0 auto 60px;
+  opacity: 0.6;
+}
+
+.a-fullbleed__headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 7vw, 8rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  color: var(--a-cream);
+  margin-bottom: 40px;
+}
+
+.a-fullbleed__sub {
+  font-family: 'Cormorant', serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  color: rgba(245, 239, 224, 0.5);
+  letter-spacing: 0.08em;
+}
+
+/* Cinematic letterbox bars */
+.a-fullbleed::before,
+.a-fullbleed::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 60px;
+  background: var(--a-bg);
+  z-index: 3;
+}
+.a-fullbleed::before { top: 0; }
+.a-fullbleed::after { bottom: 0; }
+
+
+/* — A: CTA — */
+.a-cta {
+  min-height: 80vh;
+  background: var(--a-bg);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Inset gold rectangular border */
+.a-cta__border {
+  position: absolute;
+  top: 40px; left: 40px; right: 40px; bottom: 40px;
+  border: 1px solid var(--a-gold);
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.a-cta__inner {
+  text-align: center;
+  max-width: 560px;
+  padding: 60px 40px;
+}
+
+/* Vertical gold line dropping down */
+.a-cta__line {
+  width: 1px;
+  height: 60px;
+  background: var(--a-gold);
+  margin: 0 auto 48px;
+  opacity: 0.5;
+}
+
+.a-cta__headline {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  line-height: 1.2;
+  color: var(--a-cream);
+  margin-bottom: 20px;
+}
+
+.a-cta__sub {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.95rem;
+  color: rgba(245, 239, 224, 0.5);
+  margin-bottom: 48px;
+  line-height: 1.7;
+}
+
+.a-cta__button {
+  display: inline-block;
+  padding: 18px 56px;
+  border: 1px solid var(--a-gold);
+  color: var(--a-gold);
+  font-family: 'Cormorant', serif;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  transition: color 0.6s ease;
+}
+.a-cta__button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 100%;
+  background: var(--a-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+.a-cta__button:hover::before {
+  transform: scaleX(1);
+}
+.a-cta__button:hover {
+  color: var(--a-bg);
+}
+.a-cta__button span {
+  position: relative;
+  z-index: 1;
+}
+
+.a-cta__micro {
+  font-family: 'Cormorant', serif;
+  font-size: 12px;
+  color: rgba(245, 239, 224, 0.3);
+  margin-top: 24px;
+  letter-spacing: 0.08em;
+}
+
+
+/* ============================================================
+   VARIANT B — CYBERPUNK BENTO (Dark + Neon)
+   ============================================================ */
+.variant-b {
+  --b-bg: #09090F;
+  --b-violet: #7C3AED;
+  --b-cyan: #06D6A0;
+  --b-pink: #F472B6;
+  --b-card-bg: rgba(255,255,255,0.03);
+  --b-card-border: rgba(255,255,255,0.08);
+  --b-glow-purple: rgba(124, 58, 237, 0.35);
+  --b-glow-cyan: rgba(6, 214, 160, 0.3);
+  background: var(--b-bg);
+  color: #E4E4E7;
+  font-family: 'Noto Sans KR', sans-serif;
+  position: relative;
+}
+
+/* Dot grid background */
+.variant-b::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.variant-b .variant-badge {
+  background: linear-gradient(135deg, var(--b-violet), var(--b-cyan));
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* — B: HERO — */
+.b-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.b-hero__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.b-card {
+  background: var(--b-card-bg);
+  border: 1px solid var(--b-card-border);
+  border-radius: 20px;
+  padding: 48px;
+  position: relative;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.b-card:hover {
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: 0 0 40px var(--b-glow-purple);
+}
+
+.b-hero__main-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.b-hero__brand {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--b-cyan);
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* Animated pulse dot */
+.b-hero__brand::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--b-cyan);
+  position: relative;
+  flex-shrink: 0;
+}
+.b-hero__brand::after {
+  content: '';
+  position: absolute;
+  left: 48px;
+  top: 51px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--b-cyan);
+  animation: b-pulse 2s ease-out infinite;
+}
+@keyframes b-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+
+.b-hero__headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+  line-height: 1.1;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--b-violet), var(--b-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.b-hero__sub {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(228, 228, 231, 0.55);
+  margin-bottom: 40px;
+  max-width: 440px;
+}
+
+.b-hero__buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.b-btn-gradient {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  background: linear-gradient(135deg, var(--b-violet), var(--b-cyan));
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: box-shadow 0.4s ease, transform 0.3s ease;
+}
+.b-btn-gradient:hover {
+  box-shadow: 0 0 32px var(--b-glow-purple), 0 0 64px var(--b-glow-cyan);
+  transform: translateY(-2px);
+}
+
+.b-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  background: transparent;
+  border: 1px solid var(--b-card-border);
+  border-radius: 14px;
+  color: #E4E4E7;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.b-btn-ghost:hover {
+  border-color: var(--b-violet);
+  box-shadow: 0 0 20px var(--b-glow-purple);
+}
+
+.b-hero__right {
+  display: grid;
+  grid-template-rows: 1.2fr 1fr;
+  gap: 20px;
+}
+
+.b-hero__image-card {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--b-card-border);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.b-hero__image-card:hover {
+  border-color: rgba(6, 214, 160, 0.3);
+  box-shadow: 0 0 40px var(--b-glow-cyan);
+}
+.b-hero__image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.b-hero__image-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--b-bg) 0%, transparent 50%);
+}
+
+.b-hero__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.b-stat-card {
+  background: var(--b-card-bg);
+  border: 1px solid var(--b-card-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.b-stat-card:hover {
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: 0 0 30px var(--b-glow-purple);
+}
+.b-stat-card__number {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--b-violet), var(--b-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+.b-stat-card:nth-child(2) .b-stat-card__number {
+  background: linear-gradient(135deg, var(--b-cyan), var(--b-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.b-stat-card:nth-child(3) .b-stat-card__number {
+  background: linear-gradient(135deg, var(--b-pink), var(--b-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.b-stat-card:nth-child(4) .b-stat-card__number {
+  background: linear-gradient(135deg, var(--b-violet), var(--b-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.b-stat-card__label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: rgba(228, 228, 231, 0.4);
+}
+
+/* — B: FULLBLEED — */
+.b-fullbleed {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.b-fullbleed__container {
+  width: 100%;
+  max-width: 1280px;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.b-fullbleed__bg {
+  position: absolute;
+  inset: 0;
+}
+.b-fullbleed__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.35) saturate(0.8);
+}
+
+/* Floating orbs */
+.b-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 1;
+  animation: b-float 8s ease-in-out infinite;
+}
+.b-orb--purple {
+  width: 300px;
+  height: 300px;
+  background: var(--b-violet);
+  opacity: 0.3;
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+.b-orb--cyan {
+  width: 250px;
+  height: 250px;
+  background: var(--b-cyan);
+  opacity: 0.2;
+  bottom: 10%;
+  left: 15%;
+  animation-delay: -4s;
+}
+@keyframes b-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-10px, 30px) scale(0.95); }
+  75% { transform: translate(-30px, -10px) scale(1.02); }
+}
+
+.b-fullbleed__glass {
+  position: relative;
+  z-index: 2;
+  background: rgba(9, 9, 15, 0.45);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  border-radius: 24px;
+  padding: 64px 56px;
+  max-width: 640px;
+  text-align: center;
+}
+
+.b-fullbleed__headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  line-height: 1.15;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--b-violet), var(--b-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.b-fullbleed__sub {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(228, 228, 231, 0.5);
+}
+
+/* — B: CTA — */
+.b-cta {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 48px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, var(--b-bg) 0%, rgba(124, 58, 237, 0.05) 50%, var(--b-bg) 100%);
+}
+
+.b-cta__inner {
+  max-width: 680px;
+}
+
+.b-cta__headline {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 4.5vw, 4.2rem);
+  line-height: 1.15;
+  color: #E4E4E7;
+  margin-bottom: 20px;
+}
+
+.b-cta__sub {
+  font-size: 1rem;
+  color: rgba(228, 228, 231, 0.45);
+  margin-bottom: 48px;
+  line-height: 1.7;
+}
+
+.b-cta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 56px;
+  background: linear-gradient(135deg, var(--b-violet), var(--b-cyan));
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 0 30px var(--b-glow-purple);
+  transition: box-shadow 0.4s ease, transform 0.3s ease;
+}
+.b-cta__button:hover {
+  box-shadow: 0 0 50px var(--b-glow-purple), 0 0 80px var(--b-glow-cyan);
+  transform: translateY(-3px);
+}
+
+.b-cta__micro {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: rgba(228, 228, 231, 0.3);
+  margin-top: 24px;
+  letter-spacing: 0.04em;
+}
+
+
+/* ============================================================
+   VARIANT C — SWISS MINIMAL (White + Red)
+   ============================================================ */
+.variant-c {
+  --c-bg: #FAFAF8;
+  --c-text: #1A1A1A;
+  --c-accent: #E63225;
+  --c-muted: #999;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+}
+
+.variant-c .variant-badge {
+  background: var(--c-accent);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  border-radius: 0;
+}
+
+/* — C: HERO — */
+.c-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  position: relative;
+}
+
+.c-hero__top {
+  padding: 48px 64px;
+}
+
+.c-hero__brand {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  font-weight: 500;
+}
+
+.c-hero__center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 64px 0 64px;
+}
+
+.c-hero__headline {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(5rem, 12vw, 11rem);
+  line-height: 0.95;
+  color: var(--c-text);
+  margin-bottom: 40px;
+  letter-spacing: -0.02em;
+}
+
+.c-hero__body {
+  font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--c-muted);
+  max-width: 420px;
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+.c-hero__link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--c-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness 0.3s ease;
+  font-weight: 500;
+}
+.c-hero__link:hover {
+  text-decoration-thickness: 3px;
+}
+
+.c-hero__strip {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.c-hero__strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* — C: FULLBLEED — */
+.c-fullbleed {
+  min-height: 90vh;
+  background: var(--c-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 64px;
+}
+
+.c-fullbleed__headline {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(4rem, 12vw, 14rem);
+  line-height: 0.9;
+  color: var(--c-text);
+  letter-spacing: -0.03em;
+  margin-bottom: 48px;
+}
+.c-fullbleed__headline span {
+  color: var(--c-accent);
+}
+
+.c-fullbleed__rule {
+  width: 40px;
+  height: 1px;
+  background: var(--c-accent);
+  margin-bottom: 28px;
+  border: none;
+}
+
+.c-fullbleed__sub {
+  font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--c-muted);
+  max-width: 400px;
+  font-weight: 400;
+}
+
+/* — C: CTA — */
+.c-cta {
+  min-height: 50vh;
+  background: #F5F5F2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 48px;
+  position: relative;
+}
+
+.c-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: var(--c-accent);
+}
+
+.c-cta__headline {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.2;
+  color: var(--c-text);
+  margin-bottom: 16px;
+}
+
+.c-cta__sub {
+  font-size: 0.9rem;
+  color: var(--c-muted);
+  margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+.c-cta__button {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--c-accent);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+  padding: 8px 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: text-decoration-thickness 0.3s ease;
+}
+.c-cta__button:hover {
+  text-decoration-thickness: 3px;
+}
+
+.c-cta__micro {
+  font-size: 12px;
+  color: #bbb;
+  margin-top: 20px;
+  font-weight: 400;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .a-hero {
+    grid-template-columns: 1fr;
+  }
+  .a-hero__image {
+    min-height: 50vh;
+  }
+  .a-hero__image::before {
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    bottom: 20px;
+  }
+  .a-hero__text { padding: 60px 32px; }
+  .a-hero__text::after { left: 32px; }
+
+  .b-hero__grid {
+    grid-template-columns: 1fr;
+  }
+  .b-hero__right {
+    grid-template-rows: auto auto;
+  }
+  .b-hero { padding: 60px 20px; }
+  .b-fullbleed { padding: 60px 20px; }
+  .b-cta { padding: 60px 20px; }
+  .b-card { padding: 32px; }
+
+  .c-hero__top { padding: 32px 32px; }
+  .c-hero__center { padding: 0 32px; }
+  .c-hero__headline { font-size: clamp(3.5rem, 14vw, 7rem); }
+  .c-fullbleed { padding: 80px 32px; }
+  .c-fullbleed__headline { font-size: clamp(3rem, 14vw, 8rem); }
+}
+</style>
+</head>
+<body>
+
+
+<!-- ============================================================
+     VARIANT A — LUXURY EDITORIAL
+     ============================================================ -->
+<div class="variant-a" id="variant-a">
+  <div class="variant-badge">A</div>
+
+  <!-- A: HERO -->
+  <section class="a-hero">
+    <div class="a-hero__text">
+      <div class="a-hero__brand reveal">SLEEPWELL MATTRESS</div>
+      <h1 class="a-hero__headline reveal reveal-delay-1">아침이<br>다시 기대되는<br>밤</h1>
+      <p class="a-hero__sub reveal reveal-delay-2">7존 맞춤 지지 시스템이 당신의 체형을 기억합니다. 100일 무료 체험.</p>
+      <a href="#" class="a-hero__cta reveal reveal-delay-3"><span>무료 체험 시작하기</span></a>
+    </div>
+    <div class="a-hero__image">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt="Luxury bedroom" loading="lazy">
+    </div>
+  </section>
+
+  <!-- A: FULLBLEED -->
+  <section class="a-fullbleed">
+    <div class="a-fullbleed__bg">
+      <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt="Mattress detail" loading="lazy">
+    </div>
+    <div class="a-fullbleed__content">
+      <div class="a-fullbleed__divider reveal"></div>
+      <h2 class="a-fullbleed__headline reveal reveal-delay-1">과학이 만든<br>완벽한 잠</h2>
+      <p class="a-fullbleed__sub reveal reveal-delay-2">머리부터 발끝까지 7개 구간으로 나눠진 맞춤 지지 시스템</p>
+    </div>
+  </section>
+
+  <!-- A: CTA -->
+  <section class="a-cta">
+    <div class="a-cta__border"></div>
+    <div class="a-cta__inner">
+      <div class="a-cta__line reveal"></div>
+      <h2 class="a-cta__headline reveal reveal-delay-1">더 나은 내일을 위한<br>첫 걸음</h2>
+      <p class="a-cta__sub reveal reveal-delay-2">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+      <button class="a-cta__button reveal reveal-delay-3"><span>무료 체험 시작하기</span></button>
+      <p class="a-cta__micro reveal reveal-delay-4">첫 달 무료 &middot; 만족하지 않으면 100% 환불</p>
+    </div>
+  </section>
+</div>
+
+
+<!-- SEPARATOR -->
+<div class="variant-separator">Variant B</div>
+
+
+<!-- ============================================================
+     VARIANT B — CYBERPUNK BENTO
+     ============================================================ -->
+<div class="variant-b" id="variant-b">
+  <div class="variant-badge">B</div>
+
+  <!-- B: HERO -->
+  <section class="b-hero">
+    <div class="b-hero__grid">
+      <div class="b-card b-hero__main-card">
+        <div class="b-hero__brand reveal">SLEEPWELL MATTRESS</div>
+        <h1 class="b-hero__headline reveal reveal-delay-1">아침이 다시<br>기대되는 밤</h1>
+        <p class="b-hero__sub reveal reveal-delay-2">7존 맞춤 지지 시스템이 당신의 체형을 기억합니다. 100일 무료 체험.</p>
+        <div class="b-hero__buttons reveal reveal-delay-3">
+          <button class="b-btn-gradient">무료 체험 시작하기</button>
+          <button class="b-btn-ghost">자세히 보기</button>
+        </div>
+      </div>
+
+      <div class="b-hero__right">
+        <div class="b-hero__image-card reveal">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt="Bedroom" loading="lazy">
+        </div>
+        <div class="b-hero__stats">
+          <div class="b-stat-card reveal reveal-delay-1">
+            <div class="b-stat-card__number">50K+</div>
+            <div class="b-stat-card__label">TOTAL SALES</div>
+          </div>
+          <div class="b-stat-card reveal reveal-delay-2">
+            <div class="b-stat-card__number">98%</div>
+            <div class="b-stat-card__label">SATISFACTION</div>
+          </div>
+          <div class="b-stat-card reveal reveal-delay-3">
+            <div class="b-stat-card__number">7</div>
+            <div class="b-stat-card__label">ZONE SUPPORT</div>
+          </div>
+          <div class="b-stat-card reveal reveal-delay-4">
+            <div class="b-stat-card__number">100</div>
+            <div class="b-stat-card__label">FREE TRIAL DAYS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B: FULLBLEED -->
+  <section class="b-fullbleed">
+    <div class="b-fullbleed__container">
+      <div class="b-fullbleed__bg">
+        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt="Mattress" loading="lazy">
+      </div>
+      <div class="b-orb b-orb--purple"></div>
+      <div class="b-orb b-orb--cyan"></div>
+      <div class="b-fullbleed__glass reveal">
+        <h2 class="b-fullbleed__headline reveal reveal-delay-1">과학이 만든<br>완벽한 잠</h2>
+        <p class="b-fullbleed__sub reveal reveal-delay-2">머리부터 발끝까지 7개 구간으로 나눠진 맞춤 지지 시스템</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- B: CTA -->
+  <section class="b-cta">
+    <div class="b-cta__inner">
+      <h2 class="b-cta__headline reveal">더 나은 내일을 위한 <br>첫 걸음</h2>
+      <p class="b-cta__sub reveal reveal-delay-1">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+      <button class="b-cta__button reveal reveal-delay-2">무료 체험 시작하기</button>
+      <p class="b-cta__micro reveal reveal-delay-3">첫 달 무료 &middot; 만족하지 않으면 100% 환불</p>
+    </div>
+  </section>
+</div>
+
+
+<!-- SEPARATOR -->
+<div class="variant-separator">Variant C</div>
+
+
+<!-- ============================================================
+     VARIANT C — SWISS MINIMAL
+     ============================================================ -->
+<div class="variant-c" id="variant-c">
+  <div class="variant-badge">C</div>
+
+  <!-- C: HERO -->
+  <section class="c-hero">
+    <div class="c-hero__top">
+      <span class="c-hero__brand reveal">SLEEPWELL MATTRESS</span>
+    </div>
+    <div class="c-hero__center">
+      <h1 class="c-hero__headline reveal">아침이<br>다시 기대되는<br>밤</h1>
+      <p class="c-hero__body reveal reveal-delay-1">7존 맞춤 지지 시스템이 당신의 체형을 기억합니다. 100일 무료 체험.</p>
+      <a href="#" class="c-hero__link reveal reveal-delay-2">무료 체험 시작하기</a>
+    </div>
+    <div class="c-hero__strip">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt="Bedroom" loading="lazy">
+    </div>
+  </section>
+
+  <!-- C: FULLBLEED -->
+  <section class="c-fullbleed">
+    <h2 class="c-fullbleed__headline reveal">과학이<br>만든<br><span>완벽한</span><br>잠</h2>
+    <hr class="c-fullbleed__rule reveal reveal-delay-1">
+    <p class="c-fullbleed__sub reveal reveal-delay-2">머리부터 발끝까지 7개 구간으로 나눠진<br>맞춤 지지 시스템</p>
+  </section>
+
+  <!-- C: CTA -->
+  <section class="c-cta">
+    <h2 class="c-cta__headline reveal">더 나은 내일을 위한 첫 걸음</h2>
+    <p class="c-cta__sub reveal reveal-delay-1">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+    <button class="c-cta__button reveal reveal-delay-2">무료 체험 시작하기</button>
+    <p class="c-cta__micro reveal reveal-delay-3">첫 달 무료 &middot; 만족하지 않으면 100% 환불</p>
+  </section>
+</div>
+
+
+<!-- ============================================================
+     SCROLL REVEAL SCRIPT
+     ============================================================ -->
+<script>
+(function() {
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>

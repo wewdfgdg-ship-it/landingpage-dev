@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>슬립웰 매트리스 — Clean</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF8;--red:#E63225;--bk:#1A1A1A;--gy:#777;--gl:#E0E0E0;
+  --serif:'Instrument Serif','Noto Sans KR',serif;
+  --sans:'DM Sans','Noto Sans KR',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);color:var(--bk);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.7;max-width:1240px;margin:0 auto;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.w{padding:0 clamp(20px,4vw,48px);}
+.sec{padding:clamp(48px,6vw,80px) 0;}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+.rv.on{opacity:1;transform:none;}
+.red{color:var(--red);}
+
+/* ============================================================
+   §1 HERO — 큰 이미지 배경 + 중앙 텍스트
+   ============================================================ */
+.hero{position:relative;height:85vh;min-height:560px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+.hero__bg{position:absolute;inset:0;}
+.hero__bg img{width:100%;height:100%;object-fit:cover;}
+.hero__bg::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.82);}
+.hero__in{position:relative;z-index:1;max-width:800px;padding:0 24px;}
+.hero__label{font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gy);margin-bottom:24px;}
+.hero__h1{font-family:var(--serif);font-style:italic;font-size:clamp(3.5rem,9vw,7.5rem);font-weight:400;line-height:.92;margin-bottom:24px;letter-spacing:-.03em;}
+.hero__sub{font-size:clamp(1rem,1.3vw,1.15rem);color:var(--gy);max-width:440px;margin:0 auto 32px;line-height:1.8;}
+.hero__cta{display:inline-block;padding:14px 48px;border:2px solid var(--bk);font-size:.85rem;font-weight:600;letter-spacing:.05em;transition:all .3s;}
+.hero__cta:hover{background:var(--bk);color:#fff;}
+
+/* ============================================================
+   §2 INTRO — 큰 텍스트 + 이미지 2분할
+   ============================================================ */
+.intro__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,48px);align-items:center;}
+.intro__text{font-family:var(--serif);font-style:italic;font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.25;letter-spacing:-.02em;}
+.intro__img{overflow:hidden;}
+.intro__img img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;}
+
+/* ============================================================
+   §7 FEATURES — 이미지+텍스트 교차 (큰 이미지!)
+   ============================================================ */
+.feat{border-top:1px solid var(--gl);}
+.feat__row{display:grid;grid-template-columns:1fr 1fr;height:680px;border-bottom:1px solid var(--gl);}
+.feat__row--r .feat__txt{order:-1;justify-content:flex-end;text-align:right;}
+.feat__row--r .feat__list{align-items:flex-end;}
+.feat__row--r .feat__li{flex-direction:row-reverse;}
+.feat__img{overflow:hidden;}
+.feat__img img{width:100%;height:100%;object-fit:cover;}
+.feat__txt{display:flex;align-items:center;padding:clamp(32px,4vw,64px);}
+.feat__num{font-family:var(--serif);font-style:italic;font-size:5rem;color:var(--gl);line-height:1;margin-bottom:16px;}
+.feat__h3{font-family:var(--serif);font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:400;line-height:1.2;margin-bottom:12px;}
+.feat__p{font-size:.95rem;color:var(--gy);line-height:1.8;margin-bottom:16px;}
+.feat__list{list-style:none;}
+.feat__li{font-size:.9rem;color:var(--bk);padding:6px 0;display:flex;align-items:center;gap:10px;}
+.feat__li::before{content:'—';color:var(--red);font-weight:700;}
+
+/* ============================================================
+   §5 STATS — 큰 숫자 + 얇은 세로 구분선
+   ============================================================ */
+.stats{border-top:1px solid var(--gl);border-bottom:1px solid var(--gl);}
+.stats__grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.stats__item{text-align:center;padding:clamp(32px,4vw,56px) 16px;border-right:1px solid var(--gl);}
+.stats__item:last-child{border-right:none;}
+.stats__num{font-family:var(--serif);font-style:italic;font-size:clamp(2.8rem,6vw,5rem);line-height:1;margin-bottom:8px;}
+.stats__lab{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gy);}
+
+/* ============================================================
+   §3 PRODUCTS — 2단 이미지 카드 (큰 이미지!)
+   ============================================================ */
+.products__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,24px);}
+.prod-card{position:relative;overflow:hidden;cursor:pointer;}
+.prod-card__img{aspect-ratio:4/3;overflow:hidden;}
+.prod-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1);}
+.prod-card:hover .prod-card__img img{transform:scale(1.05);}
+.prod-card__info{padding:16px 4px;}
+.prod-card__name{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:2px;}
+.prod-card__sub{font-size:.8rem;color:var(--gy);}
+
+/* ============================================================
+   §4 FULLBLEED — 큰 이미지 + 오버레이 텍스트
+   ============================================================ */
+.cinema{position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+.cinema__bg{position:absolute;inset:0;}
+.cinema__bg img{width:100%;height:100%;object-fit:cover;}
+.cinema__bg::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.75);}
+.cinema__in{position:relative;z-index:1;max-width:800px;padding:48px 24px;}
+.cinema__h2{font-family:var(--serif);font-style:italic;font-size:clamp(3rem,7vw,6rem);font-weight:400;line-height:.9;margin-bottom:24px;letter-spacing:-.03em;}
+.cinema__p{font-size:clamp(1rem,1.4vw,1.2rem);color:var(--gy);max-width:500px;margin:0 auto;line-height:1.8;}
+
+/* ============================================================
+   §6 GALLERY — 풀와이드 이미지 스트립
+   ============================================================ */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
+.gallery img{width:100%;height:300px;object-fit:cover;}
+
+/* ============================================================
+   §8 B/A — 2단 비교 (얇은 빨간선 구분)
+   ============================================================ */
+.ba{display:grid;grid-template-columns:1fr 2px 1fr;gap:0;border-top:1px solid var(--gl);border-bottom:1px solid var(--gl);}
+.ba__divider{background:var(--red);}
+.ba__col{padding:clamp(32px,4vw,56px);}
+.ba__label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;}
+.ba__label--b{color:var(--gy);}
+.ba__label--a{color:var(--red);}
+.ba__list{list-style:none;}
+.ba__li{padding:14px 0;font-size:1.05rem;line-height:1.6;border-bottom:1px solid var(--gl);word-break:keep-all;}
+.ba__li:last-child{border:none;}
+.ba__li--b{color:var(--gy);text-decoration:line-through;}
+.ba__li--a{color:var(--bk);font-weight:600;}
+
+/* ============================================================
+   §9 PRICING — 배경색 블록 + 큰 가격
+   ============================================================ */
+.pricing{background:#F0EDEA;text-align:center;}
+.pricing__label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:12px;}
+.pricing__h2{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:400;margin-bottom:40px;}
+.pricing__old{font-size:.95rem;color:var(--gy);text-decoration:line-through;}
+.pricing__now{font-family:var(--serif);font-style:italic;font-size:clamp(4rem,9vw,7rem);font-weight:400;color:var(--red);line-height:1;margin-bottom:32px;}
+.pricing__now small{font-size:.25em;color:var(--gy);font-style:normal;}
+.pricing__features{font-size:.9rem;color:var(--gy);max-width:500px;margin:0 auto 40px;line-height:1.9;}
+.pricing__btn{display:inline-block;padding:16px 56px;background:var(--bk);color:#fff;font-size:.9rem;font-weight:600;letter-spacing:.05em;transition:all .3s;}
+.pricing__btn:hover{background:var(--red);}
+
+/* ============================================================
+   §10 REVIEWS — 큰 인용 + 이미지 옆
+   ============================================================ */
+.rev__item{display:grid;grid-template-columns:200px 1fr;gap:clamp(24px,3vw,48px);align-items:center;padding:clamp(32px,4vw,48px) 0;border-bottom:1px solid var(--gl);}
+.rev__item:first-child{border-top:1px solid var(--gl);}
+.rev__avatar{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(1);}
+.rev__stars{color:var(--red);font-size:.8rem;letter-spacing:3px;margin-bottom:12px;}
+.rev__text{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,2vw,1.7rem);line-height:1.5;margin-bottom:16px;}
+.rev__name{font-size:.8rem;font-weight:600;color:var(--gy);letter-spacing:.05em;}
+
+/* ============================================================
+   §11 PROCESS — 3단 + 큰 넘버
+   ============================================================ */
+.process__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gl);}
+.process__step{background:var(--bg);padding:clamp(32px,4vw,48px);text-align:center;}
+.process__num{font-family:var(--serif);font-style:italic;font-size:clamp(4rem,7vw,6rem);color:var(--gl);line-height:1;margin-bottom:12px;}
+.process__t{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:6px;}
+.process__d{font-size:.85rem;color:var(--gy);}
+
+/* ============================================================
+   §12 FAQ
+   ============================================================ */
+.faq__in{max-width:800px;margin:0 auto;}
+.faq__item{border-bottom:1px solid var(--gl);}
+.faq__item:first-child{border-top:1px solid var(--gl);}
+.faq__q{cursor:pointer;padding:24px 0;font-size:1.1rem;font-weight:600;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s;}
+.faq__q:hover{color:var(--red);}
+.faq__q::-webkit-details-marker{display:none;}
+.faq__q::after{content:'+';color:var(--red);font-size:1.3rem;font-weight:400;transition:transform .3s;flex-shrink:0;}
+.faq__item[open] .faq__q::after{transform:rotate(45deg);}
+.faq__a{padding:0 0 24px;font-size:.95rem;line-height:1.85;color:var(--gy);}
+
+/* ============================================================
+   §13 CTA
+   ============================================================ */
+.cta{text-align:center;border-top:2px solid var(--red);}
+.cta__h2{font-family:var(--serif);font-style:italic;font-size:clamp(2.4rem,5vw,4rem);font-weight:400;margin-bottom:12px;}
+.cta__p{font-size:1rem;color:var(--gy);margin-bottom:36px;}
+.cta__btn{display:inline-block;padding:16px 64px;background:var(--red);color:#fff;font-size:1rem;font-weight:600;letter-spacing:.05em;transition:all .3s;}
+.cta__btn:hover{background:var(--bk);}
+.cta__micro{margin-top:14px;font-size:.8rem;color:var(--gy);}
+
+/* section titles */
+.stag{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gy);margin-bottom:12px;}
+.stitle{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:400;margin-bottom:40px;}
+
+@media(max-width:768px){
+  .intro__grid{grid-template-columns:1fr;}
+  .feat__row,.feat__row--r{grid-template-columns:1fr;}
+  .feat__row--r .feat__img{order:0;}
+  .feat__img{height:280px;}
+  .stats__grid{grid-template-columns:1fr 1fr;}
+  .stats__item:nth-child(2){border-right:none;}
+  .products__grid{grid-template-columns:1fr;}
+  .gallery{grid-template-columns:1fr 1fr;}
+  .gallery img{height:200px;}
+  .ba{grid-template-columns:1fr;gap:0;}
+  .ba__divider{height:2px;width:100%;}
+  .rev__item{grid-template-columns:1fr;gap:16px;}
+  .rev__avatar{width:80px;height:80px;border-radius:50%;}
+  .process__grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- §1 HERO -->
+<section class="hero">
+  <div class="hero__bg"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt=""></div>
+  <div class="hero__in rv on">
+    <p class="hero__label">SLEEPWELL MATTRESS</p>
+    <h1 class="hero__h1">아침이 다시<br>기대되는 밤</h1>
+    <p class="hero__sub">7존 맞춤 지지 시스템이 당신의 체형을 기억합니다. 100일 무료 체험으로 직접 경험하세요.</p>
+    <a href="#pricing" class="hero__cta">무료 체험 시작하기</a>
+  </div>
+</section>
+
+<!-- §2 INTRO -->
+<section class="sec">
+  <div class="w">
+    <div class="intro__grid">
+      <p class="intro__text rv">수면 과학 전문 기업이 3년간 연구 끝에 완성한, <em class="red">당신의 체형을 기억하는</em> 매트리스.</p>
+      <div class="intro__img rv"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- §7 FEATURES -->
+<section class="feat">
+  <div class="feat__row rv">
+    <div class="feat__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80" alt=""></div>
+    <div class="feat__txt"><div>
+      <p class="feat__num">01</p>
+      <h3 class="feat__h3">체형을 <span class="red">기억</span>하는<br>7존 맞춤 지지</h3>
+      <p class="feat__p">7개 구간으로 나눠진 독립 지지 시스템이 자동 조절됩니다.</p>
+      <ul class="feat__list">
+        <li class="feat__li">척추 자연 곡선 유지</li>
+        <li class="feat__li">체압 90% 분산</li>
+        <li class="feat__li">뒤척임 70% 감소</li>
+      </ul>
+    </div></div>
+  </div>
+  <div class="feat__row feat__row--r rv">
+    <div class="feat__img"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=900&q=80" alt=""></div>
+    <div class="feat__txt"><div>
+      <p class="feat__num">02</p>
+      <h3 class="feat__h3">통기성과 <span class="red">내구성</span>을<br>동시에</h3>
+      <p class="feat__p">고밀도 메모리폼 + 천연 라텍스 하이브리드 구조.</p>
+      <ul class="feat__list">
+        <li class="feat__li">항균 방진드기 처리</li>
+        <li class="feat__li">사계절 온도 조절</li>
+        <li class="feat__li">10년 형태 유지</li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+<!-- §5 STATS -->
+<section class="stats">
+  <div class="stats__grid">
+    <div class="stats__item rv"><p class="stats__num">50K+</p><p class="stats__lab">누적 판매</p></div>
+    <div class="stats__item rv"><p class="stats__num red">98%</p><p class="stats__lab">고객 만족도</p></div>
+    <div class="stats__item rv"><p class="stats__num">4.9</p><p class="stats__lab">평균 별점</p></div>
+    <div class="stats__item rv"><p class="stats__num">365</p><p class="stats__lab">일 고객 지원</p></div>
+  </div>
+</section>
+
+<!-- §3 PRODUCTS -->
+<section class="sec">
+  <div class="w">
+    <p class="stag rv">Products</p>
+    <h2 class="stitle rv">프리미엄 라인업</h2>
+    <div class="products__grid">
+      <div class="prod-card rv">
+        <div class="prod-card__img"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80" alt=""></div>
+        <div class="prod-card__info"><p class="prod-card__name">슬립웰 오리지널</p><p class="prod-card__sub">The Classic — 7존 체압분산의 시작</p></div>
+      </div>
+      <div class="prod-card rv">
+        <div class="prod-card__img"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""></div>
+        <div class="prod-card__info"><p class="prod-card__name">슬립웰 프로</p><p class="prod-card__sub">The Professional — 더 두꺼운 라텍스 레이어</p></div>
+      </div>
+      <div class="prod-card rv">
+        <div class="prod-card__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
+        <div class="prod-card__info"><p class="prod-card__name">슬립웰 토퍼</p><p class="prod-card__sub">The Topper — 기존 매트리스 업그레이드</p></div>
+      </div>
+      <div class="prod-card rv">
+        <div class="prod-card__img"><img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt=""></div>
+        <div class="prod-card__info"><p class="prod-card__name">슬립웰 베개</p><p class="prod-card__sub">The Pillow — 경추 맞춤형 메모리폼</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §4 FULLBLEED -->
+<section class="cinema">
+  <div class="cinema__bg"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt=""></div>
+  <div class="cinema__in rv">
+    <h2 class="cinema__h2">과학이 만든<br><span class="red">완벽한 잠</span></h2>
+    <p class="cinema__p">머리부터 발끝까지 7개 구간으로 나눠진 맞춤 지지 시스템이 밤새 당신을 감쌉니다.</p>
+  </div>
+</section>
+
+<!-- §6 GALLERY -->
+<section class="sec">
+  <div class="w"><p class="stag rv">Gallery</p></div>
+  <div class="gallery rv">
+    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt="">
+  </div>
+</section>
+
+<!-- §8 B/A -->
+<section class="sec">
+  <div class="w">
+    <p class="stag rv">Before / After</p>
+    <h2 class="stitle rv">무엇이 달라지나요</h2>
+  </div>
+  <div class="w"><div class="ba rv">
+    <div class="ba__col">
+      <p class="ba__label ba__label--b">Before</p>
+      <ul class="ba__list">
+        <li class="ba__li ba__li--b">새벽 2시마다 뒤척임 — 만성 수면 부족</li>
+        <li class="ba__li ba__li--b">아침마다 허리 통증 — 컨디션 저하</li>
+        <li class="ba__li ba__li--b">매트리스 3년마다 교체 — 돈만 낭비</li>
+      </ul>
+    </div>
+    <div class="ba__divider"></div>
+    <div class="ba__col">
+      <p class="ba__label ba__label--a">After</p>
+      <ul class="ba__list">
+        <li class="ba__li ba__li--a">7시간 숙면 — 알람 없이 개운하게 기상</li>
+        <li class="ba__li ba__li--a">체형 맞춤 지지 — 통증 없는 아침</li>
+        <li class="ba__li ba__li--a">10년 보증 — 한 번 사면 끝</li>
+      </ul>
+    </div>
+  </div></div>
+</section>
+
+<!-- §9 PRICING -->
+<section class="sec pricing" id="pricing">
+  <div class="w">
+    <p class="pricing__label rv">Launch Special</p>
+    <h2 class="pricing__h2 rv">지금이 가장 좋은 가격</h2>
+    <p class="pricing__old rv">590,000원</p>
+    <p class="pricing__now rv">390,000<small>원</small></p>
+    <p class="pricing__features rv">7존 맞춤 지지 · 프리미엄 커버 · 무료 배송 + 설치 · 100일 무료 체험 · 10년 품질 보증</p>
+    <a href="#" class="pricing__btn rv">특별가로 시작하기</a>
+  </div>
+</section>
+
+<!-- §10 REVIEWS -->
+<section class="sec">
+  <div class="w">
+    <p class="stag rv">Reviews</p>
+    <h2 class="stitle rv">실제 고객 후기</h2>
+    <div class="rev__item rv">
+      <img class="rev__avatar" src="https://i.pravatar.cc/400?img=32" alt="">
+      <div>
+        <p class="rev__stars">★★★★★</p>
+        <p class="rev__text">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p>
+        <p class="rev__name">김○○ · 35세</p>
+      </div>
+    </div>
+    <div class="rev__item rv">
+      <img class="rev__avatar" src="https://i.pravatar.cc/400?img=47" alt="">
+      <div>
+        <p class="rev__stars">★★★★★</p>
+        <p class="rev__text">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p>
+        <p class="rev__name">이○○ · 42세</p>
+      </div>
+    </div>
+    <div class="rev__item rv">
+      <img class="rev__avatar" src="https://i.pravatar.cc/400?img=12" alt="">
+      <div>
+        <p class="rev__stars">★★★★★</p>
+        <p class="rev__text">"호텔보다 우리 집 침대가 더 좋아졌어요."</p>
+        <p class="rev__name">박○○ · 28세</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §11 PROCESS -->
+<section class="sec">
+  <div class="w">
+    <p class="stag rv" style="text-align:center">Process</p>
+    <h2 class="stitle rv" style="text-align:center">간단한 3단계</h2>
+    <div class="process__grid rv">
+      <div class="process__step"><p class="process__num">01</p><p class="process__t">온라인 주문</p><p class="process__d">3분이면 완료</p></div>
+      <div class="process__step"><p class="process__num">02</p><p class="process__t">무료 배송 · 설치</p><p class="process__d">주문 후 1~2일</p></div>
+      <div class="process__step"><p class="process__num">03</p><p class="process__t">100일 체험</p><p class="process__d">불만족 시 전액 환불</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- §12 FAQ -->
+<section class="sec">
+  <div class="w">
+    <p class="stag rv">FAQ</p>
+    <h2 class="stitle rv">자주 묻는 질문</h2>
+    <div class="faq__in">
+      <details class="faq__item rv"><summary class="faq__q">배송은 얼마나 걸리나요?</summary><p class="faq__a">주문 후 1~2일 내 무료 배송됩니다. 전문 기사가 설치까지 도와드립니다.</p></details>
+      <details class="faq__item rv"><summary class="faq__q">100일 체험은 어떻게 진행되나요?</summary><p class="faq__a">제품 수령 후 100일간 사용하시고, 만족하지 않으시면 무료 반품 가능합니다.</p></details>
+      <details class="faq__item rv"><summary class="faq__q">사이즈 교환이 가능한가요?</summary><p class="faq__a">네, 수령 후 7일 이내 무료 교환 가능합니다.</p></details>
+      <details class="faq__item rv"><summary class="faq__q">기존 매트리스 수거도 해주나요?</summary><p class="faq__a">네, 설치 시 기존 매트리스 무료 수거 서비스를 제공합니다.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- §13 CTA -->
+<section class="sec cta">
+  <div class="w">
+    <h2 class="cta__h2 rv">더 나은 내일을 위한 첫 걸음</h2>
+    <p class="cta__p rv">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+    <a href="#" class="cta__btn rv">무료 체험 시작하기</a>
+    <p class="cta__micro rv">첫 달 무료 · 만족하지 않으면 100% 환불</p>
+  </div>
+</section>
+
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.05,rootMargin:'0px 0px 50px 0px'});
+document.querySelectorAll('.rv:not(.on)').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLEEPWELL — Premium Deep Blue</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1240px;
+  overflow-x: hidden;
+  background: #0C1B33;
+  color: #F0F4FF;
+  font-family: 'Noto Sans KR', 'Raleway', sans-serif;
+  line-height: 1.7;
+}
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* ============================================================
+   CSS VARIABLES
+   ============================================================ */
+:root {
+  --bg: #0C1B33;
+  --bg-deep: #081428;
+  --surface: #0F2040;
+  --ice: #B8D4E8;
+  --silver: #C0C8D4;
+  --white: #F0F4FF;
+  --silver-line: rgba(192, 200, 212, .25);
+  --silver-line-strong: rgba(192, 200, 212, .4);
+  --ice-glow: rgba(184, 212, 232, .15);
+  --pad: clamp(48px, 6vw, 80px);
+  --serif: 'Libre Baskerville', 'Georgia', serif;
+  --sans: 'Raleway', 'Noto Sans KR', sans-serif;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.rv {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+}
+.rv.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+.rv-d1 { transition-delay: .1s; }
+.rv-d2 { transition-delay: .2s; }
+.rv-d3 { transition-delay: .3s; }
+.rv-d4 { transition-delay: .4s; }
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.serif { font-family: var(--serif); }
+.sans { font-family: var(--sans); }
+.ice { color: var(--ice); }
+.silver { color: var(--silver); }
+.tracking { letter-spacing: .12em; }
+.tracking-sm { letter-spacing: .06em; }
+.upper { text-transform: uppercase; }
+
+/* ============================================================
+   SECTION BASE
+   ============================================================ */
+section {
+  padding: var(--pad) clamp(20px, 4vw, 40px);
+}
+
+/* Silver thin line separator */
+.section-line {
+  width: 60px;
+  height: 1px;
+  background: var(--silver-line-strong);
+  margin: 0 auto;
+}
+
+/* ============================================================
+   §1 HERO — centered text over image, floating previews
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.35) saturate(.7) sepia(.1) hue-rotate(200deg);
+}
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12,27,51,.4) 0%, rgba(12,27,51,.85) 100%);
+}
+.hero__content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 120px 20px 100px;
+}
+.hero__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ice);
+  margin-bottom: 32px;
+}
+.hero__title {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+.hero__sub {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(.95rem, 1.2vw, 1.1rem);
+  color: var(--silver);
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+}
+.hero__btn {
+  display: inline-block;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: .8rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid var(--ice);
+  padding: 16px 48px;
+  transition: all .4s ease;
+  background: transparent;
+  cursor: pointer;
+}
+.hero__btn:hover {
+  background: var(--ice);
+  color: var(--bg);
+}
+
+/* Floating preview images */
+.hero__float {
+  position: absolute;
+  z-index: 2;
+  width: clamp(120px, 14vw, 200px);
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border: 1px solid var(--silver-line);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+.hero__float img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.8) saturate(.6) hue-rotate(200deg);
+}
+.hero__float--left {
+  left: clamp(20px, 5vw, 80px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.hero__float--right {
+  right: clamp(20px, 5vw, 80px);
+  top: 50%;
+  transform: translateY(-40%);
+}
+
+/* ============================================================
+   §2 INTRO — 3-column with decorative number
+   ============================================================ */
+.intro {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.intro__grid {
+  display: grid;
+  grid-template-columns: 140px 1px 1fr 1px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.intro__num {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 6vw, 6rem);
+  font-weight: 400;
+  color: rgba(184, 212, 232, .15);
+  line-height: 1;
+}
+.intro__vline {
+  width: 1px;
+  height: 100%;
+  min-height: 120px;
+  background: var(--silver-line-strong);
+}
+.intro__heading {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--white);
+}
+.intro__heading em {
+  font-style: italic;
+  color: var(--ice);
+}
+.intro__body {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .95rem;
+  color: var(--silver);
+  line-height: 1.9;
+}
+
+/* ============================================================
+   §7 FEATURES — full-width, overlapping text
+   ============================================================ */
+.features {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.features__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  margin-bottom: 60px;
+}
+.feat-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 0;
+  margin-bottom: 80px;
+  position: relative;
+}
+.feat-row:last-child { margin-bottom: 0; }
+.feat-row__num {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--silver);
+  padding-top: 20px;
+}
+.feat-row__main {
+  position: relative;
+}
+.feat-row__img {
+  width: 65%;
+  margin-left: auto;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+.feat-row__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.75) saturate(.65) hue-rotate(200deg);
+}
+.feat-row__text {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 45%;
+  background: rgba(12, 27, 51, .88);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border: 1px solid var(--silver-line);
+}
+.feat-row__title {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.feat-row__desc {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .9rem;
+  color: var(--silver);
+  line-height: 1.8;
+}
+
+/* ============================================================
+   §5 STATS — 2x2 grid
+   ============================================================ */
+.stats {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.stats__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  text-align: center;
+  margin-bottom: 48px;
+}
+.stats__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.stat-box {
+  border: 1px solid var(--silver-line-strong);
+  padding: 40px 32px;
+  text-align: center;
+  transition: border-color .4s;
+}
+.stat-box:hover {
+  border-color: var(--ice);
+}
+.stat-box__num {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 3.5vw, 3rem);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.stat-box__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  color: var(--silver);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   §3 PRODUCTS — horizontal scroll
+   ============================================================ */
+.products {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.products__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+.products__title {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: 400;
+  color: var(--white);
+}
+.products__hint {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .1em;
+  color: var(--silver);
+  text-transform: uppercase;
+}
+.products__scroll {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+.products__scroll::-webkit-scrollbar { display: none; }
+.prod-card {
+  flex: 0 0 clamp(300px, 40vw, 420px);
+  scroll-snap-align: start;
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border: 1px solid var(--silver-line);
+}
+.prod-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.7) saturate(.6) hue-rotate(200deg);
+  transition: transform .6s ease, filter .6s ease;
+}
+.prod-card:hover img {
+  transform: scale(1.05);
+  filter: brightness(.8) saturate(.7) hue-rotate(200deg);
+}
+.prod-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  background: linear-gradient(0deg, rgba(12,27,51,.9) 0%, transparent 100%);
+}
+.prod-card__name {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--white);
+}
+.prod-card__price {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .85rem;
+  color: var(--ice);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   §4 FULLBLEED — split screen
+   ============================================================ */
+.fullbleed {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 500px;
+  padding: 0 !important;
+}
+.fullbleed__img {
+  overflow: hidden;
+}
+.fullbleed__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.65) saturate(.6) hue-rotate(200deg);
+}
+.fullbleed__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(40px, 5vw, 80px);
+  background: var(--bg);
+}
+.fullbleed__headline {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+.fullbleed__line {
+  width: 60px;
+  height: 1px;
+  background: var(--silver-line-strong);
+  margin-bottom: 24px;
+}
+.fullbleed__body {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .95rem;
+  color: var(--silver);
+  line-height: 1.9;
+}
+
+/* ============================================================
+   §6 GALLERY — 3-col equal with captions
+   ============================================================ */
+.gallery {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.gallery__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  text-align: center;
+  margin-bottom: 48px;
+}
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.gallery__item {
+  overflow: hidden;
+}
+.gallery__item img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  filter: brightness(.7) saturate(.55) hue-rotate(200deg);
+  transition: filter .5s, transform .5s;
+}
+.gallery__item:hover img {
+  filter: brightness(.85) saturate(.7) hue-rotate(200deg);
+  transform: scale(1.03);
+}
+.gallery__caption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .85rem;
+  color: var(--silver);
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   §8 B/A — tabbed interface
+   ============================================================ */
+.ba {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.ba__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  text-align: center;
+  margin-bottom: 48px;
+}
+.ba__tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 48px;
+}
+.ba__tab {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: .8rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  padding: 14px 40px;
+  border: 1px solid var(--silver-line-strong);
+  cursor: pointer;
+  transition: all .3s;
+  background: transparent;
+  color: var(--silver);
+}
+.ba__tab:first-child {
+  border-right: none;
+}
+.ba__tab.active {
+  background: rgba(184, 212, 232, .1);
+  color: var(--white);
+  border-color: var(--ice);
+}
+.ba__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+.ba__side-label {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .7rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.ba__side--before .ba__side-label { color: var(--silver); }
+.ba__side--after .ba__side-label { color: var(--ice); }
+
+.ba__item {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--silver-line);
+}
+.ba__item-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+.ba__item-desc {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .85rem;
+  line-height: 1.7;
+}
+.ba__side--before .ba__item-title { color: var(--silver); }
+.ba__side--before .ba__item-desc { color: rgba(192, 200, 212, .6); }
+.ba__side--after .ba__item-title { color: var(--white); }
+.ba__side--after .ba__item-desc { color: var(--silver); }
+
+/* ============================================================
+   §10 REVIEWS — single large testimonials
+   ============================================================ */
+.reviews {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.reviews__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  text-align: center;
+  margin-bottom: 60px;
+}
+.review-single {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 80px;
+}
+.review-single:last-child { margin-bottom: 0; }
+.review-single__quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+.review-single__quote::before {
+  content: '\201C';
+  display: block;
+  font-size: 3rem;
+  color: var(--ice);
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.review-single__name {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  color: var(--silver);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   §11 PROCESS — horizontal numbered line
+   ============================================================ */
+.process {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.process__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  text-align: center;
+  margin-bottom: 60px;
+}
+.process__track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.process__line {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 66%;
+  height: 1px;
+  background: var(--silver-line-strong);
+}
+.process__step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding: 0 16px;
+}
+.process__circle {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--ice);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--ice);
+  background: var(--bg);
+}
+.process__step-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.process__step-desc {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .85rem;
+  color: var(--silver);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   §9 PRICING — two-tier stacked
+   ============================================================ */
+.pricing {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.pricing__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  text-align: center;
+  margin-bottom: 48px;
+}
+.pricing__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.price-card {
+  border: 1px solid var(--silver-line-strong);
+  padding: 40px;
+  transition: border-color .4s, box-shadow .4s;
+}
+.price-card--premium {
+  border-color: var(--ice);
+  box-shadow: 0 0 40px var(--ice-glow), 0 0 80px rgba(184, 212, 232, .08);
+}
+.price-card__tier {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: .7rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  margin-bottom: 16px;
+}
+.price-card__price {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.price-card__price span {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .85rem;
+  color: var(--silver);
+  margin-left: 4px;
+}
+.price-card__features {
+  list-style: none;
+  padding: 0;
+}
+.price-card__features li {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .9rem;
+  color: var(--silver);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--silver-line);
+  padding-left: 20px;
+  position: relative;
+}
+.price-card__features li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--ice);
+}
+.price-card__features li:last-child {
+  border-bottom: none;
+}
+
+/* ============================================================
+   §12 FAQ — two-column
+   ============================================================ */
+.faq {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+.faq__label {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ice);
+  text-align: center;
+  margin-bottom: 48px;
+}
+.faq__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 60px;
+}
+.faq__item {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--silver-line);
+}
+.faq__q {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.faq__a {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .9rem;
+  color: var(--silver);
+  line-height: 1.8;
+}
+
+/* ============================================================
+   §13 CTA — silver frame
+   ============================================================ */
+.cta {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+  text-align: center;
+}
+.cta__frame {
+  border: 1px solid var(--silver-line-strong);
+  padding: clamp(48px, 6vw, 80px) clamp(32px, 5vw, 60px);
+  max-width: 700px;
+  margin: 0 auto;
+  transition: border-color .4s;
+}
+.cta__frame:hover {
+  border-color: var(--ice);
+}
+.cta__headline {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.cta__sub {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .9rem;
+  color: var(--silver);
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+.cta__btn {
+  display: inline-block;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: .8rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid var(--ice);
+  padding: 16px 52px;
+  transition: all .4s ease;
+  background: transparent;
+  cursor: pointer;
+}
+.cta__btn:hover {
+  background: var(--ice);
+  color: var(--bg);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  padding: 40px clamp(20px, 4vw, 40px);
+  text-align: center;
+  border-top: 1px solid var(--silver-line);
+}
+.footer__text {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: .75rem;
+  letter-spacing: .1em;
+  color: rgba(192, 200, 212, .5);
+}
+
+/* ============================================================
+   RESPONSIVE 768px
+   ============================================================ */
+@media (max-width: 768px) {
+  .hero__float { display: none; }
+
+  .intro__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .intro__vline { display: none; }
+  .intro__num { font-size: 3rem; }
+
+  .feat-row {
+    grid-template-columns: 1fr;
+  }
+  .feat-row__num {
+    margin-bottom: 12px;
+  }
+  .feat-row__img {
+    width: 100%;
+  }
+  .feat-row__text {
+    position: relative;
+    max-width: 100%;
+    top: 0;
+    transform: none;
+    margin-top: -40px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .stats__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullbleed {
+    grid-template-columns: 1fr;
+  }
+  .fullbleed__img {
+    min-height: 280px;
+  }
+
+  .gallery__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .ba__content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .process__track {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  .process__line {
+    display: none;
+  }
+
+  .faq__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .products__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     §1 HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero__bg">
+    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt="프리미엄 침실" loading="eager">
+  </div>
+
+  <div class="hero__float hero__float--left rv on">
+    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="미리보기">
+  </div>
+
+  <div class="hero__float hero__float--right rv on">
+    <img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80" alt="미리보기">
+  </div>
+
+  <div class="hero__content rv">
+    <p class="hero__label">Premium Sleep Experience</p>
+    <h1 class="hero__title">완벽한 수면,<br>완벽한 아침</h1>
+    <p class="hero__sub">독일 엔지니어링과 천연 소재의 조화.<br>매일 밤, 5성급 호텔의 잠자리를 경험하세요.</p>
+    <a href="#products" class="hero__btn">컬렉션 보기</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     §2 INTRO
+     ============================================================ -->
+<section class="intro">
+  <div class="intro__grid rv">
+    <div class="intro__num">01</div>
+    <div class="intro__vline"></div>
+    <div class="intro__heading">
+      수면 과학의 정점,<br><em>SleepWell</em> 매트리스
+    </div>
+    <div class="intro__vline"></div>
+    <div class="intro__body">
+      20년간의 수면 연구 데이터와 인체공학 설계를 결합했습니다. 체압 분산 기술과 온도 조절 소재가 당신의 수면 패턴에 맞춰 최적의 환경을 만들어냅니다. 하룻밤의 차이가 하루를 바꾸고, 인생을 바꿉니다.
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §7 FEATURES
+     ============================================================ -->
+<section class="features">
+  <p class="features__label rv">Core Features</p>
+
+  <div class="feat-row rv">
+    <div class="feat-row__num">01</div>
+    <div class="feat-row__main">
+      <div class="feat-row__img">
+        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt="7존 체압 분산">
+      </div>
+      <div class="feat-row__text">
+        <h3 class="feat-row__title">7존 체압 분산 시스템</h3>
+        <p class="feat-row__desc">머리부터 발끝까지 7개 구역별 최적 지지력을 제공합니다. 어깨와 골반부는 부드럽게, 허리는 단단하게 — 척추 정렬을 자동으로 맞춥니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat-row rv">
+    <div class="feat-row__num">02</div>
+    <div class="feat-row__main">
+      <div class="feat-row__img">
+        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt="온도 조절">
+      </div>
+      <div class="feat-row__text">
+        <h3 class="feat-row__title">스마트 온도 조절</h3>
+        <p class="feat-row__desc">통기성 오픈셀 폼과 쿨링 젤 레이어가 체온에 반응하여 열을 분산합니다. 여름에는 시원하게, 겨울에는 따뜻하게 — 사계절 쾌적한 수면.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat-row rv">
+    <div class="feat-row__num">03</div>
+    <div class="feat-row__main">
+      <div class="feat-row__img">
+        <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt="무진동">
+      </div>
+      <div class="feat-row__text">
+        <h3 class="feat-row__title">제로 모션 트랜스퍼</h3>
+        <p class="feat-row__desc">파트너의 움직임이 전달되지 않는 독립 포켓 스프링. 와인잔 테스트를 통과한 진동 차단 기술로, 둘 다 깊은 수면을 누릴 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §5 STATS
+     ============================================================ -->
+<section class="stats">
+  <p class="stats__label rv">By The Numbers</p>
+  <div class="stats__grid">
+    <div class="stat-box rv rv-d1">
+      <div class="stat-box__num">98%</div>
+      <div class="stat-box__label">고객 만족도</div>
+    </div>
+    <div class="stat-box rv rv-d2">
+      <div class="stat-box__num">12,847</div>
+      <div class="stat-box__label">5성급 리뷰</div>
+    </div>
+    <div class="stat-box rv rv-d3">
+      <div class="stat-box__num">365일</div>
+      <div class="stat-box__label">무료 체험 기간</div>
+    </div>
+    <div class="stat-box rv rv-d4">
+      <div class="stat-box__num">10년</div>
+      <div class="stat-box__label">품질 보증</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §3 PRODUCTS — horizontal scroll
+     ============================================================ -->
+<section class="products" id="products">
+  <div class="products__header rv">
+    <h2 class="products__title">컬렉션</h2>
+    <span class="products__hint">스크롤하여 더 보기 →</span>
+  </div>
+  <div class="products__scroll">
+    <div class="prod-card rv rv-d1">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt="시그니처 클라우드">
+      <div class="prod-card__overlay">
+        <div class="prod-card__name">시그니처 클라우드</div>
+        <div class="prod-card__price">₩890,000</div>
+      </div>
+    </div>
+    <div class="prod-card rv rv-d2">
+      <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt="로얄 플러시">
+      <div class="prod-card__overlay">
+        <div class="prod-card__name">로얄 플러시</div>
+        <div class="prod-card__price">₩1,290,000</div>
+      </div>
+    </div>
+    <div class="prod-card rv rv-d3">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="네이처 브리즈">
+      <div class="prod-card__overlay">
+        <div class="prod-card__name">네이처 브리즈</div>
+        <div class="prod-card__price">₩1,590,000</div>
+      </div>
+    </div>
+    <div class="prod-card rv rv-d4">
+      <img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80" alt="프레스티지 스위트">
+      <div class="prod-card__overlay">
+        <div class="prod-card__name">프레스티지 스위트</div>
+        <div class="prod-card__price">₩2,190,000</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §4 FULLBLEED — split screen
+     ============================================================ -->
+<section class="fullbleed">
+  <div class="fullbleed__img">
+    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt="프리미엄 소재">
+  </div>
+  <div class="fullbleed__text rv">
+    <h2 class="fullbleed__headline">천연 소재만을<br>고집합니다</h2>
+    <div class="fullbleed__line"></div>
+    <p class="fullbleed__body">유기농 면 커버, 천연 라텍스, 뉴질랜드산 울 — 모든 소재는 OEKO-TEX 인증을 받았습니다. 피부에 직접 닿는 소재이기에, 타협 없는 품질만을 선택합니다. 자연이 선사하는 편안함을 느껴보세요.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     §6 GALLERY — 3-col with captions
+     ============================================================ -->
+<section class="gallery">
+  <p class="gallery__label rv">Gallery</p>
+  <div class="gallery__grid">
+    <div class="gallery__item rv rv-d1">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt="스위트 침실">
+      <p class="gallery__caption">프레스티지 스위트 — 호텔 그 이상의 수면 공간</p>
+    </div>
+    <div class="gallery__item rv rv-d2">
+      <img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt="소재 디테일">
+      <p class="gallery__caption">천연 라텍스 레이어의 정교한 구조</p>
+    </div>
+    <div class="gallery__item rv rv-d3">
+      <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt="모던 침실">
+      <p class="gallery__caption">시그니처 클라우드 — 모던 인테리어와의 조화</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §8 B/A — tabbed
+     ============================================================ -->
+<section class="ba">
+  <p class="ba__label rv">Before &amp; After</p>
+  <div class="ba__tabs rv">
+    <button class="ba__tab active" data-tab="before" onclick="switchTab(this)">Before</button>
+    <button class="ba__tab" data-tab="after" onclick="switchTab(this)">After</button>
+  </div>
+  <div class="ba__content rv">
+    <div class="ba__side ba__side--before">
+      <p class="ba__side-label">Before — 일반 매트리스</p>
+      <div class="ba__item">
+        <h4 class="ba__item-title">뒤척임 평균 32회</h4>
+        <p class="ba__item-desc">체압 분산 부족으로 혈액순환 장애, 잦은 자세 변경</p>
+      </div>
+      <div class="ba__item">
+        <h4 class="ba__item-title">아침 피로감 지속</h4>
+        <p class="ba__item-desc">깊은 수면 단계 부족, 수면 효율 65% 이하</p>
+      </div>
+      <div class="ba__item">
+        <h4 class="ba__item-title">파트너 수면 방해</h4>
+        <p class="ba__item-desc">진동 전달로 상대방이 자주 깨어남</p>
+      </div>
+    </div>
+    <div class="ba__side ba__side--after">
+      <p class="ba__side-label">After — SleepWell</p>
+      <div class="ba__item">
+        <h4 class="ba__item-title">뒤척임 85% 감소</h4>
+        <p class="ba__item-desc">7존 체압 분산으로 자연스러운 자세 유지</p>
+      </div>
+      <div class="ba__item">
+        <h4 class="ba__item-title">깊은 수면 40% 증가</h4>
+        <p class="ba__item-desc">수면 효율 92% 달성, 상쾌한 기상</p>
+      </div>
+      <div class="ba__item">
+        <h4 class="ba__item-title">독립적인 수면 보장</h4>
+        <p class="ba__item-desc">제로 모션 트랜스퍼로 서로의 수면 보호</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §10 REVIEWS — single large testimonials
+     ============================================================ -->
+<section class="reviews">
+  <p class="reviews__label rv">Testimonials</p>
+
+  <div class="review-single rv">
+    <div class="review-single__quote">
+      처음 누웠을 때 몸이 구름 위에 떠 있는 느낌이었어요. 3개월이 지난 지금, 아침에 알람 없이 상쾌하게 일어납니다. 인생 최고의 투자였습니다.
+    </div>
+    <p class="review-single__name">김서윤 · 34세 · 서울</p>
+  </div>
+
+  <div class="review-single rv">
+    <div class="review-single__quote">
+      허리 통증 때문에 수십 개의 매트리스를 써봤지만, SleepWell이 유일하게 효과가 있었습니다. 6개월째 통증 없이 자고 있어요.
+    </div>
+    <p class="review-single__name">박준혁 · 41세 · 부산</p>
+  </div>
+
+  <div class="review-single rv">
+    <div class="review-single__quote">
+      남편의 코골이와 뒤척임에 매일 잠을 깼는데, 이제는 서로 깨우지 않고 각자 깊이 잡니다. 둘 다 아침이 달라졌어요.
+    </div>
+    <p class="review-single__name">이하은 · 38세 · 제주</p>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §11 PROCESS — horizontal numbered line
+     ============================================================ -->
+<section class="process">
+  <p class="process__label rv">How It Works</p>
+  <div class="process__track rv">
+    <div class="process__line"></div>
+    <div class="process__step">
+      <div class="process__circle">1</div>
+      <h4 class="process__step-title">온라인 상담</h4>
+      <p class="process__step-desc">수면 습관과 체형을 분석하여 최적의 매트리스를 추천합니다</p>
+    </div>
+    <div class="process__step">
+      <div class="process__circle">2</div>
+      <h4 class="process__step-title">무료 배송 · 설치</h4>
+      <p class="process__step-desc">전문 기사가 원하시는 날짜에 방문 설치해 드립니다</p>
+    </div>
+    <div class="process__step">
+      <div class="process__circle">3</div>
+      <h4 class="process__step-title">365일 체험</h4>
+      <p class="process__step-desc">1년간 사용 후 불만족 시 전액 환불, 수거비 무료</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §9 PRICING — two-tier
+     ============================================================ -->
+<section class="pricing">
+  <p class="pricing__label rv">Pricing</p>
+  <div class="pricing__cards">
+    <div class="price-card rv">
+      <p class="price-card__tier">Standard</p>
+      <p class="price-card__price">₩890,000 <span>/ 퀸 사이즈</span></p>
+      <ul class="price-card__features">
+        <li>7존 체압 분산 시스템</li>
+        <li>쿨링 젤 메모리폼</li>
+        <li>OEKO-TEX 인증 커버</li>
+        <li>무료 배송 및 설치</li>
+        <li>100일 무료 체험</li>
+      </ul>
+    </div>
+    <div class="price-card price-card--premium rv">
+      <p class="price-card__tier">Premium</p>
+      <p class="price-card__price">₩1,590,000 <span>/ 퀸 사이즈</span></p>
+      <ul class="price-card__features">
+        <li>Standard 전체 포함</li>
+        <li>천연 라텍스 코어</li>
+        <li>뉴질랜드산 울 토퍼</li>
+        <li>스마트 온도 조절 레이어</li>
+        <li>365일 무료 체험</li>
+        <li>10년 품질 보증</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §12 FAQ — two-column
+     ============================================================ -->
+<section class="faq">
+  <p class="faq__label rv">FAQ</p>
+  <div class="faq__grid">
+    <div class="faq__item rv rv-d1">
+      <h4 class="faq__q">매트리스 경도를 선택할 수 있나요?</h4>
+      <p class="faq__a">네, 소프트·미디엄·펌 3단계로 선택 가능합니다. 온라인 상담을 통해 체형과 수면 습관에 맞는 경도를 추천받으실 수 있습니다.</p>
+    </div>
+    <div class="faq__item rv rv-d2">
+      <h4 class="faq__q">배송은 얼마나 걸리나요?</h4>
+      <p class="faq__a">주문 후 3~5 영업일 내 전문 기사가 방문 설치합니다. 수도권은 2~3일, 그 외 지역은 4~5일이 소요됩니다.</p>
+    </div>
+    <div class="faq__item rv rv-d3">
+      <h4 class="faq__q">기존 매트리스 수거도 가능한가요?</h4>
+      <p class="faq__a">네, 설치 시 기존 매트리스를 무료로 수거해 드립니다. 친환경 방식으로 재활용 처리됩니다.</p>
+    </div>
+    <div class="faq__item rv rv-d4">
+      <h4 class="faq__q">365일 체험 후 반품 절차는?</h4>
+      <p class="faq__a">고객센터에 연락하시면 48시간 내 수거 방문합니다. 전액 환불이며, 수거 비용은 저희가 부담합니다.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-line"></div>
+
+<!-- ============================================================
+     §13 CTA — silver frame
+     ============================================================ -->
+<section class="cta">
+  <div class="cta__frame rv">
+    <h2 class="cta__headline">오늘 밤부터<br>달라지는 수면</h2>
+    <p class="cta__sub">365일 무위험 체험으로 시작하세요.<br>만족하지 못하시면 전액 환불해 드립니다.</p>
+    <a href="#" class="cta__btn">무료 상담 신청</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <p class="footer__text">&copy; 2026 SleepWell. All rights reserved.</p>
+</footer>
+
+<!-- ============================================================
+   SCROLL REVEAL JS
+   ============================================================ -->
+<script>
+(function(){
+  var els = document.querySelectorAll('.rv');
+  if (!els.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.classList.add('on');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '50px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+function switchTab(btn) {
+  document.querySelectorAll('.ba__tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  var tab = btn.getAttribute('data-tab');
+  var beforeSide = document.querySelector('.ba__side--before');
+  var afterSide = document.querySelector('.ba__side--after');
+  if (tab === 'before') {
+    beforeSide.style.opacity = '1';
+    afterSide.style.opacity = '.35';
+  } else {
+    beforeSide.style.opacity = '.35';
+    afterSide.style.opacity = '1';
+  }
+}
+</script>
+
+</body>
+</html>

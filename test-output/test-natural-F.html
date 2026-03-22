@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>슬립웰 매트리스 — Natural</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Josefin+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F0E8;--green:#2D5F3F;--green-l:#3A7A52;--green-d:#1E3F2A;
+  --brown:#8B6914;--cream:#FAF7F0;--bk:#1A1812;
+  --gy:#8A8070;--gl:rgba(0,0,0,.08);
+  --lora:'Lora','Noto Sans KR',serif;
+  --josefin:'Josefin Sans','Noto Sans KR',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--bk);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.7;max-width:1240px;margin:0 auto;font-weight:400;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.sec{padding:clamp(48px,6vw,80px) clamp(20px,3vw,40px);}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);}
+.rv.on{opacity:1;transform:none;}
+[data-d="1"]{transition-delay:.1s}[data-d="2"]{transition-delay:.2s}[data-d="3"]{transition-delay:.3s}
+.warm{filter:brightness(.9) saturate(1.05) sepia(.08);}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");}
+
+.hero{text-align:center;padding:clamp(64px,8vw,100px) clamp(20px,3vw,40px) 0;}
+.hero__brand{font-family:var(--josefin);font-size:.7rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--green);margin-bottom:28px;}
+.hero__h1{font-family:var(--lora);font-size:clamp(3rem,7vw,5.5rem);font-weight:400;line-height:.95;margin-bottom:20px;letter-spacing:-.02em;}
+.hero__h1 em{color:var(--green);font-style:italic;}
+.hero__sub{font-family:var(--lora);font-size:clamp(.95rem,1.3vw,1.1rem);color:var(--gy);max-width:480px;margin:0 auto 32px;line-height:1.8;font-style:italic;}
+.hero__cta{display:inline-block;padding:14px 48px;background:var(--green);color:var(--cream);font-family:var(--josefin);font-size:.85rem;font-weight:500;letter-spacing:.1em;border-radius:8px;transition:all .3s;}
+.hero__cta:hover{background:var(--green-d);}
+.hero__img{margin-top:clamp(40px,5vw,64px);border-radius:16px;overflow:hidden;max-height:520px;}
+.hero__img img{width:100%;height:100%;object-fit:cover;}
+
+.intro{background:var(--green);color:var(--cream);text-align:center;padding:clamp(80px,10vw,140px) clamp(24px,4vw,64px);}
+.intro__text{font-family:var(--lora);font-style:italic;font-size:clamp(1.6rem,3.5vw,2.8rem);line-height:1.35;max-width:720px;margin:0 auto;font-weight:400;}
+.intro__text em{font-style:normal;color:var(--brown);font-weight:600;}
+.intro__sub{font-family:var(--josefin);font-size:.8rem;color:rgba(255,255,255,.5);letter-spacing:.15em;text-transform:uppercase;margin-top:32px;}
+
+.feat__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px);}
+.feat-card{background:var(--cream);border-radius:14px;overflow:hidden;transition:box-shadow .4s,transform .4s;}
+.feat-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.08);transform:translateY(-4px);}
+.feat-card__img{aspect-ratio:4/3;overflow:hidden;}
+.feat-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1);}
+.feat-card:hover .feat-card__img img{transform:scale(1.06);}
+.feat-card__body{padding:clamp(20px,2.5vw,32px);}
+.feat-card__num{font-family:var(--josefin);font-size:.7rem;font-weight:600;color:var(--green);letter-spacing:.15em;margin-bottom:8px;}
+.feat-card__h3{font-family:var(--lora);font-size:clamp(1.2rem,1.8vw,1.5rem);font-weight:600;line-height:1.25;margin-bottom:10px;}
+.feat-card__h3 em{color:var(--green);font-style:italic;}
+.feat-card__p{font-size:.9rem;color:var(--gy);line-height:1.75;}
+.feat-card__list{list-style:none;margin-top:12px;}
+.feat-card__li{font-size:.85rem;padding:5px 0;color:var(--bk);display:flex;align-items:center;gap:8px;}
+.feat-card__li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;}
+
+.stats{text-align:center;border-top:1px solid var(--gl);border-bottom:1px solid var(--gl);}
+.stats__text{font-family:var(--lora);font-size:clamp(1.1rem,1.8vw,1.5rem);line-height:2;color:var(--gy);}
+.stats__text strong{color:var(--green);font-weight:700;font-size:1.15em;}
+.stats__text span{margin:0 clamp(8px,1.5vw,20px);}
+
+.products__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.5vw,20px);}
+.prod-card{cursor:pointer;}
+.prod-card__img{border-radius:12px;overflow:hidden;aspect-ratio:3/4;margin-bottom:14px;}
+.prod-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1);}
+.prod-card:hover .prod-card__img img{transform:scale(1.06);}
+.prod-card__name{font-family:var(--lora);font-size:1.05rem;font-weight:600;margin-bottom:2px;}
+.prod-card__sub{font-size:.8rem;color:var(--gy);}
+
+.cinema{position:relative;border-radius:16px;overflow:hidden;min-height:55vh;display:flex;align-items:center;justify-content:center;text-align:center;margin:0 clamp(20px,3vw,40px);}
+.cinema__bg{position:absolute;inset:0;}
+.cinema__bg img{width:100%;height:100%;object-fit:cover;}
+.cinema__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,95,63,.6),rgba(30,63,42,.8));}
+.cinema__in{position:relative;z-index:1;padding:48px 24px;color:var(--cream);}
+.cinema__h2{font-family:var(--lora);font-size:clamp(2.5rem,6vw,4.5rem);font-weight:400;line-height:.95;margin-bottom:20px;font-style:italic;}
+.cinema__p{font-family:var(--lora);font-size:clamp(1rem,1.4vw,1.15rem);color:rgba(255,255,255,.7);max-width:500px;margin:0 auto;line-height:1.8;font-style:italic;}
+
+.gallery__grid{display:grid;grid-template-columns:1.2fr .8fr;grid-template-rows:1fr 1fr;gap:clamp(8px,1vw,14px);height:520px;}
+.gallery__item{border-radius:12px;overflow:hidden;}
+.gallery__item:first-child{grid-row:1/3;}
+.gallery__item img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.gallery__item:hover img{transform:scale(1.05);}
+
+.ba__before{background:var(--green-d);color:var(--cream);padding:clamp(36px,4vw,56px);border-radius:14px 14px 0 0;}
+.ba__after{background:var(--cream);color:var(--bk);padding:clamp(36px,4vw,56px);border-radius:0 0 14px 14px;border:1px solid var(--gl);border-top:none;}
+.ba__label{font-family:var(--josefin);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;margin-bottom:20px;}
+.ba__label--b{color:rgba(255,255,255,.5);}
+.ba__label--a{color:var(--green);}
+.ba__divider{width:48px;height:48px;border-radius:50%;background:var(--green);display:grid;place-items:center;margin:-24px auto;position:relative;z-index:2;color:var(--cream);font-size:1.2rem;}
+.ba__list{list-style:none;}
+.ba__li{padding:12px 0;font-size:1.05rem;line-height:1.6;border-bottom:1px solid rgba(255,255,255,.08);word-break:keep-all;}
+.ba__after .ba__li{border-bottom-color:var(--gl);font-weight:600;}
+.ba__li:last-child{border:none;}
+
+.pricing{text-align:center;}
+.pricing__card{max-width:520px;margin:0 auto;background:var(--cream);border:2px solid var(--green);border-radius:16px;padding:clamp(40px,5vw,64px) clamp(28px,3vw,48px);}
+.pricing__badge{display:inline-block;background:var(--green);color:var(--cream);padding:6px 24px;font-family:var(--josefin);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border-radius:20px;margin-bottom:24px;}
+.pricing__old{font-size:.9rem;color:var(--gy);text-decoration:line-through;}
+.pricing__now{font-family:var(--lora);font-size:clamp(3.5rem,8vw,5.5rem);font-weight:700;color:var(--green);line-height:1;margin-bottom:28px;}
+.pricing__now small{font-size:.2em;color:var(--gy);font-weight:400;}
+.pricing__features{list-style:none;text-align:left;margin-bottom:36px;}
+.pricing__feat{padding:12px 0;font-size:1rem;border-bottom:1px solid var(--gl);display:flex;align-items:center;gap:12px;}
+.pricing__feat::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.pricing__feat:last-child{border:none;}
+.pricing__btn{display:block;padding:16px;background:var(--green);color:var(--cream);font-family:var(--josefin);font-size:1rem;font-weight:600;letter-spacing:.05em;border-radius:8px;transition:all .3s;}
+.pricing__btn:hover{background:var(--green-d);}
+
+.rev__item{display:grid;grid-template-columns:120px 1fr;gap:clamp(20px,3vw,36px);align-items:center;padding:clamp(28px,3vw,44px) 0;border-bottom:1px solid var(--gl);}
+.rev__item:first-child{border-top:1px solid var(--gl);}
+.rev__avatar{width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;}
+.rev__stars{color:var(--brown);font-size:.8rem;letter-spacing:3px;margin-bottom:10px;}
+.rev__text{font-family:var(--lora);font-style:italic;font-size:clamp(1.15rem,1.6vw,1.4rem);line-height:1.55;margin-bottom:12px;}
+.rev__name{font-family:var(--josefin);font-size:.8rem;font-weight:500;color:var(--gy);letter-spacing:.05em;}
+
+.process__list{max-width:600px;margin:0 auto;position:relative;}
+.process__list::before{content:'';position:absolute;top:24px;bottom:24px;left:23px;width:2px;background:linear-gradient(180deg,var(--green),var(--green-l));}
+.process__step{display:flex;gap:24px;align-items:center;padding:28px 0;position:relative;z-index:1;}
+.process__dot{width:48px;height:48px;border-radius:50%;background:var(--cream);border:2px solid var(--green);display:grid;place-items:center;font-family:var(--josefin);font-size:.85rem;font-weight:600;color:var(--green);flex-shrink:0;transition:all .3s;}
+.process__step:hover .process__dot{background:var(--green);color:var(--cream);}
+.process__t{font-family:var(--lora);font-size:1.15rem;font-weight:600;margin-bottom:3px;}
+.process__d{font-size:.85rem;color:var(--gy);}
+
+.faq__in{max-width:740px;margin:0 auto;}
+.faq__item{background:var(--cream);border-radius:12px;margin-bottom:8px;overflow:hidden;transition:box-shadow .3s;}
+.faq__item:hover,.faq__item[open]{box-shadow:0 4px 16px rgba(0,0,0,.06);}
+.faq__q{cursor:pointer;padding:20px 24px;font-size:1.05rem;font-weight:600;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s;}
+.faq__q:hover{color:var(--green);}
+.faq__q::-webkit-details-marker{display:none;}
+.faq__q::after{content:'+';color:var(--green);font-size:1.3rem;font-weight:400;transition:transform .3s;flex-shrink:0;}
+.faq__item[open] .faq__q::after{transform:rotate(45deg);}
+.faq__a{padding:0 24px 20px;font-size:.95rem;line-height:1.85;color:var(--gy);}
+
+.cta{background:var(--green);color:var(--cream);text-align:center;border-radius:16px;margin:0 clamp(20px,3vw,40px);padding:clamp(64px,8vw,100px) clamp(24px,4vw,56px);}
+.cta__h2{font-family:var(--lora);font-style:italic;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:400;margin-bottom:16px;line-height:1.15;}
+.cta__p{font-size:1rem;color:rgba(255,255,255,.65);margin-bottom:36px;}
+.cta__btn{display:inline-block;padding:16px 56px;background:var(--cream);color:var(--green);font-family:var(--josefin);font-size:.95rem;font-weight:600;letter-spacing:.05em;border-radius:8px;transition:all .3s;}
+.cta__btn:hover{background:var(--brown);color:var(--cream);}
+.cta__micro{margin-top:14px;font-size:.8rem;color:rgba(255,255,255,.4);}
+
+.stag{font-family:var(--josefin);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:12px;}
+.stitle{font-family:var(--lora);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;margin-bottom:36px;}
+
+@media(max-width:768px){
+  .feat__grid{grid-template-columns:1fr;}
+  .products__grid{grid-template-columns:1fr 1fr;}
+  .gallery__grid{grid-template-columns:1fr;height:auto;}
+  .gallery__item:first-child{grid-row:auto;}
+  .gallery__item{height:240px;}
+  .rev__item{grid-template-columns:80px 1fr;gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<section class="hero rv on">
+  <p class="hero__brand">SLEEPWELL MATTRESS</p>
+  <h1 class="hero__h1">아침이 다시<br><em>기대되는 밤</em></h1>
+  <p class="hero__sub">7존 맞춤 지지 시스템이 당신의 체형을 기억합니다. 100일 무료 체험으로 직접 경험하세요.</p>
+  <a href="#pricing" class="hero__cta">무료 체험 시작하기</a>
+  <div class="hero__img"><img class="warm" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt=""></div>
+</section>
+
+<section class="intro rv">
+  <p class="intro__text">당신의 몸이 가장 편안한 자세를 찾을 때, 비로소 <em>진짜 수면</em>이 시작됩니다. 슬립웰은 3년간의 수면 과학 연구로 그 순간을 만들어 냅니다.</p>
+  <p class="intro__sub">Since 2021 — Sleep Science Lab</p>
+</section>
+
+<section class="sec">
+  <p class="stag rv">Features</p>
+  <h2 class="stitle rv">왜 슬립웰인가</h2>
+  <div class="feat__grid">
+    <div class="feat-card rv">
+      <div class="feat-card__img"><img class="warm" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
+      <div class="feat-card__body"><p class="feat-card__num">01 — CORE TECH</p><h3 class="feat-card__h3">체형을 <em>기억</em>하는 7존 맞춤 지지</h3><p class="feat-card__p">7개 구간으로 나눠진 독립 지지 시스템이 자동 조절됩니다.</p><ul class="feat-card__list"><li class="feat-card__li">척추 자연 곡선 유지</li><li class="feat-card__li">체압 90% 분산</li></ul></div>
+    </div>
+    <div class="feat-card rv" data-d="1">
+      <div class="feat-card__img"><img class="warm" src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80" alt=""></div>
+      <div class="feat-card__body"><p class="feat-card__num">02 — MATERIALS</p><h3 class="feat-card__h3">통기성과 <em>내구성</em>을 동시에</h3><p class="feat-card__p">고밀도 메모리폼 + 천연 라텍스 하이브리드 구조.</p><ul class="feat-card__list"><li class="feat-card__li">항균 방진드기 처리</li><li class="feat-card__li">사계절 온도 조절</li></ul></div>
+    </div>
+    <div class="feat-card rv" data-d="2">
+      <div class="feat-card__img"><img class="warm" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""></div>
+      <div class="feat-card__body"><p class="feat-card__num">03 — DURABILITY</p><h3 class="feat-card__h3">10년 <em>형태 유지</em> 보증</h3><p class="feat-card__p">10만회 압축 테스트 통과. 오래 써도 처음 그대로.</p><ul class="feat-card__list"><li class="feat-card__li">10년 품질 보증</li><li class="feat-card__li">무상 수리 지원</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec stats rv">
+  <p class="stats__text"><strong>50,000+</strong> 고객이 선택한<span>·</span><strong>98%</strong> 만족도<span>·</span><strong>4.9</strong> 평균 별점<span>·</span><strong>365</strong>일 고객 지원</p>
+</section>
+
+<section class="sec">
+  <p class="stag rv">Products</p>
+  <h2 class="stitle rv">프리미엄 라인업</h2>
+  <div class="products__grid">
+    <div class="prod-card rv"><div class="prod-card__img"><img class="warm" src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80" alt=""></div><p class="prod-card__name">슬립웰 오리지널</p><p class="prod-card__sub">The Classic</p></div>
+    <div class="prod-card rv" data-d="1"><div class="prod-card__img"><img class="warm" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""></div><p class="prod-card__name">슬립웰 프로</p><p class="prod-card__sub">The Professional</p></div>
+    <div class="prod-card rv" data-d="2"><div class="prod-card__img"><img class="warm" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div><p class="prod-card__name">슬립웰 토퍼</p><p class="prod-card__sub">The Topper</p></div>
+    <div class="prod-card rv" data-d="3"><div class="prod-card__img"><img class="warm" src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt=""></div><p class="prod-card__name">슬립웰 베개</p><p class="prod-card__sub">The Pillow</p></div>
+  </div>
+</section>
+
+<section class="sec" style="padding-bottom:0;">
+  <div class="cinema rv">
+    <div class="cinema__bg"><img class="warm" src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt=""></div>
+    <div class="cinema__in"><h2 class="cinema__h2">과학이 만든<br>완벽한 잠</h2><p class="cinema__p">머리부터 발끝까지 7개 구간으로 나눠진 맞춤 지지 시스템이 밤새 당신을 감쌉니다.</p></div>
+  </div>
+</section>
+
+<section class="sec">
+  <p class="stag rv">Gallery</p>
+  <div class="gallery__grid rv">
+    <div class="gallery__item"><img class="warm" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt=""></div>
+    <div class="gallery__item"><img class="warm" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""></div>
+    <div class="gallery__item"><img class="warm" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
+  </div>
+</section>
+
+<section class="sec">
+  <p class="stag rv">Before / After</p>
+  <h2 class="stitle rv">무엇이 달라지나요</h2>
+  <div class="ba__before rv"><p class="ba__label ba__label--b">BEFORE</p><ul class="ba__list"><li class="ba__li">새벽 2시마다 뒤척임 — 만성 수면 부족</li><li class="ba__li">아침마다 허리 통증 — 컨디션 저하</li><li class="ba__li">매트리스 3년마다 교체 — 돈만 낭비</li></ul></div>
+  <div class="ba__divider rv">→</div>
+  <div class="ba__after rv"><p class="ba__label ba__label--a">AFTER</p><ul class="ba__list"><li class="ba__li">7시간 숙면 — 알람 없이 개운하게 기상</li><li class="ba__li">체형 맞춤 지지 — 통증 없는 아침</li><li class="ba__li">10년 보증 — 한 번 사면 끝</li></ul></div>
+</section>
+
+<section class="sec pricing" id="pricing">
+  <p class="stag rv" style="text-align:center">Pricing</p>
+  <h2 class="stitle rv" style="text-align:center">지금이 가장 좋은 가격</h2>
+  <div class="pricing__card rv"><span class="pricing__badge">Launch Special</span><p class="pricing__old">590,000원</p><p class="pricing__now">390,000<small>원</small></p><ul class="pricing__features"><li class="pricing__feat">7존 체압분산 매트리스</li><li class="pricing__feat">프리미엄 커버 포함</li><li class="pricing__feat">무료 배송 + 설치</li><li class="pricing__feat">100일 무료 체험</li><li class="pricing__feat">10년 품질 보증</li></ul><a href="#" class="pricing__btn">특별가로 시작하기</a></div>
+</section>
+
+<section class="sec">
+  <p class="stag rv">Reviews</p>
+  <h2 class="stitle rv">실제 고객 후기</h2>
+  <div class="rev__item rv"><img class="rev__avatar" src="https://i.pravatar.cc/240?img=32" alt=""><div><p class="rev__stars">★★★★★</p><p class="rev__text">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p><p class="rev__name">김○○ · 35세</p></div></div>
+  <div class="rev__item rv"><img class="rev__avatar" src="https://i.pravatar.cc/240?img=47" alt=""><div><p class="rev__stars">★★★★★</p><p class="rev__text">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p><p class="rev__name">이○○ · 42세</p></div></div>
+  <div class="rev__item rv"><img class="rev__avatar" src="https://i.pravatar.cc/240?img=12" alt=""><div><p class="rev__stars">★★★★★</p><p class="rev__text">"호텔보다 우리 집 침대가 더 좋아졌어요."</p><p class="rev__name">박○○ · 28세</p></div></div>
+</section>
+
+<section class="sec">
+  <p class="stag rv" style="text-align:center">Process</p>
+  <h2 class="stitle rv" style="text-align:center">간단한 3단계</h2>
+  <div class="process__list">
+    <div class="process__step rv"><div class="process__dot">01</div><div><p class="process__t">온라인 주문</p><p class="process__d">3분이면 완료</p></div></div>
+    <div class="process__step rv" data-d="1"><div class="process__dot">02</div><div><p class="process__t">무료 배송 · 설치</p><p class="process__d">주문 후 1~2일</p></div></div>
+    <div class="process__step rv" data-d="2"><div class="process__dot">03</div><div><p class="process__t">100일 체험</p><p class="process__d">불만족 시 전액 환불</p></div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <p class="stag rv">FAQ</p>
+  <h2 class="stitle rv">자주 묻는 질문</h2>
+  <div class="faq__in">
+    <details class="faq__item rv"><summary class="faq__q">배송은 얼마나 걸리나요?</summary><p class="faq__a">주문 후 1~2일 내 무료 배송됩니다. 전문 기사가 설치까지 도와드립니다.</p></details>
+    <details class="faq__item rv" data-d="1"><summary class="faq__q">100일 체험은 어떻게 진행되나요?</summary><p class="faq__a">제품 수령 후 100일간 사용하시고, 만족하지 않으시면 무료 반품 가능합니다.</p></details>
+    <details class="faq__item rv" data-d="2"><summary class="faq__q">사이즈 교환이 가능한가요?</summary><p class="faq__a">네, 수령 후 7일 이내 무료 교환 가능합니다.</p></details>
+    <details class="faq__item rv" data-d="3"><summary class="faq__q">기존 매트리스 수거도 해주나요?</summary><p class="faq__a">네, 설치 시 기존 매트리스 무료 수거 서비스를 제공합니다.</p></details>
+  </div>
+</section>
+
+<section class="sec" style="padding-bottom:clamp(48px,6vw,80px);">
+  <div class="cta rv"><h2 class="cta__h2">더 나은 내일을 위한 첫 걸음</h2><p class="cta__p">지금 시작하면 100일 무료 체험 + 런칭 특별가</p><a href="#" class="cta__btn">무료 체험 시작하기</a><p class="cta__micro">첫 달 무료 · 만족하지 않으면 100% 환불</p></div>
+</section>
+
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.05,rootMargin:'0px 0px 50px 0px'});
+document.querySelectorAll('.rv:not(.on)').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Sections — 3 Variants</title>
+
+<!-- Variant A Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@400;700;900&display=swap">
+<!-- Variant B Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<!-- Variant C Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+
+<style>
+/* ========== RESET ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* ========== VARIANT LABELS ========== */
+.variant-label {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 14px 32px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ========== SCROLL REVEAL ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: .12s; }
+.reveal-delay-2 { transition-delay: .24s; }
+.reveal-delay-3 { transition-delay: .36s; }
+
+
+/* ================================================================
+   VARIANT A — LUXURY EDITORIAL
+   ================================================================ */
+.va { --bg: #080604; --surface: #161210; --gold: #C6A44E; --cream: #F5EFE0; }
+.va {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Noto Serif KR', serif;
+}
+.va .variant-label {
+  background: rgba(8,6,4,.85);
+  color: var(--gold);
+  border-bottom: 1px solid rgba(198,164,78,.15);
+}
+
+/* -- A: Section Headings -- */
+.va-section-title {
+  text-align: center;
+  padding: 80px 24px 40px;
+}
+.va-section-title span {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(198,164,78,.3);
+  padding: 8px 28px;
+}
+
+/* -- A: Reviews (Editorial Spread) -- */
+.va-reviews {
+  padding: 20px 24px 100px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.va-review {
+  position: relative;
+  text-align: center;
+  padding: 60px 0;
+}
+.va-review + .va-review::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 60px;
+  opacity: .5;
+}
+.va-review__deco {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-70%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(6rem, 10vw, 8rem);
+  font-style: italic;
+  color: var(--gold);
+  opacity: .08;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.va-review__quote {
+  font-family: 'Cormorant', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.6;
+  color: var(--cream);
+  max-width: 600px;
+  margin: 0 auto 36px;
+  position: relative;
+  z-index: 1;
+}
+.va-review__stars {
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.va-review__author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.va-review__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  object-fit: cover;
+}
+.va-review__name {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* -- A: Process (Horizontal Timeline) -- */
+.va-process {
+  padding: 20px 24px 120px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.va-timeline {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 40px;
+}
+.va-timeline::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 80px;
+  right: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: .35;
+}
+.va-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.va-step__box {
+  width: 64px;
+  height: 64px;
+  border: 1.5px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--gold);
+  margin-bottom: 28px;
+  transition: box-shadow .4s ease, background .4s ease;
+  background: var(--bg);
+}
+.va-step:hover .va-step__box {
+  box-shadow: 0 0 30px rgba(198,164,78,.25), inset 0 0 20px rgba(198,164,78,.08);
+  background: rgba(198,164,78,.06);
+}
+.va-step__title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.va-step__desc {
+  font-family: 'Cormorant', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 15px;
+  color: rgba(245,239,224,.5);
+}
+
+/* A responsive */
+@media (max-width: 640px) {
+  .va-timeline { flex-direction: column; align-items: center; gap: 48px; padding: 0; }
+  .va-timeline::before { display: none; }
+}
+
+
+/* ================================================================
+   VARIANT B — CYBERPUNK TECH
+   ================================================================ */
+.vb { --bg: #09090F; --card: #16161F; --violet: #7C3AED; --cyan: #06D6A0; --pink: #F472B6; --border: #252535; }
+.vb {
+  background: var(--bg);
+  color: #E4E4E7;
+  font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+}
+.vb .variant-label {
+  background: rgba(9,9,15,.9);
+  color: var(--violet);
+  border-bottom: 1px solid var(--border);
+}
+
+/* -- B: Section Headings -- */
+.vb-section-title {
+  text-align: center;
+  padding: 80px 24px 40px;
+}
+.vb-section-title span {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: clamp(11px, 1.2vw, 13px);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  padding: 8px 24px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(6,214,160,.04);
+}
+
+/* -- B: Reviews (Chat Bubbles) -- */
+.vb-reviews {
+  padding: 20px 24px 100px;
+  max-width: 540px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.vb-bubble {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.vb-bubble__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid var(--violet);
+  object-fit: cover;
+}
+.vb-bubble__body {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px 16px 16px 16px;
+  padding: 16px 20px;
+  max-width: 440px;
+  position: relative;
+}
+.vb-bubble__top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.vb-bubble__name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+.vb-bubble__stars {
+  font-size: 12px;
+  color: var(--violet);
+  letter-spacing: 2px;
+}
+.vb-bubble__quote {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #C4C4CC;
+}
+.vb-bubble__time {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #555;
+  margin-top: 10px;
+  text-align: right;
+}
+
+/* -- B: Process (Vertical CLI) -- */
+.vb-process {
+  padding: 20px 24px 120px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.vb-cli {
+  position: relative;
+  padding-left: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+.vb-cli__line {
+  position: absolute;
+  left: 23px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--violet), var(--cyan));
+  border-radius: 2px;
+  opacity: .5;
+}
+.vb-cli-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.vb-cli-step__num {
+  position: absolute;
+  left: -64px;
+  top: -4px;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--violet);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--violet);
+  background: var(--bg);
+  z-index: 1;
+}
+.vb-cli-step__title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+}
+.vb-cli-step__cmd {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--cyan);
+  background: rgba(6,214,160,.06);
+  border: 1px solid rgba(6,214,160,.12);
+  border-radius: 8px;
+  padding: 12px 16px;
+  line-height: 1.6;
+}
+.vb-cli-step__cmd .prompt { color: var(--pink); }
+.vb-cli-step__cmd .comment { color: #555; }
+
+@media (max-width: 640px) {
+  .vb-cli { padding-left: 56px; }
+  .vb-cli-step__num { left: -56px; width: 40px; height: 40px; font-size: 14px; }
+}
+
+
+/* ================================================================
+   VARIANT C — SWISS MINIMAL
+   ================================================================ */
+.vc { --bg: #FAFAF8; --text: #1A1A1A; --accent: #E63225; --muted: #999; --border: #E5E5E5; }
+.vc {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', 'DM Sans', sans-serif;
+}
+.vc .variant-label {
+  background: rgba(250,250,248,.92);
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+}
+
+/* -- C: Section Headings -- */
+.vc-section-title {
+  text-align: center;
+  padding: 80px 24px 40px;
+}
+.vc-section-title span {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* -- C: Reviews (Pure Text Column) -- */
+.vc-reviews {
+  padding: 20px 24px 100px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.vc-review {
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
+}
+.vc-review__quote {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.vc-review__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.vc-review__name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.vc-review__stars {
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+/* -- C: Process (Giant Numbers) -- */
+.vc-process {
+  padding: 20px 24px 120px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.vc-giants {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vc-giant {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  text-align: center;
+}
+.vc-giant__num {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(8rem, 12vw, 14rem);
+  font-weight: 400;
+  color: var(--text);
+  opacity: .06;
+  line-height: 1;
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.vc-giant__content {
+  position: relative;
+  z-index: 1;
+}
+.vc-giant__title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.vc-giant__desc {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--muted);
+}
+.vc-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .vc-giants { flex-direction: column; gap: 0; }
+  .vc-dot { display: none; }
+  .vc-giant { min-height: 180px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     VARIANT A — LUXURY EDITORIAL
+     ============================================================ -->
+<section class="va">
+  <div class="variant-label">Variant A &mdash; Luxury Editorial</div>
+
+  <!-- Reviews -->
+  <div class="va-section-title reveal"><span>Customer Reviews</span></div>
+  <div class="va-reviews">
+
+    <div class="va-review reveal">
+      <div class="va-review__deco">&ldquo;</div>
+      <div class="va-review__quote">&ldquo;허리 통증이 사라졌어요. 매일 아침이 달라졌습니다.&rdquo;</div>
+      <div class="va-review__stars">&starf;&starf;&starf;&starf;&starf;</div>
+      <div class="va-review__author">
+        <img class="va-review__avatar" src="https://i.pravatar.cc/88?img=32" alt="김○○" loading="lazy">
+        <span class="va-review__name">김○○ &middot; 35세</span>
+      </div>
+    </div>
+
+    <div class="va-review reveal">
+      <div class="va-review__deco">&ldquo;</div>
+      <div class="va-review__quote">&ldquo;남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다.&rdquo;</div>
+      <div class="va-review__stars">&starf;&starf;&starf;&starf;&starf;</div>
+      <div class="va-review__author">
+        <img class="va-review__avatar" src="https://i.pravatar.cc/88?img=47" alt="이○○" loading="lazy">
+        <span class="va-review__name">이○○ &middot; 42세</span>
+      </div>
+    </div>
+
+    <div class="va-review reveal">
+      <div class="va-review__deco">&ldquo;</div>
+      <div class="va-review__quote">&ldquo;호텔보다 우리 집 침대가 더 좋아졌어요.&rdquo;</div>
+      <div class="va-review__stars">&starf;&starf;&starf;&starf;&starf;</div>
+      <div class="va-review__author">
+        <img class="va-review__avatar" src="https://i.pravatar.cc/88?img=12" alt="박○○" loading="lazy">
+        <span class="va-review__name">박○○ &middot; 28세</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Process -->
+  <div class="va-section-title reveal"><span>Process</span></div>
+  <div class="va-process">
+    <div class="va-timeline reveal">
+      <div class="va-step reveal-delay-1">
+        <div class="va-step__box">I</div>
+        <div class="va-step__title">온라인 주문</div>
+        <div class="va-step__desc">3분이면 완료</div>
+      </div>
+      <div class="va-step reveal-delay-2">
+        <div class="va-step__box">II</div>
+        <div class="va-step__title">무료 배송 &middot; 설치</div>
+        <div class="va-step__desc">주문 후 1~2일</div>
+      </div>
+      <div class="va-step reveal-delay-3">
+        <div class="va-step__box">III</div>
+        <div class="va-step__title">100일 체험</div>
+        <div class="va-step__desc">불만족 시 전액 환불</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VARIANT B — CYBERPUNK TECH
+     ============================================================ -->
+<section class="vb">
+  <div class="variant-label">Variant B &mdash; Cyberpunk Tech</div>
+
+  <!-- Reviews -->
+  <div class="vb-section-title reveal"><span>Customer Reviews</span></div>
+  <div class="vb-reviews">
+
+    <div class="vb-bubble reveal">
+      <img class="vb-bubble__avatar" src="https://i.pravatar.cc/88?img=32" alt="김○○" loading="lazy">
+      <div class="vb-bubble__body">
+        <div class="vb-bubble__top">
+          <span class="vb-bubble__name">김○○ &middot; 35세</span>
+          <span class="vb-bubble__stars">&starf;&starf;&starf;&starf;&starf;</span>
+        </div>
+        <div class="vb-bubble__quote">허리 통증이 사라졌어요. 매일 아침이 달라졌습니다.</div>
+        <div class="vb-bubble__time">2일 전</div>
+      </div>
+    </div>
+
+    <div class="vb-bubble reveal reveal-delay-1">
+      <img class="vb-bubble__avatar" src="https://i.pravatar.cc/88?img=47" alt="이○○" loading="lazy">
+      <div class="vb-bubble__body">
+        <div class="vb-bubble__top">
+          <span class="vb-bubble__name">이○○ &middot; 42세</span>
+          <span class="vb-bubble__stars">&starf;&starf;&starf;&starf;&starf;</span>
+        </div>
+        <div class="vb-bubble__quote">남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다.</div>
+        <div class="vb-bubble__time">5일 전</div>
+      </div>
+    </div>
+
+    <div class="vb-bubble reveal reveal-delay-2">
+      <img class="vb-bubble__avatar" src="https://i.pravatar.cc/88?img=12" alt="박○○" loading="lazy">
+      <div class="vb-bubble__body">
+        <div class="vb-bubble__top">
+          <span class="vb-bubble__name">박○○ &middot; 28세</span>
+          <span class="vb-bubble__stars">&starf;&starf;&starf;&starf;&starf;</span>
+        </div>
+        <div class="vb-bubble__quote">호텔보다 우리 집 침대가 더 좋아졌어요.</div>
+        <div class="vb-bubble__time">1주 전</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Process -->
+  <div class="vb-section-title reveal"><span>Process</span></div>
+  <div class="vb-process">
+    <div class="vb-cli">
+      <div class="vb-cli__line"></div>
+
+      <div class="vb-cli-step reveal">
+        <div class="vb-cli-step__num">01</div>
+        <div class="vb-cli-step__title">온라인 주문</div>
+        <div class="vb-cli-step__cmd"><span class="prompt">$ </span>sleepwell order --express <span class="comment">// 3분이면 완료</span></div>
+      </div>
+
+      <div class="vb-cli-step reveal reveal-delay-1">
+        <div class="vb-cli-step__num">02</div>
+        <div class="vb-cli-step__title">무료 배송 &middot; 설치</div>
+        <div class="vb-cli-step__cmd"><span class="prompt">$ </span>sleepwell deliver --free --install <span class="comment">// 주문 후 1~2일</span></div>
+      </div>
+
+      <div class="vb-cli-step reveal reveal-delay-2">
+        <div class="vb-cli-step__num">03</div>
+        <div class="vb-cli-step__title">100일 체험</div>
+        <div class="vb-cli-step__cmd"><span class="prompt">$ </span>sleepwell trial --days=100 --refund=full <span class="comment">// 불만족 시 전액 환불</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VARIANT C — SWISS MINIMAL
+     ============================================================ -->
+<section class="vc">
+  <div class="variant-label">Variant C &mdash; Swiss Minimal</div>
+
+  <!-- Reviews -->
+  <div class="vc-section-title reveal"><span>Customer Reviews</span></div>
+  <div class="vc-reviews">
+
+    <div class="vc-review reveal">
+      <div class="vc-review__quote">&ldquo;허리 통증이 사라졌어요. 매일 아침이 달라졌습니다.&rdquo;</div>
+      <div class="vc-review__meta">
+        <span class="vc-review__name">김○○ &middot; 35세</span>
+        <span class="vc-review__stars">&starf;&starf;&starf;&starf;&starf;</span>
+      </div>
+    </div>
+
+    <div class="vc-review reveal">
+      <div class="vc-review__quote">&ldquo;남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다.&rdquo;</div>
+      <div class="vc-review__meta">
+        <span class="vc-review__name">이○○ &middot; 42세</span>
+        <span class="vc-review__stars">&starf;&starf;&starf;&starf;&starf;</span>
+      </div>
+    </div>
+
+    <div class="vc-review reveal">
+      <div class="vc-review__quote">&ldquo;호텔보다 우리 집 침대가 더 좋아졌어요.&rdquo;</div>
+      <div class="vc-review__meta">
+        <span class="vc-review__name">박○○ &middot; 28세</span>
+        <span class="vc-review__stars">&starf;&starf;&starf;&starf;&starf;</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Process -->
+  <div class="vc-section-title reveal"><span>Process</span></div>
+  <div class="vc-process">
+    <div class="vc-giants reveal">
+      <div class="vc-giant">
+        <div class="vc-giant__num">01</div>
+        <div class="vc-giant__content">
+          <div class="vc-giant__title">온라인 주문</div>
+          <div class="vc-giant__desc">3분이면 완료</div>
+        </div>
+      </div>
+      <div class="vc-dot"></div>
+      <div class="vc-giant">
+        <div class="vc-giant__num">02</div>
+        <div class="vc-giant__content">
+          <div class="vc-giant__title">무료 배송 &middot; 설치</div>
+          <div class="vc-giant__desc">주문 후 1~2일</div>
+        </div>
+      </div>
+      <div class="vc-dot"></div>
+      <div class="vc-giant">
+        <div class="vc-giant__num">03</div>
+        <div class="vc-giant__content">
+          <div class="vc-giant__title">100일 체험</div>
+          <div class="vc-giant__desc">불만족 시 전액 환불</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SCROLL REVEAL JS
+     ============================================================ -->
+<script>
+(function() {
+  var els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  els.forEach(function(el) { observer.observe(el); });
+})();
+</script>
+
+</body>
+</html>
