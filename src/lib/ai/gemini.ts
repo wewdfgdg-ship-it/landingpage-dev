@@ -8,7 +8,7 @@ if (!geminiApiKey) {
 
 const genai = new GoogleGenAI({ apiKey: geminiApiKey });
 
-const IMAGE_MODEL = 'gemini-2.0-flash-exp';
+const IMAGE_MODEL = 'gemini-2.5-flash-preview-04-17';
 
 export async function generateImage(
   prompt: string,

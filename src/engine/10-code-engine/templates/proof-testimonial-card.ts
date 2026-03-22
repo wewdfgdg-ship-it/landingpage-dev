@@ -1,23 +1,13 @@
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 import type { DesignTokens } from '@/engine/09-visual-style/types';
 
+import type { TemplateConfig } from './types';
+import { esc } from './utils';
+
 // ============================================================
 // Template: proof-testimonial-card
 // 고객 후기 카드 그리드 (2~3열)
 // ============================================================
-
-export interface TemplateConfig {
-  patternId: string;
-  name: string;
-  category: 'hero' | 'feature' | 'proof' | 'pricing' | 'cta' | 'faq' | 'misc';
-  description: string;
-  imageSpec: {
-    required: boolean;
-    aspectRatio: string;
-    cutout: boolean;
-    maxWidth: number;
-  };
-}
 
 export const config: TemplateConfig = {
   patternId: 'proof_testimonial_card',
@@ -31,14 +21,6 @@ export const config: TemplateConfig = {
     maxWidth: 80,
   },
 };
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
 
 function renderStars(count: number): string {
   const filled = Math.min(Math.max(Math.round(count), 0), 5);
@@ -85,6 +67,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
     font-weight: ${tokens.typography.h2.weight};
     line-height: ${tokens.typography.h2.lineHeight};
     margin-bottom: ${sp.xl}px;
+    word-break: keep-all;
   }
   [data-tpl-grid="${tpl}"] {
     display: grid;

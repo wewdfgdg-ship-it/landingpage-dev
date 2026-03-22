@@ -1,23 +1,13 @@
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 import type { DesignTokens } from '@/engine/09-visual-style/types';
 
+import type { TemplateConfig } from './types';
+import { esc } from './utils';
+
 // ============================================================
 // Template: price-3col-compare
 // 3열 가격 비교 카드 (가운데 추천 강조)
 // ============================================================
-
-export interface TemplateConfig {
-  patternId: string;
-  name: string;
-  category: 'hero' | 'feature' | 'proof' | 'pricing' | 'cta' | 'faq' | 'misc';
-  description: string;
-  imageSpec: {
-    required: boolean;
-    aspectRatio: string;
-    cutout: boolean;
-    maxWidth: number;
-  };
-}
 
 export const config: TemplateConfig = {
   patternId: 'price_3col_compare',
@@ -31,14 +21,6 @@ export const config: TemplateConfig = {
     maxWidth: 0,
   },
 };
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
 
 interface PlanCard {
   name: string;
@@ -121,6 +103,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
     font-weight: ${tokens.typography.h2.weight};
     line-height: ${tokens.typography.h2.lineHeight};
     margin-bottom: ${sp.sm}px;
+    word-break: keep-all;
   }
   [data-tpl-sub="${tpl}"] {
     font-size: ${tokens.typography.body.size};

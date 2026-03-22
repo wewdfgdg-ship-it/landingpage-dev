@@ -1,22 +1,12 @@
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 import type { DesignTokens } from '@/engine/09-visual-style/types';
 
+import type { TemplateConfig } from './types';
+import { esc } from './utils';
+
 // ============================================================
 // Feature Template — 지그재그 교차 배치
 // ============================================================
-
-export interface TemplateConfig {
-  patternId: string;
-  name: string;
-  category: 'hero' | 'feature' | 'proof' | 'pricing' | 'cta' | 'faq' | 'misc';
-  description: string;
-  imageSpec: {
-    required: boolean;
-    aspectRatio: string;
-    cutout: boolean;
-    maxWidth: number;
-  };
-}
 
 export const config: TemplateConfig = {
   patternId: 'feat_zigzag',
@@ -30,14 +20,6 @@ export const config: TemplateConfig = {
     maxWidth: 500,
   },
 };
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
 
 const SCOPE = 'data-tpl-featzz';
 
@@ -133,6 +115,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens, order?: number): s
   font-weight: ${t.h2.weight};
   line-height: ${t.h2.lineHeight};
   margin: 0 0 ${sp.sm}px 0;
+  word-break: keep-all;
 }
 [${SCOPE}-body] {
   font-size: ${t.body.size};

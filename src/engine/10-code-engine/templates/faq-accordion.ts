@@ -1,22 +1,12 @@
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 import type { DesignTokens } from '@/engine/09-visual-style/types';
 
+import type { TemplateConfig } from './types';
+import { esc } from './utils';
+
 // ============================================================
 // FAQ Accordion Template — CSS-only 아코디언 FAQ
 // ============================================================
-
-export interface TemplateConfig {
-  patternId: string;
-  name: string;
-  category: 'hero' | 'feature' | 'proof' | 'pricing' | 'cta' | 'faq' | 'misc';
-  description: string;
-  imageSpec: {
-    required: boolean;
-    aspectRatio: string;
-    cutout: boolean;
-    maxWidth: number;
-  };
-}
 
 export const config: TemplateConfig = {
   patternId: 'faq_accordion',
@@ -30,14 +20,6 @@ export const config: TemplateConfig = {
     maxWidth: 0,
   },
 };
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
 
 interface QAPair {
   question: string;
@@ -59,7 +41,6 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   const c = tokens.colors;
   const t = tokens.typography;
   const sp = tokens.spacing;
-  const r = tokens.radius;
 
   const qaPairs = parseQAPairs(copy.bulletPoints);
 
@@ -91,6 +72,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   line-height: ${t.h2.lineHeight};
   text-align: center;
   margin: 0 0 ${sp.lg}px;
+  word-break: keep-all;
 }
 [data-tpl="faq-accordion"] .faq-accordion__item {
   border-bottom: 1px solid ${c.border};
