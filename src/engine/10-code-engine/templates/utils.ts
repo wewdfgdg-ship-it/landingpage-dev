@@ -29,7 +29,12 @@ export function ctaButton(
   return btn + mic;
 }
 
-/** 이미지 블록: CDN URL 있으면 img, 없으면 placeholder */
+/** 이미지가 있는지 확인 */
+export function hasImage(copy: CopyBlock): boolean {
+  return Boolean(copy.imageUrl);
+}
+
+/** 이미지 블록: CDN URL 있으면 img, 없으면 깔끔한 gradient placeholder */
 export function imageBlock(
   copy: CopyBlock,
   c: ColorPalette,
@@ -44,7 +49,8 @@ export function imageBlock(
     const bg = opts?.cutout ? 'background:transparent;' : '';
     return `<img src="${copy.imageUrl}" alt="${esc(copy.headline)}" style="width:100%;${mw}aspect-ratio:${ar};object-fit:${fit};${bg}border-radius:${br};" loading="lazy">`;
   }
-  return `<div style="width:100%;${mw}aspect-ratio:${ar};background:${c.surface};border-radius:${br};display:flex;align-items:center;justify-content:center;color:${c.textMuted};font-size:0.9rem;">${esc(copy.imageDirection)}</div>`;
+  // 이미지 없을 때: 깔끔한 그라디언트 placeholder (프롬프트 텍스트 노출 안 함)
+  return `<div style="width:100%;${mw}aspect-ratio:${ar};background:linear-gradient(135deg, ${c.surface} 0%, ${c.border} 100%);border-radius:${br};"></div>`;
 }
 
 /** 체크마크 불릿 리스트 */

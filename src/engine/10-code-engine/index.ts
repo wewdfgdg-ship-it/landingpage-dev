@@ -93,7 +93,14 @@ export function runCodeEngine(
   const tokens = styleConfig.tokens;
   const sections: RenderedSection[] = [];
 
-  for (const sectionLayout of layoutConfig.sections) {
+  // 연속 중복 섹션 제거 (같은 패턴+타입이 연속되면 첫 번째만 유지)
+  const dedupedSections = layoutConfig.sections.filter((section, idx) => {
+    if (idx === 0) return true;
+    const prev = layoutConfig.sections[idx - 1];
+    return !(section.selectedPattern === prev.selectedPattern && section.sectionType === prev.sectionType);
+  });
+
+  for (const sectionLayout of dedupedSections) {
     const sectionCopy = copyBlocks.sections.find(
       (s) => s.sectionOrder === sectionLayout.order,
     );

@@ -47,7 +47,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens, order?: number): s
     if (imgCopy.imageUrl) {
       return `<img ${SCOPE}-img src="${imgCopy.imageUrl}" alt="${esc(imgCopy.headline)}" loading="lazy">`;
     }
-    return `<div ${SCOPE}-placeholder>${esc(imgCopy.imageDirection)}</div>`;
+    return `<div ${SCOPE}-placeholder></div>`;
   };
 
   const blocks = chunks.map((chunk, blockIdx) => {
@@ -58,10 +58,11 @@ export function render(copy: CopyBlock, tokens: DesignTokens, order?: number): s
       .map((item) => `<li ${SCOPE}-bullet><span ${SCOPE}-check>✓</span>${esc(item)}</li>`)
       .join('');
 
+    const showBody = blockIdx === 0 && chunk.length === 0;
     return `<div ${SCOPE}-row ${dirAttr}>
       <div ${SCOPE}-text>
         ${blockIdx === 0 ? `<h2 ${SCOPE}-title>${esc(copy.headline)}</h2>` : ''}
-        ${blockIdx === 0 ? `<p ${SCOPE}-body>${esc(copy.body)}</p>` : ''}
+        ${showBody ? `<p ${SCOPE}-body>${esc(copy.body)}</p>` : ''}
         <ul ${SCOPE}-list>${bulletHtml}</ul>
       </div>
       <div ${SCOPE}-media>
@@ -82,19 +83,19 @@ export function render(copy: CopyBlock, tokens: DesignTokens, order?: number): s
 
   const css = `<style>
 [${SCOPE}] {
-  padding: ${tokens.sectionPadding};
+  padding: 100px 24px;
   background: ${c.background};
   color: ${c.textPrimary};
 }
 [${SCOPE}-inner] {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 [${SCOPE}-row] {
   display: flex;
   align-items: center;
-  gap: ${sp.xl}px;
-  margin-bottom: ${sp.xl}px;
+  gap: 64px;
+  margin-bottom: 64px;
 }
 [${SCOPE}-row]:last-child {
   margin-bottom: 0;
@@ -103,25 +104,28 @@ export function render(copy: CopyBlock, tokens: DesignTokens, order?: number): s
   flex-direction: row-reverse;
 }
 [${SCOPE}-text] {
-  flex: 1;
+  flex: 1.3;
   min-width: 0;
 }
 [${SCOPE}-media] {
   flex: 1;
   min-width: 0;
+  max-width: 400px;
 }
 [${SCOPE}-title] {
-  font-size: ${t.h2.size};
-  font-weight: ${t.h2.weight};
-  line-height: ${t.h2.lineHeight};
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   margin: 0 0 ${sp.sm}px 0;
   word-break: keep-all;
 }
 [${SCOPE}-body] {
-  font-size: ${t.body.size};
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
   color: ${c.textSecondary};
-  line-height: ${t.body.lineHeight};
-  margin: 0 0 ${sp.md}px 0;
+  line-height: 1.75;
+  margin: 0 0 24px 0;
+  word-break: keep-all;
 }
 [${SCOPE}-list] {
   list-style: none;
@@ -130,15 +134,16 @@ export function render(copy: CopyBlock, tokens: DesignTokens, order?: number): s
 }
 [${SCOPE}-bullet] {
   position: relative;
-  padding: 6px 0 6px ${sp.lg}px;
-  font-size: ${t.body.size};
-  line-height: ${t.body.lineHeight};
+  padding: 14px 0 14px 28px;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.75;
 }
 [${SCOPE}-check] {
   position: absolute;
   left: 0;
   color: ${c.primary};
   font-weight: 700;
+  font-size: 1.1rem;
 }
 [${SCOPE}-img] {
   width: 100%;
@@ -152,13 +157,8 @@ export function render(copy: CopyBlock, tokens: DesignTokens, order?: number): s
   width: 100%;
   max-width: 500px;
   aspect-ratio: 4/3;
-  background: ${c.surface};
+  background: linear-gradient(135deg, ${c.surface} 0%, ${c.border} 100%);
   border-radius: ${r.lg}px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${c.textMuted};
-  font-size: ${t.small.size};
 }
 @media (max-width: 768px) {
   [${SCOPE}-row],

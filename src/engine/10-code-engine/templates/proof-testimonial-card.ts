@@ -53,20 +53,21 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
 
   return `<style>
   [data-tpl="${tpl}"] {
-    padding: ${tokens.sectionPadding};
+    padding: 100px 24px;
     background: ${c.surface};
     color: ${c.textPrimary};
   }
   [data-tpl-inner="${tpl}"] {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     text-align: center;
   }
   [data-tpl-heading="${tpl}"] {
-    font-size: ${tokens.typography.h2.size};
-    font-weight: ${tokens.typography.h2.weight};
-    line-height: ${tokens.typography.h2.lineHeight};
-    margin-bottom: ${sp.xl}px;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
     word-break: keep-all;
   }
   [data-tpl-grid="${tpl}"] {
@@ -76,18 +77,18 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   }
   [data-tpl-card="${tpl}"] {
     position: relative;
-    padding: ${sp.xl}px ${sp.lg}px;
+    padding: 40px 32px;
     background: ${c.background};
-    border-radius: ${r.lg}px;
+    border-radius: 16px;
     border: 1px solid ${c.border};
     text-align: left;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   }
   [data-tpl-quote="${tpl}"] {
     position: absolute;
     top: ${sp.md}px;
     right: ${sp.lg}px;
-    font-size: 3rem;
+    font-size: 4rem;
     line-height: 1;
     color: ${c.primaryLight};
     opacity: 0.4;
@@ -95,19 +96,19 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   }
   [data-tpl-stars="${tpl}"] {
     color: #f59e0b;
-    font-size: 1rem;
-    margin-bottom: ${sp.sm}px;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
     letter-spacing: 2px;
   }
   [data-tpl-text="${tpl}"] {
-    font-size: ${tokens.typography.body.size};
-    line-height: ${tokens.typography.body.lineHeight};
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.75;
     color: ${c.textSecondary};
     font-style: italic;
     margin-bottom: ${sp.md}px;
   }
   [data-tpl-author="${tpl}"] {
-    font-size: ${tokens.typography.small.size};
+    font-size: 1.05rem;
     font-weight: 600;
     color: ${c.textPrimary};
   }

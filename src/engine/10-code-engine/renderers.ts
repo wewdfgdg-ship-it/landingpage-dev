@@ -41,7 +41,7 @@ function imageBlock(copy: CopyBlock, c: ColorPalette, maxWidth?: string): string
   if (copy.imageUrl) {
     return `<img src="${copy.imageUrl}" alt="${esc(copy.headline)}" style="width:100%;${mw}aspect-ratio:4/3;object-fit:cover;border-radius:12px;" loading="lazy">`;
   }
-  return `<div style="width:100%;${mw}aspect-ratio:4/3;background:${c.surface};border-radius:12px;display:flex;align-items:center;justify-content:center;color:${c.textMuted};font-size:0.9rem;">${esc(copy.imageDirection)}</div>`;
+  return `<div style="width:100%;${mw}aspect-ratio:4/3;background:linear-gradient(135deg, ${c.surface} 0%, ${c.border} 100%);border-radius:12px;"></div>`;
 }
 
 // --- Hero 패턴 ---

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>슬립웰 매트리스</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1810;
+  --bg2:#0a1f12;
+  --bg3:#091a0f;
+  --dark:#080808;
+  --gold:#d4a843;
+  --gold-l:#f0d78c;
+  --gold-bg:#2a2210;
+  --accent:#1a6b3c;
+  --accent2:#13502c;
+  --white:#fff;
+  --cream:#f5f0e6;
+  --mist:rgba(255,255,255,.6);
+  --ghost:rgba(255,255,255,.3);
+  --ff:'Noto Sans KR',sans-serif;
+  --ffs:'DM Serif Display',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff);color:var(--white);background:#060606;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.pg{max-width:1240px;margin:0 auto;overflow:hidden;}
+
+/* grain */
+.pg::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.25;mix-blend-mode:overlay;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+.rv.on{opacity:1;transform:none;}
+[data-d="1"]{transition-delay:.1s;}[data-d="2"]{transition-delay:.2s;}[data-d="3"]{transition-delay:.3s;}
+
+/* ============================================================
+   §1 HERO — 레퍼런스: 인물+제품 풀블리드 + 브랜드 오버레이
+   ============================================================ */
+.hero{position:relative;height:100vh;overflow:hidden;background:var(--dark);}
+.hero__img{position:absolute;inset:0;}
+.hero__img img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) contrast(1.1);}
+.hero__ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.15) 40%,rgba(0,0,0,.75) 100%);}
+.hero__in{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:0 clamp(32px,5vw,72px) clamp(60px,8vw,120px);}
+.hero__brand{font-size:.75rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.hero__brand::before{content:'';width:32px;height:1px;background:var(--gold);}
+.hero__h1{font-size:clamp(3rem,7vw,6.5rem);font-weight:900;line-height:.95;letter-spacing:-.04em;margin-bottom:20px;text-shadow:0 4px 48px rgba(0,0,0,.6);}
+.hero__h1 em{color:var(--gold);font-style:normal;}
+.hero__sub{font-size:clamp(1rem,1.5vw,1.3rem);color:var(--mist);line-height:1.7;margin-bottom:40px;max-width:500px;}
+.hero__cta{display:inline-flex;align-items:center;gap:12px;padding:18px 48px;background:var(--gold);color:var(--dark);font-size:1.1rem;font-weight:700;transition:all .3s;width:fit-content;letter-spacing:.03em;}
+.hero__cta:hover{background:var(--gold-l);box-shadow:0 0 40px rgba(212,168,67,.3);}
+
+/* ============================================================
+   §2 브랜드 소개 — 레퍼런스: 다크그린 + 로고 + 소개 텍스트
+   ============================================================ */
+.intro{background:var(--bg);padding:clamp(72px,10vw,120px) clamp(32px,5vw,72px);text-align:center;position:relative;}
+.intro::before,.intro::after{content:'';position:absolute;width:100px;height:1px;background:var(--gold);top:50%;opacity:.2;}
+.intro::before{left:clamp(20px,4vw,60px);}
+.intro::after{right:clamp(20px,4vw,60px);}
+.intro__logo{font-family:var(--ffs);font-size:clamp(2.5rem,5vw,4rem);color:var(--gold);margin-bottom:28px;letter-spacing:.05em;}
+.intro__p{font-size:clamp(1rem,1.3vw,1.2rem);color:var(--mist);line-height:1.9;max-width:600px;margin:0 auto;}
+
+/* ============================================================
+   §3 제품 카드 — 레퍼런스: 4열 사진 그리드 (다크그린 배경)
+   ============================================================ */
+.cards{background:var(--bg2);padding:clamp(60px,8vw,100px) clamp(24px,3vw,48px);}
+.cards__head{text-align:center;margin-bottom:48px;}
+.cards__tag{font-size:.7rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.cards__h2{font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-.02em;}
+.cards__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.cards__item{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;}
+.cards__item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1),filter .6s;}
+.cards__item:hover img{transform:scale(1.08);filter:brightness(.7);}
+.cards__item-label{position:absolute;bottom:0;left:0;right:0;padding:20px 16px;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);font-size:1rem;font-weight:700;letter-spacing:.02em;transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.cards__item:hover .cards__item-label{transform:none;}
+
+/* ============================================================
+   §4 풀블리드 임팩트 — 레퍼런스: 큰 사진 + 텍스트 오버레이
+   ============================================================ */
+.impact{position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+.impact__bg{position:absolute;inset:0;}
+.impact__bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.3);}
+.impact__in{position:relative;z-index:1;padding:40px;}
+.impact__h2{font-size:clamp(3rem,7vw,7rem);font-weight:900;line-height:.9;letter-spacing:-.05em;margin-bottom:24px;text-shadow:0 4px 32px rgba(0,0,0,.5);}
+.impact__h2 em{color:var(--gold);font-style:normal;}
+.impact__p{font-size:clamp(1.1rem,1.6vw,1.4rem);color:var(--mist);max-width:560px;margin:0 auto;line-height:1.75;}
+
+/* ============================================================
+   §5 골드 강점 — 레퍼런스: 골드 배경 + 큰 숫자
+   ============================================================ */
+.gold{background:linear-gradient(160deg,#b8912a,var(--gold),#dfc06a);color:var(--dark);padding:clamp(60px,8vw,100px) clamp(32px,5vw,72px);position:relative;overflow:hidden;}
+.gold::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='rgba(0,0,0,.06)' stroke-width='.5'/%3E%3C/svg%3E");opacity:.5;}
+.gold__in{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
+.gold__h2{font-size:clamp(2rem,4vw,3.2rem);font-weight:900;text-align:center;margin-bottom:56px;letter-spacing:-.02em;}
+.gold__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.gold__item{text-align:center;padding:32px 16px;background:rgba(0,0,0,.08);border-radius:8px;}
+.gold__num{font-size:clamp(2.8rem,5vw,4rem);font-weight:900;line-height:1;margin-bottom:8px;}
+.gold__lab{font-size:.95rem;font-weight:600;opacity:.6;}
+
+/* ============================================================
+   §6 매장/제품 갤러리 — 레퍼런스: 사진 3-4장 가로 배치
+   ============================================================ */
+.gallery{background:var(--dark);padding:clamp(48px,6vw,80px) clamp(24px,3vw,48px);}
+.gallery__h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;text-align:center;margin-bottom:40px;}
+.gallery__row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;height:clamp(280px,35vw,420px);}
+.gallery__item{position:relative;overflow:hidden;border-radius:8px;}
+.gallery__item img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1);}
+.gallery__item:hover img{transform:scale(1.06);}
+
+/* ============================================================
+   §7 지그재그 — 레퍼런스: 큰 사진 + 텍스트 교차
+   ============================================================ */
+.zz{background:var(--bg3);}
+.zz__row{display:grid;grid-template-columns:1fr 1fr;min-height:480px;}
+.zz__row--r .zz__img{order:-1;}
+.zz__img{position:relative;overflow:hidden;}
+.zz__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 5s ease-out;}
+.zz__row:hover .zz__img img{transform:scale(1.04);}
+.zz__txt{display:flex;align-items:center;padding:clamp(40px,5vw,80px) clamp(32px,4vw,64px);}
+.zz__row:nth-child(odd) .zz__txt{background:var(--bg);}
+.zz__row:nth-child(even) .zz__txt{background:var(--bg2);}
+.zz__in{max-width:440px;}
+.zz__tag{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;padding-bottom:10px;border-bottom:2px solid var(--gold);}
+.zz__h3{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:900;line-height:1.1;margin-bottom:16px;word-break:keep-all;}
+.zz__p{font-size:1.05rem;color:var(--mist);line-height:1.8;margin-bottom:24px;}
+.zz__ul{list-style:none;}
+.zz__li{padding:10px 0 10px 24px;position:relative;font-size:1.05rem;font-weight:500;color:rgba(255,255,255,.85);}
+.zz__li::before{content:'';position:absolute;left:0;top:50%;width:8px;height:2px;background:var(--gold);transform:translateY(-50%);}
+
+/* ============================================================
+   §8 Before/After — 레퍼런스 대비 구조
+   ============================================================ */
+.ba{display:grid;grid-template-columns:1fr 1fr;position:relative;}
+.ba::after{content:'→';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:var(--dark);border:2px solid var(--gold);display:grid;place-items:center;font-size:1.2rem;color:var(--gold);z-index:2;}
+.ba__col{padding:clamp(64px,8vw,100px) clamp(36px,5vw,64px);}
+.ba__col--b{background:var(--dark);}
+.ba__col--a{background:var(--accent);}
+.ba__tag{font-size:.65rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.ba__h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;margin-bottom:36px;}
+.ba__list{list-style:none;}
+.ba__li{padding:16px 0;font-size:clamp(1.05rem,1.3vw,1.2rem);line-height:1.55;border-bottom:1px solid rgba(255,255,255,.08);font-weight:500;word-break:keep-all;}
+.ba__li:last-child{border:none;}
+
+/* ============================================================
+   §9 가격 — 레퍼런스: 골드 강조
+   ============================================================ */
+.price{padding:clamp(80px,12vw,140px) 32px;background:var(--dark);position:relative;overflow:hidden;}
+.price__glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,67,.12),transparent 70%);animation:glow 4s ease-in-out infinite;pointer-events:none;}
+@keyframes glow{0%,100%{opacity:.4;transform:translateX(-50%) scale(1);}50%{opacity:.7;transform:translateX(-50%) scale(1.15);}}
+.price__in{max-width:540px;margin:0 auto;text-align:center;position:relative;z-index:1;}
+.price__h2{font-size:clamp(2rem,3.5vw,2.8rem);font-weight:900;margin-bottom:8px;}
+.price__sub{font-size:1rem;color:var(--ghost);margin-bottom:52px;}
+.price__card{border:1px solid var(--gold);padding:clamp(44px,6vw,72px) clamp(32px,4vw,52px);position:relative;background:linear-gradient(180deg,rgba(212,168,67,.05),transparent);}
+.price__card::before,.price__card::after{content:'';position:absolute;width:16px;height:16px;border-color:var(--gold);border-style:solid;}
+.price__card::before{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+.price__card::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+.price__badge{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:var(--gold);color:var(--dark);padding:7px 28px;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;}
+.price__old{font-size:1rem;color:var(--ghost);text-decoration:line-through;margin-top:16px;}
+.price__now{font-size:clamp(3rem,6vw,5rem);font-weight:900;color:var(--gold);line-height:1;margin-bottom:36px;text-shadow:0 0 32px rgba(212,168,67,.25);}
+.price__now small{font-size:.25em;font-weight:500;color:var(--mist);vertical-align:middle;}
+.price__ul{list-style:none;text-align:left;margin-bottom:40px;}
+.price__li{padding:13px 0;font-size:1.02rem;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:14px;color:var(--mist);}
+.price__li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.price__li:last-child{border:none;}
+.price__btn{display:block;padding:18px;background:var(--gold);color:var(--dark);font-size:1.1rem;font-weight:700;letter-spacing:.05em;text-align:center;transition:all .3s;position:relative;overflow:hidden;}
+.price__btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .6s;}
+.price__btn:hover::before{left:100%;}
+
+/* ============================================================
+   §10 후기
+   ============================================================ */
+.rev{padding:clamp(80px,10vw,120px) clamp(24px,3vw,48px);background:var(--bg3);}
+.rev__h2{font-size:clamp(2rem,3.5vw,2.8rem);font-weight:900;text-align:center;margin-bottom:48px;}
+.rev__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.rev__card{padding:36px 28px;background:var(--dark);border:1px solid rgba(255,255,255,.04);position:relative;transition:border-color .4s,transform .4s;}
+.rev__card:hover{border-color:rgba(212,168,67,.2);transform:translateY(-3px);}
+.rev__card::before{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--gold);transition:width .5s cubic-bezier(.16,1,.3,1);}
+.rev__card:hover::before{width:100%;}
+.rev__avatar{width:44px;height:44px;border-radius:50%;margin-bottom:16px;object-fit:cover;border:2px solid rgba(212,168,67,.3);}
+.rev__stars{color:var(--gold);font-size:.85rem;letter-spacing:4px;margin-bottom:16px;}
+.rev__txt{font-size:1.05rem;line-height:1.8;color:rgba(255,255,255,.85);margin-bottom:20px;}
+.rev__who{font-size:.8rem;font-weight:700;color:var(--ghost);letter-spacing:.06em;text-transform:uppercase;}
+
+/* ============================================================
+   §11 프로세스
+   ============================================================ */
+.step{padding:clamp(80px,10vw,120px) clamp(32px,5vw,72px);background:var(--bg);}
+.step__h2{font-size:clamp(2rem,3.5vw,2.8rem);font-weight:900;text-align:center;margin-bottom:72px;}
+.step__row{display:grid;grid-template-columns:repeat(3,1fr);position:relative;}
+.step__row::before{content:'';position:absolute;top:36px;left:calc(16.67% + 24px);right:calc(16.67% + 24px);height:1px;background:linear-gradient(90deg,var(--gold),var(--ghost),var(--gold));}
+.step__item{text-align:center;position:relative;z-index:1;}
+.step__num{width:72px;height:72px;border-radius:50%;border:1px solid var(--gold);background:var(--bg);display:grid;place-items:center;margin:0 auto 24px;font-size:1.5rem;font-weight:900;color:var(--gold);transition:background .3s,box-shadow .3s;}
+.step__item:hover .step__num{background:rgba(212,168,67,.1);box-shadow:0 0 24px rgba(212,168,67,.2);}
+.step__t{font-size:1.15rem;font-weight:700;margin-bottom:6px;}
+.step__d{font-size:.9rem;color:var(--ghost);}
+
+/* ============================================================
+   §12 FAQ
+   ============================================================ */
+.faq{padding:clamp(80px,10vw,120px) clamp(32px,5vw,72px);background:var(--dark);}
+.faq__in{max-width:760px;margin:0 auto;}
+.faq__h2{font-size:clamp(2rem,3.5vw,2.8rem);font-weight:900;text-align:center;margin-bottom:56px;}
+.faq__item{border-bottom:1px solid rgba(255,255,255,.06);}
+.faq__q{cursor:pointer;padding:24px 0;font-size:1.1rem;font-weight:600;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s;}
+.faq__q:hover{color:var(--gold);}
+.faq__q::-webkit-details-marker{display:none;}
+.faq__q::after{content:'';width:10px;height:10px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);transition:transform .3s;flex-shrink:0;}
+.faq__item[open] .faq__q::after{transform:rotate(-135deg);}
+.faq__a{padding:0 0 24px;font-size:1rem;line-height:1.85;color:var(--mist);}
+
+/* ============================================================
+   §13 CTA — 레퍼런스: 강조색 풀 배경
+   ============================================================ */
+.cta{padding:clamp(80px,12vw,140px) 32px;background:linear-gradient(160deg,var(--accent2),var(--accent));text-align:center;position:relative;overflow:hidden;}
+.cta::before{content:'';position:absolute;top:-40%;right:-20%;width:500px;height:500px;border-radius:50%;background:rgba(255,255,255,.03);}
+.cta__in{position:relative;z-index:1;max-width:700px;margin:0 auto;}
+.cta__h2{font-size:clamp(2.4rem,5vw,4rem);font-weight:900;line-height:1.05;margin-bottom:20px;letter-spacing:-.02em;}
+.cta__p{font-size:clamp(1.1rem,1.6vw,1.35rem);color:rgba(255,255,255,.8);margin-bottom:48px;}
+.cta__btn{display:inline-block;padding:20px 72px;background:var(--gold);color:var(--dark);font-size:1.2rem;font-weight:700;letter-spacing:.05em;transition:all .3s;position:relative;overflow:hidden;}
+.cta__btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .6s;}
+.cta__btn:hover::before{left:100%;}
+.cta__btn:hover{box-shadow:0 0 40px rgba(212,168,67,.3);}
+.cta__micro{margin-top:16px;font-size:.9rem;color:rgba(255,255,255,.45);}
+
+/* responsive */
+@media(max-width:900px){
+  .hero__in{padding:0 24px 48px;}
+  .cards__grid{grid-template-columns:repeat(2,1fr);}
+  .gold__grid{grid-template-columns:repeat(2,1fr);}
+  .gallery__row{grid-template-columns:1fr;height:auto;}
+  .gallery__item{height:240px;}
+  .zz__row{grid-template-columns:1fr;min-height:auto;}
+  .zz__img{height:300px;position:relative;}
+  .zz__row--r .zz__img{order:0;}
+  .ba{grid-template-columns:1fr;}
+  .ba::after{display:none;}
+  .rev__grid{grid-template-columns:1fr;}
+  .step__row{grid-template-columns:1fr;gap:48px;}
+  .step__row::before{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="pg">
+
+<!-- §1 HERO -->
+<section class="hero">
+  <div class="hero__img"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt=""></div>
+  <div class="hero__ov"></div>
+  <div class="hero__in">
+    <p class="hero__brand rv on">SLEEPWELL MATTRESS</p>
+    <h1 class="hero__h1 rv on">아침이 다시<br><em>기대되는 밤</em></h1>
+    <p class="hero__sub rv on">7존 맞춤 지지 시스템이 당신의 체형을 기억합니다.<br>100일 무료 체험으로 직접 경험하세요.</p>
+    <a href="#cta" class="hero__cta rv on">무료 체험 시작하기 →</a>
+  </div>
+</section>
+
+<!-- §2 브랜드 소개 -->
+<section class="intro">
+  <p class="intro__logo rv">SLEEPWELL</p>
+  <p class="intro__p rv">수면 과학 전문 기업 슬립웰이<br>3년간의 연구 끝에 완성한 프리미엄 매트리스.<br>당신의 체형을 기억하는 7존 맞춤 지지 기술.</p>
+</section>
+
+<!-- §3 제품 카드 -->
+<section class="cards">
+  <div class="cards__head">
+    <p class="cards__tag rv">Product Lineup</p>
+    <h2 class="cards__h2 rv">프리미엄 라인업</h2>
+  </div>
+  <div class="cards__grid">
+    <div class="cards__item rv"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80" alt=""><span class="cards__item-label">슬립웰 오리지널</span></div>
+    <div class="cards__item rv" data-d="1"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""><span class="cards__item-label">슬립웰 프로</span></div>
+    <div class="cards__item rv" data-d="2"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""><span class="cards__item-label">슬립웰 토퍼</span></div>
+    <div class="cards__item rv" data-d="3"><img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt=""><span class="cards__item-label">슬립웰 베개</span></div>
+  </div>
+</section>
+
+<!-- §4 풀블리드 임팩트 -->
+<section class="impact">
+  <div class="impact__bg"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt=""></div>
+  <div class="impact__in">
+    <h2 class="impact__h2 rv">과학이 만든<br><em>완벽한 잠</em></h2>
+    <p class="impact__p rv">머리부터 발끝까지 7개 구간으로 나눠진 맞춤 지지 시스템</p>
+  </div>
+</section>
+
+<!-- §5 골드 강점 -->
+<section class="gold">
+  <div class="gold__in">
+    <h2 class="gold__h2 rv">숫자로 증명합니다</h2>
+    <div class="gold__grid">
+      <div class="gold__item rv"><p class="gold__num" data-count="50000">0</p><p class="gold__lab">누적 판매</p></div>
+      <div class="gold__item rv" data-d="1"><p class="gold__num" data-count="98">0</p><p class="gold__lab">고객 만족도 %</p></div>
+      <div class="gold__item rv" data-d="2"><p class="gold__num">4.9★</p><p class="gold__lab">평균 별점</p></div>
+      <div class="gold__item rv" data-d="3"><p class="gold__num">365일</p><p class="gold__lab">고객 지원</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- §6 갤러리 -->
+<section class="gallery">
+  <h2 class="gallery__h2 rv">프리미엄 수면 환경</h2>
+  <div class="gallery__row">
+    <div class="gallery__item rv"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt=""></div>
+    <div class="gallery__item rv" data-d="1"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""></div>
+    <div class="gallery__item rv" data-d="2"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80" alt=""></div>
+  </div>
+</section>
+
+<!-- §7 지그재그 -->
+<section class="zz">
+  <div class="zz__row">
+    <div class="zz__txt"><div class="zz__in rv">
+      <span class="zz__tag">핵심 기술</span>
+      <h3 class="zz__h3">체형을 기억하는<br>7존 맞춤 지지</h3>
+      <p class="zz__p">7개 구간으로 나눠진 독립 지지 시스템이 자동 조절됩니다.</p>
+      <ul class="zz__ul"><li class="zz__li">척추 자연 곡선 유지</li><li class="zz__li">체압 90% 분산</li><li class="zz__li">뒤척임 70% 감소</li></ul>
+    </div></div>
+    <div class="zz__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt=""></div>
+  </div>
+  <div class="zz__row zz__row--r">
+    <div class="zz__txt"><div class="zz__in rv">
+      <span class="zz__tag">프리미엄 소재</span>
+      <h3 class="zz__h3">통기성과 내구성을<br>동시에</h3>
+      <p class="zz__p">고밀도 메모리폼 + 천연 라텍스 하이브리드 구조.</p>
+      <ul class="zz__ul"><li class="zz__li">항균 방진드기 처리</li><li class="zz__li">사계절 온도 조절</li><li class="zz__li">10년 형태 유지</li></ul>
+    </div></div>
+    <div class="zz__img"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=800&q=80" alt=""></div>
+  </div>
+</section>
+
+<!-- §8 Before/After -->
+<section class="ba">
+  <div class="ba__col ba__col--b">
+    <p class="ba__tag rv">Before</p>
+    <h2 class="ba__h2 rv">바꾸기 전</h2>
+    <ul class="ba__list">
+      <li class="ba__li rv">❌ 새벽 2시마다 뒤척임 → 만성 수면 부족</li>
+      <li class="ba__li rv" data-d="1">❌ 아침마다 허리 통증 → 컨디션 저하</li>
+      <li class="ba__li rv" data-d="2">❌ 매트리스 3년마다 교체 → 돈만 낭비</li>
+    </ul>
+  </div>
+  <div class="ba__col ba__col--a">
+    <p class="ba__tag rv">After</p>
+    <h2 class="ba__h2 rv">바꾼 후</h2>
+    <ul class="ba__list">
+      <li class="ba__li rv">✅ 7시간 숙면 → 알람 없이 개운하게 기상</li>
+      <li class="ba__li rv" data-d="1">✅ 체형 맞춤 지지 → 통증 없는 아침</li>
+      <li class="ba__li rv" data-d="2">✅ 10년 보증 → 한 번 사면 끝</li>
+    </ul>
+  </div>
+</section>
+
+<!-- §9 가격 -->
+<section class="price">
+  <div class="price__glow"></div>
+  <div class="price__in">
+    <h2 class="price__h2 rv">지금이 가장 좋은 가격</h2>
+    <p class="price__sub rv">런칭 특별가, 곧 정상가로 돌아갑니다</p>
+    <div class="price__card rv">
+      <span class="price__badge">Launch Special</span>
+      <p class="price__old">590,000원</p>
+      <p class="price__now">390,000<small>원</small></p>
+      <ul class="price__ul">
+        <li class="price__li">7존 체압분산 매트리스</li>
+        <li class="price__li">프리미엄 커버 포함</li>
+        <li class="price__li">무료 배송 + 설치</li>
+        <li class="price__li">100일 무료 체험</li>
+        <li class="price__li">10년 품질 보증</li>
+      </ul>
+      <a href="#cta" class="price__btn">특별가로 시작하기</a>
+    </div>
+  </div>
+</section>
+
+<!-- §10 후기 -->
+<section class="rev">
+  <h2 class="rev__h2 rv">실제 고객 후기</h2>
+  <div class="rev__grid">
+    <div class="rev__card rv">
+      <img class="rev__avatar" src="https://i.pravatar.cc/88?img=32" alt="">
+      <p class="rev__stars">★★★★★</p>
+      <p class="rev__txt">"허리 통증이 사라졌어요. 매일 아침이 달라졌습니다."</p>
+      <p class="rev__who">김○○ · 35세</p>
+    </div>
+    <div class="rev__card rv" data-d="1">
+      <img class="rev__avatar" src="https://i.pravatar.cc/88?img=47" alt="">
+      <p class="rev__stars">★★★★★</p>
+      <p class="rev__txt">"남편 코골이가 확실히 줄었어요. 저도 깊이 자게 됐습니다."</p>
+      <p class="rev__who">이○○ · 42세</p>
+    </div>
+    <div class="rev__card rv" data-d="2">
+      <img class="rev__avatar" src="https://i.pravatar.cc/88?img=12" alt="">
+      <p class="rev__stars">★★★★★</p>
+      <p class="rev__txt">"호텔보다 우리 집 침대가 더 좋아졌어요."</p>
+      <p class="rev__who">박○○ · 28세</p>
+    </div>
+  </div>
+</section>
+
+<!-- §11 프로세스 -->
+<section class="step">
+  <h2 class="step__h2 rv">간단한 3단계</h2>
+  <div class="step__row">
+    <div class="step__item rv"><div class="step__num">1</div><p class="step__t">온라인 주문</p><p class="step__d">3분이면 완료</p></div>
+    <div class="step__item rv" data-d="1"><div class="step__num">2</div><p class="step__t">무료 배송 · 설치</p><p class="step__d">주문 후 1~2일</p></div>
+    <div class="step__item rv" data-d="2"><div class="step__num">3</div><p class="step__t">100일 체험</p><p class="step__d">불만족 시 전액 환불</p></div>
+  </div>
+</section>
+
+<!-- §12 FAQ -->
+<section class="faq">
+  <div class="faq__in">
+    <h2 class="faq__h2 rv">자주 묻는 질문</h2>
+    <details class="faq__item"><summary class="faq__q">배송은 얼마나 걸리나요?</summary><p class="faq__a">주문 후 1~2일 내 무료 배송됩니다. 전문 기사가 설치까지 도와드립니다.</p></details>
+    <details class="faq__item"><summary class="faq__q">100일 체험은 어떻게 진행되나요?</summary><p class="faq__a">제품 수령 후 100일간 사용하시고, 만족하지 않으시면 무료 반품 가능합니다.</p></details>
+    <details class="faq__item"><summary class="faq__q">사이즈 교환이 가능한가요?</summary><p class="faq__a">네, 수령 후 7일 이내 무료 교환 가능합니다.</p></details>
+    <details class="faq__item"><summary class="faq__q">기존 매트리스 수거도 해주나요?</summary><p class="faq__a">네, 설치 시 기존 매트리스 무료 수거 서비스를 제공합니다.</p></details>
+  </div>
+</section>
+
+<!-- §13 CTA -->
+<section class="cta" id="cta">
+  <div class="cta__in">
+    <h2 class="cta__h2 rv">더 나은 내일을 위한<br>첫 걸음</h2>
+    <p class="cta__p rv">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+    <a href="#" class="cta__btn rv">무료 체험 시작하기</a>
+    <p class="cta__micro rv">첫 달 무료 · 만족하지 않으면 100% 환불</p>
+  </div>
+</section>
+
+</div>
+
+<script>
+// Scroll reveal
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv:not(.on)').forEach(el=>io.observe(el));
+
+// Counter
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const t=+el.dataset.count,dur=2200;
+  const fmt=n=>n>=1e3?n.toLocaleString('ko-KR')+'+':n+'%';
+  const cio=new IntersectionObserver(([e])=>{
+    if(!e.isIntersecting)return;
+    const s=performance.now();
+    (function tick(now){
+      const p=Math.min((now-s)/dur,1),v=1-Math.pow(1-p,4);
+      el.textContent=fmt(Math.floor(t*v));
+      if(p<1)requestAnimationFrame(tick);
+    })(s);
+    cio.disconnect();
+  },{threshold:.5});
+  cio.observe(el);
+});
+</script>
+</body>
+</html>

@@ -64,6 +64,7 @@ const ALIAS_MAP: Readonly<Record<string, string>> = {
   hero_minimal_typo: 'hero_fullscreen_center',
   hero_video_bg: 'hero_fullscreen_center',
   hero_card: 'hero_left_right',
+  hero_split_left: 'hero_split',
 
   // Feature aliases
   feat_card_grid: 'feat_3col_grid',
@@ -72,17 +73,25 @@ const ALIAS_MAP: Readonly<Record<string, string>> = {
   feat_accordion: 'feat_icon_list',
   feat_tab: 'feat_icon_list',
   feat_infographic: 'feat_numbered_steps',
+  features_alternating: 'feat_zigzag',
 
   // Proof aliases
   proof_review_carousel: 'proof_testimonial_card',
   proof_rating_text: 'proof_testimonial_card',
   proof_sns_grid: 'proof_testimonial_card',
   proof_logo_bar: 'proof_number_counter',
+  reviews_grid: 'proof_testimonial_card',
+
+  // Pricing aliases
+  price_toggle: 'price_3col_compare',
+  price_feature_matrix: 'price_3col_compare',
+  compare_table: 'price_3col_compare',
 
   // CTA aliases
   cta_left_right: 'cta_center',
   cta_sticky_bar: 'cta_center',
   cta_popup: 'cta_center',
+  cta_centered: 'cta_center',
 
   // FAQ aliases
   faq_2col: 'faq_accordion',
@@ -91,6 +100,11 @@ const ALIAS_MAP: Readonly<Record<string, string>> = {
   // Misc aliases
   misc_timeline: 'feat_numbered_steps',
   misc_process_flow: 'feat_numbered_steps',
+  misc_footer: 'cta_full_banner',
+  misc_newsletter: 'cta_center',
+  misc_team: 'feat_3col_grid',
+  ba_split: 'misc_before_after',
+  refund_steps: 'feat_numbered_steps',
 };
 
 // --- 레지스트리 빌드 ---

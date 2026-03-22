@@ -39,27 +39,30 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
 
   return `<style>
 [data-tpl="cta-center"] {
-  padding: ${sp.xl}px ${sp.lg}px;
-  background: ${c.primary};
+  padding: 80px 24px;
+  background: linear-gradient(160deg, ${c.primaryDark} 0%, ${c.primary} 100%);
   color: #fff;
   text-align: center;
 }
 [data-tpl="cta-center"] .cta-center__inner {
-  max-width: 640px;
+  max-width: 800px;
   margin: 0 auto;
 }
 [data-tpl="cta-center"] .cta-center__headline {
-  font-size: ${t.h1.size};
-  font-weight: ${t.h1.weight};
-  line-height: ${t.h1.lineHeight};
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #fff;
   margin: 0 0 ${sp.sm}px;
   word-break: keep-all;
 }
 [data-tpl="cta-center"] .cta-center__sub {
-  font-size: ${t.body.size};
-  line-height: ${t.body.lineHeight};
-  opacity: 0.9;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1.6;
+  opacity: 0.92;
   margin: 0 0 ${sp.md}px;
+  word-break: keep-all;
 }
 [data-tpl="cta-center"] .cta-center__bullets {
   list-style: none;
@@ -68,34 +71,36 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: ${sp.sm}px;
+  gap: 12px;
 }
 [data-tpl="cta-center"] .cta-center__bullets li {
-  opacity: 0.9;
-  font-size: ${t.small.size};
+  opacity: 0.95;
+  font-size: 1rem;
 }
 [data-tpl="cta-center"] .cta-center__bullets li::before {
   content: "✓ ";
 }
 [data-tpl="cta-center"] .cta-center__btn {
   display: inline-block;
-  padding: 16px 48px;
+  padding: 24px 64px;
   min-height: 48px;
   background: #fff;
   color: ${c.primary};
   text-decoration: none;
-  border-radius: ${r.md}px;
-  font-size: ${t.button.size};
-  font-weight: ${t.button.weight};
-  transition: opacity 0.2s, transform 0.2s;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 [data-tpl="cta-center"] .cta-center__btn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
+  opacity: 0.95;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 [data-tpl="cta-center"] .cta-center__micro {
-  margin-top: ${sp.xs}px;
-  font-size: ${t.caption.size};
+  margin-top: 16px;
+  font-size: 1.05rem;
   opacity: 0.75;
 }
 @media (max-width: 768px) {

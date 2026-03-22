@@ -47,27 +47,30 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
 
   return `<style>
 [data-tpl="misc-before-after"] {
-  padding: ${sp.xl}px ${sp.lg}px;
+  padding: 100px 24px;
   background: ${c.background};
   color: ${c.textPrimary};
 }
 [data-tpl="misc-before-after"] .ba__inner {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 [data-tpl="misc-before-after"] .ba__headline {
-  font-size: ${t.h2.size};
-  font-weight: ${t.h2.weight};
-  line-height: ${t.h2.lineHeight};
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   text-align: center;
-  margin: 0 0 ${sp.sm}px;
+  margin: 0 0 16px;
   word-break: keep-all;
 }
 [data-tpl="misc-before-after"] .ba__sub {
-  font-size: ${t.body.size};
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
   color: ${c.textSecondary};
   text-align: center;
-  margin: 0 0 ${sp.lg}px;
+  line-height: 1.6;
+  margin: 0 0 56px;
+  word-break: keep-all;
 }
 [data-tpl="misc-before-after"] .ba__grid {
   display: flex;
@@ -76,25 +79,30 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
 }
 [data-tpl="misc-before-after"] .ba__col {
   flex: 1;
-  padding: ${sp.lg}px;
+  padding: 56px 44px;
   min-width: 0;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 [data-tpl="misc-before-after"] .ba__col--before {
   background: ${c.surface};
   border-radius: ${r.lg}px 0 0 ${r.lg}px;
 }
 [data-tpl="misc-before-after"] .ba__col--after {
-  background: ${c.primary};
+  background: linear-gradient(160deg, ${c.primaryDark} 0%, ${c.primary} 100%);
   color: #fff;
   border-radius: 0 ${r.lg}px ${r.lg}px 0;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
 }
 [data-tpl="misc-before-after"] .ba__label {
-  font-size: ${t.small.size};
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0 0 ${sp.sm}px;
-  opacity: 0.7;
+  letter-spacing: 0.12em;
+  margin: 0 0 24px;
+  opacity: 0.6;
 }
 [data-tpl="misc-before-after"] .ba__list {
   list-style: none;
@@ -102,9 +110,9 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   margin: 0;
 }
 [data-tpl="misc-before-after"] .ba__item {
-  padding: ${sp.xs}px 0;
-  font-size: ${t.body.size};
-  line-height: ${t.body.lineHeight};
+  padding: 16px 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
 }
 [data-tpl="misc-before-after"] .ba__item--before::before {
   content: "✕ ";
@@ -124,7 +132,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   background: linear-gradient(180deg, ${c.surface} 0%, ${c.primary} 100%);
 }
 [data-tpl="misc-before-after"] .ba__arrow {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   color: #fff;
   font-weight: 700;
 }

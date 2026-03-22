@@ -58,20 +58,21 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
 
   return `<style>
 [data-tpl="faq-accordion"] {
-  padding: ${sp.xl}px ${sp.lg}px;
+  padding: 100px 24px;
   background: ${c.background};
   color: ${c.textPrimary};
 }
 [data-tpl="faq-accordion"] .faq-accordion__inner {
-  max-width: 720px;
+  max-width: 860px;
   margin: 0 auto;
 }
 [data-tpl="faq-accordion"] .faq-accordion__headline {
-  font-size: ${t.h2.size};
-  font-weight: ${t.h2.weight};
-  line-height: ${t.h2.lineHeight};
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   text-align: center;
-  margin: 0 0 ${sp.lg}px;
+  margin: 0 0 48px;
   word-break: keep-all;
 }
 [data-tpl="faq-accordion"] .faq-accordion__item {
@@ -79,10 +80,10 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
 }
 [data-tpl="faq-accordion"] .faq-accordion__question {
   cursor: pointer;
-  padding: ${sp.md}px 0;
-  font-size: ${t.body.size};
+  padding: 24px 0;
+  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
   font-weight: 600;
-  line-height: ${t.body.lineHeight};
+  line-height: 1.5;
   list-style: none;
   display: flex;
   align-items: center;
@@ -106,10 +107,10 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   transform: rotate(-135deg);
 }
 [data-tpl="faq-accordion"] .faq-accordion__answer {
-  padding: 0 0 ${sp.md}px;
+  padding: 0 0 20px;
   margin: 0;
-  font-size: ${t.body.size};
-  line-height: ${t.body.lineHeight};
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.8;
   color: ${c.textSecondary};
 }
 [data-tpl="faq-accordion"] .faq-accordion__answer--empty {

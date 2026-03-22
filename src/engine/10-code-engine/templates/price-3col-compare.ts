@@ -89,26 +89,29 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
 
   return `<style>
   [data-tpl="${tpl}"] {
-    padding: ${tokens.sectionPadding};
+    padding: 100px 24px;
     background: ${c.background};
     color: ${c.textPrimary};
   }
   [data-tpl-inner="${tpl}"] {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     text-align: center;
   }
   [data-tpl-heading="${tpl}"] {
-    font-size: ${tokens.typography.h2.size};
-    font-weight: ${tokens.typography.h2.weight};
-    line-height: ${tokens.typography.h2.lineHeight};
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
     margin-bottom: ${sp.sm}px;
     word-break: keep-all;
   }
   [data-tpl-sub="${tpl}"] {
-    font-size: ${tokens.typography.body.size};
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
     color: ${c.textSecondary};
-    margin-bottom: ${sp.xl}px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    word-break: keep-all;
   }
   [data-tpl-grid="${tpl}"] {
     display: grid;
@@ -118,9 +121,9 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   }
   [data-tpl-card="${tpl}"] {
     position: relative;
-    padding: ${sp.xl}px ${sp.lg}px;
+    padding: 44px 36px;
     background: ${c.surface};
-    border-radius: ${r.lg}px;
+    border-radius: 16px;
     border: 1px solid ${c.border};
     text-align: center;
     display: flex;
@@ -128,8 +131,8 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   }
   [data-tpl-featured="${tpl}"] {
     border: 2px solid ${c.primary};
-    transform: scale(1.05);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    transform: scale(1.04);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
     z-index: 1;
   }
   [data-tpl-badge="${tpl}"] {
@@ -145,13 +148,13 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
     font-weight: 700;
   }
   [data-tpl-plan="${tpl}"] {
-    font-size: ${tokens.typography.h3.size};
+    font-size: 1.3rem;
     font-weight: ${tokens.typography.h3.weight};
     margin-bottom: ${sp.sm}px;
   }
   [data-tpl-price="${tpl}"] {
-    font-size: ${tokens.typography.h1.size};
-    font-weight: ${tokens.typography.h1.weight};
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 900;
     color: ${c.primary};
     margin-bottom: ${sp.lg}px;
   }
@@ -163,8 +166,9 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
     flex: 1;
   }
   [data-tpl-feat="${tpl}"] {
-    padding: ${sp.xs}px 0;
-    font-size: ${tokens.typography.body.size};
+    padding: 10px 0;
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    line-height: 1.7;
     color: ${c.textSecondary};
     display: flex;
     align-items: center;
@@ -178,14 +182,14 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   [data-tpl-cta="${tpl}"] {
     display: inline-block;
     width: 100%;
-    padding: ${sp.md}px;
+    padding: 16px;
     background: ${c.surface};
     color: ${c.primary};
     border: 2px solid ${c.primary};
-    border-radius: ${r.md}px;
+    border-radius: 12px;
     text-decoration: none;
-    font-weight: 600;
-    font-size: ${tokens.typography.button.size};
+    font-weight: 700;
+    font-size: 1.05rem;
     box-sizing: border-box;
     transition: background 0.2s, color 0.2s;
   }

@@ -52,73 +52,91 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
 
   const css = `<style>
 [${SCOPE}] {
-  padding: ${tokens.sectionPadding};
+  padding: 100px 24px;
   background: ${c.background};
   color: ${c.textPrimary};
 }
 [${SCOPE}-inner] {
-  max-width: 700px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 [${SCOPE}-title] {
-  font-size: ${t.h2.size};
-  font-weight: ${t.h2.weight};
-  line-height: ${t.h2.lineHeight};
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   text-align: center;
   margin: 0 0 ${sp.sm}px 0;
   word-break: keep-all;
 }
 [${SCOPE}-subtitle] {
-  font-size: ${t.body.size};
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
   color: ${c.textSecondary};
   text-align: center;
-  line-height: ${t.body.lineHeight};
-  margin: 0 0 ${sp.xl}px 0;
+  line-height: 1.6;
+  margin: 0 0 48px 0;
+  word-break: keep-all;
 }
 [${SCOPE}-steps] {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
 }
 [${SCOPE}-step] {
   display: flex;
-  gap: ${sp.md}px;
-}
-[${SCOPE}-badge-col] {
-  display: flex;
   flex-direction: column;
   align-items: center;
-  flex-shrink: 0;
+  text-align: center;
+  flex: 1;
+  max-width: 300px;
+  position: relative;
+}
+[${SCOPE}-step]::after {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: calc(50% + 40px);
+  width: calc(100% - 80px);
+  height: 3px;
+  background: linear-gradient(90deg, ${c.primary}, ${c.border});
+}
+[${SCOPE}-step]:last-child::after {
+  display: none;
+}
+[${SCOPE}-badge-col] {
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
 }
 [${SCOPE}-badge] {
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   border-radius: ${r.full}px;
-  background: ${c.primary};
+  background: linear-gradient(160deg, ${c.primaryDark} 0%, ${c.primary} 100%);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: ${t.body.size};
+  font-weight: 800;
+  font-size: 1.5rem;
   flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 [${SCOPE}-connector] {
-  width: 2px;
-  flex: 1;
-  background: linear-gradient(to bottom, ${c.primary}, ${c.border});
-  min-height: ${sp.md}px;
+  display: none;
 }
 [${SCOPE}-step-content] {
-  padding-bottom: ${sp.lg}px;
-  padding-top: 8px;
   flex: 1;
   min-width: 0;
+  padding: 0 16px;
 }
 [${SCOPE}-step-text] {
-  font-size: ${t.body.size};
-  font-weight: ${t.body.weight};
-  line-height: ${t.body.lineHeight};
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.6;
   margin: 0;
+  word-break: keep-all;
 }
 [${SCOPE}-empty] {
   font-size: ${t.body.size};

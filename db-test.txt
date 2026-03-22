@@ -1,0 +1,2 @@
+SHOWCASE: 16 templates rendered
+HTML: 49453 bytes

@@ -31,7 +31,7 @@ function scopedCss(tokens: DesignTokens): string {
 <style>
   [${SCOPE}] {
     display: flex;
-    min-height: 100vh;
+    min-height: 70vh;
     background: ${c.background};
     color: ${c.textPrimary};
     overflow: hidden;
@@ -41,92 +41,87 @@ function scopedCss(tokens: DesignTokens): string {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 80px 48px;
-    background: ${c.primary};
+    padding: 80px 72px;
+    background: linear-gradient(160deg, ${c.primaryDark} 0%, ${c.primary} 100%);
     color: #fff;
     position: relative;
   }
-  [${SCOPE}] .hero-sp__left::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -40px;
-    width: 80px;
-    height: 100%;
-    background: ${c.primary};
-    clip-path: ellipse(50% 55% at 0% 50%);
-    z-index: 1;
-  }
   [${SCOPE}] .hero-sp__text {
-    max-width: 480px;
+    max-width: 100%;
     position: relative;
     z-index: 2;
   }
   [${SCOPE}] .hero-sp__headline {
-    font-size: ${t.h1.size};
-    font-weight: ${t.h1.weight};
-    line-height: ${t.h1.lineHeight};
-    margin: 0 0 16px;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 1.0;
+    margin: 0 0 40px;
     color: #fff;
     word-break: keep-all;
+    letter-spacing: -0.02em;
   }
   [${SCOPE}] .hero-sp__subheadline {
-    font-size: ${t.h3.size};
-    font-weight: ${t.h3.weight};
-    line-height: ${t.h3.lineHeight};
-    color: rgba(255,255,255,0.85);
-    margin: 0 0 16px;
-  }
-  [${SCOPE}] .hero-sp__body {
-    font-size: ${t.body.size};
-    line-height: ${t.body.lineHeight};
-    color: rgba(255,255,255,0.8);
-    margin: 0 0 24px;
-  }
-  [${SCOPE}] .hero-sp__bullets ul {
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 32px;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.92);
+    margin: 0 0 48px;
+    word-break: keep-all;
   }
   [${SCOPE}] .hero-sp__cta a {
     background: #fff !important;
     color: ${c.primary} !important;
+    padding: 22px 56px !important;
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  [${SCOPE}] .hero-sp__cta a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
   }
   [${SCOPE}] .hero-sp__cta p {
-    color: rgba(255,255,255,0.7) !important;
+    color: rgba(255,255,255,0.75) !important;
+    margin-top: 14px !important;
+    font-size: 1.1rem !important;
   }
   [${SCOPE}] .hero-sp__right {
     flex: 1 1 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
     position: relative;
+    min-height: 70vh;
+    overflow: hidden;
   }
   [${SCOPE}] .hero-sp__image-wrap {
-    width: 100%;
-    max-width: 560px;
+    position: absolute;
+    inset: 0;
   }
-  [${SCOPE}] .hero-sp__image-wrap img,
+  [${SCOPE}] .hero-sp__image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
   [${SCOPE}] .hero-sp__image-wrap > div {
     width: 100%;
-    border-radius: ${tokens.radius.lg}px;
+    height: 100%;
+    border-radius: 0;
   }
   @media (max-width: 768px) {
     [${SCOPE}] {
       flex-direction: column;
-      min-height: auto;
+      min-height: 70vh;
     }
     [${SCOPE}] .hero-sp__left {
-      padding: 48px 24px;
-    }
-    [${SCOPE}] .hero-sp__left::after {
-      display: none;
+      padding: 64px 24px;
     }
     [${SCOPE}] .hero-sp__headline {
       font-size: 2rem;
     }
     [${SCOPE}] .hero-sp__right {
-      padding: 24px 16px 48px;
+      min-height: 50vh;
+      position: relative;
     }
   }
 </style>`;
@@ -135,7 +130,6 @@ function scopedCss(tokens: DesignTokens): string {
 export function render(copy: CopyBlock, tokens: DesignTokens): string {
   const c = tokens.colors;
   const css = scopedCss(tokens);
-  const hasBullets = copy.bulletPoints.length > 0;
 
   return `${css}
 <section ${SCOPE}>
@@ -143,8 +137,6 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
     <div class="hero-sp__text">
       <h1 class="hero-sp__headline">${esc(copy.headline)}</h1>
       <p class="hero-sp__subheadline">${esc(copy.subheadline)}</p>
-      <p class="hero-sp__body">${esc(copy.body)}</p>
-      ${hasBullets ? `<div class="hero-sp__bullets">${bullets(copy.bulletPoints)}</div>` : ''}
       <div class="hero-sp__cta">
         ${ctaButton(copy.ctaText, c, copy.microCopy)}
       </div>
@@ -152,7 +144,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   </div>
   <div class="hero-sp__right">
     <div class="hero-sp__image-wrap">
-      ${imageBlock(copy, c, { aspectRatio: '3/4', borderRadius: `${tokens.radius.lg}px` })}
+      ${imageBlock(copy, c, { aspectRatio: 'auto', borderRadius: '0' })}
     </div>
   </div>
 </section>`;
