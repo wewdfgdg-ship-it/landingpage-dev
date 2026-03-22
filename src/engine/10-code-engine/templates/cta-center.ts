@@ -1,22 +1,12 @@
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 import type { DesignTokens } from '@/engine/09-visual-style/types';
 
+import type { TemplateConfig } from './types';
+import { esc } from './utils';
+
 // ============================================================
 // CTA Center Template — 중앙 정렬 CTA 블록
 // ============================================================
-
-export interface TemplateConfig {
-  patternId: string;
-  name: string;
-  category: 'hero' | 'feature' | 'proof' | 'pricing' | 'cta' | 'faq' | 'misc';
-  description: string;
-  imageSpec: {
-    required: boolean;
-    aspectRatio: string;
-    cutout: boolean;
-    maxWidth: number;
-  };
-}
 
 export const config: TemplateConfig = {
   patternId: 'cta_center',
@@ -30,14 +20,6 @@ export const config: TemplateConfig = {
     maxWidth: 0,
   },
 };
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
 
 export function render(copy: CopyBlock, tokens: DesignTokens): string {
   const c = tokens.colors;
@@ -71,6 +53,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   font-weight: ${t.h1.weight};
   line-height: ${t.h1.lineHeight};
   margin: 0 0 ${sp.sm}px;
+  word-break: keep-all;
 }
 [data-tpl="cta-center"] .cta-center__sub {
   font-size: ${t.body.size};

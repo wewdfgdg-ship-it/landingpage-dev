@@ -8,6 +8,7 @@ export interface SectionImageRequest {
   sectionType: string;
   patternId: string;
   imageDirection: string; // Copy Engine이 생성한 이미지 지시문
+  cutout: boolean; // 크로마키 배경 제거 여부
 }
 
 /** 생성된 이미지 결과 */

@@ -1,22 +1,12 @@
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 import type { DesignTokens } from '@/engine/09-visual-style/types';
 
+import type { TemplateConfig } from './types';
+import { esc } from './utils';
+
 // ============================================================
 // CTA Full Banner Template — 풀 너비 배너 CTA
 // ============================================================
-
-export interface TemplateConfig {
-  patternId: string;
-  name: string;
-  category: 'hero' | 'feature' | 'proof' | 'pricing' | 'cta' | 'faq' | 'misc';
-  description: string;
-  imageSpec: {
-    required: boolean;
-    aspectRatio: string;
-    cutout: boolean;
-    maxWidth: number;
-  };
-}
 
 export const config: TemplateConfig = {
   patternId: 'cta_full_banner',
@@ -30,14 +20,6 @@ export const config: TemplateConfig = {
     maxWidth: 0,
   },
 };
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
 
 export function render(copy: CopyBlock, tokens: DesignTokens): string {
   const c = tokens.colors;
@@ -76,6 +58,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   font-weight: ${t.h2.weight};
   line-height: ${t.h2.lineHeight};
   margin: 0 0 ${sp.xs}px;
+  word-break: keep-all;
 }
 [data-tpl="cta-full-banner"] .cta-banner__sub {
   font-size: ${t.body.size};

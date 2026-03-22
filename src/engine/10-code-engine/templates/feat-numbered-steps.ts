@@ -1,22 +1,12 @@
 import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 import type { DesignTokens } from '@/engine/09-visual-style/types';
 
+import type { TemplateConfig } from './types';
+import { esc } from './utils';
+
 // ============================================================
 // Feature Template — 번호 단계별 설명
 // ============================================================
-
-export interface TemplateConfig {
-  patternId: string;
-  name: string;
-  category: 'hero' | 'feature' | 'proof' | 'pricing' | 'cta' | 'faq' | 'misc';
-  description: string;
-  imageSpec: {
-    required: boolean;
-    aspectRatio: string;
-    cutout: boolean;
-    maxWidth: number;
-  };
-}
 
 export const config: TemplateConfig = {
   patternId: 'feat_numbered_steps',
@@ -30,14 +20,6 @@ export const config: TemplateConfig = {
     maxWidth: 0,
   },
 };
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
 
 const SCOPE = 'data-tpl-featstep';
 
@@ -84,6 +66,7 @@ export function render(copy: CopyBlock, tokens: DesignTokens): string {
   line-height: ${t.h2.lineHeight};
   text-align: center;
   margin: 0 0 ${sp.sm}px 0;
+  word-break: keep-all;
 }
 [${SCOPE}-subtitle] {
   font-size: ${t.body.size};

@@ -2,6 +2,7 @@ import { generateImage } from '@/lib/ai/gemini';
 import { r2, getCdnUrl } from '@/lib/r2';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { db } from '@/lib/db';
+import { getTemplate } from '@/engine/10-code-engine/template-registry';
 import type { CopyBlocks } from '@/engine/05-psychological-copy/types';
 import type { LayoutConfig } from '@/engine/08-layout-intelligence/types';
 import type {
@@ -10,6 +11,7 @@ import type {
   ImageGenerationOutput,
 } from './types';
 import { IMAGE_REQUIRED_PATTERNS } from './types';
+import { processChromakey } from './chromakey';
 
 export type { ImageGenerationOutput, SectionImageResult } from './types';
 
@@ -49,7 +51,11 @@ ${req.imageDirection}
 - 제품과 관련된 시각적 요소만 포함
 - 4:3 가로 비율
 - 밝고 선명한 색감
-- 배경은 심플하게`;
+${req.cutout
+    ? `- 배경은 반드시 순수 녹색(#00FF00) 단색으로 채워주세요
+- 피사체와 배경 사이에 명확한 경계를 유지하세요
+- 배경에 그림자, 그라데이션, 패턴을 넣지 마세요`
+    : '- 배경은 심플하게'}`;
 }
 
 /** 섹션 타입별 컨텍스트 설명 */
@@ -83,11 +89,16 @@ function extractImageRequests(
     const direction = sectionCopy?.copy.imageDirection;
     if (!direction) continue;
 
+    // 템플릿 설정에서 cutout 여부 확인
+    const template = getTemplate(section.selectedPattern);
+    const cutout = template?.config.imageSpec.cutout ?? false;
+
     requests.push({
       sectionOrder: section.order,
       sectionType: section.sectionType,
       patternId: section.selectedPattern,
       imageDirection: direction,
+      cutout,
     });
   }
 
@@ -108,16 +119,26 @@ async function generateAndUpload(
   // Gemini 이미지 생성
   const result = await generateImage(prompt, referenceImageBase64);
 
+  // 크로마키 처리 (cutout 요청 시)
+  let finalImageData = result.imageData;
+  let finalMimeType = result.mimeType;
+
+  if (req.cutout) {
+    const processed = await processChromakey(result.imageData, result.mimeType);
+    finalImageData = processed.imageData;
+    finalMimeType = 'image/png'; // 크로마키 적용 시 투명도 지원을 위해 PNG 강제
+  }
+
   // R2 업로드
-  const ext = result.mimeType === 'image/png' ? 'png' : 'jpg';
+  const ext = finalMimeType === 'image/png' ? 'png' : 'jpg';
   const storageKey = `projects/${projectId}/sections/s${req.sectionOrder}.${ext}`;
 
   await r2.send(
     new PutObjectCommand({
       Bucket: BUCKET,
       Key: storageKey,
-      Body: result.imageData,
-      ContentType: result.mimeType,
+      Body: finalImageData,
+      ContentType: finalMimeType,
       CacheControl: 'public, max-age=31536000',
     }),
   );
