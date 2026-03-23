@@ -374,17 +374,17 @@ const tea = makeData({
 // 7. 독립 커피 로스터리 (Magazine 레이아웃)
 const coffee = makeData({
   images: {
-    hero: 'https://images.unsplash.com/photo-1447933601403-56dc2df6e394?w=1400&q=85',
+    hero: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1400&q=85',
     feat1: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80',
     feat2: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80',
     feat3: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=800&q=80',
     fullbleed: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1400&q=85',
-    gallery1: 'https://images.unsplash.com/photo-1447933601403-56dc2df6e394?w=800&q=80',
+    gallery1: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80',
     gallery2: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80',
     gallery3: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80',
     product1: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&q=80',
-    product2: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=600&q=80',
-    product3: 'https://images.unsplash.com/photo-1497515114583-3e34a7f1b9d0?w=600&q=80',
+    product2: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80',
+    product3: 'https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=600&q=80',
     product4: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80',
   },
   before1: { title: '편의점 캔커피', desc: '설탕+합성향 — 진짜 커피 맛을 모름' },
