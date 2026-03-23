@@ -16,7 +16,7 @@
 결과: mood-renderer.ts(플레이스홀더 치환), CSS 변수화, 7개 템플릿(premium/luxury/tech/clean/bold/natural/magazine), 7업종 이미지 매칭 완료
 
 ⬜ 세션 24: 레퍼런스 기반 상세페이지 템플릿 제작 [순차, 세션 23 후]
-프롬프트: 상세페이지 이미지 1장 첨부 → 그대로 따라서 HTML 템플릿 만들어. 텍스트는 {{placeholder}}, 색상은 {{token}}, 이미지는 {{images.*}}로. 나머지 템플릿(Premium/Luxury/Tech/Bold/Natural/Magazine)도 Clean처럼 섹션별 유형 전부 다르게 적용.
+프롬프트: C:\Users\tip12\Downloads\73dc83dd299708111dcee863a925c229.jpg 분석 완료. 이 상세페이지(담가화로구이 프랜차이즈) 디자인을 따라서 HTML 템플릿 만들어. 다크+골드 프리미엄 스타일. 섹션: 히어로(금커튼+대형숫자), 신뢰(매출카드), 비교(VS표), 경쟁력(넘버카드4개), 제품(다크배경+도마), 스토리(연혁), CTA(신청폼). 텍스트={{placeholder}}, 색상={{token}}, 이미지={{images.*}}. 분석 이미지: ref-sections/section-00~08.jpg
 
 ⬜ 세션 25: 실전 파이프라인 연동 [순차, 세션 24 후]
 
