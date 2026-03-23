@@ -78,6 +78,17 @@ const TOKENS: Record<string, StyleTokens> = {
     sizeDisplay: 'clamp(3rem,7vw,5.5rem)', sizeH1: 'clamp(2rem,3.5vw,3rem)',
     sizeH2: 'clamp(1.8rem,3.5vw,2.8rem)', sizeH3: 'clamp(1.2rem,1.8vw,1.5rem)', sizeBody: 'clamp(.95rem,1.1vw,1.05rem)',
   },
+  magazine: {
+    fontUrl: 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap',
+    fontDisplay: "'DM Serif Display','Noto Sans KR',serif",
+    fontBody: "'Space Mono','Noto Sans KR',monospace",
+    bg: '#1A1A1A', surface: '#222222', surfaceLight: '#2A2A2A',
+    primary: '#FF5E1A', primaryLight: '#FF8C5A', primaryPale: '#FF5E1A',
+    frost: 'rgba(255,94,26,.08)', frostLine: 'rgba(242,237,232,.12)', frostGlow: 'rgba(255,94,26,.05)',
+    textPrimary: '#F2EDE8', textSecondary: 'rgba(242,237,232,.5)', textBright: '#FFFFFF',
+    sizeDisplay: 'clamp(3.5rem,9vw,7rem)', sizeH1: 'clamp(2.2rem,4vw,3.5rem)',
+    sizeH2: 'clamp(1.8rem,3.5vw,2.8rem)', sizeH3: 'clamp(1.2rem,2vw,1.6rem)', sizeBody: 'clamp(.85rem,1vw,.95rem)',
+  },
 };
 
 // ============================================================
@@ -142,6 +153,20 @@ function makeData(d: Partial<MoodTemplateData> & Pick<MoodTemplateData, 'brand' 
 
 // 1. 고급 시계 (Premium 레이아웃)
 const watch = makeData({
+  images: {
+    hero: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=1400&q=85',
+    feat1: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&q=80',
+    feat2: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=800&q=80',
+    feat3: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=800&q=80',
+    fullbleed: 'https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=1400&q=85',
+    gallery1: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=800&q=80',
+    gallery2: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&q=80',
+    gallery3: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&q=80',
+    product1: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600&q=80',
+    product2: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&q=80',
+    product3: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=600&q=80',
+    product4: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&q=80',
+  },
   brand: 'CHRONOS ATELIER',
   hero: { headline: '시간의 예술,<br><em>손목 위의 걸작</em>', subheadline: '스위스 무브먼트 × 사파이어 크리스탈.<br>100년을 함께할 타임피스.', cta: '컬렉션 보기' },
   intro: { headline: '장인 정신의 결정체,<br><em>Chronos</em> 워치', body: '1892년 창립 이래 4대에 걸친 시계 장인의 손끝에서 탄생합니다. 하나의 무브먼트에 312개의 부품, 800시간의 수작업.' },
@@ -167,6 +192,20 @@ const watch = makeData({
 
 // 2. 호텔 스파 (Luxury 레이아웃)
 const spa = makeData({
+  images: {
+    hero: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1400&q=85',
+    feat1: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&q=80',
+    feat2: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=800&q=80',
+    feat3: 'https://images.unsplash.com/photo-1540555700478-4be289fbec6a?w=800&q=80',
+    fullbleed: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=1400&q=85',
+    gallery1: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
+    gallery2: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80',
+    gallery3: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80',
+    product1: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80',
+    product2: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80',
+    product3: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80',
+    product4: 'https://images.unsplash.com/photo-1540555700478-4be289fbec6a?w=600&q=80',
+  },
   brand: 'MAISON SÉRÉNÉ',
   hero: { headline: '도심 속<br><em>오아시스</em>', subheadline: '프렌치 아로마테라피 × 한방 힐링.<br>당신만을 위한 90분의 여정.', cta: '예약하기' },
   intro: { headline: '몸과 마음의 <em>균형</em>', body: '파리 르봉마르셰에서 영감을 받은 공간. 유기농 에센셜 오일과 전통 한방 기법을 결합한 시그니처 트리트먼트.' },
@@ -186,6 +225,20 @@ const spa = makeData({
 
 // 3. AI SaaS (Tech 레이아웃)
 const saas = makeData({
+  images: {
+    hero: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=85',
+    feat1: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+    feat2: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80',
+    feat3: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80',
+    fullbleed: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=1400&q=85',
+    gallery1: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    gallery2: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
+    gallery3: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80',
+    product1: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
+    product2: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
+    product3: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80',
+    product4: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&q=80',
+  },
   brand: 'NEXUS AI',
   hero: { headline: '데이터를<br><em>인사이트</em>로', subheadline: 'GPT-4 기반 비즈니스 인텔리전스.<br>10분 만에 리포트가 완성됩니다.', cta: '무료로 시작하기' },
   intro: { headline: '의사결정의 <em>속도</em>를 바꾸다', body: '엑셀 파일을 업로드하면 AI가 자동으로 트렌드, 이상치, 예측을 분석합니다. 비개발자도 SQL 없이 데이터 분석.' },
@@ -205,6 +258,20 @@ const saas = makeData({
 
 // 4. 스킨케어 (Clean 레이아웃)
 const skincare = makeData({
+  images: {
+    hero: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1400&q=85',
+    feat1: 'https://images.unsplash.com/photo-1570194065650-d99fb4a38c5f?w=800&q=80',
+    feat2: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&q=80',
+    feat3: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=800&q=80',
+    fullbleed: 'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=1400&q=85',
+    gallery1: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80',
+    gallery2: 'https://images.unsplash.com/photo-1570194065650-d99fb4a38c5f?w=600&q=80',
+    gallery3: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80',
+    product1: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&q=80',
+    product2: 'https://images.unsplash.com/photo-1570194065650-d99fb4a38c5f?w=600&q=80',
+    product3: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80',
+    product4: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&q=80',
+  },
   brand: 'HARU BOTANICS',
   hero: { headline: '피부가 먹는<br><em>진짜 자연</em>', subheadline: '제주 동백 × 일본 쌀겨 발효.<br>7일이면 피부결이 달라집니다.', cta: '지금 시작하기' },
   intro: { headline: '<em>덜어내는</em> 스킨케어', body: '성분 10개 미만. 불필요한 화학 성분을 모두 덜어내고, 피부가 진짜 필요한 것만 남겼습니다.' },
@@ -224,6 +291,20 @@ const skincare = makeData({
 
 // 5. 크로스핏 짐 (Bold 레이아웃)
 const gym = makeData({
+  images: {
+    hero: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&q=85',
+    feat1: 'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=800&q=80',
+    feat2: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&q=80',
+    feat3: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80',
+    fullbleed: 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1400&q=85',
+    gallery1: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80',
+    gallery2: 'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=600&q=80',
+    gallery3: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80',
+    product1: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80',
+    product2: 'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=600&q=80',
+    product3: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80',
+    product4: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&q=80',
+  },
   brand: 'IRON REPUBLIC',
   hero: { headline: '약해질<br><em>시간은 없다</em>', subheadline: '새벽 5시부터 밤 11시까지.<br>변명 대신 바벨을 잡아라.', cta: '1주 무료 체험' },
   intro: { headline: '<em>결과</em>로 말한다', body: '평균 3개월, 체지방 -8%, 근력 +40%. 우리 멤버의 실제 데이터가 증명합니다.' },
@@ -290,6 +371,55 @@ const tea = makeData({
   cta: { headline: '오늘, <em>한 잔</em>의 여유', body: '첫 주문 무료 배송. 맛이 마음에 안 들면 환불해 드립니다.', cta: '지금 주문하기', micro: '무료 배송 · 7일 환불 · 냉장 배송' },
 });
 
+// 7. 독립 커피 로스터리 (Magazine 레이아웃)
+const coffee = makeData({
+  images: {
+    hero: 'https://images.unsplash.com/photo-1447933601403-56dc2df6e394?w=1400&q=85',
+    feat1: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80',
+    feat2: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80',
+    feat3: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=800&q=80',
+    fullbleed: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1400&q=85',
+    gallery1: 'https://images.unsplash.com/photo-1447933601403-56dc2df6e394?w=800&q=80',
+    gallery2: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&q=80',
+    gallery3: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80',
+    product1: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&q=80',
+    product2: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=600&q=80',
+    product3: 'https://images.unsplash.com/photo-1497515114583-3e34a7f1b9d0?w=600&q=80',
+    product4: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80',
+  },
+  before1: { title: '편의점 캔커피', desc: '설탕+합성향 — 진짜 커피 맛을 모름' },
+  before2: { title: '프랜차이즈 획일화', desc: '어디서나 같은 맛, 개성 없음' },
+  before3: { title: '원두 출처 불명', desc: '어디서 왔는지, 언제 볶았는지 모름' },
+  after1: { title: '산지 직송 스페셜티', desc: '에티오피아 예가체프 싱글 오리진' },
+  after2: { title: '주문 후 로스팅', desc: '주문일에 볶아서 48시간 내 배송' },
+  after3: { title: '로스팅 프로필 공개', desc: '온도, 시간, 크랙 포인트 전부 투명' },
+  products: {
+    headline: '이번 시즌 원두',
+    item1: { name: '예가체프 내추럴', sub: 'Ethiopia · Light' },
+    item2: { name: '과테말라 안티구아', sub: 'Guatemala · Medium' },
+    item3: { name: '콜롬비아 수프리모', sub: 'Colombia · Medium-Dark' },
+    item4: { name: '하우스 블렌드', sub: 'Blend · City Roast' },
+  },
+  process1: { title: '원두 선택', desc: '산지와 로스팅 레벨을 고르세요' },
+  process2: { title: '주문일 로스팅', desc: '갓 볶은 원두를 밀봉 포장' },
+  process3: { title: '48시간 배송', desc: '신선함이 살아있는 상태로 도착' },
+  brand: 'MANO ROASTERS',
+  hero: { headline: '한 잔에<br>담긴 <em>여정</em>', subheadline: '에티오피아 농장에서 당신의 컵까지.<br>주문 후 로스팅, 48시간 내 배송.', cta: '원두 보러가기' },
+  intro: { headline: '커피는 <em>농산물</em>이다', body: '와인처럼 산지, 품종, 가공법에 따라 맛이 완전히 달라집니다. 우리는 매 시즌 최고의 생두를 직접 선별하고, 주문이 들어온 날 로스팅합니다. 대량 생산과 유통 과정에서 잃어버린 커피 본연의 맛을 되찾아 드립니다.' },
+  feat1: { headline: '싱글 오리진 <em>스페셜티</em>', body: 'SCA 85점 이상 스페셜티 등급만 취급. 에티오피아, 과테말라, 콜롬비아 농장과 직거래.', tag1: 'SCA 85+', tag2: '산지 직거래' },
+  feat2: { headline: '주문 후 <em>로스팅</em>', body: '재고 원두 없음. 주문이 들어오면 그날 볶습니다. 로스팅 일자와 프로필을 라벨에 기재.', tag1: '당일 로스팅', tag2: '프로필 공개' },
+  feat3: { headline: '<em>핸드드립</em> 가이드', body: '원두마다 최적의 추출 레시피를 함께 보내드립니다. 물 온도, 비율, 시간 — 바리스타 수준의 한 잔.', tag1: '추출 레시피', tag2: '바리스타 가이드' },
+  stat1: { value: '85', unit: '+', label: 'SCA 점수' }, stat2: { value: '48', unit: 'h', label: '로스팅→배송' },
+  stat3: { value: '12', unit: '개국', label: '산지 네트워크' }, stat4: { value: '3200', unit: '+', label: '구독 고객' },
+  fullbleed: { headline: '농장에서<br><em>컵</em>까지', body: '우리가 거래하는 모든 농장을 직접 방문합니다. 공정한 가격, 지속 가능한 재배, 투명한 유통.' },
+  pricing: {
+    headline: '구독 <em>플랜</em>',
+    tier1: { name: 'Explorer', price: '₩24,000', unit: '/ 월', desc: '매달 새로운 싱글 오리진', features: ['200g × 1종', '로스팅 프로필 카드', '핸드드립 레시피', '무료 배송', '언제든 해지'], cta: '구독 시작하기' },
+    tier2: { name: 'Connoisseur', price: '₩42,000', unit: '/ 월', desc: '2종 비교 테이스팅', features: ['200g × 2종', 'Explorer 전체 포함', '테이스팅 노트', '드립백 5매 보너스', '시즌 한정 원두 우선 접근', '커핑 클래스 초대'], cta: '구독 시작하기' },
+  },
+  cta: { headline: '오늘 볶은<br><em>커피</em>를 내일 마시다', body: '첫 구독 30% 할인. 마음에 안 들면 전액 환불.', cta: '첫 구독 시작', micro: '무료 배송 · 언제든 해지 · 100% 환불' },
+});
+
 // ============================================================
 // 렌더링 실행
 // ============================================================
@@ -301,6 +431,7 @@ const cases: Array<{ layout: string; token: string; data: MoodTemplateData; labe
   { layout: 'clean',   token: 'clean',   data: skincare, label: '스킨케어-Clean' },
   { layout: 'bold',    token: 'bold',    data: gym,   label: '크로스핏-Bold' },
   { layout: 'natural', token: 'natural', data: tea,   label: '유기농차-Natural' },
+  { layout: 'magazine', token: 'magazine', data: coffee, label: '커피로스터리-Magazine' },
 ];
 
 const outDir = join(process.cwd(), 'test-output');

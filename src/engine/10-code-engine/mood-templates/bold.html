@@ -209,7 +209,7 @@ a{color:inherit;text-decoration:none;}
 
 <!-- §1 HERO -->
 <section class="hero">
-  <div class="hero__bg"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt=""></div>
+  <div class="hero__bg"><img src="{{images.hero}}" alt=""></div>
   <div class="hero__in rv on">
     <p class="hero__brand">{{brand}}</p>
     <h1 class="hero__h1">{{hero.headline}}</h1>
@@ -228,7 +228,7 @@ a{color:inherit;text-decoration:none;}
 
 <!-- §7 FEATURES -->
 <div class="feat__row rv">
-  <div class="feat__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80" alt=""></div>
+  <div class="feat__img"><img src="{{images.feat1}}" alt=""></div>
   <div class="feat__txt"><div>
     <p class="feat__num">01</p>
     <h3 class="feat__h3">{{feat1.headline}}</h3>
@@ -240,7 +240,7 @@ a{color:inherit;text-decoration:none;}
   </div></div>
 </div>
 <div class="feat__row feat__row--r rv">
-  <div class="feat__img"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=900&q=80" alt=""></div>
+  <div class="feat__img"><img src="{{images.feat2}}" alt=""></div>
   <div class="feat__txt"><div>
     <p class="feat__num">02</p>
     <h3 class="feat__h3">{{feat2.headline}}</h3>
@@ -265,16 +265,16 @@ a{color:inherit;text-decoration:none;}
 <!-- §3 PRODUCTS -->
 <section class="sec">
   <div class="products__grid">
-    <div class="prod-card rv"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 오리지널</p><p class="prod-card__sub">The Classic — 7존 체압분산의 시작</p></div></div>
-    <div class="prod-card rv" data-d="1"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 프로</p><p class="prod-card__sub">The Professional — 라텍스 레이어</p></div></div>
-    <div class="prod-card rv" data-d="2"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 토퍼</p><p class="prod-card__sub">The Topper — 즉시 업그레이드</p></div></div>
-    <div class="prod-card rv" data-d="3"><img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 베개</p><p class="prod-card__sub">The Pillow — 경추 맞춤형</p></div></div>
+    <div class="prod-card rv"><img src="{{images.product1}}" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 오리지널</p><p class="prod-card__sub">The Classic — 7존 체압분산의 시작</p></div></div>
+    <div class="prod-card rv" data-d="1"><img src="{{images.product2}}" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 프로</p><p class="prod-card__sub">The Professional — 라텍스 레이어</p></div></div>
+    <div class="prod-card rv" data-d="2"><img src="{{images.product3}}" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 토퍼</p><p class="prod-card__sub">The Topper — 즉시 업그레이드</p></div></div>
+    <div class="prod-card rv" data-d="3"><img src="{{images.product4}}" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 베개</p><p class="prod-card__sub">The Pillow — 경추 맞춤형</p></div></div>
   </div>
 </section>
 
 <!-- §4 FULLBLEED -->
 <section class="cinema">
-  <div class="cinema__bg"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt=""></div>
+  <div class="cinema__bg"><img src="{{images.fullbleed}}" alt=""></div>
   <div class="cinema__in rv">
     <h2 class="cinema__h2">{{fullbleed.headline}}</h2>
     <p class="cinema__p">{{fullbleed.body}}</p>
@@ -284,13 +284,13 @@ a{color:inherit;text-decoration:none;}
 <!-- §6 GALLERY -->
 <section class="sec" style="padding-bottom:0;">
   <div class="gallery__grid">
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt=""></div>
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""></div>
+    <div class="gallery__item"><img src="{{images.gallery1}}" alt=""></div>
+    <div class="gallery__item"><img src="{{images.gallery2}}" alt=""></div>
   </div>
   <div class="gallery__row2">
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt=""></div>
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80" alt=""></div>
+    <div class="gallery__item"><img src="{{images.gallery3}}" alt=""></div>
+    <div class="gallery__item"><img src="{{images.gallery3}}" alt=""></div>
+    <div class="gallery__item"><img src="{{images.gallery3}}" alt=""></div>
   </div>
 </section>
 

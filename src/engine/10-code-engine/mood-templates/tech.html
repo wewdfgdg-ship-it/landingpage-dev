@@ -241,7 +241,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
     </div>
     <div class="hero__img rv on" data-d="1">
-      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt="">
+      <img src="{{images.hero}}" alt="">
     </div>
     <div class="hero__stats">
       <div class="hero__stat rv on" data-d="2"><p class="hero__stat-n gradient-text">{{stat1.value}}{{stat1.unit}}</p><p class="hero__stat-l">{{stat1.label}}</p></div>
@@ -267,7 +267,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- §4 임팩트 -->
 <section class="impact rv">
   <div class="impact__bg">
-    <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt="">
+    <img src="{{images.fullbleed}}" alt="">
     <div class="impact__orb1"></div>
     <div class="impact__orb2"></div>
   </div>
@@ -282,10 +282,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="tag rv">Gallery</div>
   <h2 class="sec-title rv">프리미엄 수면 환경</h2>
   <div class="gallery__grid">
-    <div class="gallery__item rv"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt=""></div>
-    <div class="gallery__item rv" data-d="1"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""></div>
-    <div class="gallery__item rv" data-d="2"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
-    <div class="gallery__item rv" data-d="3"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80" alt=""></div>
+    <div class="gallery__item rv"><img src="{{images.gallery1}}" alt=""></div>
+    <div class="gallery__item rv" data-d="1"><img src="{{images.gallery2}}" alt=""></div>
+    <div class="gallery__item rv" data-d="2"><img src="{{images.gallery3}}" alt=""></div>
+    <div class="gallery__item rv" data-d="3"><img src="{{images.fullbleed}}" alt=""></div>
   </div>
 </section>
 
@@ -304,7 +304,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <li class="feat-card__li">{{feat1.tag2}}</li>
         </ul>
       </div>
-      <div class="feat-card__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
+      <div class="feat-card__img"><img src="{{images.feat1}}" alt=""></div>
     </div>
     <div class="glow-card feat-card rv" data-d="1">
       <span class="feat-card__pill">{{feat2.tag1}}</span>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{brand}} — {{hero.headline}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{token.fontUrl}}" rel="stylesheet">
+<style>
+:root{
+  --bg:{{token.bg}};--surface:{{token.surface}};--surface-l:{{token.surfaceLight}};
+  --acc:{{token.primary}};--acc-l:{{token.primaryLight}};--acc-p:{{token.primaryPale}};
+  --txt:{{token.textPrimary}};--txt2:{{token.textSecondary}};--txtb:{{token.textBright}};
+  --line:{{token.frostLine}};--frost:{{token.frost}};--glow:{{token.frostGlow}};
+  --serif:{{token.fontDisplay}};--mono:{{token.fontBody}};
+  --sd:{{token.sizeDisplay}};--sh1:{{token.sizeH1}};--sh2:{{token.sizeH2}};--sh3:{{token.sizeH3}};--sb:{{token.sizeBody}};
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--mono);color:var(--txt);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.65;max-width:1240px;margin:0 auto;position:relative;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;mix-blend-mode:overlay;opacity:.08;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);}
+.rv.on{opacity:1;transform:none;}
+.rv-slide{opacity:0;transform:translateX(-60px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);}
+.rv-slide.on{opacity:1;transform:none;}
+[data-d="1"]{transition-delay:.15s}[data-d="2"]{transition-delay:.3s}[data-d="3"]{transition-delay:.45s}[data-d="4"]{transition-delay:.6s}
+
+.pad{padding:clamp(48px,6vw,100px) clamp(20px,4vw,48px);}
+
+/* GHOST NUMBER */
+.ghost{position:absolute;font-family:var(--serif);font-size:clamp(12rem,22vw,20rem);font-weight:400;color:var(--txt);opacity:.03;line-height:1;pointer-events:none;user-select:none;}
+
+/* MONO LABEL */
+.label{font-family:var(--mono);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);display:inline-flex;align-items:center;gap:10px;}
+.label::before{content:'//';opacity:.5;}
+
+/* DIAGONAL DIVIDER */
+.diag{height:80px;position:relative;overflow:hidden;}
+.diag::after{content:'';position:absolute;top:0;left:-5%;right:-5%;height:1px;background:var(--line);transform:rotate(-1.5deg);transform-origin:left center;}
+
+/* ============================================================
+   §1 HERO — viewport-filling type + overlapping image
+   ============================================================ */
+.hero{min-height:100vh;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 clamp(20px,4vw,48px) clamp(40px,5vw,80px);}
+.hero__bg{position:absolute;top:0;right:0;width:55%;height:85%;overflow:hidden;z-index:0;}
+.hero__bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(.2) contrast(1.1);}
+.hero__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,var(--bg) 100%),linear-gradient(90deg,var(--bg) 0%,transparent 30%);}
+.hero__brand{font-family:var(--mono);font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--acc);margin-bottom:clamp(20px,3vw,40px);position:relative;z-index:2;}
+.hero__h1{font-family:var(--serif);font-size:var(--sd);font-weight:400;line-height:.88;letter-spacing:-.03em;color:var(--txtb);position:relative;z-index:2;max-width:90%;}
+.hero__h1 em{color:var(--acc);font-style:italic;}
+.hero__bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:clamp(32px,4vw,56px);position:relative;z-index:2;}
+.hero__sub{font-family:var(--mono);font-size:var(--sb);color:var(--txt2);max-width:400px;line-height:1.8;}
+.hero__cta{display:inline-block;padding:16px 48px;background:var(--acc);color:var(--bg);font-family:var(--mono);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;transition:all .3s;position:relative;overflow:hidden;}
+.hero__cta::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transition:left .5s;}
+.hero__cta:hover::after{left:100%;}
+.hero__cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,94,26,.3);}
+.hero__issue{position:absolute;top:clamp(40px,5vw,80px);right:clamp(20px,4vw,48px);font-family:var(--serif);font-size:clamp(6rem,12vw,10rem);color:var(--txt);opacity:.04;line-height:1;z-index:0;}
+
+/* ============================================================
+   §2 INTRO — newspaper 2-column
+   ============================================================ */
+.intro{position:relative;}
+.intro__inner{display:grid;grid-template-columns:.4fr .6fr;gap:clamp(32px,5vw,80px);align-items:start;}
+.intro__headline{font-family:var(--serif);font-size:var(--sh1);font-weight:400;line-height:1.15;color:var(--txtb);position:sticky;top:120px;}
+.intro__headline em{color:var(--acc);font-style:italic;}
+.intro__body{font-family:var(--mono);font-size:var(--sb);color:var(--txt2);line-height:1.9;column-count:2;column-gap:32px;column-rule:1px solid var(--line);}
+.intro__drop{font-family:var(--serif);font-size:3.5rem;float:left;line-height:.8;margin-right:8px;margin-top:6px;color:var(--acc);}
+
+/* ============================================================
+   §3 FEATURES — overlapping cards with ghost numbers
+   ============================================================ */
+.feat{position:relative;margin-bottom:clamp(40px,6vw,80px);}
+.feat__inner{display:grid;grid-template-columns:1.1fr .9fr;gap:0;position:relative;min-height:400px;}
+.feat--flip .feat__inner{grid-template-columns:.9fr 1.1fr;}
+.feat--flip .feat__img{order:2;}
+.feat--flip .feat__text{order:1;text-align:right;}
+.feat--flip .feat__tags{justify-content:flex-end;}
+.feat__img{overflow:hidden;position:relative;}
+.feat__img img{width:100%;height:100%;object-fit:cover;min-height:400px;filter:grayscale(.15) contrast(1.05);transition:transform 1s cubic-bezier(.16,1,.3,1);}
+.feat:hover .feat__img img{transform:scale(1.04);}
+.feat__text{display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,4vw,56px);position:relative;background:var(--surface);border:1px solid var(--line);}
+.feat__ghost{position:absolute;top:-20px;right:20px;font-family:var(--serif);font-size:clamp(8rem,14vw,12rem);color:var(--txt);opacity:.04;line-height:1;}
+.feat--flip .feat__ghost{right:auto;left:20px;}
+.feat__h3{font-family:var(--serif);font-size:var(--sh2);font-weight:400;color:var(--txtb);margin-bottom:16px;line-height:1.2;position:relative;z-index:1;}
+.feat__h3 em{color:var(--acc);font-style:italic;}
+.feat__p{font-family:var(--mono);font-size:var(--sb);color:var(--txt2);line-height:1.85;margin-bottom:20px;position:relative;z-index:1;}
+.feat__tags{display:flex;gap:8px;position:relative;z-index:1;}
+.feat__tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);padding:6px 14px;border:1px solid var(--acc);opacity:.7;}
+
+/* ============================================================
+   §4 STATS — horizontal mono strip
+   ============================================================ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.stat{padding:clamp(32px,4vw,56px) clamp(16px,2vw,28px);text-align:center;border-right:1px solid var(--line);position:relative;}
+.stat:last-child{border-right:none;}
+.stat::before{content:'';position:absolute;top:50%;left:50%;width:1px;height:0;background:var(--acc);transform:translate(-50%,-50%);transition:height .4s;opacity:.15;}
+.stat:hover::before{height:80%;}
+.stat__num{font-family:var(--serif);font-size:var(--sh1);font-weight:400;color:var(--txtb);line-height:1;margin-bottom:8px;}
+.stat__label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--txt2);}
+
+/* ============================================================
+   §5 PRODUCTS — horizontal scroll strip
+   ============================================================ */
+.products__head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:clamp(32px,4vw,48px);}
+.products__title{font-family:var(--serif);font-size:var(--sh2);font-weight:400;color:var(--txtb);}
+.products__hint{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--txt2);}
+.products__scroll{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:8px;margin:0 -20px;padding-left:20px;padding-right:20px;}
+.products__scroll::-webkit-scrollbar{display:none;}
+.prod{flex:0 0 clamp(260px,30vw,320px);scroll-snap-align:start;}
+.prod__img{aspect-ratio:3/4;overflow:hidden;margin-bottom:16px;position:relative;filter:grayscale(.1);}
+.prod__img img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1);}
+.prod:hover .prod__img img{transform:scale(1.06);}
+.prod__img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(transparent,rgba(26,26,26,.4));}
+.prod__name{font-family:var(--serif);font-size:1.1rem;color:var(--txtb);}
+.prod__sub{font-family:var(--mono);font-size:.7rem;color:var(--txt2);letter-spacing:.05em;margin-top:2px;}
+
+/* ============================================================
+   §6 FULLBLEED — cinematic with pull quote
+   ============================================================ */
+.cinema{position:relative;min-height:65vh;display:flex;align-items:center;margin:0 clamp(20px,4vw,48px);overflow:hidden;}
+.cinema__bg{position:absolute;inset:0;}
+.cinema__bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(.3) contrast(1.1);}
+.cinema__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(26,26,26,.6) 50%,rgba(26,26,26,.3) 100%);}
+.cinema__in{position:relative;z-index:1;padding:clamp(40px,5vw,80px);max-width:550px;}
+.cinema__h2{font-family:var(--serif);font-size:var(--sh1);font-weight:400;color:var(--txtb);line-height:1.2;margin-bottom:20px;}
+.cinema__h2 em{color:var(--acc);font-style:italic;}
+.cinema__p{font-family:var(--mono);font-size:var(--sb);color:var(--txt2);line-height:1.9;}
+.cinema__accent{position:absolute;top:40px;right:60px;font-family:var(--serif);font-size:clamp(10rem,18vw,14rem);color:var(--acc);opacity:.06;line-height:1;z-index:1;}
+
+/* ============================================================
+   §7 GALLERY — broken grid overlap
+   ============================================================ */
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0 clamp(20px,4vw,48px);position:relative;}
+.gallery__item{overflow:hidden;position:relative;}
+.gallery__item:first-child{grid-row:1/3;aspect-ratio:auto;min-height:500px;}
+.gallery__item:nth-child(2){margin-top:60px;}
+.gallery__item:nth-child(3){margin-top:-40px;}
+.gallery__item img{width:100%;height:100%;object-fit:cover;filter:grayscale(.15);transition:transform 1s cubic-bezier(.16,1,.3,1),filter .5s;}
+.gallery__item:hover img{transform:scale(1.04);filter:grayscale(0);}
+
+/* ============================================================
+   §8 BEFORE/AFTER — split with diagonal
+   ============================================================ */
+.ba{display:grid;grid-template-columns:1fr 1fr;position:relative;margin:0 clamp(20px,4vw,48px);}
+.ba__col{padding:clamp(40px,5vw,64px);}
+.ba__col--before{background:var(--surface);border:1px solid var(--line);border-right:none;}
+.ba__col--after{background:var(--bg);border:1px solid var(--acc);position:relative;}
+.ba__col--after::before{content:'';position:absolute;top:20px;bottom:20px;left:-1px;width:3px;background:var(--acc);}
+.ba__label{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;margin-bottom:32px;}
+.ba__col--before .ba__label{color:var(--txt2);}
+.ba__col--after .ba__label{color:var(--acc);}
+.ba__item{padding:16px 0;border-bottom:1px solid var(--line);}
+.ba__item:last-child{border:none;}
+.ba__item h4{font-family:var(--serif);font-size:1.15rem;color:var(--txtb);margin-bottom:4px;}
+.ba__col--before .ba__item h4{opacity:.6;}
+.ba__item p{font-family:var(--mono);font-size:.85rem;color:var(--txt2);line-height:1.7;}
+
+/* ============================================================
+   §9 PRICING — monospaced card
+   ============================================================ */
+.pricing{text-align:center;}
+.pricing__title{font-family:var(--serif);font-size:var(--sh2);font-weight:400;color:var(--txtb);margin-bottom:clamp(32px,4vw,56px);}
+.pricing__card{max-width:520px;margin:0 auto;border:1px solid var(--line);padding:clamp(40px,5vw,64px);position:relative;text-align:left;}
+.pricing__card::before{content:'';position:absolute;top:-1px;left:40px;right:40px;height:3px;background:var(--acc);}
+.pricing__badge{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:20px;display:block;}
+.pricing__price{font-family:var(--serif);font-size:var(--sh1);font-weight:400;color:var(--txtb);margin-bottom:4px;}
+.pricing__price small{font-family:var(--mono);font-size:.7rem;color:var(--txt2);margin-left:4px;}
+.pricing__desc{font-family:var(--mono);font-size:.8rem;color:var(--txt2);margin-bottom:28px;}
+.pricing__features{list-style:none;margin-bottom:36px;}
+.pricing__feat{font-family:var(--mono);font-size:.85rem;color:var(--txt2);padding:10px 0;border-bottom:1px solid var(--line);padding-left:16px;position:relative;}
+.pricing__feat::before{content:'>';color:var(--acc);position:absolute;left:0;font-size:.7rem;}
+.pricing__feat:last-child{border:none;}
+.pricing__btn{display:block;text-align:center;padding:16px;background:var(--acc);color:var(--bg);font-family:var(--mono);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;transition:all .3s;}
+.pricing__btn:hover{box-shadow:0 6px 20px rgba(255,94,26,.3);transform:translateY(-2px);}
+
+/* ============================================================
+   §10 REVIEWS
+   ============================================================ */
+.reviews__title{font-family:var(--serif);font-size:var(--sh2);font-weight:400;color:var(--txtb);margin-bottom:clamp(32px,4vw,48px);}
+.rev__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.review-card{border:1px solid var(--line);padding:clamp(28px,3vw,40px);position:relative;transition:border-color .3s;}
+.review-card:hover{border-color:var(--acc);}
+.review-card__top{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.review-card__avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;filter:grayscale(.3);}
+.review-card__info{}
+.review-card__name{font-family:var(--serif);font-size:.95rem;color:var(--txtb);}
+.review-card__meta{font-family:var(--mono);font-size:.65rem;color:var(--txt2);letter-spacing:.05em;}
+.review-card__stars{font-size:.65rem;letter-spacing:3px;color:var(--acc);margin-bottom:12px;}
+.review-card__quote{font-family:var(--serif);font-style:italic;font-size:var(--sb);color:var(--txt);line-height:1.7;}
+
+/* ============================================================
+   §11 PROCESS — horizontal numbered blocks
+   ============================================================ */
+.process__track{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.process__step{padding:clamp(32px,4vw,48px);border:1px solid var(--line);position:relative;transition:border-color .3s;}
+.process__step:hover{border-color:var(--acc);}
+.process__num{font-family:var(--serif);font-size:clamp(3rem,5vw,4rem);color:var(--txt);opacity:.08;line-height:1;margin-bottom:16px;}
+.process__t{font-family:var(--serif);font-size:var(--sh3);color:var(--txtb);margin-bottom:8px;}
+.process__d{font-family:var(--mono);font-size:.8rem;color:var(--txt2);line-height:1.7;}
+
+/* ============================================================
+   §12 FAQ — monospaced accordion
+   ============================================================ */
+.faq__in{max-width:700px;margin:0 auto;}
+.faq__item{border-bottom:1px solid var(--line);}
+.faq__q{cursor:pointer;padding:20px 0;font-family:var(--serif);font-size:1.1rem;color:var(--txtb);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s;}
+.faq__q:hover{color:var(--acc);}
+.faq__q::-webkit-details-marker{display:none;}
+.faq__q::after{content:'+';font-family:var(--mono);color:var(--acc);font-size:1.2rem;transition:transform .3s;}
+.faq__item[open] .faq__q::after{transform:rotate(45deg);}
+.faq__a{padding:0 0 20px;font-family:var(--mono);font-size:.88rem;color:var(--txt2);line-height:1.85;}
+
+/* ============================================================
+   §13 CTA — full accent block
+   ============================================================ */
+.cta{background:var(--acc);color:var(--bg);text-align:center;padding:clamp(72px,10vw,140px) clamp(24px,5vw,72px);margin:0 clamp(20px,4vw,48px);position:relative;overflow:hidden;}
+.cta::before{content:'GO';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--serif);font-size:clamp(15rem,30vw,25rem);opacity:.06;line-height:1;pointer-events:none;}
+.cta__h2{font-family:var(--serif);font-size:var(--sh1);font-weight:400;margin-bottom:16px;line-height:1.15;position:relative;z-index:1;}
+.cta__p{font-family:var(--mono);font-size:var(--sb);opacity:.7;margin-bottom:40px;position:relative;z-index:1;}
+.cta__btn{display:inline-block;padding:16px 56px;background:var(--bg);color:var(--acc);font-family:var(--mono);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;transition:all .3s;position:relative;z-index:1;}
+.cta__btn:hover{background:var(--txtb);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
+.cta__micro{font-family:var(--mono);font-size:.7rem;opacity:.5;margin-top:16px;position:relative;z-index:1;}
+
+/* FOOTER */
+footer{padding:40px clamp(20px,4vw,48px);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);}
+footer p{font-family:var(--mono);font-size:.65rem;color:var(--txt2);letter-spacing:.1em;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:768px){
+  .hero__bg{width:100%;height:50%;top:auto;bottom:0;}
+  .hero__h1{max-width:100%;}
+  .hero__bottom{flex-direction:column;align-items:flex-start;gap:24px;}
+  .hero__issue{display:none;}
+  .intro__inner{grid-template-columns:1fr;}
+  .intro__headline{position:static;}
+  .intro__body{column-count:1;}
+  .feat__inner,.feat--flip .feat__inner{grid-template-columns:1fr;}
+  .feat--flip .feat__img{order:0;}
+  .feat--flip .feat__text{order:1;text-align:left;}
+  .feat--flip .feat__tags{justify-content:flex-start;}
+  .feat__img img{min-height:280px;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat{border-right:none;border-bottom:1px solid var(--line);}
+  .stat:nth-child(odd){border-right:1px solid var(--line);}
+  .stat:nth-last-child(-n+2){border-bottom:none;}
+  .gallery{grid-template-columns:1fr;}
+  .gallery__item:first-child{grid-row:auto;min-height:300px;}
+  .gallery__item:nth-child(2){margin-top:0;}
+  .gallery__item:nth-child(3){margin-top:0;}
+  .ba{grid-template-columns:1fr;}
+  .ba__col--before{border-right:1px solid var(--line);border-bottom:none;}
+  .ba__col--after::before{top:auto;left:20px;right:20px;bottom:-1px;width:auto;height:3px;}
+  .rev__grid{grid-template-columns:1fr;}
+  .process__track{grid-template-columns:1fr;}
+  .products__head{flex-direction:column;align-items:flex-start;gap:8px;}
+  footer{flex-direction:column;gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<!-- §1 HERO -->
+<section class="hero">
+  <div class="hero__bg"><img src="{{images.hero}}" alt="" loading="eager"></div>
+  <div class="hero__issue">Vol.01</div>
+  <p class="hero__brand rv on">{{brand}}</p>
+  <h1 class="hero__h1 rv on">{{hero.headline}}</h1>
+  <div class="hero__bottom rv on">
+    <p class="hero__sub">{{hero.subheadline}}</p>
+    <a href="#pricing" class="hero__cta">{{hero.cta}}</a>
+  </div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §2 INTRO -->
+<section class="pad intro rv">
+  <div class="intro__inner">
+    <h2 class="intro__headline">{{intro.headline}}</h2>
+    <div class="intro__body">{{intro.body}}</div>
+  </div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §3 FEATURES -->
+<section class="pad">
+  <div class="label rv">Features</div>
+
+  <div class="feat rv" style="margin-top:40px;">
+    <div class="feat__inner">
+      <div class="feat__img"><img src="{{images.feat1}}" alt=""></div>
+      <div class="feat__text">
+        <div class="feat__ghost">01</div>
+        <h3 class="feat__h3">{{feat1.headline}}</h3>
+        <p class="feat__p">{{feat1.body}}</p>
+        <div class="feat__tags"><span class="feat__tag">{{feat1.tag1}}</span><span class="feat__tag">{{feat1.tag2}}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat feat--flip rv">
+    <div class="feat__inner">
+      <div class="feat__img"><img src="{{images.feat2}}" alt=""></div>
+      <div class="feat__text">
+        <div class="feat__ghost">02</div>
+        <h3 class="feat__h3">{{feat2.headline}}</h3>
+        <p class="feat__p">{{feat2.body}}</p>
+        <div class="feat__tags"><span class="feat__tag">{{feat2.tag1}}</span><span class="feat__tag">{{feat2.tag2}}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat rv">
+    <div class="feat__inner">
+      <div class="feat__img"><img src="{{images.feat3}}" alt=""></div>
+      <div class="feat__text">
+        <div class="feat__ghost">03</div>
+        <h3 class="feat__h3">{{feat3.headline}}</h3>
+        <p class="feat__p">{{feat3.body}}</p>
+        <div class="feat__tags"><span class="feat__tag">{{feat3.tag1}}</span><span class="feat__tag">{{feat3.tag2}}</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §4 STATS -->
+<div class="stats rv">
+  <div class="stat" data-d="1"><div class="stat__num">{{stat1.value}}{{stat1.unit}}</div><div class="stat__label">{{stat1.label}}</div></div>
+  <div class="stat" data-d="2"><div class="stat__num">{{stat2.value}}{{stat2.unit}}</div><div class="stat__label">{{stat2.label}}</div></div>
+  <div class="stat" data-d="3"><div class="stat__num">{{stat3.value}}{{stat3.unit}}</div><div class="stat__label">{{stat3.label}}</div></div>
+  <div class="stat" data-d="4"><div class="stat__num">{{stat4.value}}{{stat4.unit}}</div><div class="stat__label">{{stat4.label}}</div></div>
+</div>
+
+<div class="diag"></div>
+
+<!-- §5 PRODUCTS -->
+<section class="pad">
+  <div class="products__head rv">
+    <h2 class="products__title">{{products.headline}}</h2>
+    <span class="products__hint">Drag to explore →</span>
+  </div>
+  <div class="products__scroll">
+    <div class="prod rv" data-d="1"><div class="prod__img"><img src="{{images.product1}}" alt=""></div><p class="prod__name">{{products.item1.name}}</p><p class="prod__sub">{{products.item1.sub}}</p></div>
+    <div class="prod rv" data-d="2"><div class="prod__img"><img src="{{images.product2}}" alt=""></div><p class="prod__name">{{products.item2.name}}</p><p class="prod__sub">{{products.item2.sub}}</p></div>
+    <div class="prod rv" data-d="3"><div class="prod__img"><img src="{{images.product3}}" alt=""></div><p class="prod__name">{{products.item3.name}}</p><p class="prod__sub">{{products.item3.sub}}</p></div>
+    <div class="prod rv" data-d="4"><div class="prod__img"><img src="{{images.product4}}" alt=""></div><p class="prod__name">{{products.item4.name}}</p><p class="prod__sub">{{products.item4.sub}}</p></div>
+  </div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §6 FULLBLEED -->
+<section class="pad" style="padding-bottom:0;">
+  <div class="cinema rv">
+    <div class="cinema__bg"><img src="{{images.fullbleed}}" alt=""></div>
+    <div class="cinema__accent">&ldquo;</div>
+    <div class="cinema__in">
+      <h2 class="cinema__h2">{{fullbleed.headline}}</h2>
+      <p class="cinema__p">{{fullbleed.body}}</p>
+    </div>
+  </div>
+</section>
+
+<!-- §7 GALLERY -->
+<section class="pad">
+  <div class="label rv" style="margin-bottom:32px;">Gallery</div>
+  <div class="gallery rv">
+    <div class="gallery__item" data-d="1"><img src="{{images.gallery1}}" alt=""></div>
+    <div class="gallery__item" data-d="2"><img src="{{images.gallery2}}" alt=""></div>
+    <div class="gallery__item" data-d="3"><img src="{{images.gallery3}}" alt=""></div>
+  </div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §8 BEFORE/AFTER -->
+<section class="pad">
+  <div class="label rv" style="margin-bottom:32px;">Before &amp; After</div>
+  <div class="ba rv">
+    <div class="ba__col ba__col--before">
+      <p class="ba__label">Before</p>
+      <div class="ba__item"><h4>{{before1.title}}</h4><p>{{before1.desc}}</p></div>
+      <div class="ba__item"><h4>{{before2.title}}</h4><p>{{before2.desc}}</p></div>
+      <div class="ba__item"><h4>{{before3.title}}</h4><p>{{before3.desc}}</p></div>
+    </div>
+    <div class="ba__col ba__col--after">
+      <p class="ba__label">After</p>
+      <div class="ba__item"><h4>{{after1.title}}</h4><p>{{after1.desc}}</p></div>
+      <div class="ba__item"><h4>{{after2.title}}</h4><p>{{after2.desc}}</p></div>
+      <div class="ba__item"><h4>{{after3.title}}</h4><p>{{after3.desc}}</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §9 PRICING -->
+<section class="pad pricing" id="pricing">
+  <div class="label rv" style="justify-content:center;margin-bottom:16px;">Pricing</div>
+  <h2 class="pricing__title rv">{{pricing.headline}}</h2>
+  <div class="pricing__card rv">
+    <span class="pricing__badge">{{pricing.tier1.name}}</span>
+    <p class="pricing__price">{{pricing.tier1.price}}<small>{{pricing.tier1.unit}}</small></p>
+    <p class="pricing__desc">{{pricing.tier1.desc}}</p>
+    <ul class="pricing__features">{{pricing.tier1.features}}</ul>
+    <a href="#" class="pricing__btn">{{pricing.tier1.cta}}</a>
+  </div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §10 REVIEWS -->
+<section class="pad">
+  <div class="label rv" style="margin-bottom:16px;">Testimonials</div>
+  <h2 class="reviews__title rv">{{reviews.headline}}</h2>
+  <div class="rev__grid">{{reviews.cards}}</div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §11 PROCESS -->
+<section class="pad">
+  <div class="label rv" style="margin-bottom:32px;">Process</div>
+  <div class="process__track rv">
+    <div class="process__step" data-d="1"><div class="process__num">01</div><p class="process__t">{{process1.title}}</p><p class="process__d">{{process1.desc}}</p></div>
+    <div class="process__step" data-d="2"><div class="process__num">02</div><p class="process__t">{{process2.title}}</p><p class="process__d">{{process2.desc}}</p></div>
+    <div class="process__step" data-d="3"><div class="process__num">03</div><p class="process__t">{{process3.title}}</p><p class="process__d">{{process3.desc}}</p></div>
+  </div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §12 FAQ -->
+<section class="pad">
+  <div class="label rv" style="margin-bottom:32px;">FAQ</div>
+  <div class="faq__in">
+    {{faq.items}}
+  </div>
+</section>
+
+<div class="diag"></div>
+
+<!-- §13 CTA -->
+<section class="pad">
+  <div class="cta rv">
+    <h2 class="cta__h2">{{cta.headline}}</h2>
+    <p class="cta__p">{{cta.body}}</p>
+    <a href="#" class="cta__btn">{{cta.cta}}</a>
+    <p class="cta__micro">{{cta.micro}}</p>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 {{brand}}</p>
+  <p>Vol. 01</p>
+</footer>
+
+<script>
+(function(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}
+    });
+  },{threshold:.06,rootMargin:'0px 0px 40px 0px'});
+  document.querySelectorAll('.rv,.rv-slide').forEach(function(el){if(!el.classList.contains('on'))io.observe(el);});
+})();
+</script>
+</body>
+</html>
