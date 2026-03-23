@@ -3,19 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{brand}} — BOLD</title>
-<link href="{{token.fontUrl}}" rel="stylesheet">
+<title>ERGO CHAIR PRO — 당신의 허리가<br><em>감사할 의자</em></title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bk:{{token.bg}};--wh:{{token.textPrimary}};--red:{{token.primary}};--ye:{{token.primaryPale}};
-  --gy:{{token.textSecondary}};--gl:{{token.frostLine}};
-  --bebas:{{token.fontDisplay}};
-  --noto:{{token.fontBody}};
-  --size-display:{{token.sizeDisplay}};
-  --size-h1:{{token.sizeH1}};
-  --size-h2:{{token.sizeH2}};
-  --size-h3:{{token.sizeH3}};
-  --size-body:{{token.sizeBody}};
+  --bk:#000;--wh:#fff;--red:#FF2D20;--ye:#FFD60A;
+  --gy:#888;--gl:rgba(255,255,255,.1);
+  --bebas:'Bebas Neue',sans-serif;
+  --noto:'Noto Sans KR',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -35,9 +30,9 @@ a{color:inherit;text-decoration:none;}
 .hero__bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.35);}
 .hero__in{position:relative;z-index:1;padding:clamp(40px,5vw,80px);}
 .hero__brand{font-family:var(--bebas);font-size:clamp(.9rem,1.5vw,1.2rem);letter-spacing:.4em;color:var(--gy);margin-bottom:24px;}
-.hero__h1{font-family:var(--bebas);font-size:var(--size-display);line-height:.88;letter-spacing:.02em;margin-bottom:24px;text-transform:uppercase;}
+.hero__h1{font-family:var(--bebas);font-size:clamp(4rem,10vw,8rem);line-height:.88;letter-spacing:.02em;margin-bottom:24px;text-transform:uppercase;}
 .hero__h1 em{color:var(--ye);font-style:normal;}
-.hero__sub{font-size:var(--size-body);color:var(--gy);max-width:480px;margin-bottom:36px;line-height:1.8;font-weight:400;}
+.hero__sub{font-size:clamp(.9rem,1.2vw,1.05rem);color:var(--gy);max-width:480px;margin-bottom:36px;line-height:1.8;font-weight:400;}
 .hero__cta{display:inline-block;padding:16px 52px;background:var(--wh);color:var(--bk);font-family:var(--bebas);font-size:1.2rem;letter-spacing:.1em;transition:all .3s;}
 .hero__cta:hover{background:var(--ye);color:var(--bk);}
 
@@ -45,7 +40,7 @@ a{color:inherit;text-decoration:none;}
    §2 INTRO — 대형 텍스트 블록 (세로 크게)
    ============================================================ */
 .intro{display:flex;align-items:center;justify-content:center;text-align:center;min-height:60vh;padding:clamp(80px,12vw,160px) clamp(20px,4vw,48px);border-bottom:1px solid var(--gl);}
-.intro__text{font-family:var(--bebas);font-size:var(--size-h1);line-height:1.1;letter-spacing:.04em;text-transform:uppercase;max-width:900px;}
+.intro__text{font-family:var(--bebas);font-size:clamp(2.5rem,6vw,5rem);line-height:1.1;letter-spacing:.04em;text-transform:uppercase;max-width:900px;}
 .intro__text em{color:var(--ye);font-style:normal;}
 .intro__text small{display:block;font-family:var(--noto);font-size:clamp(.85rem,1.1vw,1rem);font-weight:400;color:var(--gy);margin-top:28px;letter-spacing:0;text-transform:none;line-height:1.8;}
 
@@ -58,7 +53,7 @@ a{color:inherit;text-decoration:none;}
 .feat__img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);}
 .feat__txt{display:flex;align-items:center;padding:clamp(36px,5vw,72px);}
 .feat__num{font-family:var(--bebas);font-size:6rem;color:rgba(255,255,255,.06);line-height:1;margin-bottom:12px;}
-.feat__h3{font-family:var(--bebas);font-size:var(--size-h2);text-transform:uppercase;letter-spacing:.03em;line-height:1.05;margin-bottom:14px;}
+.feat__h3{font-family:var(--bebas);font-size:clamp(2rem,3.5vw,3rem);text-transform:uppercase;letter-spacing:.03em;line-height:1.05;margin-bottom:14px;}
 .feat__h3 em{color:var(--ye);font-style:normal;}
 .feat__p{font-size:.95rem;color:var(--gy);line-height:1.8;margin-bottom:20px;font-weight:400;}
 .feat__list{list-style:none;}
@@ -211,18 +206,18 @@ a{color:inherit;text-decoration:none;}
 <section class="hero">
   <div class="hero__bg"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt=""></div>
   <div class="hero__in rv on">
-    <p class="hero__brand">{{brand}}</p>
-    <h1 class="hero__h1">{{hero.headline}}</h1>
-    <p class="hero__sub">{{hero.subheadline}}</p>
-    <a href="#pricing" class="hero__cta">{{hero.cta}}</a>
+    <p class="hero__brand">ERGO CHAIR PRO</p>
+    <h1 class="hero__h1">당신의 허리가<br><em>감사할 의자</em></h1>
+    <p class="hero__sub">인체공학 설계 × 프리미엄 소재.<br>하루 8시간, 10년을 함께할 의자.</p>
+    <a href="#pricing" class="hero__cta">무료 체험 신청</a>
   </div>
 </section>
 
 <!-- §2 INTRO -->
 <section class="intro rv">
   <div class="intro__text">
-    {{intro.headline}}
-    <small>{{intro.body}}</small>
+    앉는 자세의 혁신,<br><em>ErgoChair</em> 프로
+    <small>15년간의 인체공학 연구와 3,000명의 임상 데이터를 기반으로 설계했습니다. 허리, 목, 어깨의 부담을 분산하여 장시간 앉아도 피로하지 않는 경험을 만듭니다.</small>
   </div>
 </section>
 
@@ -231,44 +226,26 @@ a{color:inherit;text-decoration:none;}
   <div class="feat__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80" alt=""></div>
   <div class="feat__txt"><div>
     <p class="feat__num">01</p>
-    <h3 class="feat__h3">{{feat1.headline}}</h3>
-    <p class="feat__p">{{feat1.body}}</p>
-    <ul class="feat__list">
-      <li class="feat__li">{{feat1.tag1}}</li>
-      <li class="feat__li">{{feat1.tag2}}</li>
-    </ul>
+    <h3 class="feat__h3">4D <em>럼버 서포트</em></h3>
+    <p class="feat__p">허리 곡선에 맞춰 4방향으로 조절되는 럼버 서포트. 앉는 순간 자동으로 체형을 감지합니다.</p>
   </div></div>
 </div>
 <div class="feat__row feat__row--r rv">
   <div class="feat__img"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=900&q=80" alt=""></div>
   <div class="feat__txt"><div>
     <p class="feat__num">02</p>
-    <h3 class="feat__h3">{{feat2.headline}}</h3>
-    <p class="feat__p">{{feat2.body}}</p>
-    <ul class="feat__list">
-      <li class="feat__li">{{feat2.tag1}}</li>
-      <li class="feat__li">{{feat2.tag2}}</li>
-    </ul>
+    <h3 class="feat__h3">메시 <em>통기성</em> 소재</h3>
+    <p class="feat__p">항공우주급 메시 소재로 여름에도 쾌적합니다. 체온을 자동으로 조절하여 땀 없는 착석감.</p>
   </div></div>
 </div>
 
 <!-- §5 STATS -->
 <section class="stats">
   <div class="stats__grid">
-    <div class="stats__item rv"><p class="stats__num stats__num--y">{{stat1.value}}{{stat1.unit}}</p><p class="stats__lab">{{stat1.label}}</p></div>
-    <div class="stats__item rv" data-d="1"><p class="stats__num stats__num--r">{{stat2.value}}{{stat2.unit}}</p><p class="stats__lab">{{stat2.label}}</p></div>
-    <div class="stats__item rv" data-d="2"><p class="stats__num stats__num--y">{{stat3.value}}{{stat3.unit}}</p><p class="stats__lab">{{stat3.label}}</p></div>
-    <div class="stats__item rv" data-d="3"><p class="stats__num">{{stat4.value}}{{stat4.unit}}</p><p class="stats__lab">{{stat4.label}}</p></div>
-  </div>
-</section>
-
-<!-- §3 PRODUCTS -->
-<section class="sec">
-  <div class="products__grid">
-    <div class="prod-card rv"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=600&q=80" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 오리지널</p><p class="prod-card__sub">The Classic — 7존 체압분산의 시작</p></div></div>
-    <div class="prod-card rv" data-d="1"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 프로</p><p class="prod-card__sub">The Professional — 라텍스 레이어</p></div></div>
-    <div class="prod-card rv" data-d="2"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 토퍼</p><p class="prod-card__sub">The Topper — 즉시 업그레이드</p></div></div>
-    <div class="prod-card rv" data-d="3"><img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt=""><div class="prod-card__info"><p class="prod-card__name">슬립웰 베개</p><p class="prod-card__sub">The Pillow — 경추 맞춤형</p></div></div>
+    <div class="stats__item rv"><p class="stats__num stats__num--y">97%</p><p class="stats__lab">고객 만족도</p></div>
+    <div class="stats__item rv" data-d="1"><p class="stats__num stats__num--r">8500</p><p class="stats__lab">5성급 리뷰</p></div>
+    <div class="stats__item rv" data-d="2"><p class="stats__num stats__num--y">30일</p><p class="stats__lab">무료 체험</p></div>
+    <div class="stats__item rv" data-d="3"><p class="stats__num">12년</p><p class="stats__lab">프레임 보증</p></div>
   </div>
 </section>
 
@@ -276,21 +253,8 @@ a{color:inherit;text-decoration:none;}
 <section class="cinema">
   <div class="cinema__bg"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt=""></div>
   <div class="cinema__in rv">
-    <h2 class="cinema__h2">{{fullbleed.headline}}</h2>
-    <p class="cinema__p">{{fullbleed.body}}</p>
-  </div>
-</section>
-
-<!-- §6 GALLERY -->
-<section class="sec" style="padding-bottom:0;">
-  <div class="gallery__grid">
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt=""></div>
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80" alt=""></div>
-  </div>
-  <div class="gallery__row2">
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt=""></div>
-    <div class="gallery__item"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80" alt=""></div>
+    <h2 class="cinema__h2">독일 엔지니어링의<br><em>정밀함</em></h2>
+    <p class="cinema__p">알루미늄 다이캐스트 프레임, 이탈리아산 가죽 팔걸이, 독일 가스 실린더 — 모든 부품은 TÜV 인증을 받았습니다. 10년 사용해도 처음 그대로.</p>
   </div>
 </section>
 
@@ -299,58 +263,107 @@ a{color:inherit;text-decoration:none;}
   <div class="ba__col ba__col--b">
     <p class="ba__label ba__label--b">BEFORE</p>
     <ul class="ba__list">
-      <li class="ba__li ba__li--b">{{before1.title}} — {{before1.desc}}</li>
-      <li class="ba__li ba__li--b">{{before2.title}} — {{before2.desc}}</li>
-      <li class="ba__li ba__li--b">{{before3.title}} — {{before3.desc}}</li>
+      <li class="ba__li ba__li--b">오후 3시 허리 통증 — 일반 의자의 평평한 등받이로 요추 지지 부족</li>
+      <li class="ba__li ba__li--b">집중력 저하 — 불편한 자세로 인한 잦은 자세 변경, 업무 효율 감소</li>
+      <li class="ba__li ba__li--b">2년마다 의자 교체 — 쿠션 꺼짐, 가스 실린더 고장으로 반복 구매</li>
     </ul>
   </div>
   <div class="ba__col">
     <p class="ba__label ba__label--a">AFTER</p>
     <ul class="ba__list">
-      <li class="ba__li ba__li--a">{{after1.title}} — {{after1.desc}}</li>
-      <li class="ba__li ba__li--a">{{after2.title}} — {{after2.desc}}</li>
-      <li class="ba__li ba__li--a">{{after3.title}} — {{after3.desc}}</li>
+      <li class="ba__li ba__li--a">8시간 무통증 — 4D 럼버 서포트가 허리를 완벽하게 받쳐줌</li>
+      <li class="ba__li ba__li--a">집중력 35% 향상 — 편안한 자세 유지로 몰입 시간 대폭 증가</li>
+      <li class="ba__li ba__li--a">12년 프레임 보증 — 알루미늄 프레임 + TÜV 인증 부품으로 장기 사용</li>
     </ul>
   </div>
 </section>
 
 <!-- §9 PRICING -->
 <section class="sec pricing" id="pricing">
-  <p class="pricing__label rv">{{pricing.tier1.name}}</p>
-  <h2 class="pricing__h2 rv">{{pricing.headline}}</h2>
-  <p class="pricing__old rv">{{pricing.tier1.desc}}</p>
-  <p class="pricing__now rv">{{pricing.tier1.price}}<small>{{pricing.tier1.unit}}</small></p>
-  <p class="pricing__features rv">{{pricing.tier1.features}}</p>
-  <a href="#" class="pricing__btn rv">{{pricing.tier1.cta}}</a>
+  <p class="pricing__label rv">Standard</p>
+  <h2 class="pricing__h2 rv">합리적인 <em>투자</em></h2>
+  <p class="pricing__old rv">완벽한 자세의 시작</p>
+  <p class="pricing__now rv">₩690,000<small>/ 기본</small></p>
+  <p class="pricing__features rv"><li>4D 럼버 서포트</li>
+        <li>메시 등받이</li>
+        <li>3D 팔걸이</li>
+        <li>무료 배송</li>
+        <li>30일 무료 체험</li></p>
+  <a href="#" class="pricing__btn rv">Standard 선택</a>
 </section>
 
 <!-- §10 REVIEWS -->
 <section>
-  <div class="rev__grid">{{reviews.cards}}</div>
-</section>
+  
+    <div class="review-card rv" data-d="1">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=11" alt="">
+        <div class="review-card__info"><p class="review-card__name">이정호</p><p class="review-card__meta">개발자 · 판교</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"하루 10시간 코딩하는데 허리가 안 아파요. 인생 의자입니다."</p>
+    </div>
 
-<!-- §11 PROCESS -->
-<section>
-  <div class="process__grid rv">
-    <div class="process__step"><p class="process__num">01</p><p class="process__t">온라인 주문</p><p class="process__d">3분이면 완료</p></div>
-    <div class="process__step"><p class="process__num">02</p><p class="process__t">무료 배송 · 설치</p><p class="process__d">주문 후 1~2일</p></div>
-    <div class="process__step"><p class="process__num">03</p><p class="process__t">100일 체험</p><p class="process__d">불만족 시 전액 환불</p></div>
-  </div>
+    <div class="review-card rv" data-d="2">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=45" alt="">
+        <div class="review-card__info"><p class="review-card__name">박소연</p><p class="review-card__meta">디자이너 · 서울</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"이전 의자에서 목 통증이 심했는데 완전히 사라졌어요."</p>
+    </div>
+
+    <div class="review-card rv" data-d="3">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=53" alt="">
+        <div class="review-card__info"><p class="review-card__name">김태현</p><p class="review-card__meta">PO · 강남</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"회의실에서도 이 의자 쓰고 싶을 정도. 회사에 추가 주문했습니다."</p>
+    </div>
+
+    <div class="review-card rv" data-d="4">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=29" alt="">
+        <div class="review-card__info"><p class="review-card__name">최유진</p><p class="review-card__meta">작가 · 제주</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"글 쓸 때 자세가 편하니까 집중 시간이 확 늘었어요."</p>
+    </div>
 </section>
 
 <!-- §12 FAQ -->
 <section class="sec">
   <div class="faq__in">
-{{faq.items}}
+    
+    <div class="faq__item rv" data-d="1">
+      <h4 class="faq__q">조립이 어렵지 않나요?</h4>
+      <p class="faq__a">전문 기사가 방문하여 무료로 조립 설치합니다. 30분이면 완료됩니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="2">
+      <h4 class="faq__q">30일 체험 후 반품 절차는?</h4>
+      <p class="faq__a">고객센터에 연락하시면 48시간 내 수거 방문. 전액 환불이며 수거비 무료입니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="3">
+      <h4 class="faq__q">쿠션은 교체 가능한가요?</h4>
+      <p class="faq__a">네, 좌석 쿠션과 팔걸이 패드는 개별 구매 가능합니다. 3년 주기 교체를 권장합니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="4">
+      <h4 class="faq__q">체중 제한이 있나요?</h4>
+      <p class="faq__a">150kg까지 지원합니다. 알루미늄 프레임으로 내구성이 뛰어납니다.</p>
+    </div>
   </div>
 </section>
 
 <!-- §13 CTA -->
 <section class="cta">
-  <h2 class="cta__h2 rv">{{cta.headline}}</h2>
-  <p class="cta__p rv">{{cta.body}}</p>
-  <a href="#" class="cta__btn rv">{{cta.cta}}</a>
-  <p class="cta__micro rv">{{cta.micro}}</p>
+  <h2 class="cta__h2 rv">지금 바꾸면<br><em>내일이 다릅니다</em></h2>
+  <p class="cta__p rv">30일 무위험 체험으로 시작하세요.<br>만족하지 못하시면 전액 환불해 드립니다.</p>
+  <a href="#" class="cta__btn rv">무료 체험 신청</a>
+  <p class="cta__micro rv">무료 배송 · 무료 조립 · 100% 환불 보장</p>
 </section>
 
 <script>

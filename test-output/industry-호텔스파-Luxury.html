@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{brand}} — {{hero.headline}}</title>
+<title>MAISON SÉRÉNÉ — 도심 속<br><em>오아시스</em></title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="{{token.fontUrl}}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -23,25 +23,25 @@ a { text-decoration: none; color: inherit; }
    CSS VARIABLES
    ============================================================ */
 :root {
-  --bg: {{token.bg}};
-  --warm: {{token.surfaceLight}};
-  --surface: {{token.surface}};
-  --gold: {{token.primary}};
-  --gold-l: {{token.primaryLight}};
-  --cream: {{token.textBright}};
-  --mist: {{token.frost}};
-  --ghost: {{token.frostLine}};
-  --gold-dim: {{token.primaryPale}};
-  --text-primary: {{token.textPrimary}};
-  --text-secondary: {{token.textSecondary}};
-  --frost-glow: {{token.frostGlow}};
-  --serif: {{token.fontDisplay}};
-  --body-font: {{token.fontBody}};
-  --size-display: {{token.sizeDisplay}};
-  --size-h1: {{token.sizeH1}};
-  --size-h2: {{token.sizeH2}};
-  --size-h3: {{token.sizeH3}};
-  --size-body: {{token.sizeBody}};
+  --bg: #0A0806;
+  --warm: #1E1A16;
+  --surface: #141210;
+  --gold: #C6A44E;
+  --gold-l: #E8D5A0;
+  --cream: #F5EFE0;
+  --mist: rgba(245,239,224,.55);
+  --ghost: rgba(245,239,224,.25);
+  --gold-dim: rgba(198,164,78,.15);
+  --text-primary: #F5EFE0;
+  --text-secondary: rgba(245,239,224,.55);
+  --frost-glow: rgba(198,164,78,.08);
+  --serif: 'Playfair Display','Noto Serif KR',serif;
+  --body-font: 'Cormorant','Noto Serif KR',serif;
+  --size-display: clamp(3rem,5vw,5.5rem);
+  --size-h1: clamp(2.2rem,3.5vw,3rem);
+  --size-h2: clamp(1.6rem,3vw,2.4rem);
+  --size-h3: clamp(1.2rem,1.8vw,1.5rem);
+  --size-body: clamp(.95rem,1.1vw,1.05rem);
 }
 
 /* ============================================================
@@ -1158,10 +1158,10 @@ body::before {
      ============================================================ -->
 <section class="hero">
   <div class="hero__text">
-    <div class="hero__brand rv">{{brand}}</div>
-    <h1 class="hero__headline rv rv-d1">{{hero.headline}}</h1>
-    <p class="hero__sub rv rv-d2">{{hero.subheadline}}</p>
-    <a href="#" class="hero__cta rv rv-d3"><span>{{hero.cta}}</span></a>
+    <div class="hero__brand rv">MAISON SÉRÉNÉ</div>
+    <h1 class="hero__headline rv rv-d1">도심 속<br><em>오아시스</em></h1>
+    <p class="hero__sub rv rv-d2">프렌치 아로마테라피 × 한방 힐링.<br>당신만을 위한 90분의 여정.</p>
+    <a href="#" class="hero__cta rv rv-d3"><span>예약하기</span></a>
   </div>
   <div class="hero__image">
     <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt="Luxury bedroom" loading="lazy">
@@ -1174,9 +1174,9 @@ body::before {
 <section class="intro">
   <div class="intro__line rv"></div>
   <p class="intro__quote rv rv-d1">
-    {{intro.headline}}
+    몸과 마음의 <em>균형</em>
   </p>
-  <div class="intro__credit rv rv-d2">{{intro.body}}</div>
+  <div class="intro__credit rv rv-d2">파리 르봉마르셰에서 영감을 받은 공간. 유기농 에센셜 오일과 전통 한방 기법을 결합한 시그니처 트리트먼트.</div>
 </section>
 
 <!-- ============================================================
@@ -1189,11 +1189,11 @@ body::before {
     </div>
     <div class="zigzag__card rv rv-d1">
       <span class="zigzag__number">01</span>
-      <div class="zigzag__tag">{{feat1.tag1}}</div>
-      <h3 class="zigzag__title">{{feat1.headline}}</h3>
-      <p class="zigzag__body">{{feat1.body}}</p>
+      <div class="zigzag__tag">유기농 오일</div>
+      <h3 class="zigzag__title">아로마 <em>딥 릴렉스</em></h3>
+      <p class="zigzag__body">라벤더, 일랑일랑, 베르가못 블렌딩. 근육 이완과 스트레스 해소를 동시에.</p>
       <ul class="zigzag__bullets">
-        <li>{{feat1.tag1}}</li><li>{{feat1.tag2}}</li>
+        <li>유기농 오일</li><li>90분 코스</li>
       </ul>
     </div>
   </div>
@@ -1204,11 +1204,11 @@ body::before {
     </div>
     <div class="zigzag__card rv rv-d1">
       <span class="zigzag__number">02</span>
-      <div class="zigzag__tag">{{feat2.tag1}}</div>
-      <h3 class="zigzag__title">{{feat2.headline}}</h3>
-      <p class="zigzag__body">{{feat2.body}}</p>
+      <div class="zigzag__tag">체질별 맞춤</div>
+      <h3 class="zigzag__title">한방 <em>경락</em> 테라피</h3>
+      <p class="zigzag__body">12경락 순환 마사지. 동의보감 기반 체질별 맞춤 처방으로 근본적 피로 해소.</p>
       <ul class="zigzag__bullets">
-        <li>{{feat2.tag1}}</li><li>{{feat2.tag2}}</li>
+        <li>체질별 맞춤</li><li>경락 순환</li>
       </ul>
     </div>
   </div>
@@ -1221,38 +1221,38 @@ body::before {
   <div class="marquee">
     <div class="marquee__group">
       <div class="marquee__item">
-        <span class="marquee__number">{{stat1.value}}{{stat1.unit}}</span>
-        <span class="marquee__label">{{stat1.label}}</span>
+        <span class="marquee__number">4.9</span>
+        <span class="marquee__label">평균 별점</span>
       </div>
       <div class="marquee__item">
-        <span class="marquee__number">{{stat2.value}}{{stat2.unit}}</span>
-        <span class="marquee__label">{{stat2.label}}</span>
+        <span class="marquee__number">12000+</span>
+        <span class="marquee__label">누적 방문</span>
       </div>
       <div class="marquee__item">
-        <span class="marquee__number">{{stat3.value}}{{stat3.unit}}</span>
-        <span class="marquee__label">{{stat3.label}}</span>
+        <span class="marquee__number">98%</span>
+        <span class="marquee__label">재방문율</span>
       </div>
       <div class="marquee__item">
-        <span class="marquee__number">{{stat4.value}}{{stat4.unit}}</span>
-        <span class="marquee__label">{{stat4.label}}</span>
+        <span class="marquee__number">15종</span>
+        <span class="marquee__label">시그니처 오일</span>
       </div>
     </div>
     <div class="marquee__group" aria-hidden="true">
       <div class="marquee__item">
-        <span class="marquee__number">{{stat1.value}}{{stat1.unit}}</span>
-        <span class="marquee__label">{{stat1.label}}</span>
+        <span class="marquee__number">4.9</span>
+        <span class="marquee__label">평균 별점</span>
       </div>
       <div class="marquee__item">
-        <span class="marquee__number">{{stat2.value}}{{stat2.unit}}</span>
-        <span class="marquee__label">{{stat2.label}}</span>
+        <span class="marquee__number">12000+</span>
+        <span class="marquee__label">누적 방문</span>
       </div>
       <div class="marquee__item">
-        <span class="marquee__number">{{stat3.value}}{{stat3.unit}}</span>
-        <span class="marquee__label">{{stat3.label}}</span>
+        <span class="marquee__number">98%</span>
+        <span class="marquee__label">재방문율</span>
       </div>
       <div class="marquee__item">
-        <span class="marquee__number">{{stat4.value}}{{stat4.unit}}</span>
-        <span class="marquee__label">{{stat4.label}}</span>
+        <span class="marquee__number">15종</span>
+        <span class="marquee__label">시그니처 오일</span>
       </div>
     </div>
   </div>
@@ -1305,8 +1305,8 @@ body::before {
   </div>
   <div class="fullbleed__content">
     <div class="fullbleed__divider rv"></div>
-    <h2 class="fullbleed__headline rv rv-d1">{{fullbleed.headline}}</h2>
-    <p class="fullbleed__sub rv rv-d2">{{fullbleed.body}}</p>
+    <h2 class="fullbleed__headline rv rv-d1">자연에서 온 <em>치유</em></h2>
+    <p class="fullbleed__sub rv rv-d2">모든 오일은 프랑스 프로방스 직수입 유기농 원료. ECOCERT 인증, 동물실험 하지 않습니다.</p>
   </div>
 </section>
 
@@ -1342,16 +1342,16 @@ body::before {
   <div class="ba__split rv">
     <div class="ba__col ba__col--before">
       <div class="ba__label">Before</div>
-      <div class="ba__item">{{before1.title}} &mdash; {{before1.desc}}</div>
-      <div class="ba__item">{{before2.title}} &mdash; {{before2.desc}}</div>
-      <div class="ba__item">{{before3.title}} &mdash; {{before3.desc}}</div>
+      <div class="ba__item">기존 문제 1 &mdash; 불편함이 지속됨</div>
+      <div class="ba__item">기존 문제 2 &mdash; 비효율적인 경험</div>
+      <div class="ba__item">기존 문제 3 &mdash; 반복적인 비용 발생</div>
     </div>
     <div class="ba__divider"></div>
     <div class="ba__col ba__col--after">
       <div class="ba__label">After</div>
-      <div class="ba__item">{{after1.title}} &mdash; {{after1.desc}}</div>
-      <div class="ba__item">{{after2.title}} &mdash; {{after2.desc}}</div>
-      <div class="ba__item">{{after3.title}} &mdash; {{after3.desc}}</div>
+      <div class="ba__item">개선 결과 1 &mdash; 확실한 차이를 느낌</div>
+      <div class="ba__item">개선 결과 2 &mdash; 효율이 크게 향상됨</div>
+      <div class="ba__item">개선 결과 3 &mdash; 장기적 비용 절감</div>
     </div>
   </div>
 </section>
@@ -1362,31 +1362,70 @@ body::before {
 <section class="pricing">
   <div class="glow-orb"></div>
 
-  <p class="eyebrow rv">{{pricing.tier1.desc}}</p>
-  <h2 class="section-title rv rv-d1">{{pricing.headline}}</h2>
+  <p class="eyebrow rv">시그니처 아로마 코스</p>
+  <h2 class="section-title rv rv-d1">트리트먼트 <em>메뉴</em></h2>
 
   <div class="pricing-card rv rv-d2">
     <div class="corners-bottom"></div>
 
-    <div class="pricing-badge">{{pricing.tier1.name}}</div>
-    <p class="pricing-old-price">{{pricing.tier1.unit}}</p>
-    <p class="pricing-price">{{pricing.tier1.price}}<span style="font-size:0.4em;vertical-align:super;opacity:.7;">원</span></p>
+    <div class="pricing-badge">Signature</div>
+    <p class="pricing-old-price">/ 90분</p>
+    <p class="pricing-price">₩280,000<span style="font-size:0.4em;vertical-align:super;opacity:.7;">원</span></p>
 
     <ul class="pricing-features">
-      {{pricing.tier1.features}}
+      <li>아로마 딥 릴렉스 90분</li>
+        <li>유기농 에센셜 오일</li>
+        <li>허브티 서비스</li>
+        <li>프라이빗 라운지</li>
+        <li>주차 2시간 무료</li>
     </ul>
 
-    <a href="#" class="pricing-btn">{{pricing.tier1.cta}}</a>
+    <a href="#" class="pricing-btn">예약하기</a>
   </div>
 </section>
 
 <!-- ============================================================
      S10 REVIEWS
      ============================================================ -->
-<div class="section-heading rv"><span>{{reviews.headline}}</span></div>
+<div class="section-heading rv"><span>고객 <em>후기</em></span></div>
 <section class="reviews">
   <div class="reviews__grid">
-    {{reviews.cards}}
+    
+    <div class="review-card rv" data-d="1">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=32" alt="">
+        <div class="review-card__info"><p class="review-card__name">김지현</p><p class="review-card__meta">32세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"정말 만족합니다. 주변에 추천하고 있어요."</p>
+    </div>
+
+    <div class="review-card rv" data-d="2">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=60" alt="">
+        <div class="review-card__info"><p class="review-card__name">이준호</p><p class="review-card__meta">41세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"기대 이상이었어요. 삶의 질이 달라졌습니다."</p>
+    </div>
+
+    <div class="review-card rv" data-d="3">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=47" alt="">
+        <div class="review-card__info"><p class="review-card__name">박서연</p><p class="review-card__meta">28세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"이 가격에 이 품질이라니. 최고의 선택."</p>
+    </div>
+
+    <div class="review-card rv" data-d="4">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=12" alt="">
+        <div class="review-card__info"><p class="review-card__name">정민수</p><p class="review-card__meta">35세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"두 번째 구매입니다. 변함없는 품질."</p>
+    </div>
   </div>
 </section>
 
@@ -1424,7 +1463,26 @@ body::before {
   </div>
 
   <div class="faq-list">
-    {{faq.items}}
+    
+    <div class="faq__item rv" data-d="1">
+      <h4 class="faq__q">배송은 얼마나 걸리나요?</h4>
+      <p class="faq__a">주문 후 1~3일 내 무료 배송됩니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="2">
+      <h4 class="faq__q">반품/교환이 가능한가요?</h4>
+      <p class="faq__a">체험 기간 내 무료 반품 가능합니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="3">
+      <h4 class="faq__q">보증 기간은?</h4>
+      <p class="faq__a">품질 보증 기간 동안 무상 수리 가능합니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="4">
+      <h4 class="faq__q">AS는 어떻게 받나요?</h4>
+      <p class="faq__a">고객센터에 연락하시면 48시간 내 처리됩니다.</p>
+    </div>
   </div>
 </section>
 
@@ -1435,10 +1493,10 @@ body::before {
   <div class="cta__border"></div>
   <div class="cta__inner">
     <div class="cta__line rv"></div>
-    <h2 class="cta__headline rv rv-d1">{{cta.headline}}</h2>
-    <p class="cta__sub rv rv-d2">{{cta.body}}</p>
-    <button class="cta__button rv rv-d3"><span>{{cta.cta}}</span></button>
-    <p class="cta__micro rv rv-d4">{{cta.micro}}</p>
+    <h2 class="cta__headline rv rv-d1">오늘, <em>당신</em>을 위한 시간</h2>
+    <p class="cta__sub rv rv-d2">첫 방문 20% 할인. 마음에 들지 않으면 전액 환불.</p>
+    <button class="cta__button rv rv-d3"><span>첫 방문 예약</span></button>
+    <p class="cta__micro rv rv-d4">당일 예약 가능 · 주차 무료 · 100% 환불</p>
   </div>
 </section>
 

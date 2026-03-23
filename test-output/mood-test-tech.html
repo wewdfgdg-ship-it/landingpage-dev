@@ -3,25 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{brand}} — {{hero.headline}}</title>
-<link href="{{token.fontUrl}}" rel="stylesheet">
+<title>ERGO CHAIR PRO — 당신의 허리가<br><em>감사할 의자</em></title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --v:{{token.primary}};--vl:{{token.primaryLight}};--vd:{{token.primaryPale}};
-  --c:{{token.frost}};--cd:{{token.frostLine}};
+  --v:#7C3AED;--vl:#A78BFA;--vd:#5B21B6;
+  --c:#06D6A0;--cd:#059669;
   --pk:#F472B6;--am:#FBBF24;
-  --bg:{{token.bg}};--sf:{{token.surface}};--card:{{token.surfaceLight}};
-  --b:{{token.frostLine}};
-  --t1:{{token.textBright}};--t2:{{token.textSecondary}};--t3:{{token.textPrimary}};
-  --gv:{{token.frostGlow}};--gc:rgba(6,214,160,.25);
-  --ff:{{token.fontBody}};
-  --fd:{{token.fontDisplay}};
+  --bg:#07070E;--sf:#0E0E1A;--card:#141422;
+  --b:#1E1E35;
+  --t1:#F0F0F5;--t2:#A0A0BE;--t3:#606080;
+  --gv:rgba(124,58,237,.3);--gc:rgba(6,214,160,.25);
+  --ff:'Noto Sans KR','Outfit',sans-serif;
+  --fd:'Outfit',sans-serif;
   --fm:'IBM Plex Mono',monospace;
-  --size-display:{{token.sizeDisplay}};
-  --size-h1:{{token.sizeH1}};
-  --size-h2:{{token.sizeH2}};
-  --size-h3:{{token.sizeH3}};
-  --size-body:{{token.sizeBody}};
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -37,7 +32,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sec{padding:clamp(48px,6vw,80px) 0;position:relative;z-index:1;}
 .tag{font-family:var(--fm);font-size:.7rem;font-weight:600;color:var(--c);letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
 .tag::before{content:'//';color:var(--v);font-weight:700;}
-.sec-title{font-family:var(--fd);font-size:var(--size-h2);font-weight:900;letter-spacing:-.03em;margin-bottom:48px;line-height:1.1;}
+.sec-title{font-family:var(--fd);font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;letter-spacing:-.03em;margin-bottom:48px;line-height:1.1;}
 .glow-card{background:var(--card);border:1px solid var(--b);border-radius:16px;transition:border-color .4s,box-shadow .4s,transform .4s;}
 .glow-card:hover{border-color:rgba(124,58,237,.4);box-shadow:0 0 40px var(--gv);transform:translateY(-3px);}
 .gradient-text{background:linear-gradient(135deg,var(--vl),var(--c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -50,8 +45,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hero__dot{width:10px;height:10px;border-radius:50%;background:var(--c);position:relative;}
 .hero__dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--c);animation:hpulse 2s ease-out infinite;}
 @keyframes hpulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(3);opacity:0}}
-.hero__h1{font-family:var(--fd);font-size:var(--size-display);font-weight:900;line-height:.9;margin-bottom:28px;letter-spacing:-.04em;}
-.hero__sub{font-size:var(--size-body);color:var(--t2);line-height:1.8;margin-bottom:44px;max-width:500px;}
+.hero__h1{font-family:var(--fd);font-size:clamp(3rem,6vw,5.5rem);font-weight:900;line-height:.9;margin-bottom:28px;letter-spacing:-.04em;}
+.hero__sub{font-size:clamp(1rem,1.3vw,1.15rem);color:var(--t2);line-height:1.8;margin-bottom:44px;max-width:500px;}
 .hero__btns{display:flex;gap:12px;flex-wrap:wrap;}
 .btn-glow{padding:16px 40px;background:linear-gradient(135deg,var(--v),var(--vd));color:#fff;font-family:var(--fd);font-size:1rem;font-weight:700;border-radius:12px;transition:all .3s;box-shadow:0 4px 24px var(--gv);}
 .btn-glow:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--gv);}
@@ -70,12 +65,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .intro__kicker{font-family:var(--fm);font-size:.75rem;color:var(--c);letter-spacing:.2em;text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;justify-content:center;gap:16px;}
 .intro__kicker::before,.intro__kicker::after{content:'';width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--v));}
 .intro__kicker::after{background:linear-gradient(90deg,var(--v),transparent);}
-.intro__h2{font-family:var(--fd);font-size:var(--size-h2);font-weight:900;line-height:1.15;margin-bottom:28px;letter-spacing:-.03em;}
+.intro__h2{font-family:var(--fd);font-size:clamp(2.4rem,5vw,4rem);font-weight:900;line-height:1.15;margin-bottom:28px;letter-spacing:-.03em;}
 .intro__h2 em{font-style:normal;}
-.intro__p{font-size:var(--size-body);color:var(--t2);line-height:1.9;max-width:600px;margin:0 auto;}
+.intro__p{font-size:clamp(1.1rem,1.4vw,1.25rem);color:var(--t2);line-height:1.9;max-width:600px;margin:0 auto;}
 .intro__stats{display:flex;justify-content:center;gap:clamp(32px,5vw,64px);margin-top:48px;}
 .intro__stat-item{text-align:center;}
-.intro__stat-num{font-family:var(--fd);font-size:var(--size-h1);font-weight:900;margin-bottom:4px;}
+.intro__stat-num{font-family:var(--fd);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:900;margin-bottom:4px;}
 .intro__stat-label{font-family:var(--fm);font-size:.7rem;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;}
 
 .impact{position:relative;min-height:80vh;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 clamp(20px,3vw,48px);border-radius:24px;z-index:1;}
@@ -86,8 +81,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 @keyframes o1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-30px)}}
 @keyframes o2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,40px)}}
 .impact__glass{position:relative;z-index:2;text-align:center;max-width:900px;width:90%;padding:clamp(56px,8vw,100px) clamp(40px,5vw,80px);}
-.impact__h2{font-family:var(--fd);font-size:var(--size-display);font-weight:900;line-height:.85;margin-bottom:32px;letter-spacing:-.05em;text-shadow:0 4px 60px rgba(0,0,0,.5);}
-.impact__p{font-size:var(--size-body);color:var(--t2);line-height:1.8;max-width:600px;margin:0 auto;text-shadow:0 2px 20px rgba(0,0,0,.5);}
+.impact__h2{font-family:var(--fd);font-size:clamp(4rem,10vw,9rem);font-weight:900;line-height:.85;margin-bottom:32px;letter-spacing:-.05em;text-shadow:0 4px 60px rgba(0,0,0,.5);}
+.impact__p{font-size:clamp(1.2rem,1.8vw,1.5rem);color:var(--t2);line-height:1.8;max-width:600px;margin:0 auto;text-shadow:0 2px 20px rgba(0,0,0,.5);}
 
 .gallery__grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:240px 240px;gap:12px;}
 .gallery__item{border-radius:16px;overflow:hidden;border:1px solid var(--b);position:relative;transition:all .4s;}
@@ -103,15 +98,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .feat-card--big .feat-card__img{border-radius:12px;overflow:hidden;aspect-ratio:4/3;}
 .feat-card--big .feat-card__img img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.7);}
 .feat-card__pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:.7rem;font-weight:600;color:var(--c);background:rgba(6,214,160,.1);border:1px solid rgba(6,214,160,.2);padding:6px 16px;border-radius:6px;margin-bottom:20px;}
-.feat-card__h3{font-family:var(--fd);font-size:var(--size-h3);font-weight:800;line-height:1.15;margin-bottom:14px;}
-.feat-card__p{font-size:var(--size-body);color:var(--t2);line-height:1.8;margin-bottom:20px;}
+.feat-card__h3{font-family:var(--fd);font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:800;line-height:1.15;margin-bottom:14px;}
+.feat-card__p{font-size:1rem;color:var(--t2);line-height:1.8;margin-bottom:20px;}
 .feat-card__list{list-style:none;}
 .feat-card__li{font-family:var(--fm);font-size:.95rem;color:var(--t2);padding:8px 0;display:flex;align-items:center;gap:12px;}
 .feat-card__li::before{content:'→';color:var(--c);font-weight:700;}
 
 .metrics__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
 .metric{padding:32px 28px;text-align:center;}
-.metric__num{font-family:var(--fm);font-size:var(--size-h1);font-weight:700;margin-bottom:12px;line-height:1;}
+.metric__num{font-family:var(--fm);font-size:clamp(2.4rem,4vw,3.2rem);font-weight:700;margin-bottom:12px;line-height:1;}
 .metric__bar{width:100%;height:5px;background:var(--b);border-radius:3px;margin-bottom:14px;overflow:hidden;}
 .metric__fill{height:100%;border-radius:3px;width:0;transition:width 1.5s cubic-bezier(.22,1,.36,1);}
 .metric__fill--v{background:linear-gradient(90deg,var(--v),var(--vl));}
@@ -144,7 +139,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .diff__label--del{color:#EF4444;}
 .diff__label--add{color:var(--c);}
 .diff__list{list-style:none;}
-.diff__li{padding:16px 0;font-size:var(--size-body);border-bottom:1px solid rgba(255,255,255,.04);line-height:1.7;display:flex;gap:14px;word-break:keep-all;color:var(--t1);}
+.diff__li{padding:16px 0;font-size:clamp(1rem,1.2vw,1.1rem);border-bottom:1px solid rgba(255,255,255,.04);line-height:1.7;display:flex;gap:14px;word-break:keep-all;color:var(--t1);}
 .diff__li:last-child{border:none;}
 .diff__li--del::before{content:'−';color:#EF4444;font-family:var(--fm);font-weight:700;font-size:1.2rem;flex-shrink:0;}
 .diff__li--add::before{content:'+';color:var(--c);font-family:var(--fm);font-weight:700;font-size:1.2rem;flex-shrink:0;}
@@ -156,7 +151,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .price-card{background:rgba(20,20,34,.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(124,58,237,.25);border-radius:24px;padding:clamp(48px,6vw,80px) clamp(36px,4vw,60px);box-shadow:0 0 60px var(--gv);}
 .price-badge{display:inline-block;background:linear-gradient(135deg,var(--v),var(--vd));color:#fff;padding:8px 28px;font-family:var(--fm);font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;border-radius:20px;margin-bottom:28px;}
 .price-old{font-family:var(--fm);font-size:1rem;color:var(--t3);text-decoration:line-through;}
-.price-now{font-family:var(--fd);font-size:var(--size-h1);font-weight:900;line-height:1;margin-bottom:40px;}
+.price-now{font-family:var(--fd);font-size:clamp(3.5rem,8vw,6rem);font-weight:900;line-height:1;margin-bottom:40px;}
 .price-now small{font-size:.2em;-webkit-text-fill-color:var(--t2);}
 .price-features{list-style:none;text-align:left;margin-bottom:44px;}
 .price-feat{padding:14px 0;font-size:1.05rem;border-bottom:1px solid rgba(255,255,255,.05);color:var(--t1);display:flex;align-items:center;gap:14px;}
@@ -195,8 +190,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 .cta{text-align:center;position:relative;overflow:hidden;}
 .cta::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(124,58,237,.04),transparent);pointer-events:none;}
-.cta__h2{font-family:var(--fd);font-size:var(--size-h1);font-weight:900;line-height:1;margin-bottom:24px;letter-spacing:-.03em;}
-.cta__p{font-size:var(--size-body);color:var(--t2);margin-bottom:48px;}
+.cta__h2{font-family:var(--fd);font-size:clamp(2.8rem,6vw,5rem);font-weight:900;line-height:1;margin-bottom:24px;letter-spacing:-.03em;}
+.cta__p{font-size:clamp(1.1rem,1.4vw,1.25rem);color:var(--t2);margin-bottom:48px;}
 .cta__btn{display:inline-block;padding:20px 72px;background:linear-gradient(135deg,var(--v),var(--vd));color:#fff;font-family:var(--fd);font-size:1.2rem;font-weight:700;border-radius:14px;transition:all .3s;box-shadow:0 4px 24px var(--gv);}
 .cta__btn:hover{transform:translateY(-2px);box-shadow:0 8px 48px var(--gv);}
 .cta__micro{margin-top:18px;font-family:var(--fm);font-size:.8rem;color:var(--t3);}
@@ -232,11 +227,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="hero">
   <div class="hero__grid">
     <div class="hero__main rv on">
-      <div class="hero__brand"><span class="hero__dot"></span>{{brand}}</div>
-      <h1 class="hero__h1">{{hero.headline}}</h1>
-      <p class="hero__sub">{{hero.subheadline}}</p>
+      <div class="hero__brand"><span class="hero__dot"></span>ERGO CHAIR PRO</div>
+      <h1 class="hero__h1">당신의 허리가<br><em>감사할 의자</em></h1>
+      <p class="hero__sub">인체공학 설계 × 프리미엄 소재.<br>하루 8시간, 10년을 함께할 의자.</p>
       <div class="hero__btns">
-        <a href="#cta" class="btn-glow">{{hero.cta}}</a>
+        <a href="#cta" class="btn-glow">무료 체험 신청</a>
         <a href="#features" class="btn-ghost">자세히 보기</a>
       </div>
     </div>
@@ -244,8 +239,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt="">
     </div>
     <div class="hero__stats">
-      <div class="hero__stat rv on" data-d="2"><p class="hero__stat-n gradient-text">{{stat1.value}}{{stat1.unit}}</p><p class="hero__stat-l">{{stat1.label}}</p></div>
-      <div class="hero__stat rv on" data-d="3"><p class="hero__stat-n" style="color:var(--c)">{{stat2.value}}{{stat2.unit}}</p><p class="hero__stat-l">{{stat2.label}}</p></div>
+      <div class="hero__stat rv on" data-d="2"><p class="hero__stat-n gradient-text">97%</p><p class="hero__stat-l">고객 만족도</p></div>
+      <div class="hero__stat rv on" data-d="3"><p class="hero__stat-n" style="color:var(--c)">8500</p><p class="hero__stat-l">5성급 리뷰</p></div>
     </div>
   </div>
 </section>
@@ -254,12 +249,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="sec">
   <div class="intro rv">
     <p class="intro__kicker">Since 2021</p>
-    <h2 class="intro__h2">{{intro.headline}}</h2>
-    <p class="intro__p">{{intro.body}}</p>
+    <h2 class="intro__h2">앉는 자세의 혁신,<br><em>ErgoChair</em> 프로</h2>
+    <p class="intro__p">15년간의 인체공학 연구와 3,000명의 임상 데이터를 기반으로 설계했습니다. 허리, 목, 어깨의 부담을 분산하여 장시간 앉아도 피로하지 않는 경험을 만듭니다.</p>
     <div class="intro__stats">
-      <div class="intro__stat-item"><p class="intro__stat-num gradient-text">{{stat1.value}}{{stat1.unit}}</p><p class="intro__stat-label">{{stat1.label}}</p></div>
-      <div class="intro__stat-item"><p class="intro__stat-num" style="color:var(--c)">{{stat2.value}}{{stat2.unit}}</p><p class="intro__stat-label">{{stat2.label}}</p></div>
-      <div class="intro__stat-item"><p class="intro__stat-num" style="color:var(--pk)">{{stat3.value}}{{stat3.unit}}</p><p class="intro__stat-label">{{stat3.label}}</p></div>
+      <div class="intro__stat-item"><p class="intro__stat-num gradient-text">97%</p><p class="intro__stat-label">고객 만족도</p></div>
+      <div class="intro__stat-item"><p class="intro__stat-num" style="color:var(--c)">8500</p><p class="intro__stat-label">5성급 리뷰</p></div>
+      <div class="intro__stat-item"><p class="intro__stat-num" style="color:var(--pk)">30일</p><p class="intro__stat-label">무료 체험</p></div>
     </div>
   </div>
 </section>
@@ -272,8 +267,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="impact__orb2"></div>
   </div>
   <div class="impact__glass">
-    <h2 class="impact__h2 rv">{{fullbleed.headline}}</h2>
-    <p class="impact__p rv">{{fullbleed.body}}</p>
+    <h2 class="impact__h2 rv">독일 엔지니어링의<br><em>정밀함</em></h2>
+    <p class="impact__p rv">알루미늄 다이캐스트 프레임, 이탈리아산 가죽 팔걸이, 독일 가스 실린더 — 모든 부품은 TÜV 인증을 받았습니다. 10년 사용해도 처음 그대로.</p>
   </div>
 </section>
 
@@ -292,36 +287,36 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- §7 기능 -->
 <section class="sec" id="features">
   <div class="tag rv">Core Technology</div>
-  <h2 class="sec-title rv">{{feat1.headline}}</h2>
+  <h2 class="sec-title rv">4D <em>럼버 서포트</em></h2>
   <div class="feat__grid">
     <div class="glow-card feat-card feat-card--big rv">
       <div>
-        <span class="feat-card__pill">{{feat1.tag1}}</span>
-        <h3 class="feat-card__h3">{{feat1.headline}}</h3>
-        <p class="feat-card__p">{{feat1.body}}</p>
+        <span class="feat-card__pill">자동 체형 감지</span>
+        <h3 class="feat-card__h3">4D <em>럼버 서포트</em></h3>
+        <p class="feat-card__p">허리 곡선에 맞춰 4방향으로 조절되는 럼버 서포트. 앉는 순간 자동으로 체형을 감지합니다.</p>
         <ul class="feat-card__list">
-          <li class="feat-card__li">{{feat1.tag1}}</li>
-          <li class="feat-card__li">{{feat1.tag2}}</li>
+          <li class="feat-card__li">자동 체형 감지</li>
+          <li class="feat-card__li">4방향 조절</li>
         </ul>
       </div>
       <div class="feat-card__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
     </div>
     <div class="glow-card feat-card rv" data-d="1">
-      <span class="feat-card__pill">{{feat2.tag1}}</span>
-      <h3 class="feat-card__h3">{{feat2.headline}}</h3>
-      <p class="feat-card__p">{{feat2.body}}</p>
+      <span class="feat-card__pill">항공 메시</span>
+      <h3 class="feat-card__h3">메시 <em>통기성</em> 소재</h3>
+      <p class="feat-card__p">항공우주급 메시 소재로 여름에도 쾌적합니다. 체온을 자동으로 조절하여 땀 없는 착석감.</p>
       <ul class="feat-card__list">
-        <li class="feat-card__li">{{feat2.tag1}}</li>
-        <li class="feat-card__li">{{feat2.tag2}}</li>
+        <li class="feat-card__li">항공 메시</li>
+        <li class="feat-card__li">온도 조절</li>
       </ul>
     </div>
     <div class="glow-card feat-card rv" data-d="2">
-      <span class="feat-card__pill">{{feat3.tag1}}</span>
-      <h3 class="feat-card__h3">{{feat3.headline}}</h3>
-      <p class="feat-card__p">{{feat3.body}}</p>
+      <span class="feat-card__pill">12포인트 조절</span>
+      <h3 class="feat-card__h3">12단계 <em>높이 조절</em></h3>
+      <p class="feat-card__p">팔걸이, 좌석 높이, 등받이 각도까지 12개 포인트를 세밀하게 조절. 당신만의 완벽한 자세를 찾으세요.</p>
       <ul class="feat-card__list">
-        <li class="feat-card__li">{{feat3.tag1}}</li>
-        <li class="feat-card__li">{{feat3.tag2}}</li>
+        <li class="feat-card__li">12포인트 조절</li>
+        <li class="feat-card__li">맞춤 설정</li>
       </ul>
     </div>
   </div>
@@ -332,10 +327,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="tag rv" style="justify-content:center">Metrics</div>
   <h2 class="sec-title rv" style="text-align:center">숫자로 증명합니다</h2>
   <div class="metrics__grid">
-    <div class="glow-card metric rv"><p class="metric__num" style="color:var(--vl)">{{stat1.value}}{{stat1.unit}}</p><div class="metric__bar"><div class="metric__fill metric__fill--v" data-w="92%"></div></div><p class="metric__lab">{{stat1.label}}</p></div>
-    <div class="glow-card metric rv" data-d="1"><p class="metric__num" style="color:var(--c)">{{stat2.value}}{{stat2.unit}}</p><div class="metric__bar"><div class="metric__fill metric__fill--c" data-w="98%"></div></div><p class="metric__lab">{{stat2.label}}</p></div>
-    <div class="glow-card metric rv" data-d="2"><p class="metric__num" style="color:var(--pk)">{{stat3.value}}{{stat3.unit}}</p><div class="metric__bar"><div class="metric__fill metric__fill--p" data-w="96%"></div></div><p class="metric__lab">{{stat3.label}}</p></div>
-    <div class="glow-card metric rv" data-d="3"><p class="metric__num" style="color:var(--am)">{{stat4.value}}{{stat4.unit}}</p><div class="metric__bar"><div class="metric__fill metric__fill--a" data-w="100%"></div></div><p class="metric__lab">{{stat4.label}}</p></div>
+    <div class="glow-card metric rv"><p class="metric__num" style="color:var(--vl)">97%</p><div class="metric__bar"><div class="metric__fill metric__fill--v" data-w="92%"></div></div><p class="metric__lab">고객 만족도</p></div>
+    <div class="glow-card metric rv" data-d="1"><p class="metric__num" style="color:var(--c)">8500</p><div class="metric__bar"><div class="metric__fill metric__fill--c" data-w="98%"></div></div><p class="metric__lab">5성급 리뷰</p></div>
+    <div class="glow-card metric rv" data-d="2"><p class="metric__num" style="color:var(--pk)">30일</p><div class="metric__bar"><div class="metric__fill metric__fill--p" data-w="96%"></div></div><p class="metric__lab">무료 체험</p></div>
+    <div class="glow-card metric rv" data-d="3"><p class="metric__num" style="color:var(--am)">12년</p><div class="metric__bar"><div class="metric__fill metric__fill--a" data-w="100%"></div></div><p class="metric__lab">프레임 보증</p></div>
   </div>
 </section>
 
@@ -352,17 +347,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="diff__col diff__col--del">
         <p class="diff__label diff__label--del">— BEFORE</p>
         <ul class="diff__list">
-          <li class="diff__li diff__li--del">{{before1.title}} → {{before1.desc}}</li>
-          <li class="diff__li diff__li--del">{{before2.title}} → {{before2.desc}}</li>
-          <li class="diff__li diff__li--del">{{before3.title}} → {{before3.desc}}</li>
+          <li class="diff__li diff__li--del">오후 3시 허리 통증 → 일반 의자의 평평한 등받이로 요추 지지 부족</li>
+          <li class="diff__li diff__li--del">집중력 저하 → 불편한 자세로 인한 잦은 자세 변경, 업무 효율 감소</li>
+          <li class="diff__li diff__li--del">2년마다 의자 교체 → 쿠션 꺼짐, 가스 실린더 고장으로 반복 구매</li>
         </ul>
       </div>
       <div class="diff__col diff__col--add">
         <p class="diff__label diff__label--add">+ AFTER</p>
         <ul class="diff__list">
-          <li class="diff__li diff__li--add">{{after1.title}} → {{after1.desc}}</li>
-          <li class="diff__li diff__li--add">{{after2.title}} → {{after2.desc}}</li>
-          <li class="diff__li diff__li--add">{{after3.title}} → {{after3.desc}}</li>
+          <li class="diff__li diff__li--add">8시간 무통증 → 4D 럼버 서포트가 허리를 완벽하게 받쳐줌</li>
+          <li class="diff__li diff__li--add">집중력 35% 향상 → 편안한 자세 유지로 몰입 시간 대폭 증가</li>
+          <li class="diff__li diff__li--add">12년 프레임 보증 → 알루미늄 프레임 + TÜV 인증 부품으로 장기 사용</li>
         </ul>
       </div>
     </div>
@@ -374,15 +369,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="pricing__orb"></div>
   <div class="pricing__in">
     <div class="tag rv" style="justify-content:center">Pricing</div>
-    <h2 class="sec-title rv" style="text-align:center">{{pricing.headline}}</h2>
+    <h2 class="sec-title rv" style="text-align:center">합리적인 <em>투자</em></h2>
     <div class="price-card rv">
-      <span class="price-badge">{{pricing.tier1.name}}</span>
-      <p class="price-old">{{pricing.tier1.price}}</p>
-      <p class="price-now gradient-text">{{pricing.tier2.price}}<small>{{pricing.tier2.unit}}</small></p>
+      <span class="price-badge">Standard</span>
+      <p class="price-old">₩690,000</p>
+      <p class="price-now gradient-text">₩1,190,000<small>/ 풀옵션</small></p>
       <ul class="price-features">
-        {{pricing.tier1.features}}
+        <li>4D 럼버 서포트</li>
+        <li>메시 등받이</li>
+        <li>3D 팔걸이</li>
+        <li>무료 배송</li>
+        <li>30일 무료 체험</li>
       </ul>
-      <a href="#cta" class="price-btn">{{pricing.tier1.cta}}</a>
+      <a href="#cta" class="price-btn">Standard 선택</a>
     </div>
   </div>
 </section>
@@ -390,9 +389,44 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- §10 후기 -->
 <section class="sec">
   <div class="tag rv" style="justify-content:center">Customer Reviews</div>
-  <h2 class="sec-title rv" style="text-align:center">{{reviews.headline}}</h2>
+  <h2 class="sec-title rv" style="text-align:center">실사용자 <em>후기</em></h2>
   <div class="reviews__grid">
-    {{reviews.cards}}
+    
+    <div class="review-card rv" data-d="1">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=11" alt="">
+        <div class="review-card__info"><p class="review-card__name">이정호</p><p class="review-card__meta">개발자 · 판교</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"하루 10시간 코딩하는데 허리가 안 아파요. 인생 의자입니다."</p>
+    </div>
+
+    <div class="review-card rv" data-d="2">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=45" alt="">
+        <div class="review-card__info"><p class="review-card__name">박소연</p><p class="review-card__meta">디자이너 · 서울</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"이전 의자에서 목 통증이 심했는데 완전히 사라졌어요."</p>
+    </div>
+
+    <div class="review-card rv" data-d="3">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=53" alt="">
+        <div class="review-card__info"><p class="review-card__name">김태현</p><p class="review-card__meta">PO · 강남</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"회의실에서도 이 의자 쓰고 싶을 정도. 회사에 추가 주문했습니다."</p>
+    </div>
+
+    <div class="review-card rv" data-d="4">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=29" alt="">
+        <div class="review-card__info"><p class="review-card__name">최유진</p><p class="review-card__meta">작가 · 제주</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"글 쓸 때 자세가 편하니까 집중 시간이 확 늘었어요."</p>
+    </div>
   </div>
 </section>
 
@@ -401,16 +435,35 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="tag rv" style="justify-content:center">FAQ</div>
   <h2 class="sec-title rv" style="text-align:center">자주 묻는 질문</h2>
   <div class="faq__in">
-    {{faq.items}}
+    
+    <div class="faq__item rv" data-d="1">
+      <h4 class="faq__q">조립이 어렵지 않나요?</h4>
+      <p class="faq__a">전문 기사가 방문하여 무료로 조립 설치합니다. 30분이면 완료됩니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="2">
+      <h4 class="faq__q">30일 체험 후 반품 절차는?</h4>
+      <p class="faq__a">고객센터에 연락하시면 48시간 내 수거 방문. 전액 환불이며 수거비 무료입니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="3">
+      <h4 class="faq__q">쿠션은 교체 가능한가요?</h4>
+      <p class="faq__a">네, 좌석 쿠션과 팔걸이 패드는 개별 구매 가능합니다. 3년 주기 교체를 권장합니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="4">
+      <h4 class="faq__q">체중 제한이 있나요?</h4>
+      <p class="faq__a">150kg까지 지원합니다. 알루미늄 프레임으로 내구성이 뛰어납니다.</p>
+    </div>
   </div>
 </section>
 
 <!-- §13 CTA -->
 <section class="sec cta" id="cta">
-  <h2 class="cta__h2 rv">{{cta.headline}}</h2>
-  <p class="cta__p rv">{{cta.body}}</p>
-  <a href="#" class="cta__btn rv">{{cta.cta}}</a>
-  <p class="cta__micro rv">{{cta.micro}}</p>
+  <h2 class="cta__h2 rv">지금 바꾸면<br><em>내일이 다릅니다</em></h2>
+  <p class="cta__p rv">30일 무위험 체험으로 시작하세요.<br>만족하지 못하시면 전액 환불해 드립니다.</p>
+  <a href="#" class="cta__btn rv">무료 체험 신청</a>
+  <p class="cta__micro rv">무료 배송 · 무료 조립 · 100% 환불 보장</p>
 </section>
 
 </div>

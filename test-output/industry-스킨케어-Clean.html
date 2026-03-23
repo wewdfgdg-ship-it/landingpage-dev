@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{brand}} — {{hero.headline}}</title>
-<link href="{{token.fontUrl}}" rel="stylesheet">
+<title>HARU BOTANICS — 피부가 먹는<br><em>진짜 자연</em></title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:{{token.bg}};--surface:{{token.surface}};--surfaceLight:{{token.surfaceLight}};
-  --red:{{token.primary}};--primaryLight:{{token.primaryLight}};--primaryPale:{{token.primaryPale}};
-  --bk:{{token.textPrimary}};--gy:{{token.textSecondary}};--textBright:{{token.textBright}};
-  --gl:{{token.frostLine}};--frost:{{token.frost}};--frostGlow:{{token.frostGlow}};
-  --serif:{{token.fontDisplay}};
-  --sans:{{token.fontBody}};
-  --size-display:{{token.sizeDisplay}};
-  --size-h1:{{token.sizeH1}};
-  --size-h2:{{token.sizeH2}};
-  --size-h3:{{token.sizeH3}};
-  --size-body:{{token.sizeBody}};
+  --bg:#FAFAF8;--surface:#FFFFFF;--surfaceLight:#F0F0EE;
+  --red:#E63225;--primaryLight:#FF6B5E;--primaryPale:#FFE8E6;
+  --bk:#1A1A1A;--gy:#777777;--textBright:#000000;
+  --gl:#E0E0E0;--frost:rgba(230,50,37,.08);--frostGlow:rgba(230,50,37,.04);
+  --serif:'Instrument Serif','Noto Sans KR',serif;
+  --sans:'DM Sans','Noto Sans KR',sans-serif;
+  --size-display:clamp(3rem,7vw,5.5rem);
+  --size-h1:clamp(2rem,3.5vw,3rem);
+  --size-h2:clamp(1.6rem,3vw,2.4rem);
+  --size-h3:clamp(1.2rem,1.8vw,1.5rem);
+  --size-body:clamp(.95rem,1.1vw,1.05rem);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -208,10 +208,10 @@ a{color:inherit;text-decoration:none;}
 <section class="hero">
   <div class="hero__bg"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85" alt=""></div>
   <div class="hero__in rv on">
-    <p class="hero__label">{{brand}}</p>
-    <h1 class="hero__h1">{{hero.headline}}</h1>
-    <p class="hero__sub">{{hero.subheadline}}</p>
-    <a href="#pricing" class="hero__cta">{{hero.cta}}</a>
+    <p class="hero__label">HARU BOTANICS</p>
+    <h1 class="hero__h1">피부가 먹는<br><em>진짜 자연</em></h1>
+    <p class="hero__sub">제주 동백 × 일본 쌀겨 발효.<br>7일이면 피부결이 달라집니다.</p>
+    <a href="#pricing" class="hero__cta">지금 시작하기</a>
   </div>
 </section>
 
@@ -219,7 +219,7 @@ a{color:inherit;text-decoration:none;}
 <section class="sec">
   <div class="w">
     <div class="intro__grid">
-      <p class="intro__text rv">{{intro.headline}}</p>
+      <p class="intro__text rv"><em>덜어내는</em> 스킨케어</p>
       <div class="intro__img rv"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80" alt=""></div>
     </div>
   </div>
@@ -231,16 +231,16 @@ a{color:inherit;text-decoration:none;}
     <div class="feat__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80" alt=""></div>
     <div class="feat__txt"><div>
       <p class="feat__num">01</p>
-      <h3 class="feat__h3">{{feat1.headline}}</h3>
-      <p class="feat__p">{{feat1.body}}</p>
+      <h3 class="feat__h3">제주 <em>동백</em> 오일</h3>
+      <p class="feat__p">제주 한림읍 자생 동백에서 냉압착 추출. 올레산 85% 함유로 깊은 보습과 장벽 강화.</p>
     </div></div>
   </div>
   <div class="feat__row feat__row--r rv">
     <div class="feat__img"><img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?w=900&q=80" alt=""></div>
     <div class="feat__txt"><div>
       <p class="feat__num">02</p>
-      <h3 class="feat__h3">{{feat2.headline}}</h3>
-      <p class="feat__p">{{feat2.body}}</p>
+      <h3 class="feat__h3">쌀겨 <em>발효</em> 에센스</h3>
+      <p class="feat__p">일본 니가타현 코시히카리 쌀겨 72시간 자연 발효. 피부결 개선과 톤업을 동시에.</p>
     </div></div>
   </div>
 </section>
@@ -248,10 +248,10 @@ a{color:inherit;text-decoration:none;}
 <!-- §5 STATS -->
 <section class="stats">
   <div class="stats__grid">
-    <div class="stats__item rv"><p class="stats__num">{{stat1.value}}{{stat1.unit}}</p><p class="stats__lab">{{stat1.label}}</p></div>
-    <div class="stats__item rv"><p class="stats__num red">{{stat2.value}}{{stat2.unit}}</p><p class="stats__lab">{{stat2.label}}</p></div>
-    <div class="stats__item rv"><p class="stats__num">{{stat3.value}}{{stat3.unit}}</p><p class="stats__lab">{{stat3.label}}</p></div>
-    <div class="stats__item rv"><p class="stats__num">{{stat4.value}}{{stat4.unit}}</p><p class="stats__lab">{{stat4.label}}</p></div>
+    <div class="stats__item rv"><p class="stats__num">97%</p><p class="stats__lab">피부결 개선</p></div>
+    <div class="stats__item rv"><p class="stats__num red">10개 미만</p><p class="stats__lab">성분 수</p></div>
+    <div class="stats__item rv"><p class="stats__num">7일</p><p class="stats__lab">첫 효과 체감</p></div>
+    <div class="stats__item rv"><p class="stats__num">0%</p><p class="stats__lab">화학 방부제</p></div>
   </div>
 </section>
 
@@ -259,8 +259,8 @@ a{color:inherit;text-decoration:none;}
 <section class="cinema">
   <div class="cinema__bg"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85" alt=""></div>
   <div class="cinema__in rv">
-    <h2 class="cinema__h2">{{fullbleed.headline}}</h2>
-    <p class="cinema__p">{{fullbleed.body}}</p>
+    <h2 class="cinema__h2">제주에서 <em>피부</em>까지</h2>
+    <p class="cinema__p">원료 수확부터 제품 완성까지 72시간. 냉장 배송으로 활성 성분의 신선함을 유지합니다.</p>
   </div>
 </section>
 
@@ -273,18 +273,18 @@ a{color:inherit;text-decoration:none;}
     <div class="ba__col">
       <p class="ba__label ba__label--b">Before</p>
       <ul class="ba__list">
-        <li class="ba__li ba__li--b">{{before1.title}} — {{before1.desc}}</li>
-        <li class="ba__li ba__li--b">{{before2.title}} — {{before2.desc}}</li>
-        <li class="ba__li ba__li--b">{{before3.title}} — {{before3.desc}}</li>
+        <li class="ba__li ba__li--b">기존 문제 1 — 불편함이 지속됨</li>
+        <li class="ba__li ba__li--b">기존 문제 2 — 비효율적인 경험</li>
+        <li class="ba__li ba__li--b">기존 문제 3 — 반복적인 비용 발생</li>
       </ul>
     </div>
     <div class="ba__divider"></div>
     <div class="ba__col">
       <p class="ba__label ba__label--a">After</p>
       <ul class="ba__list">
-        <li class="ba__li ba__li--a">{{after1.title}} — {{after1.desc}}</li>
-        <li class="ba__li ba__li--a">{{after2.title}} — {{after2.desc}}</li>
-        <li class="ba__li ba__li--a">{{after3.title}} — {{after3.desc}}</li>
+        <li class="ba__li ba__li--a">개선 결과 1 — 확실한 차이를 느낌</li>
+        <li class="ba__li ba__li--a">개선 결과 2 — 효율이 크게 향상됨</li>
+        <li class="ba__li ba__li--a">개선 결과 3 — 장기적 비용 절감</li>
       </ul>
     </div>
   </div></div>
@@ -293,12 +293,16 @@ a{color:inherit;text-decoration:none;}
 <!-- §9 PRICING -->
 <section class="sec pricing" id="pricing">
   <div class="w">
-    <p class="pricing__label rv">{{pricing.headline}}</p>
-    <h2 class="pricing__h2 rv">{{pricing.tier1.name}}</h2>
-    <p class="pricing__old rv">{{pricing.tier1.desc}}</p>
-    <p class="pricing__now rv">{{pricing.tier1.price}}<small>{{pricing.tier1.unit}}</small></p>
-    <p class="pricing__features rv">{{pricing.tier1.features}}</p>
-    <a href="#" class="pricing__btn rv">{{pricing.tier1.cta}}</a>
+    <p class="pricing__label rv">시작하기 좋은 <em>세트</em></p>
+    <h2 class="pricing__h2 rv">Basic Set</h2>
+    <p class="pricing__old rv">입문 3종 세트</p>
+    <p class="pricing__now rv">₩68,000<small></small></p>
+    <p class="pricing__features rv"><li>동백 클렌징 오일</li>
+        <li>쌀겨 발효 토너</li>
+        <li>동백 모이스처 크림</li>
+        <li>파우치 증정</li>
+        <li>무료 배송</li></p>
+    <a href="#" class="pricing__btn rv">Basic 시작</a>
   </div>
 </section>
 
@@ -306,9 +310,44 @@ a{color:inherit;text-decoration:none;}
 <section class="sec">
   <div class="w">
     <p class="stag rv">Reviews</p>
-    <h2 class="stitle rv">{{reviews.headline}}</h2>
+    <h2 class="stitle rv">고객 <em>후기</em></h2>
     <div class="rev__grid">
-      {{reviews.cards}}
+      
+    <div class="review-card rv" data-d="1">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=32" alt="">
+        <div class="review-card__info"><p class="review-card__name">김지현</p><p class="review-card__meta">32세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"정말 만족합니다. 주변에 추천하고 있어요."</p>
+    </div>
+
+    <div class="review-card rv" data-d="2">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=60" alt="">
+        <div class="review-card__info"><p class="review-card__name">이준호</p><p class="review-card__meta">41세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"기대 이상이었어요. 삶의 질이 달라졌습니다."</p>
+    </div>
+
+    <div class="review-card rv" data-d="3">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=47" alt="">
+        <div class="review-card__info"><p class="review-card__name">박서연</p><p class="review-card__meta">28세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"이 가격에 이 품질이라니. 최고의 선택."</p>
+    </div>
+
+    <div class="review-card rv" data-d="4">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=12" alt="">
+        <div class="review-card__info"><p class="review-card__name">정민수</p><p class="review-card__meta">35세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"두 번째 구매입니다. 변함없는 품질."</p>
+    </div>
     </div>
   </div>
 </section>
@@ -318,7 +357,26 @@ a{color:inherit;text-decoration:none;}
   <div class="w">
     <p class="stag rv">FAQ</p>
     <div class="faq__in">
-      {{faq.items}}
+      
+    <div class="faq__item rv" data-d="1">
+      <h4 class="faq__q">배송은 얼마나 걸리나요?</h4>
+      <p class="faq__a">주문 후 1~3일 내 무료 배송됩니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="2">
+      <h4 class="faq__q">반품/교환이 가능한가요?</h4>
+      <p class="faq__a">체험 기간 내 무료 반품 가능합니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="3">
+      <h4 class="faq__q">보증 기간은?</h4>
+      <p class="faq__a">품질 보증 기간 동안 무상 수리 가능합니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="4">
+      <h4 class="faq__q">AS는 어떻게 받나요?</h4>
+      <p class="faq__a">고객센터에 연락하시면 48시간 내 처리됩니다.</p>
+    </div>
     </div>
   </div>
 </section>
@@ -326,10 +384,10 @@ a{color:inherit;text-decoration:none;}
 <!-- §13 CTA -->
 <section class="sec cta">
   <div class="w">
-    <h2 class="cta__h2 rv">{{cta.headline}}</h2>
-    <p class="cta__p rv">{{cta.body}}</p>
-    <a href="#" class="cta__btn rv">{{cta.cta}}</a>
-    <p class="cta__micro rv">{{cta.micro}}</p>
+    <h2 class="cta__h2 rv">피부가 <em>답</em>을 압니다</h2>
+    <p class="cta__p rv">첫 구매 20% 할인. 7일 사용 후 불만족 시 전액 환불.</p>
+    <a href="#" class="cta__btn rv">첫 구매 혜택 받기</a>
+    <p class="cta__micro rv">무료 배송 · 7일 환불 · 동물실험 반대</p>
   </div>
 </section>
 

@@ -1,0 +1,4525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Assembler 실전 테스트 — 6개 무드 비교</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:#111;color:#fff;}
+.mood-nav{position:sticky;top:0;z-index:9999;background:#000;padding:12px 24px;display:flex;gap:12px;border-bottom:1px solid #333;}
+.mood-nav a{color:#888;text-decoration:none;font-size:14px;font-weight:600;letter-spacing:.05em;padding:8px 16px;border:1px solid #333;transition:all .2s;}
+.mood-nav a:hover,.mood-nav a:target{color:#fff;border-color:#fff;}
+.mood-section{border-bottom:4px solid #333;}
+.mood-header{padding:40px 24px;text-align:center;background:#0a0a0a;}
+.mood-header h2{font-size:2rem;margin-bottom:8px;}
+.mood-header p{color:#888;font-size:.9rem;}
+.mood-body{max-width:1240px;margin:0 auto;overflow:hidden;}
+</style>
+</head>
+<body>
+
+<nav class="mood-nav">
+  <span style="color:#555;font-size:12px;padding:8px 0;">ASSEMBLER TEST →</span>
+  <a href="#luxury">LUXURY</a>
+  <a href="#tech">TECH</a>
+  <a href="#clean">CLEAN</a>
+  <a href="#bold">BOLD</a>
+  <a href="#natural">NATURAL</a>
+  <a href="#premium">PREMIUM</a>
+</nav>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<div class="mood-section" id="luxury">
+  <div class="mood-header">
+    <h2>LUXURY</h2>
+    <p>배경: #080604 | 주색: #C6A44E | 폰트: Playfair Display</p>
+  </div>
+  <div class="mood-body" style="background:#080604;color:#F5EFE0;font-family:'Cormorant', 'Noto Serif KR', serif;">
+    <!-- hero (hero_split) -->
+
+<style>
+  [data-tpl-hero-sp] {
+    display: flex;
+    min-height: 70vh;
+    background: #080604;
+    color: #F5EFE0;
+    overflow: hidden;
+  }
+  [data-tpl-hero-sp] .hero-sp__left {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 72px;
+    background: linear-gradient(160deg, #A08030 0%, #C6A44E 100%);
+    color: #fff;
+    position: relative;
+  }
+  [data-tpl-hero-sp] .hero-sp__text {
+    max-width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  [data-tpl-hero-sp] .hero-sp__headline {
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 1.0;
+    margin: 0 0 40px;
+    color: #fff;
+    word-break: keep-all;
+    letter-spacing: -0.02em;
+  }
+  [data-tpl-hero-sp] .hero-sp__subheadline {
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.92);
+    margin: 0 0 48px;
+    word-break: keep-all;
+  }
+  [data-tpl-hero-sp] .hero-sp__cta a {
+    background: #fff !important;
+    color: #C6A44E !important;
+    padding: 22px 56px !important;
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  [data-tpl-hero-sp] .hero-sp__cta a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+  }
+  [data-tpl-hero-sp] .hero-sp__cta p {
+    color: rgba(255,255,255,0.75) !important;
+    margin-top: 14px !important;
+    font-size: 1.1rem !important;
+  }
+  [data-tpl-hero-sp] .hero-sp__right {
+    flex: 1 1 50%;
+    position: relative;
+    min-height: 70vh;
+    overflow: hidden;
+  }
+  [data-tpl-hero-sp] .hero-sp__image-wrap {
+    position: absolute;
+    inset: 0;
+  }
+  [data-tpl-hero-sp] .hero-sp__image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+  [data-tpl-hero-sp] .hero-sp__image-wrap > div {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-hero-sp] {
+      flex-direction: column;
+      min-height: 70vh;
+    }
+    [data-tpl-hero-sp] .hero-sp__left {
+      padding: 64px 24px;
+    }
+    [data-tpl-hero-sp] .hero-sp__headline {
+      font-size: 2rem;
+    }
+    [data-tpl-hero-sp] .hero-sp__right {
+      min-height: 50vh;
+      position: relative;
+    }
+  }
+</style>
+<section data-tpl-hero-sp>
+  <div class="hero-sp__left">
+    <div class="hero-sp__text">
+      <h1 class="hero-sp__headline">완벽한 수면, 완벽한 아침</h1>
+      <p class="hero-sp__subheadline">독일 엔지니어링과 천연 소재의 조화</p>
+      <div class="hero-sp__cta">
+        <a href="#cta" style="display:inline-block;padding:16px 40px;background:#C6A44E;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:1.1rem;min-height:48px;line-height:1;transition:opacity .2s;">무료 체험 시작하기</a><p style="margin-top:8px;font-size:0.85rem;color:rgba(245,239,224,.25);">100일 무료 체험 · 무료 배송</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-sp__right">
+    <div class="hero-sp__image-wrap">
+      <div style="width:100%;aspect-ratio:auto;background:linear-gradient(135deg, #161210 0%, rgba(198,164,78,.15) 100%);border-radius:0;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- features (feat_zigzag) -->
+<style>
+[data-tpl-featzz] {
+  padding: 100px 24px;
+  background: #080604;
+  color: #F5EFE0;
+}
+[data-tpl-featzz-inner] {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl-featzz-row] {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  margin-bottom: 64px;
+}
+[data-tpl-featzz-row]:last-child {
+  margin-bottom: 0;
+}
+[data-tpl-featzz-row-reverse] {
+  flex-direction: row-reverse;
+}
+[data-tpl-featzz-text] {
+  flex: 1.3;
+  min-width: 0;
+}
+[data-tpl-featzz-media] {
+  flex: 1;
+  min-width: 0;
+  max-width: 400px;
+}
+[data-tpl-featzz-title] {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px 0;
+  word-break: keep-all;
+}
+[data-tpl-featzz-body] {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  color: rgba(245,239,224,.55);
+  line-height: 1.75;
+  margin: 0 0 24px 0;
+  word-break: keep-all;
+}
+[data-tpl-featzz-list] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl-featzz-bullet] {
+  position: relative;
+  padding: 14px 0 14px 28px;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.75;
+}
+[data-tpl-featzz-check] {
+  position: absolute;
+  left: 0;
+  color: #C6A44E;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+[data-tpl-featzz-img] {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 0px;
+  display: block;
+}
+[data-tpl-featzz-placeholder] {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, #161210 0%, rgba(198,164,78,.15) 100%);
+  border-radius: 0px;
+}
+@media (max-width: 768px) {
+  [data-tpl-featzz-row],
+  [data-tpl-featzz-row-reverse] {
+    flex-direction: column;
+    gap: 32px;
+  }
+  [data-tpl-featzz-title] {
+    font-size: 1.5rem;
+  }
+  [data-tpl-featzz-img],
+  [data-tpl-featzz-placeholder] {
+    max-width: 100%;
+  }
+}
+</style>
+<section data-tpl-featzz>
+  <div data-tpl-featzz-inner>
+    <div data-tpl-featzz-row >
+      <div data-tpl-featzz-text>
+        <h2 data-tpl-featzz-title>왜 슬립웰인가</h2>
+        
+        <ul data-tpl-featzz-list><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>체형 맞춤 7존 지지 시스템</li><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>사계절 쾌적한 온도 조절</li></ul>
+      </div>
+      <div data-tpl-featzz-media>
+        <div data-tpl-featzz-placeholder></div>
+      </div>
+    </div><div data-tpl-featzz-row data-tpl-featzz-row-reverse>
+      <div data-tpl-featzz-text>
+        
+        
+        <ul data-tpl-featzz-list><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>파트너 진동 완벽 차단</li><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>10년 형태 유지 보증</li></ul>
+      </div>
+      <div data-tpl-featzz-media>
+        <div data-tpl-featzz-placeholder></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- proof (proof_testimonial_card) -->
+<style>
+  [data-tpl="proof-testimonial"] {
+    padding: 100px 24px;
+    background: #161210;
+    color: #F5EFE0;
+  }
+  [data-tpl-inner="proof-testimonial"] {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="proof-testimonial"] {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    word-break: keep-all;
+  }
+  [data-tpl-grid="proof-testimonial"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  [data-tpl-card="proof-testimonial"] {
+    position: relative;
+    padding: 40px 32px;
+    background: #080604;
+    border-radius: 16px;
+    border: 1px solid rgba(198,164,78,.15);
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  [data-tpl-quote="proof-testimonial"] {
+    position: absolute;
+    top: 16px;
+    right: 32px;
+    font-size: 4rem;
+    line-height: 1;
+    color: #E8D5A0;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  [data-tpl-stars="proof-testimonial"] {
+    color: #f59e0b;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  [data-tpl-text="proof-testimonial"] {
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.75;
+    color: rgba(245,239,224,.55);
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  [data-tpl-author="proof-testimonial"] {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #F5EFE0;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-grid="proof-testimonial"] {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+<section data-tpl="proof-testimonial">
+  <div data-tpl-inner="proof-testimonial">
+    <h2 data-tpl-heading="proof-testimonial">실제 고객 후기</h2>
+    <div data-tpl-grid="proof-testimonial">
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">50,000+ 고객이 선택</p>
+      <p data-tpl-author="proof-testimonial">— 고객 1</p>
+    </div>
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">98% 만족도</p>
+      <p data-tpl-author="proof-testimonial">— 고객 2</p>
+    </div>
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">4.9 평균 별점</p>
+      <p data-tpl-author="proof-testimonial">— 고객 3</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- pricing (price_single_card) -->
+<style>
+  [data-tpl="price-single"] {
+    padding: clamp(80px, 10vw, 140px) clamp(24px, 4vw, 64px);
+    background: #161210;
+    color: #F5EFE0;
+  }
+  [data-tpl-inner="price-single"] {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="price-single"] {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    word-break: keep-all;
+  }
+  [data-tpl-sub="price-single"] {
+    font-size: 1rem;
+    color: rgba(245,239,224,.55);
+    margin-bottom: 64px;
+  }
+  [data-tpl-card="price-single"] {
+    background: #080604;
+    border-radius: 0px;
+    border: 2px solid #C6A44E;
+    padding: 120px 64px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+  [data-tpl-original="price-single"] {
+    font-size: 1rem;
+    color: rgba(245,239,224,.25);
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+  [data-tpl-current="price-single"] {
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 400;
+    color: #C6A44E;
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+  [data-tpl-divider="price-single"] {
+    width: 60px;
+    height: 2px;
+    background: rgba(198,164,78,.15);
+    margin: 0 auto 32px;
+  }
+  [data-tpl-features="price-single"] {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 64px;
+    text-align: left;
+  }
+  [data-tpl-feat="price-single"] {
+    padding: 8px 0;
+    font-size: 1rem;
+    color: rgba(245,239,224,.55);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(198,164,78,.15);
+  }
+  [data-tpl-feat="price-single"]:last-child {
+    border-bottom: none;
+  }
+  [data-tpl-check="price-single"] {
+    color: #C6A44E;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  [data-tpl-cta="price-single"] {
+    display: inline-block;
+    width: 100%;
+    padding: 16px;
+    background: #C6A44E;
+    color: #fff;
+    border: none;
+    border-radius: 0px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: opacity 0.2s;
+  }
+  [data-tpl-micro="price-single"] {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: rgba(245,239,224,.25);
+  }
+  @media (max-width: 768px) {
+    [data-tpl-inner="price-single"] {
+      max-width: 100%;
+      padding: 0 16px;
+    }
+  }
+</style>
+<section data-tpl="price-single">
+  <div data-tpl-inner="price-single">
+    <h2 data-tpl-heading="price-single">지금이 가장 좋은 가격</h2>
+    <p data-tpl-sub="price-single">런칭 특별가 한정 수량</p>
+    <div data-tpl-card="price-single">
+      <p data-tpl-current="price-single">590,000원</p>
+      <div data-tpl-divider="price-single"></div>
+      <ul data-tpl-features="price-single">
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>7존 체압분산 매트리스</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>프리미엄 커버 포함</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>무료 배송 + 설치</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>100일 무료 체험</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>10년 품질 보증</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-single">특별가로 시작하기</a>
+      <p data-tpl-micro="price-single">만족하지 않으면 100% 환불</p>
+    </div>
+  </div>
+</section>
+
+<!-- beforeAfter (misc_before_after) -->
+<style>
+[data-tpl="misc-before-after"] {
+  padding: 100px 24px;
+  background: #080604;
+  color: #F5EFE0;
+}
+[data-tpl="misc-before-after"] .ba__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl="misc-before-after"] .ba__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__sub {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: rgba(245,239,224,.55);
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 0 56px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__grid {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+[data-tpl="misc-before-after"] .ba__col {
+  flex: 1;
+  padding: 56px 44px;
+  min-width: 0;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-tpl="misc-before-after"] .ba__col--before {
+  background: #161210;
+  border-radius: 0px 0 0 0px;
+}
+[data-tpl="misc-before-after"] .ba__col--after {
+  background: linear-gradient(160deg, #A08030 0%, #C6A44E 100%);
+  color: #fff;
+  border-radius: 0 0px 0px 0;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
+}
+[data-tpl="misc-before-after"] .ba__label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 24px;
+  opacity: 0.6;
+}
+[data-tpl="misc-before-after"] .ba__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl="misc-before-after"] .ba__item {
+  padding: 16px 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+}
+[data-tpl="misc-before-after"] .ba__item--before::before {
+  content: "✕ ";
+  color: #E53E3E;
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__col--after .ba__item--after::before {
+  content: "✓ ";
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #161210 0%, #C6A44E 100%);
+}
+[data-tpl="misc-before-after"] .ba__arrow {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  [data-tpl="misc-before-after"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="misc-before-after"] .ba__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+  [data-tpl="misc-before-after"] .ba__grid {
+    flex-direction: column;
+  }
+  [data-tpl="misc-before-after"] .ba__col--before {
+    border-radius: 0px 0px 0 0;
+  }
+  [data-tpl="misc-before-after"] .ba__col--after {
+    border-radius: 0 0 0px 0px;
+  }
+  [data-tpl="misc-before-after"] .ba__divider {
+    width: 100%;
+    height: 48px;
+  }
+  [data-tpl="misc-before-after"] .ba__arrow {
+    transform: rotate(90deg);
+  }
+}
+</style>
+<section data-tpl="misc-before-after">
+  <div class="ba__inner">
+    <h2 class="ba__headline">무엇이 달라지나요</h2>
+    <p class="ba__sub">Before &amp; After</p>
+    <div class="ba__grid">
+      <div class="ba__col ba__col--before">
+        <p class="ba__label">Before</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--before">Before: 새벽 2시마다 뒤척임 → After: 7시간 숙면</li>
+        <li class="ba__item ba__item--before">Before: 아침마다 허리 통증 → After: 통증 없는 아침</li>
+        </ul>
+      </div>
+      <div class="ba__divider">
+        <span class="ba__arrow">→</span>
+      </div>
+      <div class="ba__col ba__col--after">
+        <p class="ba__label">After</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--after">Before: 매트리스 3년마다 교체 → After: 10년 보증</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- faq (faq_accordion) -->
+<style>
+[data-tpl="faq-accordion"] {
+  padding: 100px 24px;
+  background: #080604;
+  color: #F5EFE0;
+}
+[data-tpl="faq-accordion"] .faq-accordion__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+[data-tpl="faq-accordion"] .faq-accordion__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 48px;
+  word-break: keep-all;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item {
+  border-bottom: 1px solid rgba(198,164,78,.15);
+}
+[data-tpl="faq-accordion"] .faq-accordion__question {
+  cursor: pointer;
+  padding: 24px 0;
+  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::-webkit-details-marker {
+  display: none;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::after {
+  content: "";
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(245,239,224,.25);
+  border-bottom: 2px solid rgba(245,239,224,.25);
+  transform: rotate(45deg);
+  transition: transform 0.25s;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item[open] .faq-accordion__question::after {
+  transform: rotate(-135deg);
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer {
+  padding: 0 0 20px;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.8;
+  color: rgba(245,239,224,.55);
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer--empty {
+  font-style: italic;
+  color: rgba(245,239,224,.25);
+}
+@media (max-width: 768px) {
+  [data-tpl="faq-accordion"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="faq-accordion"] .faq-accordion__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+}
+</style>
+<section data-tpl="faq-accordion">
+  <div class="faq-accordion__inner">
+    <h2 class="faq-accordion__headline">자주 묻는 질문</h2>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">배송은 얼마나 걸리나요? → 주문 후 1~2일 내 무료 배송</summary>
+      <p class="faq-accordion__answer">100일 체험은 어떻게 진행되나요? → 불만족 시 무료 반품</p>
+    </details>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">사이즈 교환이 가능한가요? → 7일 이내 무료 교환</summary>
+      <p class="faq-accordion__answer">기존 매트리스 수거도 해주나요? → 무료 수거 서비스 제공</p>
+    </details>
+  </div>
+</section>
+
+<!-- cta (cta_center) -->
+<style>
+[data-tpl="cta-center"] {
+  padding: 80px 24px;
+  background: linear-gradient(160deg, #A08030 0%, #C6A44E 100%);
+  color: #fff;
+  text-align: center;
+}
+[data-tpl="cta-center"] .cta-center__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+[data-tpl="cta-center"] .cta-center__headline {
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 8px;
+  word-break: keep-all;
+}
+[data-tpl="cta-center"] .cta-center__sub {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1.6;
+  opacity: 0.92;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="cta-center"] .cta-center__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+[data-tpl="cta-center"] .cta-center__bullets li {
+  opacity: 0.95;
+  font-size: 1rem;
+}
+[data-tpl="cta-center"] .cta-center__bullets li::before {
+  content: "✓ ";
+}
+[data-tpl="cta-center"] .cta-center__btn {
+  display: inline-block;
+  padding: 24px 64px;
+  min-height: 48px;
+  background: #fff;
+  color: #C6A44E;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+[data-tpl="cta-center"] .cta-center__btn:hover {
+  opacity: 0.95;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+[data-tpl="cta-center"] .cta-center__micro {
+  margin-top: 16px;
+  font-size: 1.05rem;
+  opacity: 0.75;
+}
+@media (max-width: 768px) {
+  [data-tpl="cta-center"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="cta-center"] .cta-center__headline {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  }
+  [data-tpl="cta-center"] .cta-center__bullets {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+<section data-tpl="cta-center" id="cta">
+  <div class="cta-center__inner">
+    <h2 class="cta-center__headline">더 나은 내일을 위한 첫 걸음</h2>
+    <p class="cta-center__sub">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+    
+    <a href="#cta" class="cta-center__btn">무료 체험 시작하기</a>
+    <p class="cta-center__micro">첫 달 무료 · 만족하지 않으면 100% 환불</p>
+  </div>
+</section>
+  </div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<div class="mood-section" id="tech">
+  <div class="mood-header">
+    <h2>TECH</h2>
+    <p>배경: #07070E | 주색: #7C3AED | 폰트: Outfit</p>
+  </div>
+  <div class="mood-body" style="background:#07070E;color:#F0F0F5;font-family:'Noto Sans KR', 'Outfit', sans-serif;">
+    <!-- hero (hero_fullscreen_center) -->
+
+<style>
+  [data-tpl-hero-fc] {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    background: #07070E;
+    color: #F0F0F5;
+    position: relative;
+    overflow: hidden;
+  }
+  [data-tpl-hero-fc] .hero-fc__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      #5B21B618 0%,
+      #07070E 100%
+    );
+    pointer-events: none;
+  }
+  [data-tpl-hero-fc] .hero-fc__content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__headline {
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    margin: 0 0 16px;
+    color: #F0F0F5;
+    word-break: keep-all;
+  }
+  [data-tpl-hero-fc] .hero-fc__subheadline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: #A0A0BE;
+    margin: 0 0 24px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #A0A0BE;
+    margin: 0 0 40px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__cta {
+    margin-top: 8px;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-hero-fc] {
+      min-height: 90vh;
+      padding: 48px 16px;
+    }
+    [data-tpl-hero-fc] .hero-fc__headline {
+      font-size: 2rem;
+    }
+    [data-tpl-hero-fc] .hero-fc__subheadline {
+      font-size: 1rem;
+    }
+  }
+</style>
+<section data-tpl-hero-fc>
+  <div class="hero-fc__overlay"></div>
+  <div class="hero-fc__content">
+    <h1 class="hero-fc__headline">완벽한 수면, 완벽한 아침</h1>
+    <p class="hero-fc__subheadline">독일 엔지니어링과 천연 소재의 조화</p>
+    <p class="hero-fc__body">매일 밤, 5성급 호텔의 잠자리를 경험하세요. 7존 맞춤 지지 시스템이 당신의 체형을 기억합니다.</p>
+    <div class="hero-fc__cta">
+      <a href="#cta" style="display:inline-block;padding:16px 40px;background:#7C3AED;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:1.1rem;min-height:48px;line-height:1;transition:opacity .2s;">무료 체험 시작하기</a><p style="margin-top:8px;font-size:0.85rem;color:#606080;">100일 무료 체험 · 무료 배송</p>
+    </div>
+  </div>
+</section>
+
+<!-- features (feat_3col_grid) -->
+<style>
+[data-tpl-feat3col] {
+  padding: clamp(64px, 8vw, 120px) clamp(20px, 3vw, 48px);
+  background: #07070E;
+  color: #F0F0F5;
+}
+[data-tpl-feat3col-inner] {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+[data-tpl-feat3col-title] {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 8px 0;
+  word-break: keep-all;
+}
+[data-tpl-feat3col-subtitle] {
+  font-size: 1rem;
+  color: #A0A0BE;
+  margin: 0 0 48px 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+[data-tpl-feat3col-grid] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+[data-tpl-feat3col-card] {
+  padding: 24px;
+  background: #0E0E1A;
+  border-radius: 16px;
+  border: 1px solid #1E1E35;
+  text-align: center;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  cursor: default;
+}
+[data-tpl-feat3col-card]:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+}
+[data-tpl-feat3col-icon] {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+[data-tpl-feat3col-card-title] {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 4px 0;
+}
+[data-tpl-feat3col-card-desc] {
+  font-size: 0.875rem;
+  color: #A0A0BE;
+  line-height: 1.5;
+  margin: 0;
+}
+[data-tpl-feat3col-empty] {
+  font-size: 1rem;
+  color: #A0A0BE;
+}
+@media (max-width: 768px) {
+  [data-tpl-feat3col-grid] {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  [data-tpl-feat3col-title] {
+    font-size: 1.5rem;
+  }
+}
+</style>
+<section data-tpl-feat3col>
+  <div data-tpl-feat3col-inner>
+    <h2 data-tpl-feat3col-title>왜 슬립웰인가</h2>
+    <p data-tpl-feat3col-subtitle>수면 과학으로 증명된 기술</p>
+    <div data-tpl-feat3col-grid>
+      <div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>💡</div>
+        <h3 data-tpl-feat3col-card-title>체형 맞춤 7존 지지 시스템</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>⚡</div>
+        <h3 data-tpl-feat3col-card-title>사계절 쾌적한 온도 조절</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>🎯</div>
+        <h3 data-tpl-feat3col-card-title>파트너 진동 완벽 차단</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>🔒</div>
+        <h3 data-tpl-feat3col-card-title>10년 형태 유지 보증</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- proof (proof_number_counter) -->
+<style>
+  [data-tpl="proof-counter"] {
+    padding: clamp(64px, 8vw, 120px) clamp(20px, 3vw, 48px);
+    background: #7C3AED;
+    color: #fff;
+  }
+  [data-tpl-inner="proof-counter"] {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="proof-counter"] {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 48px;
+    color: #fff;
+    word-break: keep-all;
+  }
+  [data-tpl-grid="proof-counter"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+  [data-tpl-item="proof-counter"] {
+    padding: 24px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px;
+  }
+  [data-tpl-number="proof-counter"] {
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  [data-tpl-label="proof-counter"] {
+    font-size: 1rem;
+    opacity: 0.85;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-grid="proof-counter"] {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+<section data-tpl="proof-counter">
+  <div data-tpl-inner="proof-counter">
+    <h2 data-tpl-heading="proof-counter">실제 고객 후기</h2>
+    <div data-tpl-grid="proof-counter">
+      <div data-tpl-item="proof-counter">
+      <p data-tpl-number="proof-counter">50,000+</p>
+      <p data-tpl-label="proof-counter">고객이 선택</p>
+    </div>
+      <div data-tpl-item="proof-counter">
+      <p data-tpl-number="proof-counter">98%</p>
+      <p data-tpl-label="proof-counter">만족도</p>
+    </div>
+      <div data-tpl-item="proof-counter">
+      <p data-tpl-number="proof-counter">4.9</p>
+      <p data-tpl-label="proof-counter">평균 별점</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- pricing (price_3col_compare) -->
+<style>
+  [data-tpl="price-3col"] {
+    padding: 100px 24px;
+    background: #07070E;
+    color: #F0F0F5;
+  }
+  [data-tpl-inner="price-3col"] {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="price-3col"] {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    word-break: keep-all;
+  }
+  [data-tpl-sub="price-3col"] {
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    color: #A0A0BE;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    word-break: keep-all;
+  }
+  [data-tpl-grid="price-3col"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  [data-tpl-card="price-3col"] {
+    position: relative;
+    padding: 44px 36px;
+    background: #0E0E1A;
+    border-radius: 16px;
+    border: 1px solid #1E1E35;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  [data-tpl-featured="price-3col"] {
+    border: 2px solid #7C3AED;
+    transform: scale(1.04);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    z-index: 1;
+  }
+  [data-tpl-badge="price-3col"] {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #7C3AED;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  [data-tpl-plan="price-3col"] {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  [data-tpl-price="price-3col"] {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 900;
+    color: #7C3AED;
+    margin-bottom: 24px;
+  }
+  [data-tpl-features="price-3col"] {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    text-align: left;
+    flex: 1;
+  }
+  [data-tpl-feat="price-3col"] {
+    padding: 10px 0;
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    line-height: 1.7;
+    color: #A0A0BE;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  [data-tpl-check="price-3col"] {
+    color: #7C3AED;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  [data-tpl-cta="price-3col"] {
+    display: inline-block;
+    width: 100%;
+    padding: 16px;
+    background: #0E0E1A;
+    color: #7C3AED;
+    border: 2px solid #7C3AED;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-sizing: border-box;
+    transition: background 0.2s, color 0.2s;
+  }
+  [data-tpl-cta-primary="price-3col"] {
+    background: #7C3AED;
+    color: #fff;
+    border-color: #7C3AED;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-grid="price-3col"] {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    [data-tpl-featured="price-3col"] {
+      transform: none;
+    }
+  }
+</style>
+<section data-tpl="price-3col">
+  <div data-tpl-inner="price-3col">
+    <h2 data-tpl-heading="price-3col">지금이 가장 좋은 가격</h2>
+    <p data-tpl-sub="price-3col">런칭 특별가 한정 수량</p>
+    <div data-tpl-grid="price-3col">
+      <div data-tpl-card="price-3col">
+      
+      <h3 data-tpl-plan="price-3col">Basic</h3>
+      <p data-tpl-price="price-3col">무료</p>
+      <ul data-tpl-features="price-3col">
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>7존 체압분산 매트리스</li>
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>프리미엄 커버 포함</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-3col">특별가로 시작하기</a>
+    </div>
+      <div data-tpl-card="price-3col" data-tpl-featured="price-3col">
+      <div data-tpl-badge="price-3col">추천</div>
+      <h3 data-tpl-plan="price-3col">Pro</h3>
+      <p data-tpl-price="price-3col">유료</p>
+      <ul data-tpl-features="price-3col">
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>무료 배송 + 설치</li>
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>100일 무료 체험</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-3col" data-tpl-cta-primary="price-3col">특별가로 시작하기</a>
+    </div>
+      <div data-tpl-card="price-3col">
+      
+      <h3 data-tpl-plan="price-3col">Enterprise</h3>
+      <p data-tpl-price="price-3col">문의</p>
+      <ul data-tpl-features="price-3col">
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>10년 품질 보증</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-3col">특별가로 시작하기</a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- beforeAfter (misc_before_after) -->
+<style>
+[data-tpl="misc-before-after"] {
+  padding: 100px 24px;
+  background: #07070E;
+  color: #F0F0F5;
+}
+[data-tpl="misc-before-after"] .ba__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl="misc-before-after"] .ba__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__sub {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: #A0A0BE;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 0 56px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__grid {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+[data-tpl="misc-before-after"] .ba__col {
+  flex: 1;
+  padding: 56px 44px;
+  min-width: 0;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-tpl="misc-before-after"] .ba__col--before {
+  background: #0E0E1A;
+  border-radius: 16px 0 0 16px;
+}
+[data-tpl="misc-before-after"] .ba__col--after {
+  background: linear-gradient(160deg, #5B21B6 0%, #7C3AED 100%);
+  color: #fff;
+  border-radius: 0 16px 16px 0;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
+}
+[data-tpl="misc-before-after"] .ba__label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 24px;
+  opacity: 0.6;
+}
+[data-tpl="misc-before-after"] .ba__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl="misc-before-after"] .ba__item {
+  padding: 16px 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+}
+[data-tpl="misc-before-after"] .ba__item--before::before {
+  content: "✕ ";
+  color: #EF4444;
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__col--after .ba__item--after::before {
+  content: "✓ ";
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #0E0E1A 0%, #7C3AED 100%);
+}
+[data-tpl="misc-before-after"] .ba__arrow {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  [data-tpl="misc-before-after"] {
+    padding: 24px 8px;
+  }
+  [data-tpl="misc-before-after"] .ba__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+  [data-tpl="misc-before-after"] .ba__grid {
+    flex-direction: column;
+  }
+  [data-tpl="misc-before-after"] .ba__col--before {
+    border-radius: 16px 16px 0 0;
+  }
+  [data-tpl="misc-before-after"] .ba__col--after {
+    border-radius: 0 0 16px 16px;
+  }
+  [data-tpl="misc-before-after"] .ba__divider {
+    width: 100%;
+    height: 48px;
+  }
+  [data-tpl="misc-before-after"] .ba__arrow {
+    transform: rotate(90deg);
+  }
+}
+</style>
+<section data-tpl="misc-before-after">
+  <div class="ba__inner">
+    <h2 class="ba__headline">무엇이 달라지나요</h2>
+    <p class="ba__sub">Before &amp; After</p>
+    <div class="ba__grid">
+      <div class="ba__col ba__col--before">
+        <p class="ba__label">Before</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--before">Before: 새벽 2시마다 뒤척임 → After: 7시간 숙면</li>
+        <li class="ba__item ba__item--before">Before: 아침마다 허리 통증 → After: 통증 없는 아침</li>
+        </ul>
+      </div>
+      <div class="ba__divider">
+        <span class="ba__arrow">→</span>
+      </div>
+      <div class="ba__col ba__col--after">
+        <p class="ba__label">After</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--after">Before: 매트리스 3년마다 교체 → After: 10년 보증</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- faq (faq_accordion) -->
+<style>
+[data-tpl="faq-accordion"] {
+  padding: 100px 24px;
+  background: #07070E;
+  color: #F0F0F5;
+}
+[data-tpl="faq-accordion"] .faq-accordion__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+[data-tpl="faq-accordion"] .faq-accordion__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 48px;
+  word-break: keep-all;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item {
+  border-bottom: 1px solid #1E1E35;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question {
+  cursor: pointer;
+  padding: 24px 0;
+  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::-webkit-details-marker {
+  display: none;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::after {
+  content: "";
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #606080;
+  border-bottom: 2px solid #606080;
+  transform: rotate(45deg);
+  transition: transform 0.25s;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item[open] .faq-accordion__question::after {
+  transform: rotate(-135deg);
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer {
+  padding: 0 0 20px;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.8;
+  color: #A0A0BE;
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer--empty {
+  font-style: italic;
+  color: #606080;
+}
+@media (max-width: 768px) {
+  [data-tpl="faq-accordion"] {
+    padding: 24px 8px;
+  }
+  [data-tpl="faq-accordion"] .faq-accordion__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+}
+</style>
+<section data-tpl="faq-accordion">
+  <div class="faq-accordion__inner">
+    <h2 class="faq-accordion__headline">자주 묻는 질문</h2>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">배송은 얼마나 걸리나요? → 주문 후 1~2일 내 무료 배송</summary>
+      <p class="faq-accordion__answer">100일 체험은 어떻게 진행되나요? → 불만족 시 무료 반품</p>
+    </details>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">사이즈 교환이 가능한가요? → 7일 이내 무료 교환</summary>
+      <p class="faq-accordion__answer">기존 매트리스 수거도 해주나요? → 무료 수거 서비스 제공</p>
+    </details>
+  </div>
+</section>
+
+<!-- cta (cta_full_banner) -->
+<style>
+[data-tpl="cta-full-banner"] {
+  padding: 48px 24px;
+  background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+  color: #fff;
+}
+[data-tpl="cta-full-banner"] .cta-banner__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+[data-tpl="cta-full-banner"] .cta-banner__text {
+  flex: 1;
+  min-width: 0;
+}
+[data-tpl="cta-full-banner"] .cta-banner__headline {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 4px;
+  word-break: keep-all;
+}
+[data-tpl="cta-full-banner"] .cta-banner__sub {
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  margin: 0 0 8px;
+}
+[data-tpl="cta-full-banner"] .cta-banner__urgency {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+}
+[data-tpl="cta-full-banner"] .cta-banner__action {
+  flex-shrink: 0;
+  text-align: center;
+}
+[data-tpl="cta-full-banner"] .cta-banner__btn {
+  display: inline-block;
+  padding: 16px 48px;
+  min-height: 48px;
+  background: #fff;
+  color: #7C3AED;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: opacity 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+[data-tpl="cta-full-banner"] .cta-banner__btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+[data-tpl="cta-full-banner"] .cta-banner__micro {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+@media (max-width: 768px) {
+  [data-tpl="cta-full-banner"] {
+    padding: 24px 8px;
+  }
+  [data-tpl="cta-full-banner"] .cta-banner__inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  [data-tpl="cta-full-banner"] .cta-banner__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+}
+</style>
+<section data-tpl="cta-full-banner" id="cta">
+  <div class="cta-banner__inner">
+    <div class="cta-banner__text">
+      <h2 class="cta-banner__headline">더 나은 내일을 위한 첫 걸음</h2>
+      <p class="cta-banner__sub">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+      
+    </div>
+    <div class="cta-banner__action">
+      <a href="#cta" class="cta-banner__btn">무료 체험 시작하기</a>
+      <p class="cta-banner__micro">첫 달 무료 · 만족하지 않으면 100% 환불</p>
+    </div>
+  </div>
+</section>
+  </div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<div class="mood-section" id="clean">
+  <div class="mood-header">
+    <h2>CLEAN</h2>
+    <p>배경: #FAFAF8 | 주색: #E63225 | 폰트: Instrument Serif</p>
+  </div>
+  <div class="mood-body" style="background:#FAFAF8;color:#1A1A1A;font-family:'DM Sans', 'Noto Sans KR', sans-serif;">
+    <!-- hero (hero_fullscreen_center) -->
+
+<style>
+  [data-tpl-hero-fc] {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    background: #FAFAF8;
+    color: #1A1A1A;
+    position: relative;
+    overflow: hidden;
+  }
+  [data-tpl-hero-fc] .hero-fc__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      #C41E1218 0%,
+      #FAFAF8 100%
+    );
+    pointer-events: none;
+  }
+  [data-tpl-hero-fc] .hero-fc__content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__headline {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.0;
+    margin: 0 0 16px;
+    color: #1A1A1A;
+    word-break: keep-all;
+  }
+  [data-tpl-hero-fc] .hero-fc__subheadline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: #777777;
+    margin: 0 0 24px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #777777;
+    margin: 0 0 40px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__cta {
+    margin-top: 8px;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-hero-fc] {
+      min-height: 90vh;
+      padding: 48px 16px;
+    }
+    [data-tpl-hero-fc] .hero-fc__headline {
+      font-size: 2rem;
+    }
+    [data-tpl-hero-fc] .hero-fc__subheadline {
+      font-size: 1rem;
+    }
+  }
+</style>
+<section data-tpl-hero-fc>
+  <div class="hero-fc__overlay"></div>
+  <div class="hero-fc__content">
+    <h1 class="hero-fc__headline">완벽한 수면, 완벽한 아침</h1>
+    <p class="hero-fc__subheadline">독일 엔지니어링과 천연 소재의 조화</p>
+    <p class="hero-fc__body">매일 밤, 5성급 호텔의 잠자리를 경험하세요. 7존 맞춤 지지 시스템이 당신의 체형을 기억합니다.</p>
+    <div class="hero-fc__cta">
+      <a href="#cta" style="display:inline-block;padding:16px 40px;background:#E63225;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:1.1rem;min-height:48px;line-height:1;transition:opacity .2s;">무료 체험 시작하기</a><p style="margin-top:8px;font-size:0.85rem;color:#AAAAAA;">100일 무료 체험 · 무료 배송</p>
+    </div>
+  </div>
+</section>
+
+<!-- features (feat_3col_grid) -->
+<style>
+[data-tpl-feat3col] {
+  padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 48px);
+  background: #FAFAF8;
+  color: #1A1A1A;
+}
+[data-tpl-feat3col-inner] {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+[data-tpl-feat3col-title] {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 8px 0;
+  word-break: keep-all;
+}
+[data-tpl-feat3col-subtitle] {
+  font-size: 1rem;
+  color: #777777;
+  margin: 0 0 64px 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+[data-tpl-feat3col-grid] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+[data-tpl-feat3col-card] {
+  padding: 32px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E0E0E0;
+  text-align: center;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  cursor: default;
+}
+[data-tpl-feat3col-card]:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+}
+[data-tpl-feat3col-icon] {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+[data-tpl-feat3col-card-title] {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 4px 0;
+}
+[data-tpl-feat3col-card-desc] {
+  font-size: 0.875rem;
+  color: #777777;
+  line-height: 1.5;
+  margin: 0;
+}
+[data-tpl-feat3col-empty] {
+  font-size: 1rem;
+  color: #777777;
+}
+@media (max-width: 768px) {
+  [data-tpl-feat3col-grid] {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  [data-tpl-feat3col-title] {
+    font-size: 1.5rem;
+  }
+}
+</style>
+<section data-tpl-feat3col>
+  <div data-tpl-feat3col-inner>
+    <h2 data-tpl-feat3col-title>왜 슬립웰인가</h2>
+    <p data-tpl-feat3col-subtitle>수면 과학으로 증명된 기술</p>
+    <div data-tpl-feat3col-grid>
+      <div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>💡</div>
+        <h3 data-tpl-feat3col-card-title>체형 맞춤 7존 지지 시스템</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>⚡</div>
+        <h3 data-tpl-feat3col-card-title>사계절 쾌적한 온도 조절</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>🎯</div>
+        <h3 data-tpl-feat3col-card-title>파트너 진동 완벽 차단</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>🔒</div>
+        <h3 data-tpl-feat3col-card-title>10년 형태 유지 보증</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- proof (proof_testimonial_card) -->
+<style>
+  [data-tpl="proof-testimonial"] {
+    padding: 100px 24px;
+    background: #FFFFFF;
+    color: #1A1A1A;
+  }
+  [data-tpl-inner="proof-testimonial"] {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="proof-testimonial"] {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    word-break: keep-all;
+  }
+  [data-tpl-grid="proof-testimonial"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  [data-tpl-card="proof-testimonial"] {
+    position: relative;
+    padding: 40px 32px;
+    background: #FAFAF8;
+    border-radius: 16px;
+    border: 1px solid #E0E0E0;
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  [data-tpl-quote="proof-testimonial"] {
+    position: absolute;
+    top: 16px;
+    right: 32px;
+    font-size: 4rem;
+    line-height: 1;
+    color: #FF6B5E;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  [data-tpl-stars="proof-testimonial"] {
+    color: #f59e0b;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  [data-tpl-text="proof-testimonial"] {
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.75;
+    color: #777777;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  [data-tpl-author="proof-testimonial"] {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1A1A1A;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-grid="proof-testimonial"] {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+<section data-tpl="proof-testimonial">
+  <div data-tpl-inner="proof-testimonial">
+    <h2 data-tpl-heading="proof-testimonial">실제 고객 후기</h2>
+    <div data-tpl-grid="proof-testimonial">
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">50,000+ 고객이 선택</p>
+      <p data-tpl-author="proof-testimonial">— 고객 1</p>
+    </div>
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">98% 만족도</p>
+      <p data-tpl-author="proof-testimonial">— 고객 2</p>
+    </div>
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">4.9 평균 별점</p>
+      <p data-tpl-author="proof-testimonial">— 고객 3</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- pricing (price_single_card) -->
+<style>
+  [data-tpl="price-single"] {
+    padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 48px);
+    background: #FFFFFF;
+    color: #1A1A1A;
+  }
+  [data-tpl-inner="price-single"] {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="price-single"] {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    word-break: keep-all;
+  }
+  [data-tpl-sub="price-single"] {
+    font-size: 1rem;
+    color: #777777;
+    margin-bottom: 64px;
+  }
+  [data-tpl-card="price-single"] {
+    background: #FAFAF8;
+    border-radius: 16px;
+    border: 2px solid #E63225;
+    padding: 100px 64px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+  [data-tpl-original="price-single"] {
+    font-size: 1rem;
+    color: #AAAAAA;
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+  [data-tpl-current="price-single"] {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 400;
+    color: #E63225;
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+  [data-tpl-divider="price-single"] {
+    width: 60px;
+    height: 2px;
+    background: #E0E0E0;
+    margin: 0 auto 32px;
+  }
+  [data-tpl-features="price-single"] {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 64px;
+    text-align: left;
+  }
+  [data-tpl-feat="price-single"] {
+    padding: 8px 0;
+    font-size: 1rem;
+    color: #777777;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #E0E0E0;
+  }
+  [data-tpl-feat="price-single"]:last-child {
+    border-bottom: none;
+  }
+  [data-tpl-check="price-single"] {
+    color: #E63225;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  [data-tpl-cta="price-single"] {
+    display: inline-block;
+    width: 100%;
+    padding: 16px;
+    background: #E63225;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: opacity 0.2s;
+  }
+  [data-tpl-micro="price-single"] {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: #AAAAAA;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-inner="price-single"] {
+      max-width: 100%;
+      padding: 0 16px;
+    }
+  }
+</style>
+<section data-tpl="price-single">
+  <div data-tpl-inner="price-single">
+    <h2 data-tpl-heading="price-single">지금이 가장 좋은 가격</h2>
+    <p data-tpl-sub="price-single">런칭 특별가 한정 수량</p>
+    <div data-tpl-card="price-single">
+      <p data-tpl-current="price-single">590,000원</p>
+      <div data-tpl-divider="price-single"></div>
+      <ul data-tpl-features="price-single">
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>7존 체압분산 매트리스</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>프리미엄 커버 포함</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>무료 배송 + 설치</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>100일 무료 체험</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>10년 품질 보증</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-single">특별가로 시작하기</a>
+      <p data-tpl-micro="price-single">만족하지 않으면 100% 환불</p>
+    </div>
+  </div>
+</section>
+
+<!-- beforeAfter (misc_before_after) -->
+<style>
+[data-tpl="misc-before-after"] {
+  padding: 100px 24px;
+  background: #FAFAF8;
+  color: #1A1A1A;
+}
+[data-tpl="misc-before-after"] .ba__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl="misc-before-after"] .ba__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__sub {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: #777777;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 0 56px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__grid {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+[data-tpl="misc-before-after"] .ba__col {
+  flex: 1;
+  padding: 56px 44px;
+  min-width: 0;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-tpl="misc-before-after"] .ba__col--before {
+  background: #FFFFFF;
+  border-radius: 12px 0 0 12px;
+}
+[data-tpl="misc-before-after"] .ba__col--after {
+  background: linear-gradient(160deg, #C41E12 0%, #E63225 100%);
+  color: #fff;
+  border-radius: 0 12px 12px 0;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
+}
+[data-tpl="misc-before-after"] .ba__label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 24px;
+  opacity: 0.6;
+}
+[data-tpl="misc-before-after"] .ba__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl="misc-before-after"] .ba__item {
+  padding: 16px 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+}
+[data-tpl="misc-before-after"] .ba__item--before::before {
+  content: "✕ ";
+  color: #E63225;
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__col--after .ba__item--after::before {
+  content: "✓ ";
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E63225 100%);
+}
+[data-tpl="misc-before-after"] .ba__arrow {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  [data-tpl="misc-before-after"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="misc-before-after"] .ba__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+  [data-tpl="misc-before-after"] .ba__grid {
+    flex-direction: column;
+  }
+  [data-tpl="misc-before-after"] .ba__col--before {
+    border-radius: 12px 12px 0 0;
+  }
+  [data-tpl="misc-before-after"] .ba__col--after {
+    border-radius: 0 0 12px 12px;
+  }
+  [data-tpl="misc-before-after"] .ba__divider {
+    width: 100%;
+    height: 48px;
+  }
+  [data-tpl="misc-before-after"] .ba__arrow {
+    transform: rotate(90deg);
+  }
+}
+</style>
+<section data-tpl="misc-before-after">
+  <div class="ba__inner">
+    <h2 class="ba__headline">무엇이 달라지나요</h2>
+    <p class="ba__sub">Before &amp; After</p>
+    <div class="ba__grid">
+      <div class="ba__col ba__col--before">
+        <p class="ba__label">Before</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--before">Before: 새벽 2시마다 뒤척임 → After: 7시간 숙면</li>
+        <li class="ba__item ba__item--before">Before: 아침마다 허리 통증 → After: 통증 없는 아침</li>
+        </ul>
+      </div>
+      <div class="ba__divider">
+        <span class="ba__arrow">→</span>
+      </div>
+      <div class="ba__col ba__col--after">
+        <p class="ba__label">After</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--after">Before: 매트리스 3년마다 교체 → After: 10년 보증</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- faq (faq_accordion) -->
+<style>
+[data-tpl="faq-accordion"] {
+  padding: 100px 24px;
+  background: #FAFAF8;
+  color: #1A1A1A;
+}
+[data-tpl="faq-accordion"] .faq-accordion__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+[data-tpl="faq-accordion"] .faq-accordion__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 48px;
+  word-break: keep-all;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item {
+  border-bottom: 1px solid #E0E0E0;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question {
+  cursor: pointer;
+  padding: 24px 0;
+  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::-webkit-details-marker {
+  display: none;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::after {
+  content: "";
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #AAAAAA;
+  border-bottom: 2px solid #AAAAAA;
+  transform: rotate(45deg);
+  transition: transform 0.25s;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item[open] .faq-accordion__question::after {
+  transform: rotate(-135deg);
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer {
+  padding: 0 0 20px;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.8;
+  color: #777777;
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer--empty {
+  font-style: italic;
+  color: #AAAAAA;
+}
+@media (max-width: 768px) {
+  [data-tpl="faq-accordion"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="faq-accordion"] .faq-accordion__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+}
+</style>
+<section data-tpl="faq-accordion">
+  <div class="faq-accordion__inner">
+    <h2 class="faq-accordion__headline">자주 묻는 질문</h2>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">배송은 얼마나 걸리나요? → 주문 후 1~2일 내 무료 배송</summary>
+      <p class="faq-accordion__answer">100일 체험은 어떻게 진행되나요? → 불만족 시 무료 반품</p>
+    </details>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">사이즈 교환이 가능한가요? → 7일 이내 무료 교환</summary>
+      <p class="faq-accordion__answer">기존 매트리스 수거도 해주나요? → 무료 수거 서비스 제공</p>
+    </details>
+  </div>
+</section>
+
+<!-- cta (cta_center) -->
+<style>
+[data-tpl="cta-center"] {
+  padding: 80px 24px;
+  background: linear-gradient(160deg, #C41E12 0%, #E63225 100%);
+  color: #fff;
+  text-align: center;
+}
+[data-tpl="cta-center"] .cta-center__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+[data-tpl="cta-center"] .cta-center__headline {
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 8px;
+  word-break: keep-all;
+}
+[data-tpl="cta-center"] .cta-center__sub {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1.6;
+  opacity: 0.92;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="cta-center"] .cta-center__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+[data-tpl="cta-center"] .cta-center__bullets li {
+  opacity: 0.95;
+  font-size: 1rem;
+}
+[data-tpl="cta-center"] .cta-center__bullets li::before {
+  content: "✓ ";
+}
+[data-tpl="cta-center"] .cta-center__btn {
+  display: inline-block;
+  padding: 24px 64px;
+  min-height: 48px;
+  background: #fff;
+  color: #E63225;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+[data-tpl="cta-center"] .cta-center__btn:hover {
+  opacity: 0.95;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+[data-tpl="cta-center"] .cta-center__micro {
+  margin-top: 16px;
+  font-size: 1.05rem;
+  opacity: 0.75;
+}
+@media (max-width: 768px) {
+  [data-tpl="cta-center"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="cta-center"] .cta-center__headline {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  }
+  [data-tpl="cta-center"] .cta-center__bullets {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+<section data-tpl="cta-center" id="cta">
+  <div class="cta-center__inner">
+    <h2 class="cta-center__headline">더 나은 내일을 위한 첫 걸음</h2>
+    <p class="cta-center__sub">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+    
+    <a href="#cta" class="cta-center__btn">무료 체험 시작하기</a>
+    <p class="cta-center__micro">첫 달 무료 · 만족하지 않으면 100% 환불</p>
+  </div>
+</section>
+  </div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<div class="mood-section" id="bold">
+  <div class="mood-header">
+    <h2>BOLD</h2>
+    <p>배경: #000000 | 주색: #FF2D20 | 폰트: Bebas Neue</p>
+  </div>
+  <div class="mood-body" style="background:#000000;color:#FFFFFF;font-family:'Noto Sans KR', sans-serif;">
+    <!-- hero (hero_fullscreen_center) -->
+
+<style>
+  [data-tpl-hero-fc] {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    background: #000000;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+  }
+  [data-tpl-hero-fc] .hero-fc__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      #CC181018 0%,
+      #000000 100%
+    );
+    pointer-events: none;
+  }
+  [data-tpl-hero-fc] .hero-fc__content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__headline {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 400;
+    line-height: 0.9;
+    margin: 0 0 16px;
+    color: #FFFFFF;
+    word-break: keep-all;
+  }
+  [data-tpl-hero-fc] .hero-fc__subheadline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: #888888;
+    margin: 0 0 24px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #888888;
+    margin: 0 0 40px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__cta {
+    margin-top: 8px;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-hero-fc] {
+      min-height: 90vh;
+      padding: 48px 16px;
+    }
+    [data-tpl-hero-fc] .hero-fc__headline {
+      font-size: 2rem;
+    }
+    [data-tpl-hero-fc] .hero-fc__subheadline {
+      font-size: 1rem;
+    }
+  }
+</style>
+<section data-tpl-hero-fc>
+  <div class="hero-fc__overlay"></div>
+  <div class="hero-fc__content">
+    <h1 class="hero-fc__headline">완벽한 수면, 완벽한 아침</h1>
+    <p class="hero-fc__subheadline">독일 엔지니어링과 천연 소재의 조화</p>
+    <p class="hero-fc__body">매일 밤, 5성급 호텔의 잠자리를 경험하세요. 7존 맞춤 지지 시스템이 당신의 체형을 기억합니다.</p>
+    <div class="hero-fc__cta">
+      <a href="#cta" style="display:inline-block;padding:16px 40px;background:#FF2D20;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:1.1rem;min-height:48px;line-height:1;transition:opacity .2s;">무료 체험 시작하기</a><p style="margin-top:8px;font-size:0.85rem;color:rgba(255,255,255,.1);">100일 무료 체험 · 무료 배송</p>
+    </div>
+  </div>
+</section>
+
+<!-- features (feat_zigzag) -->
+<style>
+[data-tpl-featzz] {
+  padding: 100px 24px;
+  background: #000000;
+  color: #FFFFFF;
+}
+[data-tpl-featzz-inner] {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl-featzz-row] {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  margin-bottom: 64px;
+}
+[data-tpl-featzz-row]:last-child {
+  margin-bottom: 0;
+}
+[data-tpl-featzz-row-reverse] {
+  flex-direction: row-reverse;
+}
+[data-tpl-featzz-text] {
+  flex: 1.3;
+  min-width: 0;
+}
+[data-tpl-featzz-media] {
+  flex: 1;
+  min-width: 0;
+  max-width: 400px;
+}
+[data-tpl-featzz-title] {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px 0;
+  word-break: keep-all;
+}
+[data-tpl-featzz-body] {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  color: #888888;
+  line-height: 1.75;
+  margin: 0 0 24px 0;
+  word-break: keep-all;
+}
+[data-tpl-featzz-list] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl-featzz-bullet] {
+  position: relative;
+  padding: 14px 0 14px 28px;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.75;
+}
+[data-tpl-featzz-check] {
+  position: absolute;
+  left: 0;
+  color: #FF2D20;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+[data-tpl-featzz-img] {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 0px;
+  display: block;
+}
+[data-tpl-featzz-placeholder] {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, #111111 0%, rgba(255,255,255,.1) 100%);
+  border-radius: 0px;
+}
+@media (max-width: 768px) {
+  [data-tpl-featzz-row],
+  [data-tpl-featzz-row-reverse] {
+    flex-direction: column;
+    gap: 24px;
+  }
+  [data-tpl-featzz-title] {
+    font-size: 1.5rem;
+  }
+  [data-tpl-featzz-img],
+  [data-tpl-featzz-placeholder] {
+    max-width: 100%;
+  }
+}
+</style>
+<section data-tpl-featzz>
+  <div data-tpl-featzz-inner>
+    <div data-tpl-featzz-row >
+      <div data-tpl-featzz-text>
+        <h2 data-tpl-featzz-title>왜 슬립웰인가</h2>
+        
+        <ul data-tpl-featzz-list><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>체형 맞춤 7존 지지 시스템</li><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>사계절 쾌적한 온도 조절</li></ul>
+      </div>
+      <div data-tpl-featzz-media>
+        <div data-tpl-featzz-placeholder></div>
+      </div>
+    </div><div data-tpl-featzz-row data-tpl-featzz-row-reverse>
+      <div data-tpl-featzz-text>
+        
+        
+        <ul data-tpl-featzz-list><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>파트너 진동 완벽 차단</li><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>10년 형태 유지 보증</li></ul>
+      </div>
+      <div data-tpl-featzz-media>
+        <div data-tpl-featzz-placeholder></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- proof (proof_number_counter) -->
+<style>
+  [data-tpl="proof-counter"] {
+    padding: clamp(48px, 6vw, 80px) clamp(20px, 3vw, 40px);
+    background: #FF2D20;
+    color: #fff;
+  }
+  [data-tpl-inner="proof-counter"] {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="proof-counter"] {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.0;
+    margin-bottom: 48px;
+    color: #fff;
+    word-break: keep-all;
+  }
+  [data-tpl-grid="proof-counter"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+  [data-tpl-item="proof-counter"] {
+    padding: 24px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 0px;
+  }
+  [data-tpl-number="proof-counter"] {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  [data-tpl-label="proof-counter"] {
+    font-size: 1rem;
+    opacity: 0.85;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-grid="proof-counter"] {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+<section data-tpl="proof-counter">
+  <div data-tpl-inner="proof-counter">
+    <h2 data-tpl-heading="proof-counter">실제 고객 후기</h2>
+    <div data-tpl-grid="proof-counter">
+      <div data-tpl-item="proof-counter">
+      <p data-tpl-number="proof-counter">50,000+</p>
+      <p data-tpl-label="proof-counter">고객이 선택</p>
+    </div>
+      <div data-tpl-item="proof-counter">
+      <p data-tpl-number="proof-counter">98%</p>
+      <p data-tpl-label="proof-counter">만족도</p>
+    </div>
+      <div data-tpl-item="proof-counter">
+      <p data-tpl-number="proof-counter">4.9</p>
+      <p data-tpl-label="proof-counter">평균 별점</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- pricing (price_single_card) -->
+<style>
+  [data-tpl="price-single"] {
+    padding: clamp(48px, 6vw, 80px) clamp(20px, 3vw, 40px);
+    background: #111111;
+    color: #FFFFFF;
+  }
+  [data-tpl-inner="price-single"] {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="price-single"] {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.0;
+    margin-bottom: 8px;
+    word-break: keep-all;
+  }
+  [data-tpl-sub="price-single"] {
+    font-size: 1rem;
+    color: #888888;
+    margin-bottom: 48px;
+  }
+  [data-tpl-card="price-single"] {
+    background: #000000;
+    border-radius: 0px;
+    border: 2px solid #FF2D20;
+    padding: 80px 48px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+  [data-tpl-original="price-single"] {
+    font-size: 1rem;
+    color: rgba(255,255,255,.1);
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+  [data-tpl-current="price-single"] {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 400;
+    color: #FF2D20;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+  [data-tpl-divider="price-single"] {
+    width: 60px;
+    height: 2px;
+    background: rgba(255,255,255,.1);
+    margin: 0 auto 24px;
+  }
+  [data-tpl-features="price-single"] {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 48px;
+    text-align: left;
+  }
+  [data-tpl-feat="price-single"] {
+    padding: 8px 0;
+    font-size: 1rem;
+    color: #888888;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  [data-tpl-feat="price-single"]:last-child {
+    border-bottom: none;
+  }
+  [data-tpl-check="price-single"] {
+    color: #FF2D20;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  [data-tpl-cta="price-single"] {
+    display: inline-block;
+    width: 100%;
+    padding: 16px;
+    background: #FF2D20;
+    color: #fff;
+    border: none;
+    border-radius: 0px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: opacity 0.2s;
+  }
+  [data-tpl-micro="price-single"] {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,.1);
+  }
+  @media (max-width: 768px) {
+    [data-tpl-inner="price-single"] {
+      max-width: 100%;
+      padding: 0 16px;
+    }
+  }
+</style>
+<section data-tpl="price-single">
+  <div data-tpl-inner="price-single">
+    <h2 data-tpl-heading="price-single">지금이 가장 좋은 가격</h2>
+    <p data-tpl-sub="price-single">런칭 특별가 한정 수량</p>
+    <div data-tpl-card="price-single">
+      <p data-tpl-current="price-single">590,000원</p>
+      <div data-tpl-divider="price-single"></div>
+      <ul data-tpl-features="price-single">
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>7존 체압분산 매트리스</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>프리미엄 커버 포함</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>무료 배송 + 설치</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>100일 무료 체험</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>10년 품질 보증</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-single">특별가로 시작하기</a>
+      <p data-tpl-micro="price-single">만족하지 않으면 100% 환불</p>
+    </div>
+  </div>
+</section>
+
+<!-- beforeAfter (misc_before_after) -->
+<style>
+[data-tpl="misc-before-after"] {
+  padding: 100px 24px;
+  background: #000000;
+  color: #FFFFFF;
+}
+[data-tpl="misc-before-after"] .ba__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl="misc-before-after"] .ba__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__sub {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: #888888;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 0 56px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__grid {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+[data-tpl="misc-before-after"] .ba__col {
+  flex: 1;
+  padding: 56px 44px;
+  min-width: 0;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-tpl="misc-before-after"] .ba__col--before {
+  background: #111111;
+  border-radius: 0px 0 0 0px;
+}
+[data-tpl="misc-before-after"] .ba__col--after {
+  background: linear-gradient(160deg, #CC1810 0%, #FF2D20 100%);
+  color: #fff;
+  border-radius: 0 0px 0px 0;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
+}
+[data-tpl="misc-before-after"] .ba__label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 24px;
+  opacity: 0.6;
+}
+[data-tpl="misc-before-after"] .ba__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl="misc-before-after"] .ba__item {
+  padding: 16px 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+}
+[data-tpl="misc-before-after"] .ba__item--before::before {
+  content: "✕ ";
+  color: #FF2D20;
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__col--after .ba__item--after::before {
+  content: "✓ ";
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #111111 0%, #FF2D20 100%);
+}
+[data-tpl="misc-before-after"] .ba__arrow {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  [data-tpl="misc-before-after"] {
+    padding: 24px 8px;
+  }
+  [data-tpl="misc-before-after"] .ba__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+  [data-tpl="misc-before-after"] .ba__grid {
+    flex-direction: column;
+  }
+  [data-tpl="misc-before-after"] .ba__col--before {
+    border-radius: 0px 0px 0 0;
+  }
+  [data-tpl="misc-before-after"] .ba__col--after {
+    border-radius: 0 0 0px 0px;
+  }
+  [data-tpl="misc-before-after"] .ba__divider {
+    width: 100%;
+    height: 48px;
+  }
+  [data-tpl="misc-before-after"] .ba__arrow {
+    transform: rotate(90deg);
+  }
+}
+</style>
+<section data-tpl="misc-before-after">
+  <div class="ba__inner">
+    <h2 class="ba__headline">무엇이 달라지나요</h2>
+    <p class="ba__sub">Before &amp; After</p>
+    <div class="ba__grid">
+      <div class="ba__col ba__col--before">
+        <p class="ba__label">Before</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--before">Before: 새벽 2시마다 뒤척임 → After: 7시간 숙면</li>
+        <li class="ba__item ba__item--before">Before: 아침마다 허리 통증 → After: 통증 없는 아침</li>
+        </ul>
+      </div>
+      <div class="ba__divider">
+        <span class="ba__arrow">→</span>
+      </div>
+      <div class="ba__col ba__col--after">
+        <p class="ba__label">After</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--after">Before: 매트리스 3년마다 교체 → After: 10년 보증</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- faq (faq_accordion) -->
+<style>
+[data-tpl="faq-accordion"] {
+  padding: 100px 24px;
+  background: #000000;
+  color: #FFFFFF;
+}
+[data-tpl="faq-accordion"] .faq-accordion__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+[data-tpl="faq-accordion"] .faq-accordion__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 48px;
+  word-break: keep-all;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item {
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+[data-tpl="faq-accordion"] .faq-accordion__question {
+  cursor: pointer;
+  padding: 24px 0;
+  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::-webkit-details-marker {
+  display: none;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::after {
+  content: "";
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(255,255,255,.1);
+  border-bottom: 2px solid rgba(255,255,255,.1);
+  transform: rotate(45deg);
+  transition: transform 0.25s;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item[open] .faq-accordion__question::after {
+  transform: rotate(-135deg);
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer {
+  padding: 0 0 20px;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.8;
+  color: #888888;
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer--empty {
+  font-style: italic;
+  color: rgba(255,255,255,.1);
+}
+@media (max-width: 768px) {
+  [data-tpl="faq-accordion"] {
+    padding: 24px 8px;
+  }
+  [data-tpl="faq-accordion"] .faq-accordion__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+}
+</style>
+<section data-tpl="faq-accordion">
+  <div class="faq-accordion__inner">
+    <h2 class="faq-accordion__headline">자주 묻는 질문</h2>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">배송은 얼마나 걸리나요? → 주문 후 1~2일 내 무료 배송</summary>
+      <p class="faq-accordion__answer">100일 체험은 어떻게 진행되나요? → 불만족 시 무료 반품</p>
+    </details>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">사이즈 교환이 가능한가요? → 7일 이내 무료 교환</summary>
+      <p class="faq-accordion__answer">기존 매트리스 수거도 해주나요? → 무료 수거 서비스 제공</p>
+    </details>
+  </div>
+</section>
+
+<!-- cta (cta_full_banner) -->
+<style>
+[data-tpl="cta-full-banner"] {
+  padding: 48px 24px;
+  background: linear-gradient(135deg, #FF2D20 0%, #CC1810 100%);
+  color: #fff;
+}
+[data-tpl="cta-full-banner"] .cta-banner__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+[data-tpl="cta-full-banner"] .cta-banner__text {
+  flex: 1;
+  min-width: 0;
+}
+[data-tpl="cta-full-banner"] .cta-banner__headline {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.0;
+  margin: 0 0 4px;
+  word-break: keep-all;
+}
+[data-tpl="cta-full-banner"] .cta-banner__sub {
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  margin: 0 0 8px;
+}
+[data-tpl="cta-full-banner"] .cta-banner__urgency {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+}
+[data-tpl="cta-full-banner"] .cta-banner__action {
+  flex-shrink: 0;
+  text-align: center;
+}
+[data-tpl="cta-full-banner"] .cta-banner__btn {
+  display: inline-block;
+  padding: 16px 48px;
+  min-height: 48px;
+  background: #fff;
+  color: #FF2D20;
+  text-decoration: none;
+  border-radius: 0px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+[data-tpl="cta-full-banner"] .cta-banner__btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+[data-tpl="cta-full-banner"] .cta-banner__micro {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+@media (max-width: 768px) {
+  [data-tpl="cta-full-banner"] {
+    padding: 24px 8px;
+  }
+  [data-tpl="cta-full-banner"] .cta-banner__inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  [data-tpl="cta-full-banner"] .cta-banner__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+}
+</style>
+<section data-tpl="cta-full-banner" id="cta">
+  <div class="cta-banner__inner">
+    <div class="cta-banner__text">
+      <h2 class="cta-banner__headline">더 나은 내일을 위한 첫 걸음</h2>
+      <p class="cta-banner__sub">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+      
+    </div>
+    <div class="cta-banner__action">
+      <a href="#cta" class="cta-banner__btn">무료 체험 시작하기</a>
+      <p class="cta-banner__micro">첫 달 무료 · 만족하지 않으면 100% 환불</p>
+    </div>
+  </div>
+</section>
+  </div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Josefin+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<div class="mood-section" id="natural">
+  <div class="mood-header">
+    <h2>NATURAL</h2>
+    <p>배경: #F5F0E8 | 주색: #2D5F3F | 폰트: Lora</p>
+  </div>
+  <div class="mood-body" style="background:#F5F0E8;color:#1A1812;font-family:'Josefin Sans', 'Noto Sans KR', sans-serif;">
+    <!-- hero (hero_product_center) -->
+
+<style>
+  [data-tpl-hero-pc] {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    background: #F5F0E8;
+    color: #1A1812;
+  }
+  [data-tpl-hero-pc] .hero-pc__header {
+    max-width: 640px;
+    margin-bottom: 48px;
+  }
+  [data-tpl-hero-pc] .hero-pc__headline {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.0;
+    margin: 0 0 16px;
+    color: #1A1812;
+    word-break: keep-all;
+  }
+  [data-tpl-hero-pc] .hero-pc__subheadline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: #8A8070;
+    margin: 0;
+  }
+  [data-tpl-hero-pc] .hero-pc__product {
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    margin-bottom: 48px;
+  }
+  [data-tpl-hero-pc] .hero-pc__product-float {
+    animation: hero-pc-float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.07));
+  }
+  [data-tpl-hero-pc] .hero-pc__product-float img,
+  [data-tpl-hero-pc] .hero-pc__product-float > div {
+    width: 100%;
+  }
+  [data-tpl-hero-pc] .hero-pc__glow {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 32px;
+    background: radial-gradient(ellipse, #2D5F3F22 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  [data-tpl-hero-pc] .hero-pc__footer {
+    max-width: 480px;
+  }
+  [data-tpl-hero-pc] .hero-pc__body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #8A8070;
+    margin: 0 0 32px;
+  }
+  @keyframes hero-pc-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @media (max-width: 768px) {
+    [data-tpl-hero-pc] {
+      min-height: auto;
+      padding: 48px 16px;
+    }
+    [data-tpl-hero-pc] .hero-pc__headline {
+      font-size: 2rem;
+    }
+    [data-tpl-hero-pc] .hero-pc__product {
+      max-width: 320px;
+      margin-bottom: 32px;
+    }
+    [data-tpl-hero-pc] .hero-pc__header {
+      margin-bottom: 32px;
+    }
+  }
+</style>
+<section data-tpl-hero-pc>
+  <div class="hero-pc__header">
+    <h1 class="hero-pc__headline">완벽한 수면, 완벽한 아침</h1>
+    <p class="hero-pc__subheadline">독일 엔지니어링과 천연 소재의 조화</p>
+  </div>
+  <div class="hero-pc__product">
+    <div class="hero-pc__product-float">
+      <div style="width:100%;max-width:480px;aspect-ratio:1/1;background:linear-gradient(135deg, #FAF7F0 0%, rgba(0,0,0,.08) 100%);border-radius:16px;"></div>
+    </div>
+    <div class="hero-pc__glow"></div>
+  </div>
+  <div class="hero-pc__footer">
+    <p class="hero-pc__body">매일 밤, 5성급 호텔의 잠자리를 경험하세요. 7존 맞춤 지지 시스템이 당신의 체형을 기억합니다.</p>
+    <a href="#cta" style="display:inline-block;padding:16px 40px;background:#2D5F3F;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:1.1rem;min-height:48px;line-height:1;transition:opacity .2s;">무료 체험 시작하기</a><p style="margin-top:8px;font-size:0.85rem;color:rgba(0,0,0,.08);">100일 무료 체험 · 무료 배송</p>
+  </div>
+</section>
+
+<!-- features (feat_3col_grid) -->
+<style>
+[data-tpl-feat3col] {
+  padding: clamp(48px, 6vw, 80px) clamp(20px, 3vw, 40px);
+  background: #F5F0E8;
+  color: #1A1812;
+}
+[data-tpl-feat3col-inner] {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+[data-tpl-feat3col-title] {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 8px 0;
+  word-break: keep-all;
+}
+[data-tpl-feat3col-subtitle] {
+  font-size: 1rem;
+  color: #8A8070;
+  margin: 0 0 64px 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+[data-tpl-feat3col-grid] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+[data-tpl-feat3col-card] {
+  padding: 32px;
+  background: #FAF7F0;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,.08);
+  text-align: center;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  cursor: default;
+}
+[data-tpl-feat3col-card]:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+}
+[data-tpl-feat3col-icon] {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+[data-tpl-feat3col-card-title] {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 4px 0;
+}
+[data-tpl-feat3col-card-desc] {
+  font-size: 0.875rem;
+  color: #8A8070;
+  line-height: 1.5;
+  margin: 0;
+}
+[data-tpl-feat3col-empty] {
+  font-size: 1rem;
+  color: #8A8070;
+}
+@media (max-width: 768px) {
+  [data-tpl-feat3col-grid] {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  [data-tpl-feat3col-title] {
+    font-size: 1.5rem;
+  }
+}
+</style>
+<section data-tpl-feat3col>
+  <div data-tpl-feat3col-inner>
+    <h2 data-tpl-feat3col-title>왜 슬립웰인가</h2>
+    <p data-tpl-feat3col-subtitle>수면 과학으로 증명된 기술</p>
+    <div data-tpl-feat3col-grid>
+      <div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>💡</div>
+        <h3 data-tpl-feat3col-card-title>체형 맞춤 7존 지지 시스템</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>⚡</div>
+        <h3 data-tpl-feat3col-card-title>사계절 쾌적한 온도 조절</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>🎯</div>
+        <h3 data-tpl-feat3col-card-title>파트너 진동 완벽 차단</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div><div data-tpl-feat3col-card>
+        <div data-tpl-feat3col-icon>🔒</div>
+        <h3 data-tpl-feat3col-card-title>10년 형태 유지 보증</h3>
+        <p data-tpl-feat3col-card-desc>7존 체압분산 시스템, 스마트 온도 조절, 제로 모션 트랜스퍼 — 세 가지 핵심 기술이 만드는 차이.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- proof (proof_testimonial_card) -->
+<style>
+  [data-tpl="proof-testimonial"] {
+    padding: 100px 24px;
+    background: #FAF7F0;
+    color: #1A1812;
+  }
+  [data-tpl-inner="proof-testimonial"] {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="proof-testimonial"] {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    word-break: keep-all;
+  }
+  [data-tpl-grid="proof-testimonial"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  [data-tpl-card="proof-testimonial"] {
+    position: relative;
+    padding: 40px 32px;
+    background: #F5F0E8;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,.08);
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  [data-tpl-quote="proof-testimonial"] {
+    position: absolute;
+    top: 16px;
+    right: 32px;
+    font-size: 4rem;
+    line-height: 1;
+    color: #3A7A52;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  [data-tpl-stars="proof-testimonial"] {
+    color: #f59e0b;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  [data-tpl-text="proof-testimonial"] {
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.75;
+    color: #8A8070;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  [data-tpl-author="proof-testimonial"] {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1A1812;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-grid="proof-testimonial"] {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+<section data-tpl="proof-testimonial">
+  <div data-tpl-inner="proof-testimonial">
+    <h2 data-tpl-heading="proof-testimonial">실제 고객 후기</h2>
+    <div data-tpl-grid="proof-testimonial">
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">50,000+ 고객이 선택</p>
+      <p data-tpl-author="proof-testimonial">— 고객 1</p>
+    </div>
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">98% 만족도</p>
+      <p data-tpl-author="proof-testimonial">— 고객 2</p>
+    </div>
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">4.9 평균 별점</p>
+      <p data-tpl-author="proof-testimonial">— 고객 3</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- pricing (price_single_card) -->
+<style>
+  [data-tpl="price-single"] {
+    padding: clamp(48px, 6vw, 80px) clamp(20px, 3vw, 40px);
+    background: #FAF7F0;
+    color: #1A1812;
+  }
+  [data-tpl-inner="price-single"] {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="price-single"] {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    word-break: keep-all;
+  }
+  [data-tpl-sub="price-single"] {
+    font-size: 1rem;
+    color: #8A8070;
+    margin-bottom: 64px;
+  }
+  [data-tpl-card="price-single"] {
+    background: #F5F0E8;
+    border-radius: 16px;
+    border: 2px solid #2D5F3F;
+    padding: 100px 64px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+  [data-tpl-original="price-single"] {
+    font-size: 1rem;
+    color: rgba(0,0,0,.08);
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+  [data-tpl-current="price-single"] {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 400;
+    color: #2D5F3F;
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+  [data-tpl-divider="price-single"] {
+    width: 60px;
+    height: 2px;
+    background: rgba(0,0,0,.08);
+    margin: 0 auto 32px;
+  }
+  [data-tpl-features="price-single"] {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 64px;
+    text-align: left;
+  }
+  [data-tpl-feat="price-single"] {
+    padding: 8px 0;
+    font-size: 1rem;
+    color: #8A8070;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(0,0,0,.08);
+  }
+  [data-tpl-feat="price-single"]:last-child {
+    border-bottom: none;
+  }
+  [data-tpl-check="price-single"] {
+    color: #2D5F3F;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  [data-tpl-cta="price-single"] {
+    display: inline-block;
+    width: 100%;
+    padding: 16px;
+    background: #2D5F3F;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: opacity 0.2s;
+  }
+  [data-tpl-micro="price-single"] {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: rgba(0,0,0,.08);
+  }
+  @media (max-width: 768px) {
+    [data-tpl-inner="price-single"] {
+      max-width: 100%;
+      padding: 0 16px;
+    }
+  }
+</style>
+<section data-tpl="price-single">
+  <div data-tpl-inner="price-single">
+    <h2 data-tpl-heading="price-single">지금이 가장 좋은 가격</h2>
+    <p data-tpl-sub="price-single">런칭 특별가 한정 수량</p>
+    <div data-tpl-card="price-single">
+      <p data-tpl-current="price-single">590,000원</p>
+      <div data-tpl-divider="price-single"></div>
+      <ul data-tpl-features="price-single">
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>7존 체압분산 매트리스</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>프리미엄 커버 포함</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>무료 배송 + 설치</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>100일 무료 체험</li>
+        <li data-tpl-feat="price-single"><span data-tpl-check="price-single">✓</span>10년 품질 보증</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-single">특별가로 시작하기</a>
+      <p data-tpl-micro="price-single">만족하지 않으면 100% 환불</p>
+    </div>
+  </div>
+</section>
+
+<!-- beforeAfter (misc_before_after) -->
+<style>
+[data-tpl="misc-before-after"] {
+  padding: 100px 24px;
+  background: #F5F0E8;
+  color: #1A1812;
+}
+[data-tpl="misc-before-after"] .ba__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl="misc-before-after"] .ba__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__sub {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: #8A8070;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 0 56px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__grid {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+[data-tpl="misc-before-after"] .ba__col {
+  flex: 1;
+  padding: 56px 44px;
+  min-width: 0;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-tpl="misc-before-after"] .ba__col--before {
+  background: #FAF7F0;
+  border-radius: 14px 0 0 14px;
+}
+[data-tpl="misc-before-after"] .ba__col--after {
+  background: linear-gradient(160deg, #1E3F2A 0%, #2D5F3F 100%);
+  color: #fff;
+  border-radius: 0 14px 14px 0;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
+}
+[data-tpl="misc-before-after"] .ba__label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 24px;
+  opacity: 0.6;
+}
+[data-tpl="misc-before-after"] .ba__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl="misc-before-after"] .ba__item {
+  padding: 16px 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+}
+[data-tpl="misc-before-after"] .ba__item--before::before {
+  content: "✕ ";
+  color: #DC2626;
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__col--after .ba__item--after::before {
+  content: "✓ ";
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #FAF7F0 0%, #2D5F3F 100%);
+}
+[data-tpl="misc-before-after"] .ba__arrow {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  [data-tpl="misc-before-after"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="misc-before-after"] .ba__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+  [data-tpl="misc-before-after"] .ba__grid {
+    flex-direction: column;
+  }
+  [data-tpl="misc-before-after"] .ba__col--before {
+    border-radius: 14px 14px 0 0;
+  }
+  [data-tpl="misc-before-after"] .ba__col--after {
+    border-radius: 0 0 14px 14px;
+  }
+  [data-tpl="misc-before-after"] .ba__divider {
+    width: 100%;
+    height: 48px;
+  }
+  [data-tpl="misc-before-after"] .ba__arrow {
+    transform: rotate(90deg);
+  }
+}
+</style>
+<section data-tpl="misc-before-after">
+  <div class="ba__inner">
+    <h2 class="ba__headline">무엇이 달라지나요</h2>
+    <p class="ba__sub">Before &amp; After</p>
+    <div class="ba__grid">
+      <div class="ba__col ba__col--before">
+        <p class="ba__label">Before</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--before">Before: 새벽 2시마다 뒤척임 → After: 7시간 숙면</li>
+        <li class="ba__item ba__item--before">Before: 아침마다 허리 통증 → After: 통증 없는 아침</li>
+        </ul>
+      </div>
+      <div class="ba__divider">
+        <span class="ba__arrow">→</span>
+      </div>
+      <div class="ba__col ba__col--after">
+        <p class="ba__label">After</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--after">Before: 매트리스 3년마다 교체 → After: 10년 보증</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- faq (faq_accordion) -->
+<style>
+[data-tpl="faq-accordion"] {
+  padding: 100px 24px;
+  background: #F5F0E8;
+  color: #1A1812;
+}
+[data-tpl="faq-accordion"] .faq-accordion__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+[data-tpl="faq-accordion"] .faq-accordion__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 48px;
+  word-break: keep-all;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item {
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+[data-tpl="faq-accordion"] .faq-accordion__question {
+  cursor: pointer;
+  padding: 24px 0;
+  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::-webkit-details-marker {
+  display: none;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::after {
+  content: "";
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(0,0,0,.08);
+  border-bottom: 2px solid rgba(0,0,0,.08);
+  transform: rotate(45deg);
+  transition: transform 0.25s;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item[open] .faq-accordion__question::after {
+  transform: rotate(-135deg);
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer {
+  padding: 0 0 20px;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.8;
+  color: #8A8070;
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer--empty {
+  font-style: italic;
+  color: rgba(0,0,0,.08);
+}
+@media (max-width: 768px) {
+  [data-tpl="faq-accordion"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="faq-accordion"] .faq-accordion__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+}
+</style>
+<section data-tpl="faq-accordion">
+  <div class="faq-accordion__inner">
+    <h2 class="faq-accordion__headline">자주 묻는 질문</h2>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">배송은 얼마나 걸리나요? → 주문 후 1~2일 내 무료 배송</summary>
+      <p class="faq-accordion__answer">100일 체험은 어떻게 진행되나요? → 불만족 시 무료 반품</p>
+    </details>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">사이즈 교환이 가능한가요? → 7일 이내 무료 교환</summary>
+      <p class="faq-accordion__answer">기존 매트리스 수거도 해주나요? → 무료 수거 서비스 제공</p>
+    </details>
+  </div>
+</section>
+
+<!-- cta (cta_center) -->
+<style>
+[data-tpl="cta-center"] {
+  padding: 80px 24px;
+  background: linear-gradient(160deg, #1E3F2A 0%, #2D5F3F 100%);
+  color: #fff;
+  text-align: center;
+}
+[data-tpl="cta-center"] .cta-center__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+[data-tpl="cta-center"] .cta-center__headline {
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 8px;
+  word-break: keep-all;
+}
+[data-tpl="cta-center"] .cta-center__sub {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1.6;
+  opacity: 0.92;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="cta-center"] .cta-center__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+[data-tpl="cta-center"] .cta-center__bullets li {
+  opacity: 0.95;
+  font-size: 1rem;
+}
+[data-tpl="cta-center"] .cta-center__bullets li::before {
+  content: "✓ ";
+}
+[data-tpl="cta-center"] .cta-center__btn {
+  display: inline-block;
+  padding: 24px 64px;
+  min-height: 48px;
+  background: #fff;
+  color: #2D5F3F;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+[data-tpl="cta-center"] .cta-center__btn:hover {
+  opacity: 0.95;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+[data-tpl="cta-center"] .cta-center__micro {
+  margin-top: 16px;
+  font-size: 1.05rem;
+  opacity: 0.75;
+}
+@media (max-width: 768px) {
+  [data-tpl="cta-center"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="cta-center"] .cta-center__headline {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  }
+  [data-tpl="cta-center"] .cta-center__bullets {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+<section data-tpl="cta-center" id="cta">
+  <div class="cta-center__inner">
+    <h2 class="cta-center__headline">더 나은 내일을 위한 첫 걸음</h2>
+    <p class="cta-center__sub">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+    
+    <a href="#cta" class="cta-center__btn">무료 체험 시작하기</a>
+    <p class="cta-center__micro">첫 달 무료 · 만족하지 않으면 100% 환불</p>
+  </div>
+</section>
+  </div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<div class="mood-section" id="premium">
+  <div class="mood-header">
+    <h2>PREMIUM</h2>
+    <p>배경: #0A1628 | 주색: #9DC4E0 | 폰트: Cormorant Garamond</p>
+  </div>
+  <div class="mood-body" style="background:#0A1628;color:#FFFFFF;font-family:'Outfit', 'Noto Sans KR', sans-serif;">
+    <!-- hero (hero_fullscreen_center) -->
+
+<style>
+  [data-tpl-hero-fc] {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    background: #0A1628;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+  }
+  [data-tpl-hero-fc] .hero-fc__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      #7AA8C818 0%,
+      #0A1628 100%
+    );
+    pointer-events: none;
+  }
+  [data-tpl-hero-fc] .hero-fc__content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__headline {
+    font-size: clamp(3.2rem, 7.5vw, 6.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    margin: 0 0 16px;
+    color: #FFFFFF;
+    word-break: keep-all;
+  }
+  [data-tpl-hero-fc] .hero-fc__subheadline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: #B8C8D8;
+    margin: 0 0 24px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__body {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: #B8C8D8;
+    margin: 0 0 40px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  [data-tpl-hero-fc] .hero-fc__cta {
+    margin-top: 8px;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-hero-fc] {
+      min-height: 90vh;
+      padding: 48px 16px;
+    }
+    [data-tpl-hero-fc] .hero-fc__headline {
+      font-size: 2rem;
+    }
+    [data-tpl-hero-fc] .hero-fc__subheadline {
+      font-size: 1rem;
+    }
+  }
+</style>
+<section data-tpl-hero-fc>
+  <div class="hero-fc__overlay"></div>
+  <div class="hero-fc__content">
+    <h1 class="hero-fc__headline">완벽한 수면, 완벽한 아침</h1>
+    <p class="hero-fc__subheadline">독일 엔지니어링과 천연 소재의 조화</p>
+    <p class="hero-fc__body">매일 밤, 5성급 호텔의 잠자리를 경험하세요. 7존 맞춤 지지 시스템이 당신의 체형을 기억합니다.</p>
+    <div class="hero-fc__cta">
+      <a href="#cta" style="display:inline-block;padding:16px 40px;background:#9DC4E0;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:1.1rem;min-height:48px;line-height:1;transition:opacity .2s;">무료 체험 시작하기</a><p style="margin-top:8px;font-size:0.85rem;color:rgba(157,196,224,.18);">100일 무료 체험 · 무료 배송</p>
+    </div>
+  </div>
+</section>
+
+<!-- features (feat_zigzag) -->
+<style>
+[data-tpl-featzz] {
+  padding: 100px 24px;
+  background: #0A1628;
+  color: #FFFFFF;
+}
+[data-tpl-featzz-inner] {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl-featzz-row] {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  margin-bottom: 64px;
+}
+[data-tpl-featzz-row]:last-child {
+  margin-bottom: 0;
+}
+[data-tpl-featzz-row-reverse] {
+  flex-direction: row-reverse;
+}
+[data-tpl-featzz-text] {
+  flex: 1.3;
+  min-width: 0;
+}
+[data-tpl-featzz-media] {
+  flex: 1;
+  min-width: 0;
+  max-width: 400px;
+}
+[data-tpl-featzz-title] {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px 0;
+  word-break: keep-all;
+}
+[data-tpl-featzz-body] {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  color: #B8C8D8;
+  line-height: 1.75;
+  margin: 0 0 24px 0;
+  word-break: keep-all;
+}
+[data-tpl-featzz-list] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl-featzz-bullet] {
+  position: relative;
+  padding: 14px 0 14px 28px;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.75;
+}
+[data-tpl-featzz-check] {
+  position: absolute;
+  left: 0;
+  color: #9DC4E0;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+[data-tpl-featzz-img] {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 0px;
+  display: block;
+}
+[data-tpl-featzz-placeholder] {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, #0E1F3D 0%, rgba(157,196,224,.18) 100%);
+  border-radius: 0px;
+}
+@media (max-width: 768px) {
+  [data-tpl-featzz-row],
+  [data-tpl-featzz-row-reverse] {
+    flex-direction: column;
+    gap: 32px;
+  }
+  [data-tpl-featzz-title] {
+    font-size: 1.5rem;
+  }
+  [data-tpl-featzz-img],
+  [data-tpl-featzz-placeholder] {
+    max-width: 100%;
+  }
+}
+</style>
+<section data-tpl-featzz>
+  <div data-tpl-featzz-inner>
+    <div data-tpl-featzz-row >
+      <div data-tpl-featzz-text>
+        <h2 data-tpl-featzz-title>왜 슬립웰인가</h2>
+        
+        <ul data-tpl-featzz-list><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>체형 맞춤 7존 지지 시스템</li><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>사계절 쾌적한 온도 조절</li></ul>
+      </div>
+      <div data-tpl-featzz-media>
+        <div data-tpl-featzz-placeholder></div>
+      </div>
+    </div><div data-tpl-featzz-row data-tpl-featzz-row-reverse>
+      <div data-tpl-featzz-text>
+        
+        
+        <ul data-tpl-featzz-list><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>파트너 진동 완벽 차단</li><li data-tpl-featzz-bullet><span data-tpl-featzz-check>✓</span>10년 형태 유지 보증</li></ul>
+      </div>
+      <div data-tpl-featzz-media>
+        <div data-tpl-featzz-placeholder></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- proof (proof_testimonial_card) -->
+<style>
+  [data-tpl="proof-testimonial"] {
+    padding: 100px 24px;
+    background: #0E1F3D;
+    color: #FFFFFF;
+  }
+  [data-tpl-inner="proof-testimonial"] {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="proof-testimonial"] {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    word-break: keep-all;
+  }
+  [data-tpl-grid="proof-testimonial"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  [data-tpl-card="proof-testimonial"] {
+    position: relative;
+    padding: 40px 32px;
+    background: #0A1628;
+    border-radius: 16px;
+    border: 1px solid rgba(157,196,224,.18);
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  [data-tpl-quote="proof-testimonial"] {
+    position: absolute;
+    top: 16px;
+    right: 32px;
+    font-size: 4rem;
+    line-height: 1;
+    color: #B8DCF0;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  [data-tpl-stars="proof-testimonial"] {
+    color: #f59e0b;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  [data-tpl-text="proof-testimonial"] {
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.75;
+    color: #B8C8D8;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  [data-tpl-author="proof-testimonial"] {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-grid="proof-testimonial"] {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+<section data-tpl="proof-testimonial">
+  <div data-tpl-inner="proof-testimonial">
+    <h2 data-tpl-heading="proof-testimonial">실제 고객 후기</h2>
+    <div data-tpl-grid="proof-testimonial">
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">50,000+ 고객이 선택</p>
+      <p data-tpl-author="proof-testimonial">— 고객 1</p>
+    </div>
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">98% 만족도</p>
+      <p data-tpl-author="proof-testimonial">— 고객 2</p>
+    </div>
+      <div data-tpl-card="proof-testimonial">
+      <div data-tpl-quote="proof-testimonial">“</div>
+      <div data-tpl-stars="proof-testimonial"><span aria-label="5점">★★★★★</span></div>
+      <p data-tpl-text="proof-testimonial">4.9 평균 별점</p>
+      <p data-tpl-author="proof-testimonial">— 고객 3</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- pricing (price_3col_compare) -->
+<style>
+  [data-tpl="price-3col"] {
+    padding: 100px 24px;
+    background: #0A1628;
+    color: #FFFFFF;
+  }
+  [data-tpl-inner="price-3col"] {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  [data-tpl-heading="price-3col"] {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    word-break: keep-all;
+  }
+  [data-tpl-sub="price-3col"] {
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    color: #B8C8D8;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    word-break: keep-all;
+  }
+  [data-tpl-grid="price-3col"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  [data-tpl-card="price-3col"] {
+    position: relative;
+    padding: 44px 36px;
+    background: #0E1F3D;
+    border-radius: 16px;
+    border: 1px solid rgba(157,196,224,.18);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  [data-tpl-featured="price-3col"] {
+    border: 2px solid #9DC4E0;
+    transform: scale(1.04);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    z-index: 1;
+  }
+  [data-tpl-badge="price-3col"] {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #9DC4E0;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  [data-tpl-plan="price-3col"] {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  [data-tpl-price="price-3col"] {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 900;
+    color: #9DC4E0;
+    margin-bottom: 32px;
+  }
+  [data-tpl-features="price-3col"] {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px;
+    text-align: left;
+    flex: 1;
+  }
+  [data-tpl-feat="price-3col"] {
+    padding: 10px 0;
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    line-height: 1.7;
+    color: #B8C8D8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  [data-tpl-check="price-3col"] {
+    color: #9DC4E0;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  [data-tpl-cta="price-3col"] {
+    display: inline-block;
+    width: 100%;
+    padding: 16px;
+    background: #0E1F3D;
+    color: #9DC4E0;
+    border: 2px solid #9DC4E0;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-sizing: border-box;
+    transition: background 0.2s, color 0.2s;
+  }
+  [data-tpl-cta-primary="price-3col"] {
+    background: #9DC4E0;
+    color: #fff;
+    border-color: #9DC4E0;
+  }
+  @media (max-width: 768px) {
+    [data-tpl-grid="price-3col"] {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    [data-tpl-featured="price-3col"] {
+      transform: none;
+    }
+  }
+</style>
+<section data-tpl="price-3col">
+  <div data-tpl-inner="price-3col">
+    <h2 data-tpl-heading="price-3col">지금이 가장 좋은 가격</h2>
+    <p data-tpl-sub="price-3col">런칭 특별가 한정 수량</p>
+    <div data-tpl-grid="price-3col">
+      <div data-tpl-card="price-3col">
+      
+      <h3 data-tpl-plan="price-3col">Basic</h3>
+      <p data-tpl-price="price-3col">무료</p>
+      <ul data-tpl-features="price-3col">
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>7존 체압분산 매트리스</li>
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>프리미엄 커버 포함</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-3col">특별가로 시작하기</a>
+    </div>
+      <div data-tpl-card="price-3col" data-tpl-featured="price-3col">
+      <div data-tpl-badge="price-3col">추천</div>
+      <h3 data-tpl-plan="price-3col">Pro</h3>
+      <p data-tpl-price="price-3col">유료</p>
+      <ul data-tpl-features="price-3col">
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>무료 배송 + 설치</li>
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>100일 무료 체험</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-3col" data-tpl-cta-primary="price-3col">특별가로 시작하기</a>
+    </div>
+      <div data-tpl-card="price-3col">
+      
+      <h3 data-tpl-plan="price-3col">Enterprise</h3>
+      <p data-tpl-price="price-3col">문의</p>
+      <ul data-tpl-features="price-3col">
+          <li data-tpl-feat="price-3col"><span data-tpl-check="price-3col">✓</span>10년 품질 보증</li>
+      </ul>
+      <a href="#cta" data-tpl-cta="price-3col">특별가로 시작하기</a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- beforeAfter (misc_before_after) -->
+<style>
+[data-tpl="misc-before-after"] {
+  padding: 100px 24px;
+  background: #0A1628;
+  color: #FFFFFF;
+}
+[data-tpl="misc-before-after"] .ba__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+[data-tpl="misc-before-after"] .ba__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__sub {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: #B8C8D8;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 0 56px;
+  word-break: keep-all;
+}
+[data-tpl="misc-before-after"] .ba__grid {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+[data-tpl="misc-before-after"] .ba__col {
+  flex: 1;
+  padding: 56px 44px;
+  min-width: 0;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-tpl="misc-before-after"] .ba__col--before {
+  background: #0E1F3D;
+  border-radius: 0px 0 0 0px;
+}
+[data-tpl="misc-before-after"] .ba__col--after {
+  background: linear-gradient(160deg, #7AA8C8 0%, #9DC4E0 100%);
+  color: #fff;
+  border-radius: 0 0px 0px 0;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
+}
+[data-tpl="misc-before-after"] .ba__label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 24px;
+  opacity: 0.6;
+}
+[data-tpl="misc-before-after"] .ba__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+[data-tpl="misc-before-after"] .ba__item {
+  padding: 16px 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+}
+[data-tpl="misc-before-after"] .ba__item--before::before {
+  content: "✕ ";
+  color: #EF4444;
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__col--after .ba__item--after::before {
+  content: "✓ ";
+  font-weight: 700;
+}
+[data-tpl="misc-before-after"] .ba__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #0E1F3D 0%, #9DC4E0 100%);
+}
+[data-tpl="misc-before-after"] .ba__arrow {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  [data-tpl="misc-before-after"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="misc-before-after"] .ba__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+  [data-tpl="misc-before-after"] .ba__grid {
+    flex-direction: column;
+  }
+  [data-tpl="misc-before-after"] .ba__col--before {
+    border-radius: 0px 0px 0 0;
+  }
+  [data-tpl="misc-before-after"] .ba__col--after {
+    border-radius: 0 0 0px 0px;
+  }
+  [data-tpl="misc-before-after"] .ba__divider {
+    width: 100%;
+    height: 48px;
+  }
+  [data-tpl="misc-before-after"] .ba__arrow {
+    transform: rotate(90deg);
+  }
+}
+</style>
+<section data-tpl="misc-before-after">
+  <div class="ba__inner">
+    <h2 class="ba__headline">무엇이 달라지나요</h2>
+    <p class="ba__sub">Before &amp; After</p>
+    <div class="ba__grid">
+      <div class="ba__col ba__col--before">
+        <p class="ba__label">Before</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--before">Before: 새벽 2시마다 뒤척임 → After: 7시간 숙면</li>
+        <li class="ba__item ba__item--before">Before: 아침마다 허리 통증 → After: 통증 없는 아침</li>
+        </ul>
+      </div>
+      <div class="ba__divider">
+        <span class="ba__arrow">→</span>
+      </div>
+      <div class="ba__col ba__col--after">
+        <p class="ba__label">After</p>
+        <ul class="ba__list">
+          <li class="ba__item ba__item--after">Before: 매트리스 3년마다 교체 → After: 10년 보증</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- faq (faq_accordion) -->
+<style>
+[data-tpl="faq-accordion"] {
+  padding: 100px 24px;
+  background: #0A1628;
+  color: #FFFFFF;
+}
+[data-tpl="faq-accordion"] .faq-accordion__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+[data-tpl="faq-accordion"] .faq-accordion__headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 48px;
+  word-break: keep-all;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item {
+  border-bottom: 1px solid rgba(157,196,224,.18);
+}
+[data-tpl="faq-accordion"] .faq-accordion__question {
+  cursor: pointer;
+  padding: 24px 0;
+  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::-webkit-details-marker {
+  display: none;
+}
+[data-tpl="faq-accordion"] .faq-accordion__question::after {
+  content: "";
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(157,196,224,.18);
+  border-bottom: 2px solid rgba(157,196,224,.18);
+  transform: rotate(45deg);
+  transition: transform 0.25s;
+}
+[data-tpl="faq-accordion"] .faq-accordion__item[open] .faq-accordion__question::after {
+  transform: rotate(-135deg);
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer {
+  padding: 0 0 20px;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.8;
+  color: #B8C8D8;
+}
+[data-tpl="faq-accordion"] .faq-accordion__answer--empty {
+  font-style: italic;
+  color: rgba(157,196,224,.18);
+}
+@media (max-width: 768px) {
+  [data-tpl="faq-accordion"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="faq-accordion"] .faq-accordion__headline {
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  }
+}
+</style>
+<section data-tpl="faq-accordion">
+  <div class="faq-accordion__inner">
+    <h2 class="faq-accordion__headline">자주 묻는 질문</h2>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">배송은 얼마나 걸리나요? → 주문 후 1~2일 내 무료 배송</summary>
+      <p class="faq-accordion__answer">100일 체험은 어떻게 진행되나요? → 불만족 시 무료 반품</p>
+    </details>
+    <details class="faq-accordion__item">
+      <summary class="faq-accordion__question">사이즈 교환이 가능한가요? → 7일 이내 무료 교환</summary>
+      <p class="faq-accordion__answer">기존 매트리스 수거도 해주나요? → 무료 수거 서비스 제공</p>
+    </details>
+  </div>
+</section>
+
+<!-- cta (cta_center) -->
+<style>
+[data-tpl="cta-center"] {
+  padding: 80px 24px;
+  background: linear-gradient(160deg, #7AA8C8 0%, #9DC4E0 100%);
+  color: #fff;
+  text-align: center;
+}
+[data-tpl="cta-center"] .cta-center__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+[data-tpl="cta-center"] .cta-center__headline {
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 8px;
+  word-break: keep-all;
+}
+[data-tpl="cta-center"] .cta-center__sub {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1.6;
+  opacity: 0.92;
+  margin: 0 0 16px;
+  word-break: keep-all;
+}
+[data-tpl="cta-center"] .cta-center__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+[data-tpl="cta-center"] .cta-center__bullets li {
+  opacity: 0.95;
+  font-size: 1rem;
+}
+[data-tpl="cta-center"] .cta-center__bullets li::before {
+  content: "✓ ";
+}
+[data-tpl="cta-center"] .cta-center__btn {
+  display: inline-block;
+  padding: 24px 64px;
+  min-height: 48px;
+  background: #fff;
+  color: #9DC4E0;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+[data-tpl="cta-center"] .cta-center__btn:hover {
+  opacity: 0.95;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+[data-tpl="cta-center"] .cta-center__micro {
+  margin-top: 16px;
+  font-size: 1.05rem;
+  opacity: 0.75;
+}
+@media (max-width: 768px) {
+  [data-tpl="cta-center"] {
+    padding: 32px 8px;
+  }
+  [data-tpl="cta-center"] .cta-center__headline {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  }
+  [data-tpl="cta-center"] .cta-center__bullets {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+<section data-tpl="cta-center" id="cta">
+  <div class="cta-center__inner">
+    <h2 class="cta-center__headline">더 나은 내일을 위한 첫 걸음</h2>
+    <p class="cta-center__sub">지금 시작하면 100일 무료 체험 + 런칭 특별가</p>
+    
+    <a href="#cta" class="cta-center__btn">무료 체험 시작하기</a>
+    <p class="cta-center__micro">첫 달 무료 · 만족하지 않으면 100% 환불</p>
+  </div>
+</section>
+  </div>
+</div>
+
+</body>
+</html>

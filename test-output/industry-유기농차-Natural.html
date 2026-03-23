@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{brand}} — {{hero.headline}}</title>
+<title>SONAMU CHA — 한 잔의<br><em>고요한 시간</em></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="{{token.fontUrl}}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Josefin+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:{{token.bg}};--green:{{token.primary}};--green-l:{{token.primaryLight}};--green-d:#1E3F2A;
-  --brown:{{token.primaryPale}};--cream:{{token.surface}};--bk:{{token.textPrimary}};
-  --gy:{{token.textSecondary}};--gl:{{token.frostLine}};
-  --lora:{{token.fontDisplay}};
-  --josefin:{{token.fontBody}};
-  --size-display:{{token.sizeDisplay}};
-  --size-h1:{{token.sizeH1}};
-  --size-h2:{{token.sizeH2}};
-  --size-h3:{{token.sizeH3}};
-  --size-body:{{token.sizeBody}};
+  --bg:#F5F0E8;--green:#2D5F3F;--green-l:#3A7A52;--green-d:#1E3F2A;
+  --brown:#8B6914;--cream:#FAF7F0;--bk:#1A1812;
+  --gy:#8A8070;--gl:rgba(0,0,0,.08);
+  --lora:'Lora','Noto Sans KR',serif;
+  --josefin:'Josefin Sans','Noto Sans KR',sans-serif;
+  --size-display:clamp(3rem,7vw,5.5rem);
+  --size-h1:clamp(2rem,3.5vw,3rem);
+  --size-h2:clamp(1.8rem,3.5vw,2.8rem);
+  --size-h3:clamp(1.2rem,1.8vw,1.5rem);
+  --size-body:clamp(.95rem,1.1vw,1.05rem);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -235,22 +235,22 @@ footer p{font-size:.75rem;color:var(--gy);}
 <!-- §1 HERO -->
 <section class="hero">
   <div class="hero__text rv-left on">
-    <p class="hero__brand">{{brand}}</p>
-    <h1 class="hero__h1">{{hero.headline}}</h1>
-    <p class="hero__sub">{{hero.subheadline}}</p>
-    <a href="#pricing" class="hero__cta">{{hero.cta}}</a>
+    <p class="hero__brand">SONAMU CHA</p>
+    <h1 class="hero__h1">한 잔의<br><em>고요한 시간</em></h1>
+    <p class="hero__sub">하동 야생 녹차 × 제주 감귤.<br>자연이 빚은 블렌딩 티.</p>
+    <a href="#pricing" class="hero__cta">티 컬렉션 보기</a>
   </div>
   <div class="hero__img-wrap rv-right on">
-    <div class="hero__img"><img src="{{images.hero}}" alt="" loading="eager"></div>
-    <div class="hero__float"><img src="{{images.feat1}}" alt=""></div>
+    <div class="hero__img"><img src="https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?w=1400&q=85" alt="" loading="eager"></div>
+    <div class="hero__float"><img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600&q=80" alt=""></div>
     <div class="hero__accent"></div>
   </div>
 </section>
 
 <!-- §2 INTRO -->
 <section class="intro rv">
-  <p class="intro__text">{{intro.headline}}</p>
-  <p class="intro__sub">{{intro.body}}</p>
+  <p class="intro__text"><em>느리게</em> 우려낸 가치</p>
+  <p class="intro__sub">경남 하동 화개골 해발 400m 야생 차밭. 할머니의 손으로 채엽하고, 가마솥에서 덖어 만듭니다.</p>
 </section>
 
 <!-- §3 FEATURES -->
@@ -259,36 +259,36 @@ footer p{font-size:.75rem;color:var(--gy);}
 
   <div class="feat rv">
     <div class="feat__inner">
-      <div class="feat__img"><img src="{{images.feat1}}" alt=""></div>
+      <div class="feat__img"><img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600&q=80" alt=""></div>
       <div class="feat__body">
         <div class="feat__num">01</div>
-        <h3 class="feat__h3">{{feat1.headline}}</h3>
-        <p class="feat__p">{{feat1.body}}</p>
-        <div class="feat__tags"><span class="feat__tag">{{feat1.tag1}}</span><span class="feat__tag">{{feat1.tag2}}</span></div>
+        <h3 class="feat__h3">하동 <em>야생</em> 녹차</h3>
+        <p class="feat__p">50년 이상 무농약 야생 차나무. 봄 첫물차만 수확하여 L-테아닌 함량 극대화.</p>
+        <div class="feat__tags"><span class="feat__tag">야생 차밭</span><span class="feat__tag">봄 첫물차</span></div>
       </div>
     </div>
   </div>
 
   <div class="feat feat--flip rv">
     <div class="feat__inner">
-      <div class="feat__img"><img src="{{images.feat2}}" alt=""></div>
+      <div class="feat__img"><img src="https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?w=600&q=80" alt=""></div>
       <div class="feat__body">
         <div class="feat__num">02</div>
-        <h3 class="feat__h3">{{feat2.headline}}</h3>
-        <p class="feat__p">{{feat2.body}}</p>
-        <div class="feat__tags"><span class="feat__tag">{{feat2.tag1}}</span><span class="feat__tag">{{feat2.tag2}}</span></div>
+        <h3 class="feat__h3">제주 <em>감귤</em> 블렌딩</h3>
+        <p class="feat__p">제주 무농약 청견 감귤 껍질을 저온 건조. 녹차의 쓴맛을 부드럽게 잡아주는 시트러스 향.</p>
+        <div class="feat__tags"><span class="feat__tag">무농약 감귤</span><span class="feat__tag">저온 건조</span></div>
       </div>
     </div>
   </div>
 
   <div class="feat rv">
     <div class="feat__inner">
-      <div class="feat__img"><img src="{{images.feat3}}" alt=""></div>
+      <div class="feat__img"><img src="https://images.unsplash.com/photo-1582793988951-9aed5509eb97?w=600&q=80" alt=""></div>
       <div class="feat__body">
         <div class="feat__num">03</div>
-        <h3 class="feat__h3">{{feat3.headline}}</h3>
-        <p class="feat__p">{{feat3.body}}</p>
-        <div class="feat__tags"><span class="feat__tag">{{feat3.tag1}}</span><span class="feat__tag">{{feat3.tag2}}</span></div>
+        <h3 class="feat__h3">수제 <em>가마솥</em> 덖음</h3>
+        <p class="feat__p">기계 대신 손으로. 300도 가마솥에서 숙련된 장인이 직접 덖어 깊은 향미를 끌어냅니다.</p>
+        <div class="feat__tags"><span class="feat__tag">수제 덖음</span><span class="feat__tag">장인 제다</span></div>
       </div>
     </div>
   </div>
@@ -296,30 +296,30 @@ footer p{font-size:.75rem;color:var(--gy);}
 
 <!-- §4 STATS -->
 <div class="stats rv">
-  <div class="stat" data-d="1"><div class="stat__num">{{stat1.value}}{{stat1.unit}}</div><div class="stat__label">{{stat1.label}}</div></div>
-  <div class="stat" data-d="2"><div class="stat__num">{{stat2.value}}{{stat2.unit}}</div><div class="stat__label">{{stat2.label}}</div></div>
-  <div class="stat" data-d="3"><div class="stat__num">{{stat3.value}}{{stat3.unit}}</div><div class="stat__label">{{stat3.label}}</div></div>
-  <div class="stat" data-d="4"><div class="stat__num">{{stat4.value}}{{stat4.unit}}</div><div class="stat__label">{{stat4.label}}</div></div>
+  <div class="stat" data-d="1"><div class="stat__num">50년+</div><div class="stat__label">야생 차밭 수령</div></div>
+  <div class="stat" data-d="2"><div class="stat__num">0%</div><div class="stat__label">농약 사용</div></div>
+  <div class="stat" data-d="3"><div class="stat__num">300°C</div><div class="stat__label">가마솥 덖음 온도</div></div>
+  <div class="stat" data-d="4"><div class="stat__num">4대째</div><div class="stat__label">가업 전승</div></div>
 </div>
 
 <!-- §5 PRODUCTS -->
 <section class="sec">
-  <div class="products__head rv"><h2 class="products__title">{{products.headline}}</h2></div>
+  <div class="products__head rv"><h2 class="products__title">티 컬렉션</h2></div>
   <div class="products__grid">
-    <div class="prod rv" data-d="1"><div class="prod__img"><img src="{{images.product1}}" alt=""></div><p class="prod__name">{{products.item1.name}}</p><p class="prod__sub">{{products.item1.sub}}</p></div>
-    <div class="prod rv" data-d="2"><div class="prod__img"><img src="{{images.product2}}" alt=""></div><p class="prod__name">{{products.item2.name}}</p><p class="prod__sub">{{products.item2.sub}}</p></div>
-    <div class="prod rv" data-d="3"><div class="prod__img"><img src="{{images.product3}}" alt=""></div><p class="prod__name">{{products.item3.name}}</p><p class="prod__sub">{{products.item3.sub}}</p></div>
-    <div class="prod rv" data-d="4"><div class="prod__img"><img src="{{images.product4}}" alt=""></div><p class="prod__name">{{products.item4.name}}</p><p class="prod__sub">{{products.item4.sub}}</p></div>
+    <div class="prod rv" data-d="1"><div class="prod__img"><img src="https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?w=600&q=80" alt=""></div><p class="prod__name">하동 야생 녹차</p><p class="prod__sub">봄 첫물차 30g</p></div>
+    <div class="prod rv" data-d="2"><div class="prod__img"><img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600&q=80" alt=""></div><p class="prod__name">감귤 블렌딩</p><p class="prod__sub">제주 청견 20g</p></div>
+    <div class="prod rv" data-d="3"><div class="prod__img"><img src="https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?w=600&q=80" alt=""></div><p class="prod__name">가마솥 덖음차</p><p class="prod__sub">수제 한정판 20g</p></div>
+    <div class="prod rv" data-d="4"><div class="prod__img"><img src="https://images.unsplash.com/photo-1582793988951-9aed5509eb97?w=600&q=80" alt=""></div><p class="prod__name">다관 티백</p><p class="prod__sub">간편 우림 10매</p></div>
   </div>
 </section>
 
 <!-- §6 FULLBLEED -->
 <section class="sec" style="padding-bottom:0;">
   <div class="cinema rv">
-    <div class="cinema__bg"><img src="{{images.fullbleed}}" alt=""></div>
+    <div class="cinema__bg"><img src="https://images.unsplash.com/photo-1542888847-05b0527e9f42?w=1400&q=85" alt=""></div>
     <div class="cinema__in">
-      <h2 class="cinema__h2">{{fullbleed.headline}}</h2>
-      <p class="cinema__p">{{fullbleed.body}}</p>
+      <h2 class="cinema__h2">자연 그대로,<br><em>찻잔</em> 안에</h2>
+      <p class="cinema__p">차밭에서 찻잔까지 48시간. 당일 채엽, 당일 덖음, 냉장 배송으로 신선함을 지킵니다.</p>
     </div>
   </div>
 </section>
@@ -328,56 +328,83 @@ footer p{font-size:.75rem;color:var(--gy);}
 <section class="sec">
   <div class="sec-head rv"><p class="sec-tag">Gallery</p></div>
   <div class="gallery rv">
-    <div class="gallery__item" data-d="1"><img src="{{images.gallery1}}" alt=""></div>
-    <div class="gallery__item" data-d="2"><img src="{{images.gallery2}}" alt=""></div>
-    <div class="gallery__item" data-d="3"><img src="{{images.gallery3}}" alt=""></div>
+    <div class="gallery__item" data-d="1"><img src="https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?w=800&q=80" alt=""></div>
+    <div class="gallery__item" data-d="2"><img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600&q=80" alt=""></div>
+    <div class="gallery__item" data-d="3"><img src="https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?w=600&q=80" alt=""></div>
   </div>
 </section>
 
 <!-- §8 BEFORE / AFTER -->
 <section class="sec">
-  <div class="sec-head rv"><p class="sec-tag">Before &amp; After</p><h2 class="sec-title">{{fullbleed.headline}}</h2></div>
+  <div class="sec-head rv"><p class="sec-tag">Before &amp; After</p><h2 class="sec-title">자연 그대로,<br><em>찻잔</em> 안에</h2></div>
   <div class="ba rv">
     <div class="ba__col ba__col--before">
       <p class="ba__label">Before</p>
-      <div class="ba__item"><h4>{{before1.title}}</h4><p>{{before1.desc}}</p></div>
-      <div class="ba__item"><h4>{{before2.title}}</h4><p>{{before2.desc}}</p></div>
-      <div class="ba__item"><h4>{{before3.title}}</h4><p>{{before3.desc}}</p></div>
+      <div class="ba__item"><h4>마트 티백 습관</h4><p>향도 맛도 없는 대량생산 차</p></div>
+      <div class="ba__item"><h4>카페인 의존</h4><p>커피 없이 못 버티는 하루</p></div>
+      <div class="ba__item"><h4>쉬는 시간 없음</h4><p>바쁜 일상에 여유가 사라짐</p></div>
     </div>
     <div class="ba__col ba__col--after">
       <p class="ba__label">After</p>
-      <div class="ba__item"><h4>{{after1.title}}</h4><p>{{after1.desc}}</p></div>
-      <div class="ba__item"><h4>{{after2.title}}</h4><p>{{after2.desc}}</p></div>
-      <div class="ba__item"><h4>{{after3.title}}</h4><p>{{after3.desc}}</p></div>
+      <div class="ba__item"><h4>매일 다른 향</h4><p>계절마다 달라지는 야생차의 깊은 풍미</p></div>
+      <div class="ba__item"><h4>자연스러운 각성</h4><p>L-테아닌의 부드러운 집중력</p></div>
+      <div class="ba__item"><h4>나만의 의식</h4><p>차 한 잔으로 시작하는 고요한 시간</p></div>
     </div>
   </div>
 </section>
 
 <!-- §9 PRICING -->
 <section class="sec pricing" id="pricing">
-  <div class="pricing__head rv"><p class="sec-tag">Pricing</p><h2 class="pricing__title">{{pricing.headline}}</h2></div>
+  <div class="pricing__head rv"><p class="sec-tag">Pricing</p><h2 class="pricing__title">티 <em>컬렉션</em></h2></div>
   <div class="pricing__card rv">
-    <span class="pricing__badge">{{pricing.tier1.name}}</span>
-    <p class="pricing__desc">{{pricing.tier1.desc}}</p>
-    <p class="pricing__price">{{pricing.tier1.price}}<small>{{pricing.tier1.unit}}</small></p>
-    <ul class="pricing__features">{{pricing.tier1.features}}</ul>
-    <a href="#" class="pricing__btn">{{pricing.tier1.cta}}</a>
+    <span class="pricing__badge">입문 세트</span>
+    <p class="pricing__desc">처음 만나는 소나무차</p>
+    <p class="pricing__price">₩38,000<small></small></p>
+    <ul class="pricing__features"><li>야생 녹차 30g</li>
+        <li>감귤 블렌딩 20g</li>
+        <li>다관 티백 10매</li>
+        <li>보관 틴케이스</li>
+        <li>무료 배송</li></ul>
+    <a href="#" class="pricing__btn">입문 세트 주문</a>
   </div>
 </section>
 
 <!-- §10 REVIEWS -->
 <section class="sec">
-  <div class="reviews__head rv"><p class="sec-tag">Reviews</p><h2 class="reviews__title">{{reviews.headline}}</h2></div>
-  <div class="rev__grid">{{reviews.cards}}</div>
+  <div class="reviews__head rv"><p class="sec-tag">Reviews</p><h2 class="reviews__title">고객 <em>후기</em></h2></div>
+  <div class="rev__grid">
+    <div class="rev-card rv">
+      <div class="rev-card__top"><img class="rev-card__avatar" src="https://i.pravatar.cc/120?img=32" alt=""><div><p class="rev-card__name">김지현</p><p class="rev-card__meta">32세</p></div></div>
+      <p class="rev-card__stars">★★★★★</p>
+      <p class="rev-card__text">"정말 만족합니다. 주변에 추천하고 있어요."</p>
+    </div>
+
+    <div class="rev-card rv" data-d="1">
+      <div class="rev-card__top"><img class="rev-card__avatar" src="https://i.pravatar.cc/120?img=60" alt=""><div><p class="rev-card__name">이준호</p><p class="rev-card__meta">41세</p></div></div>
+      <p class="rev-card__stars">★★★★★</p>
+      <p class="rev-card__text">"기대 이상이었어요. 삶의 질이 달라졌습니다."</p>
+    </div>
+
+    <div class="rev-card rv" data-d="2">
+      <div class="rev-card__top"><img class="rev-card__avatar" src="https://i.pravatar.cc/120?img=47" alt=""><div><p class="rev-card__name">박서연</p><p class="rev-card__meta">28세</p></div></div>
+      <p class="rev-card__stars">★★★★★</p>
+      <p class="rev-card__text">"이 가격에 이 품질이라니. 최고의 선택."</p>
+    </div>
+
+    <div class="rev-card rv" data-d="3">
+      <div class="rev-card__top"><img class="rev-card__avatar" src="https://i.pravatar.cc/120?img=12" alt=""><div><p class="rev-card__name">정민수</p><p class="rev-card__meta">35세</p></div></div>
+      <p class="rev-card__stars">★★★★★</p>
+      <p class="rev-card__text">"두 번째 구매입니다. 변함없는 품질."</p>
+    </div></div>
 </section>
 
 <!-- §11 PROCESS -->
 <section class="sec process">
   <div class="sec-head rv"><p class="sec-tag">Process</p></div>
   <div class="process__track rv">
-    <div class="process__step" data-d="1"><div class="process__dot">01</div><p class="process__t">{{process1.title}}</p><p class="process__d">{{process1.desc}}</p></div>
-    <div class="process__step" data-d="2"><div class="process__dot">02</div><p class="process__t">{{process2.title}}</p><p class="process__d">{{process2.desc}}</p></div>
-    <div class="process__step" data-d="3"><div class="process__dot">03</div><p class="process__t">{{process3.title}}</p><p class="process__d">{{process3.desc}}</p></div>
+    <div class="process__step" data-d="1"><div class="process__dot">01</div><p class="process__t">티 선택</p><p class="process__d">취향에 맞는 차를 고르세요</p></div>
+    <div class="process__step" data-d="2"><div class="process__dot">02</div><p class="process__t">냉장 배송</p><p class="process__d">채엽 48시간 내 배송</p></div>
+    <div class="process__step" data-d="3"><div class="process__dot">03</div><p class="process__t">우려 마시기</p><p class="process__d">가이드북과 함께 즐기세요</p></div>
   </div>
 </section>
 
@@ -385,21 +412,28 @@ footer p{font-size:.75rem;color:var(--gy);}
 <section class="sec">
   <div class="sec-head rv"><p class="sec-tag">FAQ</p><h2 class="sec-title">자주 묻는 질문</h2></div>
   <div class="faq__in">
-    {{faq.items}}
+    
+    <details class="faq__item rv"><summary class="faq__q">배송은 얼마나 걸리나요?</summary><p class="faq__a">주문 후 1~3일 내 무료 배송됩니다.</p></details>
+
+    <details class="faq__item rv" data-d="1"><summary class="faq__q">반품/교환이 가능한가요?</summary><p class="faq__a">체험 기간 내 무료 반품 가능합니다.</p></details>
+
+    <details class="faq__item rv" data-d="2"><summary class="faq__q">보증 기간은?</summary><p class="faq__a">품질 보증 기간 동안 무상 수리 가능합니다.</p></details>
+
+    <details class="faq__item rv" data-d="3"><summary class="faq__q">AS는 어떻게 받나요?</summary><p class="faq__a">고객센터에 연락하시면 48시간 내 처리됩니다.</p></details>
   </div>
 </section>
 
 <!-- §13 CTA -->
 <section class="sec">
   <div class="cta rv">
-    <h2 class="cta__h2">{{cta.headline}}</h2>
-    <p class="cta__p">{{cta.body}}</p>
-    <a href="#" class="cta__btn">{{cta.cta}}</a>
-    <p class="cta__micro">{{cta.micro}}</p>
+    <h2 class="cta__h2">오늘, <em>한 잔</em>의 여유</h2>
+    <p class="cta__p">첫 주문 무료 배송. 맛이 마음에 안 들면 환불해 드립니다.</p>
+    <a href="#" class="cta__btn">지금 주문하기</a>
+    <p class="cta__micro">무료 배송 · 7일 환불 · 냉장 배송</p>
   </div>
 </section>
 
-<footer><p>&copy; 2026 {{brand}}. All rights reserved.</p></footer>
+<footer><p>&copy; 2026 SONAMU CHA. All rights reserved.</p></footer>
 
 <script>
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.06,rootMargin:'0px 0px 40px 0px'});

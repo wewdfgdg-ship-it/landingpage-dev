@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{brand}} — {{hero.headline}}</title>
-<link href="{{token.fontUrl}}" rel="stylesheet">
+<title>NEXUS AI — 데이터를<br><em>인사이트</em>로</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --v:{{token.primary}};--vl:{{token.primaryLight}};--vd:{{token.primaryPale}};
-  --c:{{token.frost}};--cd:{{token.frostLine}};
+  --v:#7C3AED;--vl:#A78BFA;--vd:#5B21B6;
+  --c:rgba(6,214,160,.25);--cd:#1E1E35;
   --pk:#F472B6;--am:#FBBF24;
-  --bg:{{token.bg}};--sf:{{token.surface}};--card:{{token.surfaceLight}};
-  --b:{{token.frostLine}};
-  --t1:{{token.textBright}};--t2:{{token.textSecondary}};--t3:{{token.textPrimary}};
-  --gv:{{token.frostGlow}};--gc:rgba(6,214,160,.25);
-  --ff:{{token.fontBody}};
-  --fd:{{token.fontDisplay}};
+  --bg:#07070E;--sf:#0E0E1A;--card:#141422;
+  --b:#1E1E35;
+  --t1:#F0F0F5;--t2:#A0A0BE;--t3:#606080;
+  --gv:rgba(124,58,237,.3);--gc:rgba(6,214,160,.25);
+  --ff:'Noto Sans KR','Outfit',sans-serif;
+  --fd:'Outfit','Noto Sans KR',sans-serif;
   --fm:'IBM Plex Mono',monospace;
-  --size-display:{{token.sizeDisplay}};
-  --size-h1:{{token.sizeH1}};
-  --size-h2:{{token.sizeH2}};
-  --size-h3:{{token.sizeH3}};
-  --size-body:{{token.sizeBody}};
+  --size-display:clamp(3rem,7vw,5rem);
+  --size-h1:clamp(2rem,3.5vw,3rem);
+  --size-h2:clamp(1.6rem,3vw,2.4rem);
+  --size-h3:clamp(1.2rem,1.8vw,1.5rem);
+  --size-body:clamp(.9rem,1.1vw,1rem);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -232,11 +232,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="hero">
   <div class="hero__grid">
     <div class="hero__main rv on">
-      <div class="hero__brand"><span class="hero__dot"></span>{{brand}}</div>
-      <h1 class="hero__h1">{{hero.headline}}</h1>
-      <p class="hero__sub">{{hero.subheadline}}</p>
+      <div class="hero__brand"><span class="hero__dot"></span>NEXUS AI</div>
+      <h1 class="hero__h1">데이터를<br><em>인사이트</em>로</h1>
+      <p class="hero__sub">GPT-4 기반 비즈니스 인텔리전스.<br>10분 만에 리포트가 완성됩니다.</p>
       <div class="hero__btns">
-        <a href="#cta" class="btn-glow">{{hero.cta}}</a>
+        <a href="#cta" class="btn-glow">무료로 시작하기</a>
         <a href="#features" class="btn-ghost">자세히 보기</a>
       </div>
     </div>
@@ -244,8 +244,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt="">
     </div>
     <div class="hero__stats">
-      <div class="hero__stat rv on" data-d="2"><p class="hero__stat-n gradient-text">{{stat1.value}}{{stat1.unit}}</p><p class="hero__stat-l">{{stat1.label}}</p></div>
-      <div class="hero__stat rv on" data-d="3"><p class="hero__stat-n" style="color:var(--c)">{{stat2.value}}{{stat2.unit}}</p><p class="hero__stat-l">{{stat2.label}}</p></div>
+      <div class="hero__stat rv on" data-d="2"><p class="hero__stat-n gradient-text">94%</p><p class="hero__stat-l">예측 정확도</p></div>
+      <div class="hero__stat rv on" data-d="3"><p class="hero__stat-n" style="color:var(--c)">3200+</p><p class="hero__stat-l">기업 고객</p></div>
     </div>
   </div>
 </section>
@@ -254,12 +254,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <section class="sec">
   <div class="intro rv">
     <p class="intro__kicker">Since 2021</p>
-    <h2 class="intro__h2">{{intro.headline}}</h2>
-    <p class="intro__p">{{intro.body}}</p>
+    <h2 class="intro__h2">의사결정의 <em>속도</em>를 바꾸다</h2>
+    <p class="intro__p">엑셀 파일을 업로드하면 AI가 자동으로 트렌드, 이상치, 예측을 분석합니다. 비개발자도 SQL 없이 데이터 분석.</p>
     <div class="intro__stats">
-      <div class="intro__stat-item"><p class="intro__stat-num gradient-text">{{stat1.value}}{{stat1.unit}}</p><p class="intro__stat-label">{{stat1.label}}</p></div>
-      <div class="intro__stat-item"><p class="intro__stat-num" style="color:var(--c)">{{stat2.value}}{{stat2.unit}}</p><p class="intro__stat-label">{{stat2.label}}</p></div>
-      <div class="intro__stat-item"><p class="intro__stat-num" style="color:var(--pk)">{{stat3.value}}{{stat3.unit}}</p><p class="intro__stat-label">{{stat3.label}}</p></div>
+      <div class="intro__stat-item"><p class="intro__stat-num gradient-text">94%</p><p class="intro__stat-label">예측 정확도</p></div>
+      <div class="intro__stat-item"><p class="intro__stat-num" style="color:var(--c)">3200+</p><p class="intro__stat-label">기업 고객</p></div>
+      <div class="intro__stat-item"><p class="intro__stat-num" style="color:var(--pk)">10분</p><p class="intro__stat-label">리포트 생성</p></div>
     </div>
   </div>
 </section>
@@ -272,8 +272,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="impact__orb2"></div>
   </div>
   <div class="impact__glass">
-    <h2 class="impact__h2 rv">{{fullbleed.headline}}</h2>
-    <p class="impact__p rv">{{fullbleed.body}}</p>
+    <h2 class="impact__h2 rv">엔터프라이즈 <em>보안</em></h2>
+    <p class="impact__p rv">SOC 2 Type II 인증. 데이터는 한국 리전에 저장되며, 고객 데이터로 모델을 학습하지 않습니다.</p>
   </div>
 </section>
 
@@ -292,36 +292,36 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- §7 기능 -->
 <section class="sec" id="features">
   <div class="tag rv">Core Technology</div>
-  <h2 class="sec-title rv">{{feat1.headline}}</h2>
+  <h2 class="sec-title rv">자연어 <em>쿼리</em></h2>
   <div class="feat__grid">
     <div class="glow-card feat-card feat-card--big rv">
       <div>
-        <span class="feat-card__pill">{{feat1.tag1}}</span>
-        <h3 class="feat-card__h3">{{feat1.headline}}</h3>
-        <p class="feat-card__p">{{feat1.body}}</p>
+        <span class="feat-card__pill">한국어 지원</span>
+        <h3 class="feat-card__h3">자연어 <em>쿼리</em></h3>
+        <p class="feat-card__p">"지난 달 매출 상위 10개 제품 보여줘" — 한국어로 물어보면 차트가 나옵니다.</p>
         <ul class="feat-card__list">
-          <li class="feat-card__li">{{feat1.tag1}}</li>
-          <li class="feat-card__li">{{feat1.tag2}}</li>
+          <li class="feat-card__li">한국어 지원</li>
+          <li class="feat-card__li">SQL 불필요</li>
         </ul>
       </div>
       <div class="feat-card__img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
     </div>
     <div class="glow-card feat-card rv" data-d="1">
-      <span class="feat-card__pill">{{feat2.tag1}}</span>
-      <h3 class="feat-card__h3">{{feat2.headline}}</h3>
-      <p class="feat-card__p">{{feat2.body}}</p>
+      <span class="feat-card__pill">30+ 연동</span>
+      <h3 class="feat-card__h3"><em>실시간</em> 대시보드</h3>
+      <p class="feat-card__p">Slack, Notion, Google Sheets 연동. 데이터가 바뀌면 대시보드가 자동 업데이트.</p>
       <ul class="feat-card__list">
-        <li class="feat-card__li">{{feat2.tag1}}</li>
-        <li class="feat-card__li">{{feat2.tag2}}</li>
+        <li class="feat-card__li">30+ 연동</li>
+        <li class="feat-card__li">실시간 동기화</li>
       </ul>
     </div>
     <div class="glow-card feat-card rv" data-d="2">
-      <span class="feat-card__pill">{{feat3.tag1}}</span>
-      <h3 class="feat-card__h3">{{feat3.headline}}</h3>
-      <p class="feat-card__p">{{feat3.body}}</p>
+      <span class="feat-card__pill">94% 정확도</span>
+      <h3 class="feat-card__h3">AI <em>예측</em> 모델</h3>
+      <p class="feat-card__p">과거 데이터 기반 매출 예측, 이탈 예측, 재고 최적화. 정확도 94%.</p>
       <ul class="feat-card__list">
-        <li class="feat-card__li">{{feat3.tag1}}</li>
-        <li class="feat-card__li">{{feat3.tag2}}</li>
+        <li class="feat-card__li">94% 정확도</li>
+        <li class="feat-card__li">자동 학습</li>
       </ul>
     </div>
   </div>
@@ -332,10 +332,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="tag rv" style="justify-content:center">Metrics</div>
   <h2 class="sec-title rv" style="text-align:center">숫자로 증명합니다</h2>
   <div class="metrics__grid">
-    <div class="glow-card metric rv"><p class="metric__num" style="color:var(--vl)">{{stat1.value}}{{stat1.unit}}</p><div class="metric__bar"><div class="metric__fill metric__fill--v" data-w="92%"></div></div><p class="metric__lab">{{stat1.label}}</p></div>
-    <div class="glow-card metric rv" data-d="1"><p class="metric__num" style="color:var(--c)">{{stat2.value}}{{stat2.unit}}</p><div class="metric__bar"><div class="metric__fill metric__fill--c" data-w="98%"></div></div><p class="metric__lab">{{stat2.label}}</p></div>
-    <div class="glow-card metric rv" data-d="2"><p class="metric__num" style="color:var(--pk)">{{stat3.value}}{{stat3.unit}}</p><div class="metric__bar"><div class="metric__fill metric__fill--p" data-w="96%"></div></div><p class="metric__lab">{{stat3.label}}</p></div>
-    <div class="glow-card metric rv" data-d="3"><p class="metric__num" style="color:var(--am)">{{stat4.value}}{{stat4.unit}}</p><div class="metric__bar"><div class="metric__fill metric__fill--a" data-w="100%"></div></div><p class="metric__lab">{{stat4.label}}</p></div>
+    <div class="glow-card metric rv"><p class="metric__num" style="color:var(--vl)">94%</p><div class="metric__bar"><div class="metric__fill metric__fill--v" data-w="92%"></div></div><p class="metric__lab">예측 정확도</p></div>
+    <div class="glow-card metric rv" data-d="1"><p class="metric__num" style="color:var(--c)">3200+</p><div class="metric__bar"><div class="metric__fill metric__fill--c" data-w="98%"></div></div><p class="metric__lab">기업 고객</p></div>
+    <div class="glow-card metric rv" data-d="2"><p class="metric__num" style="color:var(--pk)">10분</p><div class="metric__bar"><div class="metric__fill metric__fill--p" data-w="96%"></div></div><p class="metric__lab">리포트 생성</p></div>
+    <div class="glow-card metric rv" data-d="3"><p class="metric__num" style="color:var(--am)">30+</p><div class="metric__bar"><div class="metric__fill metric__fill--a" data-w="100%"></div></div><p class="metric__lab">연동 서비스</p></div>
   </div>
 </section>
 
@@ -352,17 +352,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="diff__col diff__col--del">
         <p class="diff__label diff__label--del">— BEFORE</p>
         <ul class="diff__list">
-          <li class="diff__li diff__li--del">{{before1.title}} → {{before1.desc}}</li>
-          <li class="diff__li diff__li--del">{{before2.title}} → {{before2.desc}}</li>
-          <li class="diff__li diff__li--del">{{before3.title}} → {{before3.desc}}</li>
+          <li class="diff__li diff__li--del">기존 문제 1 → 불편함이 지속됨</li>
+          <li class="diff__li diff__li--del">기존 문제 2 → 비효율적인 경험</li>
+          <li class="diff__li diff__li--del">기존 문제 3 → 반복적인 비용 발생</li>
         </ul>
       </div>
       <div class="diff__col diff__col--add">
         <p class="diff__label diff__label--add">+ AFTER</p>
         <ul class="diff__list">
-          <li class="diff__li diff__li--add">{{after1.title}} → {{after1.desc}}</li>
-          <li class="diff__li diff__li--add">{{after2.title}} → {{after2.desc}}</li>
-          <li class="diff__li diff__li--add">{{after3.title}} → {{after3.desc}}</li>
+          <li class="diff__li diff__li--add">개선 결과 1 → 확실한 차이를 느낌</li>
+          <li class="diff__li diff__li--add">개선 결과 2 → 효율이 크게 향상됨</li>
+          <li class="diff__li diff__li--add">개선 결과 3 → 장기적 비용 절감</li>
         </ul>
       </div>
     </div>
@@ -374,15 +374,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="pricing__orb"></div>
   <div class="pricing__in">
     <div class="tag rv" style="justify-content:center">Pricing</div>
-    <h2 class="sec-title rv" style="text-align:center">{{pricing.headline}}</h2>
+    <h2 class="sec-title rv" style="text-align:center"><em>요금제</em></h2>
     <div class="price-card rv">
-      <span class="price-badge">{{pricing.tier1.name}}</span>
-      <p class="price-old">{{pricing.tier1.price}}</p>
-      <p class="price-now gradient-text">{{pricing.tier2.price}}<small>{{pricing.tier2.unit}}</small></p>
+      <span class="price-badge">Starter</span>
+      <p class="price-old">₩49,000</p>
+      <p class="price-now gradient-text">₩199,000<small>/ 월</small></p>
       <ul class="price-features">
-        {{pricing.tier1.features}}
+        <li>사용자 5명</li>
+        <li>월 1,000 쿼리</li>
+        <li>기본 대시보드</li>
+        <li>Slack 연동</li>
+        <li>이메일 지원</li>
       </ul>
-      <a href="#cta" class="price-btn">{{pricing.tier1.cta}}</a>
+      <a href="#cta" class="price-btn">무료 체험</a>
     </div>
   </div>
 </section>
@@ -390,9 +394,44 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- §10 후기 -->
 <section class="sec">
   <div class="tag rv" style="justify-content:center">Customer Reviews</div>
-  <h2 class="sec-title rv" style="text-align:center">{{reviews.headline}}</h2>
+  <h2 class="sec-title rv" style="text-align:center">고객 <em>후기</em></h2>
   <div class="reviews__grid">
-    {{reviews.cards}}
+    
+    <div class="review-card rv" data-d="1">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=32" alt="">
+        <div class="review-card__info"><p class="review-card__name">김지현</p><p class="review-card__meta">32세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"정말 만족합니다. 주변에 추천하고 있어요."</p>
+    </div>
+
+    <div class="review-card rv" data-d="2">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=60" alt="">
+        <div class="review-card__info"><p class="review-card__name">이준호</p><p class="review-card__meta">41세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"기대 이상이었어요. 삶의 질이 달라졌습니다."</p>
+    </div>
+
+    <div class="review-card rv" data-d="3">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=47" alt="">
+        <div class="review-card__info"><p class="review-card__name">박서연</p><p class="review-card__meta">28세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"이 가격에 이 품질이라니. 최고의 선택."</p>
+    </div>
+
+    <div class="review-card rv" data-d="4">
+      <div class="review-card__top">
+        <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=12" alt="">
+        <div class="review-card__info"><p class="review-card__name">정민수</p><p class="review-card__meta">35세</p></div>
+      </div>
+      <p class="review-card__stars">★★★★★</p>
+      <p class="review-card__quote">"두 번째 구매입니다. 변함없는 품질."</p>
+    </div>
   </div>
 </section>
 
@@ -401,16 +440,35 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="tag rv" style="justify-content:center">FAQ</div>
   <h2 class="sec-title rv" style="text-align:center">자주 묻는 질문</h2>
   <div class="faq__in">
-    {{faq.items}}
+    
+    <div class="faq__item rv" data-d="1">
+      <h4 class="faq__q">배송은 얼마나 걸리나요?</h4>
+      <p class="faq__a">주문 후 1~3일 내 무료 배송됩니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="2">
+      <h4 class="faq__q">반품/교환이 가능한가요?</h4>
+      <p class="faq__a">체험 기간 내 무료 반품 가능합니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="3">
+      <h4 class="faq__q">보증 기간은?</h4>
+      <p class="faq__a">품질 보증 기간 동안 무상 수리 가능합니다.</p>
+    </div>
+
+    <div class="faq__item rv" data-d="4">
+      <h4 class="faq__q">AS는 어떻게 받나요?</h4>
+      <p class="faq__a">고객센터에 연락하시면 48시간 내 처리됩니다.</p>
+    </div>
   </div>
 </section>
 
 <!-- §13 CTA -->
 <section class="sec cta" id="cta">
-  <h2 class="cta__h2 rv">{{cta.headline}}</h2>
-  <p class="cta__p rv">{{cta.body}}</p>
-  <a href="#" class="cta__btn rv">{{cta.cta}}</a>
-  <p class="cta__micro rv">{{cta.micro}}</p>
+  <h2 class="cta__h2 rv">데이터가 <em>답</em>합니다</h2>
+  <p class="cta__p rv">14일 무료 체험. 신용카드 불필요.</p>
+  <a href="#" class="cta__btn rv">무료로 시작하기</a>
+  <p class="cta__micro rv">14일 무료 · 언제든 취소 · 데이터 삭제 보장</p>
 </section>
 
 </div>
