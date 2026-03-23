@@ -37,10 +37,12 @@ export async function askClaude<T>(
   const text =
     response.content[0].type === 'text' ? response.content[0].text : '';
 
-  // JSON 파싱 (```json ... ``` 블록 처리)
-  const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
-  const jsonStr = jsonMatch ? jsonMatch[1] : text;
-  const data = JSON.parse(jsonStr) as T;
+  // JSON 파싱 (여러 형식 시도)
+  const jsonCodeBlock = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+  const jsonArray = text.match(/\[[\s\S]*\]/);
+  const jsonObject = text.match(/\{[\s\S]*\}/);
+  const jsonStr = jsonCodeBlock?.[1] ?? jsonArray?.[0] ?? jsonObject?.[0] ?? text;
+  const data = JSON.parse(jsonStr.trim()) as T;
 
   return { data, model: MODEL, inputTokens, outputTokens, cost, latencyMs };
 }
