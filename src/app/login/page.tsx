@@ -13,12 +13,13 @@ export default function LoginPage(): React.ReactElement {
     e.preventDefault();
     setLoading(true);
     setError('');
-    const result = await signIn('credentials', {
-      email,
-      password,
-      callbackUrl: '/projects',
-    });
-    if (result?.error) {
+    try {
+      await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: '/projects',
+      });
+    } catch {
       setError('로그인에 실패했습니다');
     }
     setLoading(false);
