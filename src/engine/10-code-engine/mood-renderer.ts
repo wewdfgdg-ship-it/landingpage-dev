@@ -153,6 +153,14 @@ function renderReviewCards(reviews: ReviewData[], mood?: string): string {
 }
 
 function renderFaqItems(faqs: FaqData[], mood?: string): string {
+  // Clean은 카드 그리드 (아코디언 아님)
+  if (mood === 'clean') {
+    return faqs.map((f, i) => `
+    <div class="faq__card rv"${i > 0 ? ` data-d="${i}"` : ''}>
+      <h4>${f.question}</h4>
+      <p>${f.answer}</p>
+    </div>`).join('\n');
+  }
   // Bold/Natural은 details/summary 구조
   if (mood === 'bold' || mood === 'natural') {
     return faqs.map((f, i) => `
