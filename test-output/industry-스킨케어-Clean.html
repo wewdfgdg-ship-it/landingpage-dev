@@ -4,201 +4,203 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HARU BOTANICS — 피부가 먹는<br><em>진짜 자연</em></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FAFAF8;--surface:#FFFFFF;--surfaceLight:#F0F0EE;
-  --red:#E63225;--primaryLight:#FF6B5E;--primaryPale:#FFE8E6;
-  --bk:#1A1A1A;--gy:#777777;--textBright:#000000;
-  --gl:#E0E0E0;--frost:rgba(230,50,37,.08);--frostGlow:rgba(230,50,37,.04);
-  --serif:'Instrument Serif','Noto Sans KR',serif;
-  --sans:'DM Sans','Noto Sans KR',sans-serif;
-  --size-display:clamp(3rem,7vw,5.5rem);
-  --size-h1:clamp(2rem,3.5vw,3rem);
-  --size-h2:clamp(1.6rem,3vw,2.4rem);
-  --size-h3:clamp(1.2rem,1.8vw,1.5rem);
-  --size-body:clamp(.95rem,1.1vw,1.05rem);
+  --bg:#FAFAF8;--surface:#FFFFFF;--surface-l:#F0F0EE;
+  --rose:#E63225;--rose-l:#FF6B5E;--rose-p:#FFE8E6;
+  --bk:#1A1A1A;--gy:#777777;--txtb:#000000;
+  --gl:#E0E0E0;--frost:rgba(230,50,37,.08);--glow:rgba(230,50,37,.04);
+  --serif:'Instrument Serif','Noto Sans KR',serif;--sans:'DM Sans','Noto Sans KR',sans-serif;
+  --sd:clamp(3rem,7vw,5.5rem);--sh1:clamp(2rem,3.5vw,3rem);--sh2:clamp(1.6rem,3vw,2.4rem);--sh3:clamp(1.2rem,1.8vw,1.5rem);--sb:clamp(.95rem,1.1vw,1.05rem);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:var(--sans);color:var(--bk);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.7;max-width:1240px;margin:0 auto;}
 img{max-width:100%;display:block;}
 a{color:inherit;text-decoration:none;}
-.w{padding:0 clamp(20px,4vw,48px);}
-.sec{padding:clamp(48px,6vw,80px) 0;}
-.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
 .rv.on{opacity:1;transform:none;}
-.red{color:var(--red);}
+[data-d="1"]{transition-delay:.12s}[data-d="2"]{transition-delay:.24s}[data-d="3"]{transition-delay:.36s}[data-d="4"]{transition-delay:.48s}
 
-/* ============================================================
-   §1 HERO — 큰 이미지 배경 + 중앙 텍스트
-   ============================================================ */
-.hero{position:relative;height:85vh;min-height:560px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
-.hero__bg{position:absolute;inset:0;}
-.hero__bg img{width:100%;height:100%;object-fit:cover;}
-.hero__bg::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.82);}
-.hero__in{position:relative;z-index:1;max-width:800px;padding:0 24px;}
-.hero__label{font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gy);margin-bottom:24px;}
-.hero__h1{font-family:var(--serif);font-style:italic;font-size:var(--size-display);font-weight:400;line-height:.92;margin-bottom:24px;letter-spacing:-.03em;}
-.hero__sub{font-size:var(--size-body);color:var(--gy);max-width:440px;margin:0 auto 32px;line-height:1.8;}
-.hero__cta{display:inline-block;padding:14px 48px;border:2px solid var(--bk);font-size:.85rem;font-weight:600;letter-spacing:.05em;transition:all .3s;}
-.hero__cta:hover{background:var(--bk);color:#fff;}
+.sec{padding:clamp(64px,8vw,120px) clamp(20px,4vw,48px);}
 
-/* ============================================================
-   §2 INTRO — 큰 텍스트 + 이미지 2분할
-   ============================================================ */
-.intro__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,48px);align-items:center;}
-.intro__text{font-family:var(--serif);font-style:italic;font-size:var(--size-h2);line-height:1.25;letter-spacing:-.02em;}
-.intro__img{overflow:hidden;}
-.intro__img img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;}
+/* TAG */
+.tag{font-family:var(--sans);font-weight:600;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rose);display:inline-flex;align-items:center;gap:10px;}
+.tag::before{content:'';width:20px;height:2px;background:var(--rose);border-radius:1px;}
+.sec-head{margin-bottom:clamp(36px,4vw,56px);}
+.sec-title{font-family:var(--serif);font-size:var(--sh2);font-weight:400;color:var(--bk);margin-top:10px;font-style:italic;}
+.sec-title em{font-style:normal;color:var(--rose);}
 
-/* ============================================================
-   §7 FEATURES — 이미지+텍스트 교차 (큰 이미지!)
-   ============================================================ */
-.feat{border-top:1px solid var(--gl);}
-.feat__row{display:grid;grid-template-columns:1fr 1fr;height:680px;border-bottom:1px solid var(--gl);}
-.feat__row--r .feat__txt{order:-1;justify-content:flex-end;text-align:right;}
-.feat__row--r .feat__list{align-items:flex-end;}
-.feat__row--r .feat__li{flex-direction:row-reverse;}
-.feat__img{overflow:hidden;}
-.feat__img img{width:100%;height:100%;object-fit:cover;}
-.feat__txt{display:flex;align-items:center;padding:clamp(32px,4vw,64px);}
-.feat__num{font-family:var(--serif);font-style:italic;font-size:5rem;color:var(--gl);line-height:1;margin-bottom:16px;}
-.feat__h3{font-family:var(--serif);font-size:var(--size-h3);font-weight:400;line-height:1.2;margin-bottom:12px;}
-.feat__p{font-size:var(--size-body);color:var(--gy);line-height:1.8;margin-bottom:16px;}
-.feat__list{list-style:none;}
-.feat__li{font-size:.9rem;color:var(--bk);padding:6px 0;display:flex;align-items:center;gap:10px;}
-.feat__li::before{content:'—';color:var(--red);font-weight:700;}
+/* ===== §1 HERO — Split: text left, massive image right ===== */
+.hero{display:grid;grid-template-columns:.45fr .55fr;min-height:92vh;align-items:center;gap:0;position:relative;}
+.hero__text{padding:clamp(40px,5vw,80px) clamp(32px,4vw,56px) clamp(40px,5vw,80px) clamp(20px,4vw,48px);}
+.hero__brand{font-family:var(--sans);font-weight:600;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:clamp(24px,3vw,40px);display:flex;align-items:center;gap:10px;}
+.hero__brand::before{content:'';width:20px;height:2px;background:var(--rose);border-radius:1px;}
+.hero__h1{font-family:var(--serif);font-size:var(--sd);font-weight:400;line-height:1.05;color:var(--bk);margin-bottom:clamp(20px,2.5vw,28px);font-style:italic;}
+.hero__h1 em{color:var(--rose);font-style:normal;font-weight:400;}
+.hero__sub{font-size:var(--sb);color:var(--gy);max-width:360px;line-height:1.85;margin-bottom:clamp(32px,3vw,44px);}
+.hero__cta{display:inline-block;padding:16px 48px;background:var(--rose);color:#fff;font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.08em;border-radius:60px;transition:all .4s cubic-bezier(.22,1,.36,1);}
+.hero__cta:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(212,86,78,.25);}
+.hero__img{height:100%;min-height:500px;overflow:hidden;position:relative;}
+.hero__img img{width:100%;height:100%;object-fit:cover;transition:transform 8s cubic-bezier(.16,1,.3,1);}
+.hero:hover .hero__img img{transform:scale(1.04);}
+.hero__img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(transparent,var(--bg));pointer-events:none;}
 
-/* ============================================================
-   §5 STATS — 큰 숫자 + 얇은 세로 구분선
-   ============================================================ */
-.stats{border-top:1px solid var(--gl);border-bottom:1px solid var(--gl);}
-.stats__grid{display:grid;grid-template-columns:repeat(4,1fr);}
-.stats__item{text-align:center;padding:clamp(32px,4vw,56px) 16px;border-right:1px solid var(--gl);}
-.stats__item:last-child{border-right:none;}
-.stats__num{font-family:var(--serif);font-style:italic;font-size:var(--size-h1);line-height:1;margin-bottom:8px;}
-.stats__lab{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gy);}
+/* ===== §2 INTRO — centered poetic ===== */
+.intro{text-align:center;padding:clamp(80px,10vw,160px) clamp(32px,6vw,100px);position:relative;}
+.intro__text{font-family:var(--serif);font-style:italic;font-size:var(--sh1);line-height:1.4;max-width:680px;margin:0 auto;color:var(--bk);}
+.intro__text em{font-style:normal;color:var(--rose);font-weight:400;}
+.intro__body{font-family:var(--sans);font-size:var(--sb);color:var(--gy);max-width:500px;margin:28px auto 0;line-height:1.9;}
+.intro__line{width:40px;height:2px;background:var(--rose);margin:0 auto 32px;border-radius:1px;}
 
-/* ============================================================
-   §3 PRODUCTS — 2단 이미지 카드 (큰 이미지!)
-   ============================================================ */
-.products__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,24px);}
-.prod-card{position:relative;overflow:hidden;cursor:pointer;}
-.prod-card__img{aspect-ratio:4/3;overflow:hidden;}
-.prod-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1);}
-.prod-card:hover .prod-card__img img{transform:scale(1.05);}
-.prod-card__info{padding:16px 4px;}
-.prod-card__name{font-family:var(--serif);font-size:var(--size-h3);font-weight:400;margin-bottom:2px;}
-.prod-card__sub{font-size:.8rem;color:var(--gy);}
+/* ===== §3 FEATURES — alternating image+text ===== */
+.feat{margin-bottom:clamp(48px,6vw,80px);}
+.feat:last-of-type{margin-bottom:0;}
+.feat__inner{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,4vw,60px);align-items:center;}
+.feat--flip .feat__inner{grid-template-columns:.9fr 1.1fr;direction:rtl;}
+.feat--flip .feat__inner > *{direction:ltr;}
+.feat__img{border-radius:20px;overflow:hidden;aspect-ratio:4/5;position:relative;}
+.feat__img img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.22,1,.36,1);}
+.feat:hover .feat__img img{transform:scale(1.04);}
+.feat__body{padding:clamp(8px,2vw,24px) 0;}
+.feat__num{font-family:var(--serif);font-size:clamp(4rem,6vw,5rem);font-style:italic;color:var(--rose);opacity:.12;line-height:1;margin-bottom:-12px;}
+.feat__h3{font-family:var(--serif);font-size:var(--sh2);font-weight:400;font-style:italic;color:var(--bk);margin-bottom:14px;line-height:1.25;}
+.feat__h3 em{color:var(--rose);font-style:normal;}
+.feat__p{font-size:var(--sb);color:var(--gy);line-height:1.85;margin-bottom:18px;}
+.feat__tags{display:flex;gap:8px;flex-wrap:wrap;}
+.feat__tag{font-size:.68rem;font-weight:500;letter-spacing:.06em;color:var(--rose);padding:6px 16px;border:1.5px solid var(--rose);border-radius:40px;opacity:.8;transition:all .3s;}
+.feat__tag:hover{background:var(--rose);color:#fff;opacity:1;}
 
-/* ============================================================
-   §4 FULLBLEED — 큰 이미지 + 오버레이 텍스트
-   ============================================================ */
-.cinema{position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+/* ===== §4 STATS — rose accent bar ===== */
+.stats{background:var(--rose);color:#fff;border-radius:20px;margin:0 clamp(20px,4vw,48px);padding:clamp(40px,5vw,64px) clamp(24px,3vw,40px);display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center;}
+.stat__num{font-family:var(--serif);font-size:var(--sh1);font-weight:400;font-style:italic;line-height:1;margin-bottom:8px;}
+.stat__label{font-family:var(--sans);font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;opacity:.75;}
+
+/* ===== §5 PRODUCTS — lookbook grid ===== */
+.products__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,24px);}
+.prod{position:relative;cursor:pointer;}
+.prod__img{border-radius:16px;overflow:hidden;aspect-ratio:3/4;margin-bottom:16px;background:var(--surface);}
+.prod__img img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.prod:hover .prod__img img{transform:scale(1.06);}
+.prod__name{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--bk);}
+.prod__sub{font-size:.78rem;color:var(--gy);margin-top:2px;}
+
+/* ===== §6 FULLBLEED — cinematic ===== */
+.cinema{position:relative;border-radius:20px;overflow:hidden;min-height:50vh;display:flex;align-items:center;margin:0 clamp(20px,4vw,48px);}
 .cinema__bg{position:absolute;inset:0;}
-.cinema__bg img{width:100%;height:100%;object-fit:cover;}
-.cinema__bg::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.75);}
-.cinema__in{position:relative;z-index:1;max-width:800px;padding:48px 24px;}
-.cinema__h2{font-family:var(--serif);font-style:italic;font-size:var(--size-h2);font-weight:400;line-height:.9;margin-bottom:24px;letter-spacing:-.03em;}
-.cinema__p{font-size:var(--size-body);color:var(--gy);max-width:500px;margin:0 auto;line-height:1.8;}
+.cinema__bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.85);}
+.cinema__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,26,26,.75) 0%,rgba(26,26,26,.2) 60%,transparent 100%);}
+.cinema__in{position:relative;z-index:1;padding:clamp(40px,5vw,72px);max-width:480px;color:#fff;}
+.cinema__h2{font-family:var(--serif);font-size:var(--sh1);font-weight:400;font-style:italic;line-height:1.2;margin-bottom:16px;}
+.cinema__h2 em{color:var(--rose-l);font-style:normal;}
+.cinema__p{font-size:var(--sb);color:rgba(255,255,255,.8);line-height:1.85;}
 
-/* ============================================================
-   §6 GALLERY — 풀와이드 이미지 스트립
-   ============================================================ */
-.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
-.gallery img{width:100%;height:300px;object-fit:cover;}
+/* ===== §7 GALLERY — asymmetric mosaic ===== */
+.gallery{display:grid;grid-template-columns:1.2fr .8fr;grid-template-rows:1fr .9fr;gap:clamp(12px,1.5vw,20px);height:clamp(420px,45vw,580px);padding:0 clamp(20px,4vw,48px);}
+.gallery__item{border-radius:16px;overflow:hidden;}
+.gallery__item:first-child{grid-row:1/3;}
+.gallery__item img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.22,1,.36,1);}
+.gallery__item:hover img{transform:scale(1.04);}
 
-/* ============================================================
-   §8 B/A — 2단 비교 (얇은 빨간선 구분)
-   ============================================================ */
-.ba{display:grid;grid-template-columns:1fr 2px 1fr;gap:0;border-top:1px solid var(--gl);border-bottom:1px solid var(--gl);}
-.ba__divider{background:var(--red);}
-.ba__col{padding:clamp(32px,4vw,56px);}
-.ba__label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;}
-.ba__label--b{color:var(--gy);}
-.ba__label--a{color:var(--red);}
-.ba__list{list-style:none;}
-.ba__li{padding:14px 0;font-size:1.05rem;line-height:1.6;border-bottom:1px solid var(--gl);word-break:keep-all;}
-.ba__li:last-child{border:none;}
-.ba__li--b{color:var(--gy);text-decoration:line-through;}
-.ba__li--a{color:var(--bk);font-weight:600;}
+/* ===== §8 BEFORE/AFTER — transformation story ===== */
+.ba{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:stretch;margin:0 clamp(20px,4vw,48px);border-radius:20px;overflow:hidden;}
+.ba__col{padding:clamp(36px,4vw,56px);}
+.ba__col--before{background:var(--surface);}
+.ba__col--after{background:#fff;}
+.ba__center{display:flex;align-items:center;justify-content:center;background:var(--rose);color:#fff;font-family:var(--serif);font-size:1.5rem;font-style:italic;writing-mode:vertical-rl;}
+.ba__label{font-family:var(--sans);font-weight:600;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:28px;}
+.ba__col--before .ba__label{color:var(--gy);}
+.ba__col--after .ba__label{color:var(--rose);}
+.ba__item{padding:16px 0;border-bottom:1px solid var(--gl);}
+.ba__item:last-child{border:none;}
+.ba__item h4{font-family:var(--serif);font-size:1.1rem;font-style:italic;margin-bottom:4px;color:var(--bk);}
+.ba__col--before .ba__item h4{opacity:.55;}
+.ba__col--before .ba__item p{color:var(--gy);opacity:.7;}
+.ba__item p{font-size:.88rem;color:var(--gy);line-height:1.7;}
+.ba__col--after .ba__item h4{color:var(--rose);}
 
-/* ============================================================
-   §9 PRICING — 배경색 블록 + 큰 가격
-   ============================================================ */
-.pricing{background:var(--surface);text-align:center;}
-.pricing__label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:12px;}
-.pricing__h2{font-family:var(--serif);font-size:var(--size-h2);font-weight:400;margin-bottom:40px;}
-.pricing__old{font-size:.95rem;color:var(--gy);text-decoration:line-through;}
-.pricing__now{font-family:var(--serif);font-style:italic;font-size:var(--size-h1);font-weight:400;color:var(--red);line-height:1;margin-bottom:32px;}
-.pricing__now small{font-size:.25em;color:var(--gy);font-style:normal;}
-.pricing__features{font-size:.9rem;color:var(--gy);max-width:500px;margin:0 auto 40px;line-height:1.9;}
-.pricing__btn{display:inline-block;padding:16px 56px;background:var(--bk);color:#fff;font-size:.9rem;font-weight:600;letter-spacing:.05em;transition:all .3s;}
-.pricing__btn:hover{background:var(--red);}
+/* ===== §9 PRICING — elegant card ===== */
+.pricing{text-align:center;}
+.pricing__card{max-width:480px;margin:0 auto;background:#fff;border-radius:24px;padding:clamp(40px,5vw,64px);box-shadow:0 8px 40px rgba(0,0,0,.06);position:relative;overflow:hidden;}
+.pricing__card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--rose),var(--rose-l));}
+.pricing__badge{display:inline-block;background:var(--rose);color:#fff;padding:6px 24px;font-family:var(--sans);font-size:.6rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;border-radius:40px;margin-bottom:24px;}
+.pricing__price{font-family:var(--serif);font-size:var(--sh1);font-weight:400;font-style:italic;color:var(--rose);line-height:1;margin-bottom:4px;}
+.pricing__price small{font-family:var(--sans);font-size:.7rem;color:var(--gy);font-style:normal;margin-left:4px;}
+.pricing__desc{font-size:.85rem;color:var(--gy);margin-bottom:28px;}
+.pricing__features{list-style:none;text-align:left;margin-bottom:32px;}
+.pricing__feat{padding:11px 0;font-size:.92rem;color:var(--bk);border-bottom:1px solid var(--gl);display:flex;align-items:center;gap:12px;}
+.pricing__feat::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--rose);flex-shrink:0;opacity:.6;}
+.pricing__feat:last-child{border:none;}
+.pricing__btn{display:block;padding:16px;background:var(--rose);color:#fff;font-family:var(--sans);font-size:.82rem;font-weight:600;letter-spacing:.06em;border-radius:60px;transition:all .4s cubic-bezier(.22,1,.36,1);}
+.pricing__btn:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(212,86,78,.25);}
 
-/* ============================================================
-   §10 REVIEWS — 큰 인용 + 이미지 옆
-   ============================================================ */
-.rev__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,40px);}
-.rev__item{display:grid;grid-template-columns:120px 1fr;gap:clamp(16px,2vw,24px);align-items:center;padding:clamp(24px,3vw,36px);border:1px solid var(--gl);}
-.rev__avatar{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(1);}
-.rev__stars{color:var(--red);font-size:.8rem;letter-spacing:3px;margin-bottom:12px;}
-.rev__text{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,1.6vw,1.4rem);line-height:1.5;margin-bottom:16px;}
-.rev__name{font-size:.8rem;font-weight:600;color:var(--gy);letter-spacing:.05em;}
+/* ===== §10 REVIEWS ===== */
+.rev__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,24px);}
+.review-card{background:#fff;border-radius:20px;padding:clamp(28px,3vw,40px);box-shadow:0 4px 20px rgba(0,0,0,.04);transition:box-shadow .4s,transform .4s;}
+.review-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.08);transform:translateY(-4px);}
+.review-card__top{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.review-card__avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--rose-p);}
+.review-card__name{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--bk);}
+.review-card__meta{font-size:.72rem;color:var(--gy);}
+.review-card__stars{font-size:.7rem;letter-spacing:3px;color:var(--rose);margin-bottom:12px;}
+.review-card__quote{font-size:var(--sb);color:var(--bk);line-height:1.75;}
 
-/* ============================================================
-   §11 PROCESS — 3단 + 큰 넘버
-   ============================================================ */
-.process__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gl);}
-.process__step{background:var(--bg);padding:clamp(32px,4vw,48px);text-align:center;}
-.process__num{font-family:var(--serif);font-style:italic;font-size:clamp(4rem,7vw,6rem);color:var(--gl);line-height:1;margin-bottom:12px;}
-.process__t{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:6px;}
-.process__d{font-size:.85rem;color:var(--gy);}
+/* ===== §11 PROCESS — horizontal dots ===== */
+.process__track{display:flex;justify-content:center;gap:clamp(32px,5vw,72px);position:relative;margin-top:clamp(40px,5vw,56px);}
+.process__track::before{content:'';position:absolute;top:32px;left:18%;right:18%;height:1px;background:var(--gl);}
+.process__step{text-align:center;position:relative;z-index:1;flex:0 0 auto;width:clamp(160px,18vw,200px);}
+.process__dot{width:64px;height:64px;border-radius:50%;background:#fff;border:2px solid var(--rose);display:grid;place-items:center;font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--rose);margin:0 auto 20px;transition:all .4s;}
+.process__step:hover .process__dot{background:var(--rose);color:#fff;}
+.process__t{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--bk);margin-bottom:6px;}
+.process__d{font-size:.82rem;color:var(--gy);}
 
-/* ============================================================
-   §12 FAQ
-   ============================================================ */
-.faq__in{max-width:800px;margin:0 auto;}
-.faq__item{border-bottom:1px solid var(--gl);}
-.faq__item:first-child{border-top:1px solid var(--gl);}
-.faq__q{cursor:pointer;padding:24px 0;font-size:1.1rem;font-weight:600;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s;}
-.faq__q:hover{color:var(--red);}
+/* ===== §12 FAQ ===== */
+.faq__in{max-width:680px;margin:0 auto;}
+.faq__item{background:#fff;border-radius:14px;margin-bottom:8px;overflow:hidden;transition:box-shadow .3s;}
+.faq__item:hover,.faq__item[open]{box-shadow:0 4px 16px rgba(0,0,0,.05);}
+.faq__q{cursor:pointer;padding:20px 24px;font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--bk);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s;}
+.faq__q:hover{color:var(--rose);}
 .faq__q::-webkit-details-marker{display:none;}
-.faq__q::after{content:'+';color:var(--red);font-size:1.3rem;font-weight:400;transition:transform .3s;flex-shrink:0;}
+.faq__q::after{content:'+';color:var(--rose);font-family:var(--sans);font-size:1.3rem;font-weight:300;font-style:normal;transition:transform .3s;}
 .faq__item[open] .faq__q::after{transform:rotate(45deg);}
-.faq__a{padding:0 0 24px;font-size:.95rem;line-height:1.85;color:var(--gy);}
+.faq__a{padding:0 24px 20px;font-size:.92rem;color:var(--gy);line-height:1.85;}
 
-/* ============================================================
-   §13 CTA
-   ============================================================ */
-.cta{text-align:center;border-top:2px solid var(--red);}
-.cta__h2{font-family:var(--serif);font-style:italic;font-size:var(--size-h1);font-weight:400;margin-bottom:12px;}
-.cta__p{font-size:var(--size-body);color:var(--gy);margin-bottom:36px;}
-.cta__btn{display:inline-block;padding:16px 64px;background:var(--red);color:#fff;font-size:1rem;font-weight:600;letter-spacing:.05em;transition:all .3s;}
-.cta__btn:hover{background:var(--bk);}
-.cta__micro{margin-top:14px;font-size:.8rem;color:var(--gy);}
+/* ===== §13 CTA ===== */
+.cta{text-align:center;position:relative;}
+.cta__frame{background:#fff;border-radius:24px;padding:clamp(64px,8vw,100px) clamp(32px,5vw,64px);box-shadow:0 8px 40px rgba(0,0,0,.06);position:relative;overflow:hidden;}
+.cta__frame::before{content:'';position:absolute;inset:0;border:2px solid var(--rose);border-radius:24px;opacity:.15;}
+.cta__h2{font-family:var(--serif);font-size:var(--sh1);font-weight:400;font-style:italic;color:var(--bk);margin-bottom:14px;line-height:1.2;}
+.cta__h2 em{color:var(--rose);font-style:normal;}
+.cta__p{font-size:var(--sb);color:var(--gy);margin-bottom:36px;line-height:1.8;}
+.cta__btn{display:inline-block;padding:18px 64px;background:var(--rose);color:#fff;font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.06em;border-radius:60px;transition:all .4s cubic-bezier(.22,1,.36,1);}
+.cta__btn:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(212,86,78,.25);}
+.cta__micro{margin-top:16px;font-size:.78rem;color:var(--gy);}
 
-/* section titles */
-.stag{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gy);margin-bottom:12px;}
-.stitle{font-family:var(--serif);font-size:var(--size-h2);font-weight:400;margin-bottom:40px;}
+/* FOOTER */
+footer{padding:40px clamp(20px,4vw,48px);text-align:center;}
+footer p{font-size:.72rem;color:var(--gy);}
 
+/* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .intro__grid{grid-template-columns:1fr;}
-  .feat__row,.feat__row--r{grid-template-columns:1fr;}
-  .feat__row--r .feat__img{order:0;}
-  .feat__img{height:280px;}
-  .stats__grid{grid-template-columns:1fr 1fr;}
-  .stats__item:nth-child(2){border-right:none;}
-  .products__grid{grid-template-columns:1fr;}
-  .gallery{grid-template-columns:1fr 1fr;}
-  .gallery img{height:200px;}
-  .ba{grid-template-columns:1fr;gap:0;}
-  .ba__divider{height:2px;width:100%;}
+  .hero{grid-template-columns:1fr;min-height:auto;}
+  .hero__img{min-height:360px;border-radius:0 0 20px 20px;}
+  .hero__text{padding:40px 20px;}
+  .feat__inner,.feat--flip .feat__inner{grid-template-columns:1fr;direction:ltr;}
+  .feat__img{aspect-ratio:16/9;}
+  .stats{grid-template-columns:1fr 1fr;border-radius:16px;}
+  .products__grid{grid-template-columns:1fr 1fr;}
+  .gallery{grid-template-columns:1fr;height:auto;}
+  .gallery__item{height:220px;}
+  .gallery__item:first-child{grid-row:auto;}
+  .ba{grid-template-columns:1fr;border-radius:16px;}
+  .ba__center{writing-mode:horizontal-tb;padding:16px;}
   .rev__grid{grid-template-columns:1fr;}
-  .rev__item{grid-template-columns:80px 1fr;gap:16px;}
-  .rev__avatar{width:80px;height:80px;border-radius:50%;}
-  .process__grid{grid-template-columns:1fr;}
+  .process__track{flex-direction:column;gap:28px;}
+  .process__track::before{display:none;}
 }
 </style>
 </head>
@@ -206,113 +208,143 @@ a{color:inherit;text-decoration:none;}
 
 <!-- §1 HERO -->
 <section class="hero">
-  <div class="hero__bg"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1400&q=85" alt=""></div>
-  <div class="hero__in rv on">
-    <p class="hero__label">HARU BOTANICS</p>
+  <div class="hero__text rv on">
+    <p class="hero__brand">HARU BOTANICS</p>
     <h1 class="hero__h1">피부가 먹는<br><em>진짜 자연</em></h1>
     <p class="hero__sub">제주 동백 × 일본 쌀겨 발효.<br>7일이면 피부결이 달라집니다.</p>
     <a href="#pricing" class="hero__cta">지금 시작하기</a>
   </div>
+  <div class="hero__img"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1400&q=85" alt="" loading="eager"></div>
 </section>
 
 <!-- §2 INTRO -->
+<section class="intro rv">
+  <div class="intro__line"></div>
+  <p class="intro__text"><em>덜어내는</em> 스킨케어</p>
+  <p class="intro__body">성분 10개 미만. 불필요한 화학 성분을 모두 덜어내고, 피부가 진짜 필요한 것만 남겼습니다.</p>
+</section>
+
+<!-- §3 FEATURES -->
 <section class="sec">
-  <div class="w">
-    <div class="intro__grid">
-      <p class="intro__text rv"><em>덜어내는</em> 스킨케어</p>
-      <div class="intro__img rv"><img src="https://images.unsplash.com/photo-1570194065650-d99fb4a38c5f?w=800&q=80" alt=""></div>
+  <div class="sec-head rv"><span class="tag">Ingredients</span></div>
+
+  <div class="feat rv">
+    <div class="feat__inner">
+      <div class="feat__img"><img src="https://images.unsplash.com/photo-1570194065650-d99fb4a38c5f?w=800&q=80" alt=""></div>
+      <div class="feat__body">
+        <div class="feat__num">01</div>
+        <h3 class="feat__h3">제주 <em>동백</em> 오일</h3>
+        <p class="feat__p">제주 한림읍 자생 동백에서 냉압착 추출. 올레산 85% 함유로 깊은 보습과 장벽 강화.</p>
+        <div class="feat__tags"><span class="feat__tag">냉압착</span><span class="feat__tag">올레산 85%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat feat--flip rv">
+    <div class="feat__inner">
+      <div class="feat__img"><img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&q=80" alt=""></div>
+      <div class="feat__body">
+        <div class="feat__num">02</div>
+        <h3 class="feat__h3">쌀겨 <em>발효</em> 에센스</h3>
+        <p class="feat__p">일본 니가타현 코시히카리 쌀겨 72시간 자연 발효. 피부결 개선과 톤업을 동시에.</p>
+        <div class="feat__tags"><span class="feat__tag">72시간 발효</span><span class="feat__tag">톤업 효과</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat rv">
+    <div class="feat__inner">
+      <div class="feat__img"><img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=800&q=80" alt=""></div>
+      <div class="feat__body">
+        <div class="feat__num">03</div>
+        <h3 class="feat__h3">비건 <em>인증</em> 포뮬러</h3>
+        <p class="feat__p">EVE VEGAN, ECOCERT 이중 인증. 동물성 원료 0%, 생분해 가능 패키지.</p>
+        <div class="feat__tags"><span class="feat__tag">비건 인증</span><span class="feat__tag">친환경 패키지</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- §7 FEATURES -->
-<section class="feat">
-  <div class="feat__row rv">
-    <div class="feat__img"><img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&q=80" alt=""></div>
-    <div class="feat__txt"><div>
-      <p class="feat__num">01</p>
-      <h3 class="feat__h3">제주 <em>동백</em> 오일</h3>
-      <p class="feat__p">제주 한림읍 자생 동백에서 냉압착 추출. 올레산 85% 함유로 깊은 보습과 장벽 강화.</p>
-    </div></div>
-  </div>
-  <div class="feat__row feat__row--r rv">
-    <div class="feat__img"><img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=800&q=80" alt=""></div>
-    <div class="feat__txt"><div>
-      <p class="feat__num">02</p>
-      <h3 class="feat__h3">쌀겨 <em>발효</em> 에센스</h3>
-      <p class="feat__p">일본 니가타현 코시히카리 쌀겨 72시간 자연 발효. 피부결 개선과 톤업을 동시에.</p>
-    </div></div>
-  </div>
-</section>
+<!-- §4 STATS -->
+<div class="stats rv">
+  <div class="stat" data-d="1"><div class="stat__num">97%</div><div class="stat__label">피부결 개선</div></div>
+  <div class="stat" data-d="2"><div class="stat__num">10개 미만</div><div class="stat__label">성분 수</div></div>
+  <div class="stat" data-d="3"><div class="stat__num">7일</div><div class="stat__label">첫 효과 체감</div></div>
+  <div class="stat" data-d="4"><div class="stat__num">0%</div><div class="stat__label">화학 방부제</div></div>
+</div>
 
-<!-- §5 STATS -->
-<section class="stats">
-  <div class="stats__grid">
-    <div class="stats__item rv"><p class="stats__num">97%</p><p class="stats__lab">피부결 개선</p></div>
-    <div class="stats__item rv"><p class="stats__num red">10개 미만</p><p class="stats__lab">성분 수</p></div>
-    <div class="stats__item rv"><p class="stats__num">7일</p><p class="stats__lab">첫 효과 체감</p></div>
-    <div class="stats__item rv"><p class="stats__num">0%</p><p class="stats__lab">화학 방부제</p></div>
-  </div>
-</section>
-
-<!-- §4 FULLBLEED -->
-<section class="cinema">
-  <div class="cinema__bg"><img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=1400&q=85" alt=""></div>
-  <div class="cinema__in rv">
-    <h2 class="cinema__h2">제주에서 <em>피부</em>까지</h2>
-    <p class="cinema__p">원료 수확부터 제품 완성까지 72시간. 냉장 배송으로 활성 성분의 신선함을 유지합니다.</p>
-  </div>
-</section>
-
-<!-- §8 B/A -->
+<!-- §5 PRODUCTS -->
 <section class="sec">
-  <div class="w">
-    <p class="stag rv">Before / After</p>
+  <div class="sec-head rv"><span class="tag">Collection</span><h2 class="sec-title">제품 라인업</h2></div>
+  <div class="products__grid">
+    <div class="prod rv" data-d="1"><div class="prod__img"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&q=80" alt=""></div><p class="prod__name">제품 1</p><p class="prod__sub">Product One</p></div>
+    <div class="prod rv" data-d="2"><div class="prod__img"><img src="https://images.unsplash.com/photo-1570194065650-d99fb4a38c5f?w=600&q=80" alt=""></div><p class="prod__name">제품 2</p><p class="prod__sub">Product Two</p></div>
+    <div class="prod rv" data-d="3"><div class="prod__img"><img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80" alt=""></div><p class="prod__name">제품 3</p><p class="prod__sub">Product Three</p></div>
+    <div class="prod rv" data-d="4"><div class="prod__img"><img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&q=80" alt=""></div><p class="prod__name">제품 4</p><p class="prod__sub">Product Four</p></div>
   </div>
-  <div class="w"><div class="ba rv">
-    <div class="ba__col">
-      <p class="ba__label ba__label--b">Before</p>
-      <ul class="ba__list">
-        <li class="ba__li ba__li--b">기존 문제 1 — 불편함이 지속됨</li>
-        <li class="ba__li ba__li--b">기존 문제 2 — 비효율적인 경험</li>
-        <li class="ba__li ba__li--b">기존 문제 3 — 반복적인 비용 발생</li>
-      </ul>
+</section>
+
+<!-- §6 FULLBLEED -->
+<section class="sec" style="padding-bottom:0;">
+  <div class="cinema rv">
+    <div class="cinema__bg"><img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=1400&q=85" alt=""></div>
+    <div class="cinema__in">
+      <h2 class="cinema__h2">제주에서 <em>피부</em>까지</h2>
+      <p class="cinema__p">원료 수확부터 제품 완성까지 72시간. 냉장 배송으로 활성 성분의 신선함을 유지합니다.</p>
     </div>
-    <div class="ba__divider"></div>
-    <div class="ba__col">
-      <p class="ba__label ba__label--a">After</p>
-      <ul class="ba__list">
-        <li class="ba__li ba__li--a">개선 결과 1 — 확실한 차이를 느낌</li>
-        <li class="ba__li ba__li--a">개선 결과 2 — 효율이 크게 향상됨</li>
-        <li class="ba__li ba__li--a">개선 결과 3 — 장기적 비용 절감</li>
-      </ul>
+  </div>
+</section>
+
+<!-- §7 GALLERY -->
+<section class="sec">
+  <div class="sec-head rv"><span class="tag">Gallery</span></div>
+  <div class="gallery rv">
+    <div class="gallery__item" data-d="1"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80" alt=""></div>
+    <div class="gallery__item" data-d="2"><img src="https://images.unsplash.com/photo-1570194065650-d99fb4a38c5f?w=600&q=80" alt=""></div>
+    <div class="gallery__item" data-d="3"><img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80" alt=""></div>
+  </div>
+</section>
+
+<!-- §8 BEFORE / AFTER -->
+<section class="sec">
+  <div class="sec-head rv" style="text-align:center;"><span class="tag" style="justify-content:center;">Transformation</span><h2 class="sec-title">제주에서 <em>피부</em>까지</h2></div>
+  <div class="ba rv">
+    <div class="ba__col ba__col--before">
+      <p class="ba__label">Before</p>
+      <div class="ba__item"><h4>기존 문제 1</h4><p>불편함이 지속됨</p></div>
+      <div class="ba__item"><h4>기존 문제 2</h4><p>비효율적인 경험</p></div>
+      <div class="ba__item"><h4>기존 문제 3</h4><p>반복적인 비용 발생</p></div>
     </div>
-  </div></div>
+    <div class="ba__center">→</div>
+    <div class="ba__col ba__col--after">
+      <p class="ba__label">After</p>
+      <div class="ba__item"><h4>개선 결과 1</h4><p>확실한 차이를 느낌</p></div>
+      <div class="ba__item"><h4>개선 결과 2</h4><p>효율이 크게 향상됨</p></div>
+      <div class="ba__item"><h4>개선 결과 3</h4><p>장기적 비용 절감</p></div>
+    </div>
+  </div>
 </section>
 
 <!-- §9 PRICING -->
 <section class="sec pricing" id="pricing">
-  <div class="w">
-    <p class="pricing__label rv">시작하기 좋은 <em>세트</em></p>
-    <h2 class="pricing__h2 rv">Basic Set</h2>
-    <p class="pricing__old rv">입문 3종 세트</p>
-    <p class="pricing__now rv">₩68,000<small></small></p>
-    <p class="pricing__features rv"><li>동백 클렌징 오일</li>
+  <div class="sec-head rv" style="text-align:center;"><span class="tag" style="justify-content:center;">Pricing</span><h2 class="sec-title">시작하기 좋은 <em>세트</em></h2></div>
+  <div class="pricing__card rv">
+    <span class="pricing__badge">Basic Set</span>
+    <p class="pricing__desc">입문 3종 세트</p>
+    <p class="pricing__price">₩68,000<small></small></p>
+    <ul class="pricing__features"><li>동백 클렌징 오일</li>
         <li>쌀겨 발효 토너</li>
         <li>동백 모이스처 크림</li>
         <li>파우치 증정</li>
-        <li>무료 배송</li></p>
-    <a href="#" class="pricing__btn rv">Basic 시작</a>
+        <li>무료 배송</li></ul>
+    <a href="#" class="pricing__btn">Basic 시작</a>
   </div>
 </section>
 
 <!-- §10 REVIEWS -->
 <section class="sec">
-  <div class="w">
-    <p class="stag rv">Reviews</p>
-    <h2 class="stitle rv">고객 <em>후기</em></h2>
-    <div class="rev__grid">
-      
+  <div class="sec-head rv" style="text-align:center;"><span class="tag" style="justify-content:center;">Reviews</span><h2 class="sec-title">고객 <em>후기</em></h2></div>
+  <div class="rev__grid">
     <div class="review-card rv" data-d="1">
       <div class="review-card__top">
         <img class="review-card__avatar" src="https://i.pravatar.cc/120?img=32" alt="">
@@ -347,17 +379,23 @@ a{color:inherit;text-decoration:none;}
       </div>
       <p class="review-card__stars">★★★★★</p>
       <p class="review-card__quote">"두 번째 구매입니다. 변함없는 품질."</p>
-    </div>
-    </div>
+    </div></div>
+</section>
+
+<!-- §11 PROCESS -->
+<section class="sec">
+  <div class="sec-head rv" style="text-align:center;"><span class="tag" style="justify-content:center;">Process</span></div>
+  <div class="process__track rv">
+    <div class="process__step" data-d="1"><div class="process__dot">01</div><p class="process__t">온라인 주문</p><p class="process__d">3분이면 완료</p></div>
+    <div class="process__step" data-d="2"><div class="process__dot">02</div><p class="process__t">무료 배송</p><p class="process__d">주문 후 1~2일</p></div>
+    <div class="process__step" data-d="3"><div class="process__dot">03</div><p class="process__t">체험 시작</p><p class="process__d">불만족 시 전액 환불</p></div>
   </div>
 </section>
 
 <!-- §12 FAQ -->
 <section class="sec">
-  <div class="w">
-    <p class="stag rv">FAQ</p>
-    <div class="faq__in">
-      
+  <div class="sec-head rv" style="text-align:center;"><span class="tag" style="justify-content:center;">FAQ</span><h2 class="sec-title">자주 묻는 질문</h2></div>
+  <div class="faq__in">
     <div class="faq__item rv" data-d="1">
       <h4 class="faq__q">배송은 얼마나 걸리나요?</h4>
       <p class="faq__a">주문 후 1~3일 내 무료 배송됩니다.</p>
@@ -376,24 +414,30 @@ a{color:inherit;text-decoration:none;}
     <div class="faq__item rv" data-d="4">
       <h4 class="faq__q">AS는 어떻게 받나요?</h4>
       <p class="faq__a">고객센터에 연락하시면 48시간 내 처리됩니다.</p>
-    </div>
-    </div>
-  </div>
+    </div></div>
 </section>
 
 <!-- §13 CTA -->
 <section class="sec cta">
-  <div class="w">
-    <h2 class="cta__h2 rv">피부가 <em>답</em>을 압니다</h2>
-    <p class="cta__p rv">첫 구매 20% 할인. 7일 사용 후 불만족 시 전액 환불.</p>
-    <a href="#" class="cta__btn rv">첫 구매 혜택 받기</a>
-    <p class="cta__micro rv">무료 배송 · 7일 환불 · 동물실험 반대</p>
+  <div class="cta__frame rv">
+    <h2 class="cta__h2">피부가 <em>답</em>을 압니다</h2>
+    <p class="cta__p">첫 구매 20% 할인. 7일 사용 후 불만족 시 전액 환불.</p>
+    <a href="#" class="cta__btn">첫 구매 혜택 받기</a>
+    <p class="cta__micro">무료 배송 · 7일 환불 · 동물실험 반대</p>
   </div>
 </section>
 
+<footer><p>&copy; 2026 HARU BOTANICS. All rights reserved.</p></footer>
+
 <script>
-const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.05,rootMargin:'0px 0px 50px 0px'});
-document.querySelectorAll('.rv:not(.on)').forEach(el=>io.observe(el));
+(function(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}
+    });
+  },{threshold:.06,rootMargin:'0px 0px 40px 0px'});
+  document.querySelectorAll('.rv:not(.on)').forEach(function(el){io.observe(el);});
+})();
 </script>
 </body>
 </html>
