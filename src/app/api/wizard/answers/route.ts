@@ -77,7 +77,8 @@ ${questions.map((q, i) => `${i + 1}. [${q.id}] ${q.question}`).join('\n')}`;
 
     return NextResponse.json({ answers: result.data });
   } catch (error) {
-    console.error('Answer generation error:', error);
-    return NextResponse.json({ error: '답변 생성 실패' }, { status: 500 });
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error('Answer generation error:', msg);
+    return NextResponse.json({ error: '답변 생성 실패', detail: msg }, { status: 500 });
   }
 }
