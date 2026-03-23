@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWizardStore } from '@/stores/wizard-store';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -22,6 +22,29 @@ async function fetchDeepQuestions(
   return data.questions;
 }
 
+async function fetchAiAnswers(
+  basicInfo: {
+    productName: string;
+    industry: string;
+    pageGoal: string;
+    targetAudience: string;
+    priceRange: string;
+  },
+  questions: { id: string; question: string }[],
+): Promise<{ id: string; answer: string }[]> {
+  const res = await fetch('/api/wizard/answers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...basicInfo, questions }),
+  });
+
+  if (!res.ok) throw new Error('답변 생성 실패');
+  const data = (await res.json()) as {
+    answers: { id: string; answer: string }[];
+  };
+  return data.answers;
+}
+
 export function StepDeepQuestions(): React.ReactElement {
   const {
     basicInfo,
@@ -31,6 +54,8 @@ export function StepDeepQuestions(): React.ReactElement {
     updateAnswer,
     setQuestionsLoading,
   } = useWizardStore();
+
+  const [aiAnswerLoading, setAiAnswerLoading] = useState(false);
 
   useEffect(() => {
     if (deepQuestions.length > 0) return;
@@ -51,7 +76,6 @@ export function StepDeepQuestions(): React.ReactElement {
           );
         }
       } catch {
-        // 실패 시 기본 질문 제공
         if (!cancelled) {
           setDeepQuestions([
             {
@@ -104,6 +128,30 @@ export function StepDeepQuestions(): React.ReactElement {
     setDeepQuestions([]);
   };
 
+  const handleAiAutoFill = async (): Promise<void> => {
+    setAiAnswerLoading(true);
+    try {
+      const answers = await fetchAiAnswers(
+        {
+          productName: basicInfo.productName,
+          industry: basicInfo.industry as string,
+          pageGoal: basicInfo.pageGoal as string,
+          targetAudience: basicInfo.targetAudience,
+          priceRange: basicInfo.priceRange,
+        },
+        deepQuestions.map((q) => ({ id: q.id, question: q.question })),
+      );
+
+      for (const a of answers) {
+        updateAnswer(a.id, a.answer);
+      }
+    } catch {
+      // 실패 시 무시
+    } finally {
+      setAiAnswerLoading(false);
+    }
+  };
+
   if (questionsLoading) {
     return (
       <div className="space-y-6">
@@ -137,6 +185,27 @@ export function StepDeepQuestions(): React.ReactElement {
         <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">
           {answeredCount}/{deepQuestions.length}
         </span>
+      </div>
+
+      {/* AI 자동 답변 버튼 */}
+      <div className="flex gap-2">
+        <Button
+          onClick={handleAiAutoFill}
+          disabled={aiAnswerLoading || deepQuestions.length === 0}
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700"
+        >
+          {aiAnswerLoading ? (
+            <>
+              <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              AI 답변 생성 중...
+            </>
+          ) : (
+            '✨ AI 자동 답변 생성'
+          )}
+        </Button>
+        <p className="flex items-center text-xs text-gray-400">
+          제품 정보 기반으로 AI가 답변을 작성합니다 (수정 가능)
+        </p>
       </div>
 
       <div className="space-y-5">
