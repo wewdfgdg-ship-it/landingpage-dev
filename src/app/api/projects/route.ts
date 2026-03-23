@@ -67,37 +67,42 @@ export async function POST(req: Request): Promise<NextResponse> {
 }
 
 export async function GET(): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: '인증 필요' }, { status: 401 });
-  }
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ projects: [] });
+    }
 
-  const membership = await db.membership.findFirst({
-    where: { userId: session.user.id },
-    select: { orgId: true },
-  });
+    const membership = await db.membership.findFirst({
+      where: { userId: session.user.id },
+      select: { orgId: true },
+    });
 
-  if (!membership) {
+    if (!membership) {
+      return NextResponse.json({ projects: [] });
+    }
+
+    const projects = await db.project.findMany({
+      where: {
+        orgId: membership.orgId,
+        deletedAt: null,
+      },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        status: true,
+        inputScore: true,
+        isDeployed: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return NextResponse.json({ projects });
+  } catch (error) {
+    console.error('GET /api/projects error:', error);
     return NextResponse.json({ projects: [] });
   }
-
-  const projects = await db.project.findMany({
-    where: {
-      orgId: membership.orgId,
-      deletedAt: null,
-    },
-    orderBy: { createdAt: 'desc' },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      status: true,
-      inputScore: true,
-      isDeployed: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
-
-  return NextResponse.json({ projects });
 }
