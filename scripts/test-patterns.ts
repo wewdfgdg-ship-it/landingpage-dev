@@ -1,4 +1,4 @@
-import { PrismaClient } from '../src/generated/prisma/client.js';
+import { PrismaClient, Prisma } from '../src/generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 import * as fs from 'node:fs';
 
@@ -6,7 +6,7 @@ async function main(): Promise<void> {
   const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
   const prisma = new PrismaClient({ adapter });
   const projects = await prisma.project.findMany({
-    where: { layoutConfig: { not: null } },
+    where: { layoutConfig: { not: Prisma.JsonNull } },
     select: { layoutConfig: true },
   });
   const patterns = new Set<string>();

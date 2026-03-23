@@ -11,6 +11,20 @@ import { join } from 'path';
 // 완전히 다른 제품 — "에르고 체어 프로"
 const chairData: MoodTemplateData = {
   brand: 'ERGO CHAIR PRO',
+  images: {
+    hero: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=1200&q=80',
+    feat1: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&q=80',
+    feat2: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&q=80',
+    feat3: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&q=80',
+    fullbleed: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=1200&q=80',
+    gallery1: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80',
+    gallery2: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80',
+    gallery3: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80',
+    product1: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80',
+    product2: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80',
+    product3: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80',
+    product4: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&q=80',
+  },
   hero: {
     headline: '당신의 허리가<br><em>감사할 의자</em>',
     subheadline: '인체공학 설계 × 프리미엄 소재.<br>하루 8시간, 10년을 함께할 의자.',
@@ -86,6 +100,16 @@ const chairData: MoodTemplateData = {
     { question: '쿠션은 교체 가능한가요?', answer: '네, 좌석 쿠션과 팔걸이 패드는 개별 구매 가능합니다. 3년 주기 교체를 권장합니다.' },
     { question: '체중 제한이 있나요?', answer: '150kg까지 지원합니다. 알루미늄 프레임으로 내구성이 뛰어납니다.' },
   ],
+  products: {
+    headline: '라인업 <em>소개</em>',
+    item1: { name: 'ErgoChair Standard', sub: '기본형 인체공학 의자' },
+    item2: { name: 'ErgoChair Premium', sub: '풀옵션 프리미엄 의자' },
+    item3: { name: 'ErgoDesk Pro', sub: '높이조절 스탠딩 데스크' },
+    item4: { name: 'ErgoMonitor Arm', sub: '모니터 암 거치대' },
+  },
+  process1: { title: '온라인 주문', desc: '원하는 모델을 선택하고 주문하세요.' },
+  process2: { title: '무료 배송 · 설치', desc: '전문 기사가 방문하여 조립 설치합니다.' },
+  process3: { title: '30일 무료 체험', desc: '만족하지 못하면 전액 환불해 드립니다.' },
   cta: {
     headline: '지금 바꾸면<br><em>내일이 다릅니다</em>',
     body: '30일 무위험 체험으로 시작하세요.<br>만족하지 못하시면 전액 환불해 드립니다.',
