@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
 import { askClaude } from '@/lib/ai/claude';
 
 interface QuestionInput {
@@ -30,11 +29,6 @@ JSON 형식:
 ]`;
 
 export async function POST(req: Request): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: '인증 필요' }, { status: 401 });
-  }
-
   const body = (await req.json()) as QuestionInput;
   const { productName, industry, pageGoal } = body;
 
