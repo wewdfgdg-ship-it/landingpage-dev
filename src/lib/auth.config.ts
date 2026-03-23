@@ -1,5 +1,6 @@
 import type { NextAuthConfig } from 'next-auth';
 import Google from 'next-auth/providers/google';
+import Credentials from 'next-auth/providers/credentials';
 
 // ============================================================
 // Edge Runtime 호환 인증 설정 (middleware용)
@@ -9,17 +10,39 @@ import Google from 'next-auth/providers/google';
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
-if (!googleClientId || !googleClientSecret) {
-  throw new Error('GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET must be set');
-}
+const providers: NextAuthConfig['providers'] = [
+  Credentials({
+    name: '이메일 로그인',
+    credentials: {
+      email: { label: '이메일', type: 'email', placeholder: 'you@example.com' },
+      password: { label: '비밀번호', type: 'password' },
+    },
+    async authorize(credentials) {
+      const email = credentials?.email as string;
+      const password = credentials?.password as string;
+      if (!email || !password) return null;
+      // 데모용 — 이메일만 있으면 로그인 허용
+      return {
+        id: email.replace(/[^a-zA-Z0-9]/g, '-'),
+        email,
+        name: email.split('@')[0],
+      };
+    },
+  }),
+];
 
-export const authConfig: NextAuthConfig = {
-  providers: [
+// Google OAuth는 키가 유효할 때만 추가
+if (googleClientId && googleClientSecret) {
+  providers.push(
     Google({
       clientId: googleClientId,
       clientSecret: googleClientSecret,
     }),
-  ],
+  );
+}
+
+export const authConfig: NextAuthConfig = {
+  providers,
   session: {
     strategy: 'jwt',
   },
