@@ -59,6 +59,85 @@ export interface PricingTier {
   cta: string;
 }
 
+// ============================================================
+// 1-B. 프랜차이즈 템플릿 데이터 타입
+// ============================================================
+
+export interface StoreData {
+  name: string;
+  revenue: string;
+  revenueUnit: string;
+  period: string;
+  image: string;
+}
+
+export interface CompareItem {
+  text: string;
+  highlight?: boolean;
+}
+
+export interface SnsCardData {
+  icon: string;
+  name: string;
+  handle: string;
+}
+
+export interface IngredientData {
+  name: string;
+  desc: string;
+  image: string;
+}
+
+export interface TimelineData {
+  year: string;
+  text: string;
+  active?: boolean;
+}
+
+export interface FranchiseTemplateData {
+  brand: string;
+  images: {
+    hero: string;
+    videoBg: string;
+    brand: string;
+    product1: string;
+    product2: string;
+    product3: string;
+    founder: string;
+    marketingTv: string;
+  };
+  hero: { eyebrow: string; number: string; unit: string; unitLabel: string; headline: string; subheadline: string; cta: string };
+  trust: {
+    tag: string; headline: string;
+    card1: { stamp: string; label: string; value: string; valueUnit: string; unit: string; sub: string };
+    card2: { stamp: string; label: string; value: string; valueUnit: string; unit: string; sub: string };
+  };
+  video: { tag: string; headline: string; url: string };
+  stores: { tag: string; headline: string; items: StoreData[] };
+  compare: { tag: string; headline: string; leftTitle: string; rightTitle: string; leftItems: CompareItem[]; rightItems: CompareItem[] };
+  brandIntro: { tag: string; headline: string; body: string; sub: string };
+  strengths: { tag: string; headline: string };
+  strength1: { title: string; body: string };
+  strength2: { title: string; body: string };
+  strength3: { title: string; body: string };
+  strength4: { title: string; body: string };
+  winwin: { tag: string; headline: string; leftIcon: string; leftTitle: string; leftItems: string[]; rightIcon: string; rightTitle: string; rightItems: string[] };
+  marketing: { tag: string; headline: string; tvBadge: string; snsCards: SnsCardData[] };
+  ingredients: { tag: string; headline: string; body: string; items: IngredientData[] };
+  products: { tag: string; headline: string };
+  product1: { name: string; desc: string; badge: string };
+  product2: { name: string; desc: string; badge: string };
+  product3: { name: string; desc: string; badge: string };
+  story: { tag: string; headline: string; founderName: string; founderRole: string; items: TimelineData[] };
+  cta: {
+    headline: string; body: string; cta: string; phone: string; kakao: string;
+    nameLabel: string; namePlaceholder: string;
+    phoneLabel: string; phonePlaceholder: string;
+    regionLabel: string; regionPlaceholder: string;
+    messageLabel: string; messagePlaceholder: string;
+  };
+}
+
 export interface MoodTemplateData {
   brand: string;
   images: {
@@ -74,6 +153,7 @@ export interface MoodTemplateData {
     product2: string;
     product3: string;
     product4: string;
+    [key: string]: string;
   };
   hero: { headline: string; subheadline: string; cta: string };
   intro: { headline: string; body: string };
@@ -178,6 +258,60 @@ function renderFeatureList(features: string[]): string {
 }
 
 // ============================================================
+// 2-B. 프랜차이즈 블록 렌더러
+// ============================================================
+
+function renderStoreCards(stores: StoreData[]): string {
+  return stores.map((s, i) => `
+    <div class="store-card rv"${i > 0 ? ` data-d="${i}"` : ''}>
+      <div class="store-card__img"><img src="${s.image}" alt="${s.name}"></div>
+      <div class="store-card__body">
+        <p class="store-card__name">${s.name}</p>
+        <p class="store-card__revenue">${s.revenue}<em>${s.revenueUnit}</em></p>
+        <p class="store-card__period">${s.period}</p>
+      </div>
+    </div>`).join('\n');
+}
+
+function renderCompareItems(items: CompareItem[]): string {
+  return items.map(item =>
+    `<p class="compare__item${item.highlight ? '' : ' compare__item--dim'}">${item.text}</p>`
+  ).join('\n      ');
+}
+
+function renderWinwinItems(items: string[]): string {
+  return items.map(item =>
+    `<p class="winwin__item">${item}</p>`
+  ).join('\n      ');
+}
+
+function renderSnsCards(cards: SnsCardData[]): string {
+  return cards.map((c, i) => `
+    <div class="sns-card rv"${i > 0 ? ` data-d="${i}"` : ''}>
+      <p class="sns-card__icon">${c.icon}</p>
+      <p class="sns-card__name">${c.name}</p>
+      <p class="sns-card__handle">${c.handle}</p>
+    </div>`).join('\n');
+}
+
+function renderIngredientItems(items: IngredientData[]): string {
+  return items.map((item, i) => `
+    <div class="ingr-item rv"${i > 0 ? ` data-d="${Math.min(i, 5)}"` : ''}>
+      <div class="ingr-item__photo"><img src="${item.image}" alt="${item.name}"></div>
+      <p class="ingr-item__name">${item.name}</p>
+      <p class="ingr-item__desc">${item.desc}</p>
+    </div>`).join('\n');
+}
+
+function renderTimeline(items: TimelineData[]): string {
+  return items.map(item => `
+      <div class="timeline__item${item.active ? ' timeline__item--active' : ''}">
+        <p class="timeline__year">${item.year}</p>
+        <p class="timeline__text">${item.text}</p>
+      </div>`).join('\n');
+}
+
+// ============================================================
 // 3. 메인 렌더러
 // ============================================================
 
@@ -207,7 +341,49 @@ export function renderMoodTemplate(
   }
 
   // 단순 플레이스홀더 치환 (dot notation flatten)
-  const flat = flattenObject(data);
+  const flat = flattenObject(data as unknown as Record<string, unknown>);
+  for (const [key, value] of Object.entries(flat)) {
+    if (typeof value === 'string') {
+      html = html.replaceAll(`{{${key}}}`, value);
+    }
+  }
+
+  return html;
+}
+
+// ============================================================
+// 3-B. 프랜차이즈 렌더러
+// ============================================================
+
+export function renderFranchiseTemplate(
+  data: FranchiseTemplateData,
+  tokens?: StyleTokens,
+): string {
+  const templatePath = join(__dirname, 'mood-templates', 'franchise.html');
+  let html = readFileSync(templatePath, 'utf-8');
+
+  // 반복 블록 먼저 처리
+  html = html.replace('{{store.cards}}', renderStoreCards(data.stores.items));
+  html = html.replace('{{compare.leftItems}}', renderCompareItems(data.compare.leftItems));
+  html = html.replace('{{compare.rightItems}}', renderCompareItems(data.compare.rightItems));
+  html = html.replace('{{winwin.leftItems}}', renderWinwinItems(data.winwin.leftItems));
+  html = html.replace('{{winwin.rightItems}}', renderWinwinItems(data.winwin.rightItems));
+  html = html.replace('{{marketing.snsCards}}', renderSnsCards(data.marketing.snsCards));
+  html = html.replace('{{ingredient.items}}', renderIngredientItems(data.ingredients.items));
+  html = html.replace('{{story.timeline}}', renderTimeline(data.story.items));
+
+  // 토큰 치환
+  if (tokens) {
+    const tokenFlat = flattenObject({ token: tokens });
+    for (const [key, value] of Object.entries(tokenFlat)) {
+      if (typeof value === 'string') {
+        html = html.replaceAll(`{{${key}}}`, value);
+      }
+    }
+  }
+
+  // 단순 플레이스홀더 치환
+  const flat = flattenObject(data as unknown as Record<string, unknown>);
   for (const [key, value] of Object.entries(flat)) {
     if (typeof value === 'string') {
       html = html.replaceAll(`{{${key}}}`, value);

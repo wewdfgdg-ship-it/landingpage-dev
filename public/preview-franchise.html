@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>담가화로구이 — 4억 8천만원의 비밀</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Pretendard:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CSS VARIABLES — dark + gold franchise theme
+   ============================================================ */
+:root{
+  --bg:#0d0d0d;--surface:#1a1a1a;--surface-l:#2a2a2a;
+  --gold:#c8a96e;--gold-l:#e8d5a8;--gold-p:rgba(200,169,110,.15);
+  --cream:#f5f0e8;--text:#e5e0d8;--text-s:#8a8278;
+  --frost:rgba(200,169,110,.08);--frost-line:rgba(200,169,110,.2);--glow:rgba(200,169,110,.12);
+  --serif:'Noto Serif KR',serif;--body:'Pretendard',sans-serif;
+  --sd:clamp(3.2rem,7vw,5.5rem);--sh1:clamp(2rem,4vw,3rem);--sh2:clamp(1.6rem,3vw,2.4rem);
+  --sh3:clamp(1.2rem,2vw,1.6rem);--sb:clamp(.88rem,1vw,1rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+body{background:var(--bg);color:var(--cream);font-family:var(--body);line-height:1.7;overflow-x:hidden;max-width:1240px;margin:0 auto;}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{border:none;background:none;cursor:pointer;font:inherit;color:inherit;}
+
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.03;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.1'/%3E%3C/svg%3E");}
+
+/* SCROLL REVEAL */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);}
+.rv.on{opacity:1;transform:none;}
+[data-d="1"]{transition-delay:.12s}[data-d="2"]{transition-delay:.24s}[data-d="3"]{transition-delay:.36s}[data-d="4"]{transition-delay:.48s}[data-d="5"]{transition-delay:.6s}
+
+.sec{padding:clamp(64px,8vw,120px) clamp(20px,4vw,48px);}
+
+/* SECTION DIVIDER — gold glow line */
+.divider{position:relative;height:1px;margin:0 clamp(20px,4vw,48px);background:var(--frost-line);overflow:visible;}
+.divider::after{content:'';position:absolute;left:50%;top:-1px;transform:translateX(-50%);width:120px;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;filter:blur(1px);}
+
+/* TAG LABEL */
+.tag{font-family:var(--body);font-weight:600;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;}
+.tag::before{content:'';width:28px;height:1.5px;background:var(--gold);}
+
+/* SECTION TITLE */
+.stitle{font-family:var(--serif);font-weight:700;font-size:var(--sh2);line-height:1.15;color:var(--cream);margin-top:16px;letter-spacing:-.01em;}
+.stitle em{font-style:normal;color:var(--gold-l);}
+
+/* ============================================================
+   §1 HERO
+   ============================================================ */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000;}
+.hero__bg{position:absolute;inset:0;z-index:0;}
+.hero__bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.35) saturate(.6);transform:scale(1.05);animation:heroZoom 20s ease-in-out infinite alternate;}
+@keyframes heroZoom{0%{transform:scale(1.05)}100%{transform:scale(1.12)}}
+
+.hero__curtain{position:absolute;top:0;bottom:0;width:clamp(80px,15vw,200px);z-index:1;pointer-events:none;}
+.hero__curtain--l{left:0;background:linear-gradient(90deg,rgba(200,169,110,.12) 0%,rgba(200,169,110,.05) 40%,transparent 100%);}
+.hero__curtain--r{right:0;background:linear-gradient(-90deg,rgba(200,169,110,.12) 0%,rgba(200,169,110,.05) 40%,transparent 100%);}
+.hero__curtain::before{content:'';position:absolute;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgba(200,169,110,.4),rgba(200,169,110,.1),rgba(200,169,110,.3));}
+.hero__curtain--l::before{right:0;}
+.hero__curtain--r::before{left:0;}
+
+.hero__particle{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:.3;z-index:1;animation:particleFloat 6s ease-in-out infinite;}
+.hero__particle:nth-child(2){width:3px;height:3px;opacity:.2;animation-delay:2s;animation-duration:8s;}
+.hero__particle:nth-child(3){width:5px;height:5px;opacity:.15;animation-delay:4s;animation-duration:10s;}
+@keyframes particleFloat{0%,100%{transform:translateY(0) scale(1);opacity:.3}50%{transform:translateY(-40px) scale(1.5);opacity:.6}}
+
+.hero__content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:900px;}
+.hero__eyebrow{font-family:var(--body);font-weight:600;font-size:.7rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:16px;}
+.hero__eyebrow::before,.hero__eyebrow::after{content:'';width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
+.hero__eyebrow::after{background:linear-gradient(-90deg,transparent,var(--gold));}
+
+.hero__number{font-family:var(--serif);font-weight:900;font-size:clamp(4rem,12vw,9rem);line-height:.9;color:var(--cream);margin-bottom:8px;text-shadow:0 4px 60px rgba(200,169,110,.3),0 2px 20px rgba(0,0,0,.5);}
+.hero__number em{color:var(--gold-l);font-style:normal;}
+.hero__unit{font-family:var(--body);font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:300;color:var(--gold);letter-spacing:.1em;margin-bottom:32px;}
+
+.hero__h1{font-family:var(--serif);font-weight:700;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.3;color:var(--cream);margin-bottom:20px;letter-spacing:-.01em;}
+.hero__sub{font-family:var(--body);font-weight:400;font-size:var(--sb);color:var(--text);opacity:.8;max-width:500px;margin:0 auto 48px;line-height:1.9;}
+
+.hero__cta{display:inline-block;padding:18px 56px;font-family:var(--body);font-weight:600;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-l));border:none;transition:all .5s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;}
+.hero__cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-l),#fff);opacity:0;transition:opacity .5s;}
+.hero__cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(200,169,110,.4);}
+.hero__cta:hover::before{opacity:.3;}
+
+.hero__scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-s);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-family:var(--body);font-weight:300;}
+.hero__scroll-line{width:1px;height:40px;background:linear-gradient(180deg,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ============================================================
+   §2 TRUST
+   ============================================================ */
+.trust{background:linear-gradient(180deg,#0a1a0a 0%,#0d1f0d 50%,#0a1a0a 100%);position:relative;overflow:hidden;}
+.trust::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(40,80,40,.15) 0%,transparent 70%);pointer-events:none;}
+.trust__head{text-align:center;margin-bottom:clamp(40px,5vw,64px);}
+.trust__cards{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px);max-width:800px;margin:0 auto;}
+
+.receipt{background:linear-gradient(180deg,#f5f0e0,#ede5d0);border-radius:4px;padding:clamp(28px,3vw,44px);position:relative;color:#1a1a1a;box-shadow:0 20px 60px rgba(0,0,0,.4);overflow:hidden;}
+.receipt::before{content:'';position:absolute;top:0;left:0;right:0;height:12px;background:repeating-linear-gradient(90deg,transparent,transparent 8px,#f5f0e0 8px,#f5f0e0 16px);background-size:16px 12px;background-position:0 -6px;}
+.receipt::after{content:'';position:absolute;bottom:0;left:0;right:0;height:12px;background:repeating-linear-gradient(90deg,transparent,transparent 8px,#f5f0e0 8px,#f5f0e0 16px);background-size:16px 12px;background-position:0 6px;}
+.receipt__label{font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#666;margin-bottom:16px;padding-bottom:12px;border-bottom:1px dashed #ccc;}
+.receipt__value{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:900;line-height:1;color:#1a1a1a;margin-bottom:4px;}
+.receipt__value em{color:#c8a96e;font-style:normal;}
+.receipt__unit{font-size:clamp(1rem,2vw,1.4rem);font-weight:600;color:#666;margin-bottom:16px;}
+.receipt__sub{font-size:.75rem;color:#888;padding-top:12px;border-top:1px dashed #ccc;line-height:1.6;}
+.receipt__stamp{position:absolute;top:20px;right:20px;width:60px;height:60px;border:3px solid rgba(200,60,60,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.55rem;color:rgba(200,60,60,.7);transform:rotate(-15deg);letter-spacing:.05em;}
+
+/* ============================================================
+   §3 VIDEO
+   ============================================================ */
+.video-sec{position:relative;overflow:hidden;}
+.video-sec__bg{position:absolute;inset:0;z-index:0;}
+.video-sec__bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.2) saturate(.5);}
+.video-sec__inner{position:relative;z-index:1;text-align:center;}
+.video-sec__head{margin-bottom:clamp(32px,4vw,48px);}
+.video-sec__frame{position:relative;width:100%;max-width:800px;margin:0 auto;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6);}
+.video-sec__frame iframe{width:100%;height:100%;border:none;}
+
+/* ============================================================
+   §4 STORES
+   ============================================================ */
+.stores__head{margin-bottom:clamp(32px,4vw,48px);}
+.stores__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.5vw,20px);}
+.store-card{background:var(--surface);border-radius:16px;overflow:hidden;transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s;}
+.store-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(200,169,110,.15);}
+.store-card__img{aspect-ratio:4/3;overflow:hidden;background:#222;}
+.store-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .6s;}
+.store-card:hover .store-card__img img{transform:scale(1.06);}
+.store-card__body{padding:clamp(16px,2vw,24px);}
+.store-card__name{font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--cream);margin-bottom:8px;}
+.store-card__revenue{font-family:var(--serif);font-weight:900;font-size:clamp(1.3rem,2.5vw,1.8rem);color:var(--gold-l);}
+.store-card__revenue em{font-style:normal;font-size:.7em;color:var(--text-s);font-weight:400;}
+.store-card__period{font-size:.7rem;color:var(--text-s);margin-top:4px;}
+
+/* ============================================================
+   §5 COMPARE
+   ============================================================ */
+.compare{background:var(--surface);position:relative;overflow:hidden;}
+.compare::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(200,169,110,.04) 0%,transparent 70%);pointer-events:none;}
+.compare__head{text-align:center;margin-bottom:clamp(40px,5vw,64px);}
+.compare__table{display:grid;grid-template-columns:1fr auto 1fr;gap:0;max-width:900px;margin:0 auto;position:relative;}
+.compare__col{padding:clamp(24px,3vw,40px);}
+.compare__col--left{text-align:right;}
+.compare__col--right{text-align:left;}
+.compare__col-title{font-family:var(--serif);font-weight:700;font-size:var(--sh3);margin-bottom:clamp(24px,3vw,36px);color:var(--cream);}
+.compare__col--left .compare__col-title{color:var(--text-s);}
+.compare__col--right .compare__col-title{color:var(--gold-l);}
+.compare__vs{display:flex;align-items:center;justify-content:center;position:relative;}
+.compare__vs-badge{width:clamp(56px,7vw,80px);height:clamp(56px,7vw,80px);background:linear-gradient(135deg,var(--gold),var(--gold-l));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;font-size:clamp(1.2rem,2vw,1.6rem);color:var(--bg);z-index:2;box-shadow:0 0 40px rgba(200,169,110,.3);}
+.compare__vs::before{content:'';position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--frost-line),transparent);left:50%;transform:translateX(-50%);}
+.compare__item{font-size:var(--sb);color:var(--text);line-height:1.7;padding:12px 0;border-bottom:1px solid var(--frost-line);}
+.compare__item:last-child{border-bottom:none;}
+.compare__item em{color:var(--gold-l);font-style:normal;font-weight:600;}
+.compare__item--dim{color:var(--text-s);opacity:.6;}
+
+/* ============================================================
+   §6 BRAND INTRO
+   ============================================================ */
+.brand-intro{position:relative;min-height:500px;display:flex;align-items:flex-end;overflow:hidden;}
+.brand-intro__bg{position:absolute;inset:0;}
+.brand-intro__bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.5);}
+.brand-intro__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,13,13,.95) 0%,rgba(13,13,13,.4) 50%,rgba(13,13,13,.2) 100%);}
+.brand-intro__content{position:relative;z-index:2;padding:clamp(40px,6vw,80px);max-width:700px;}
+.brand-intro__h2{font-family:var(--serif);font-weight:700;font-size:var(--sh1);line-height:1.2;color:var(--cream);margin-bottom:20px;}
+.brand-intro__h2 em{color:var(--gold-l);font-style:normal;}
+.brand-intro__body{font-size:var(--sb);color:var(--text);line-height:2;opacity:.85;}
+.brand-intro__sub{font-size:.8rem;color:var(--gold);margin-top:16px;font-weight:600;letter-spacing:.05em;}
+
+/* ============================================================
+   §7 STRENGTHS
+   ============================================================ */
+.strengths__head{text-align:center;margin-bottom:clamp(40px,5vw,64px);}
+.strengths__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,28px);}
+.str-card{position:relative;background:var(--surface);border-radius:20px;padding:clamp(32px,4vw,52px);overflow:hidden;transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s;border:1px solid var(--frost-line);}
+.str-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(200,169,110,.1);border-color:var(--gold);}
+.str-card__num{font-family:var(--serif);font-weight:900;font-size:clamp(4rem,8vw,6rem);line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--gold);position:absolute;top:clamp(16px,2vw,28px);right:clamp(16px,2vw,28px);opacity:.3;}
+.str-card__title{font-family:var(--serif);font-weight:700;font-size:var(--sh3);color:var(--cream);margin-bottom:12px;position:relative;z-index:1;}
+.str-card__title em{color:var(--gold-l);font-style:normal;}
+.str-card__body{font-size:var(--sb);color:var(--text-s);line-height:1.8;position:relative;z-index:1;}
+
+/* ============================================================
+   §8 WIN-WIN
+   ============================================================ */
+.winwin{background:linear-gradient(135deg,var(--surface) 0%,var(--bg) 100%);position:relative;overflow:hidden;}
+.winwin::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(200,169,110,.06) 0%,transparent 70%);pointer-events:none;}
+.winwin__head{text-align:center;margin-bottom:clamp(40px,5vw,64px);}
+.winwin__grid{display:grid;grid-template-columns:1fr 80px 1fr;gap:0;align-items:start;}
+.winwin__col{padding:clamp(24px,3vw,40px);}
+.winwin__col-icon{font-size:2.4rem;margin-bottom:16px;}
+.winwin__col-title{font-family:var(--serif);font-weight:700;font-size:var(--sh3);color:var(--cream);margin-bottom:20px;}
+.winwin__col-title em{color:var(--gold-l);font-style:normal;}
+.winwin__item{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;font-size:var(--sb);color:var(--text);line-height:1.7;}
+.winwin__item::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:2px;}
+.winwin__arrow{display:flex;align-items:center;justify-content:center;position:relative;}
+.winwin__arrow::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,var(--frost-line),transparent);}
+.winwin__arrow-badge{width:56px;height:56px;background:var(--surface);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;z-index:1;}
+
+/* ============================================================
+   §9 MARKETING
+   ============================================================ */
+.marketing__head{margin-bottom:clamp(32px,4vw,48px);}
+.marketing__tv{margin-bottom:clamp(32px,4vw,48px);}
+.marketing__tv-frame{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:16/9;max-width:700px;background:#222;}
+.marketing__tv-frame img{width:100%;height:100%;object-fit:cover;}
+.marketing__tv-badge{position:absolute;top:16px;left:16px;background:rgba(200,60,60,.9);color:#fff;font-size:.65rem;font-weight:700;padding:6px 14px;border-radius:4px;letter-spacing:.05em;}
+.marketing__sns{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.5vw,20px);}
+.sns-card{background:var(--surface);border-radius:12px;padding:clamp(20px,2.5vw,32px);text-align:center;border:1px solid var(--frost-line);transition:all .4s;}
+.sns-card:hover{border-color:var(--gold);box-shadow:0 8px 30px rgba(200,169,110,.1);}
+.sns-card__icon{font-size:2rem;margin-bottom:12px;}
+.sns-card__name{font-weight:700;font-size:.85rem;color:var(--cream);margin-bottom:4px;}
+.sns-card__handle{font-size:.7rem;color:var(--text-s);}
+
+/* ============================================================
+   §10 INGREDIENTS
+   ============================================================ */
+.ingredients{background:var(--surface);position:relative;overflow:hidden;}
+.ingredients::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(200,169,110,.05) 0%,transparent 60%);pointer-events:none;}
+.ingredients__head{text-align:center;margin-bottom:clamp(40px,5vw,64px);}
+.ingredients__ring{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(20px,3vw,40px);max-width:800px;margin:0 auto;}
+.ingr-item{display:flex;flex-direction:column;align-items:center;gap:12px;width:clamp(100px,15vw,140px);}
+.ingr-item__photo{width:clamp(80px,12vw,120px);height:clamp(80px,12vw,120px);border-radius:50%;overflow:hidden;border:2px solid var(--frost-line);transition:border-color .4s,transform .4s;background:#222;}
+.ingr-item:hover .ingr-item__photo{border-color:var(--gold);transform:scale(1.06);}
+.ingr-item__photo img{width:100%;height:100%;object-fit:cover;}
+.ingr-item__name{font-weight:600;font-size:.8rem;color:var(--cream);text-align:center;}
+.ingr-item__desc{font-size:.65rem;color:var(--text-s);text-align:center;line-height:1.4;}
+
+/* ============================================================
+   §11 PRODUCTS
+   ============================================================ */
+.products{background:#080808;position:relative;}
+.products::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(200,169,110,.04) 0%,transparent 50%);pointer-events:none;}
+.products__head{text-align:center;margin-bottom:clamp(40px,5vw,64px);}
+.products__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px);}
+.prod-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:#111;}
+.prod-card__img{position:absolute;inset:0;}
+.prod-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.prod-card:hover .prod-card__img img{transform:scale(1.06);}
+.prod-card__overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.1) 50%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(20px,3vw,36px);}
+.prod-card__name{font-family:var(--serif);font-weight:700;font-size:var(--sh3);color:var(--cream);margin-bottom:6px;}
+.prod-card__desc{font-size:.8rem;color:var(--text-s);line-height:1.6;}
+.prod-card__badge{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--bg);font-size:.6rem;font-weight:700;padding:6px 12px;border-radius:20px;letter-spacing:.05em;}
+
+/* ============================================================
+   §12 STORY
+   ============================================================ */
+.story__head{margin-bottom:clamp(40px,5vw,64px);}
+.story__layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,64px);align-items:start;}
+.timeline{position:relative;padding-left:32px;}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),var(--frost-line),transparent);}
+.timeline__item{position:relative;margin-bottom:clamp(24px,3vw,36px);padding-left:12px;}
+.timeline__item::before{content:'';position:absolute;left:-28px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--gold);z-index:1;}
+.timeline__item--active::before{background:var(--gold);box-shadow:0 0 12px rgba(200,169,110,.5);}
+.timeline__year{font-family:var(--serif);font-weight:900;font-size:1.1rem;color:var(--gold);margin-bottom:4px;}
+.timeline__text{font-size:var(--sb);color:var(--text);line-height:1.7;}
+.story__founder{border-radius:20px;overflow:hidden;position:relative;}
+.story__founder-img{aspect-ratio:3/4;overflow:hidden;background:#222;}
+.story__founder-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);}
+.story__founder-overlay{position:absolute;bottom:0;left:0;right:0;padding:clamp(24px,3vw,40px);background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,transparent 100%);}
+.story__founder-name{font-family:var(--serif);font-weight:700;font-size:var(--sh3);color:var(--cream);margin-bottom:4px;}
+.story__founder-role{font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:.1em;}
+
+/* ============================================================
+   §13 CTA
+   ============================================================ */
+.cta-sec{background:linear-gradient(180deg,var(--bg) 0%,var(--surface) 100%);position:relative;overflow:hidden;}
+.cta-sec::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(200,169,110,.06) 0%,transparent 70%);pointer-events:none;}
+.cta-sec__inner{max-width:640px;margin:0 auto;text-align:center;position:relative;z-index:1;}
+.cta-sec__h2{font-family:var(--serif);font-weight:700;font-size:var(--sh1);line-height:1.2;color:var(--cream);margin-bottom:16px;}
+.cta-sec__h2 em{color:var(--gold-l);font-style:normal;}
+.cta-sec__body{font-size:var(--sb);color:var(--text);margin-bottom:clamp(32px,4vw,48px);line-height:1.9;}
+.cta-form{background:var(--surface);border-radius:20px;padding:clamp(32px,4vw,48px);border:1px solid var(--frost-line);text-align:left;}
+.cta-form__row{margin-bottom:20px;}
+.cta-form__label{display:block;font-size:.75rem;font-weight:600;color:var(--gold);margin-bottom:8px;letter-spacing:.05em;}
+.cta-form__input{width:100%;padding:14px 18px;background:var(--bg);border:1px solid var(--frost-line);border-radius:8px;color:var(--cream);font-family:var(--body);font-size:var(--sb);transition:border-color .3s;}
+.cta-form__input:focus{outline:none;border-color:var(--gold);}
+.cta-form__input::placeholder{color:var(--text-s);}
+.cta-form__select{width:100%;padding:14px 18px;background:var(--bg);border:1px solid var(--frost-line);border-radius:8px;color:var(--cream);font-family:var(--body);font-size:var(--sb);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;}
+.cta-form__textarea{width:100%;padding:14px 18px;background:var(--bg);border:1px solid var(--frost-line);border-radius:8px;color:var(--cream);font-family:var(--body);font-size:var(--sb);resize:vertical;min-height:100px;transition:border-color .3s;}
+.cta-form__textarea:focus{outline:none;border-color:var(--gold);}
+.cta-form__textarea::placeholder{color:var(--text-s);}
+.cta-form__submit{width:100%;padding:18px;background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--bg);font-family:var(--body);font-weight:700;font-size:1rem;border:none;border-radius:8px;cursor:pointer;letter-spacing:.05em;transition:all .4s;margin-top:8px;}
+.cta-form__submit:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(200,169,110,.3);}
+.cta-sec__contact{margin-top:clamp(24px,3vw,36px);display:flex;justify-content:center;gap:clamp(24px,4vw,48px);flex-wrap:wrap;}
+.cta-sec__contact-item{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text);}
+.cta-sec__contact-icon{width:36px;height:36px;background:var(--surface);border:1px solid var(--frost-line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .trust__cards{grid-template-columns:1fr;}
+  .stores__grid{grid-template-columns:1fr 1fr;gap:12px;}
+  .compare__table{grid-template-columns:1fr;gap:0;}
+  .compare__col--left{text-align:left;}
+  .compare__vs{padding:16px 0;}
+  .compare__vs::before{display:none;}
+  .strengths__grid{grid-template-columns:1fr;}
+  .winwin__grid{grid-template-columns:1fr;gap:0;}
+  .winwin__arrow{padding:16px 0;}
+  .winwin__arrow::before{display:none;}
+  .marketing__sns{grid-template-columns:1fr 1fr;}
+  .products__grid{grid-template-columns:1fr;}
+  .story__layout{grid-template-columns:1fr;}
+  .story__founder{margin-top:32px;}
+  .cta-sec__contact{flex-direction:column;align-items:center;}
+  .hero__curtain{display:none;}
+}
+@media(max-width:480px){
+  .stores__grid{grid-template-columns:1fr;}
+  .marketing__sns{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== §1 HERO ===== -->
+<section class="hero">
+  <div class="hero__bg"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1400&q=80" alt="담가화로구이"></div>
+  <div class="hero__curtain hero__curtain--l"></div>
+  <div class="hero__curtain hero__curtain--r"></div>
+  <div class="hero__particle" style="top:20%;left:25%"></div>
+  <div class="hero__particle" style="top:60%;left:70%"></div>
+  <div class="hero__particle" style="top:40%;left:50%"></div>
+
+  <div class="hero__content rv">
+    <p class="hero__eyebrow">프랜차이즈 창업 설명회</p>
+    <p class="hero__number">4억<em>8천</em></p>
+    <p class="hero__unit">만원의 비밀</p>
+    <h1 class="hero__h1">월매출 4,800만원, 당신도 가능합니다</h1>
+    <p class="hero__sub">검증된 화로구이 프랜차이즈.<br>본사 직영 물류 + 전문 교육으로<br>초보 창업도 안정적인 수익을 보장합니다.</p>
+    <a class="hero__cta" href="#cta">창업 상담 신청</a>
+  </div>
+
+  <div class="hero__scroll"><span>Scroll</span><span class="hero__scroll-line"></span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §2 TRUST ===== -->
+<section class="trust sec">
+  <div class="trust__head rv">
+    <p class="tag" style="justify-content:center">매출 실적</p>
+    <h2 class="stitle" style="text-align:center">숫자가 <em>증명</em>합니다</h2>
+  </div>
+  <div class="trust__cards">
+    <div class="receipt rv">
+      <div class="receipt__stamp">VERIFIED</div>
+      <p class="receipt__label">월 평균 매출</p>
+      <p class="receipt__value">4,800<em>만</em></p>
+      <p class="receipt__unit">원 / 월</p>
+      <p class="receipt__sub">2024년 전 매장 평균 기준<br>VAT 포함 실매출</p>
+    </div>
+    <div class="receipt rv" data-d="1">
+      <div class="receipt__stamp">REAL</div>
+      <p class="receipt__label">일 평균 매출</p>
+      <p class="receipt__value">160<em>만</em></p>
+      <p class="receipt__unit">원 / 일</p>
+      <p class="receipt__sub">주말 피크 기준 220만원<br>평일 평균 140만원</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §3 VIDEO ===== -->
+<section class="video-sec sec">
+  <div class="video-sec__bg"><img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=1400&q=80" alt=""></div>
+  <div class="video-sec__inner">
+    <div class="video-sec__head rv">
+      <p class="tag" style="justify-content:center">브랜드 소개</p>
+      <h2 class="stitle" style="text-align:center">담가화로구이를 <em>영상</em>으로 만나보세요</h2>
+    </div>
+    <div class="video-sec__frame rv" data-d="1">
+      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="담가화로구이" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §4 STORES ===== -->
+<section class="sec">
+  <div class="stores__head rv">
+    <p class="tag">매장 실적</p>
+    <h2 class="stitle">전국 매장 <em>매출 현황</em></h2>
+  </div>
+  <div class="stores__grid">
+    <div class="store-card rv">
+      <div class="store-card__img"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt="강남점"></div>
+      <div class="store-card__body">
+        <p class="store-card__name">강남점</p>
+        <p class="store-card__revenue">5,200<em>만원</em></p>
+        <p class="store-card__period">2024년 월평균</p>
+      </div>
+    </div>
+    <div class="store-card rv" data-d="1">
+      <div class="store-card__img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="홍대점"></div>
+      <div class="store-card__body">
+        <p class="store-card__name">홍대점</p>
+        <p class="store-card__revenue">4,800<em>만원</em></p>
+        <p class="store-card__period">2024년 월평균</p>
+      </div>
+    </div>
+    <div class="store-card rv" data-d="2">
+      <div class="store-card__img"><img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&q=80" alt="부산서면점"></div>
+      <div class="store-card__body">
+        <p class="store-card__name">부산서면점</p>
+        <p class="store-card__revenue">4,500<em>만원</em></p>
+        <p class="store-card__period">2024년 월평균</p>
+      </div>
+    </div>
+    <div class="store-card rv" data-d="3">
+      <div class="store-card__img"><img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80" alt="대전둔산점"></div>
+      <div class="store-card__body">
+        <p class="store-card__name">대전둔산점</p>
+        <p class="store-card__revenue">4,200<em>만원</em></p>
+        <p class="store-card__period">2024년 월평균</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §5 COMPARE ===== -->
+<section class="compare sec">
+  <div class="compare__head rv">
+    <p class="tag" style="justify-content:center">경쟁 비교</p>
+    <h2 class="stitle" style="text-align:center">무한리필 vs <em>담가화로구이</em></h2>
+  </div>
+  <div class="compare__table rv" data-d="1">
+    <div class="compare__col compare__col--left">
+      <h3 class="compare__col-title">일반 무한리필</h3>
+      <p class="compare__item compare__item--dim">저급 수입육 사용</p>
+      <p class="compare__item compare__item--dim">객단가 12,900원</p>
+      <p class="compare__item compare__item--dim">식사 시간 30분</p>
+      <p class="compare__item compare__item--dim">재방문율 15%</p>
+      <p class="compare__item compare__item--dim">마진율 25%</p>
+    </div>
+    <div class="compare__vs">
+      <span class="compare__vs-badge">VS</span>
+    </div>
+    <div class="compare__col compare__col--right">
+      <h3 class="compare__col-title">담가화로구이</h3>
+      <p class="compare__item"><em>프리미엄 국내산</em> 한우 + 돼지</p>
+      <p class="compare__item">객단가 <em>29,900원</em></p>
+      <p class="compare__item">식사 시간 <em>70분</em> (주류 매출↑)</p>
+      <p class="compare__item">재방문율 <em>68%</em></p>
+      <p class="compare__item">마진율 <em>42%</em></p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §6 BRAND INTRO ===== -->
+<section class="brand-intro">
+  <div class="brand-intro__bg"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=80" alt="담가화로구이"></div>
+  <div class="brand-intro__content rv">
+    <p class="tag">브랜드 소개</p>
+    <h2 class="brand-intro__h2"><em>담가</em>화로구이,<br>숯불의 정석</h2>
+    <p class="brand-intro__body">2018년 첫 매장 오픈 이후, 담가화로구이는 '진짜 숯불 화로구이'라는 가치를 지켜왔습니다. 직접 운영하는 물류 센터에서 매일 신선한 고기를 공급하고, 모든 매장이 동일한 품질을 유지합니다.</p>
+    <p class="brand-intro__sub">전국 42개 매장 · 평균 영업이익률 38%</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §7 STRENGTHS ===== -->
+<section class="sec">
+  <div class="strengths__head rv">
+    <p class="tag" style="justify-content:center">핵심 경쟁력</p>
+    <h2 class="stitle" style="text-align:center">담가만의 <em>4가지 무기</em></h2>
+  </div>
+  <div class="strengths__grid">
+    <div class="str-card rv">
+      <span class="str-card__num">01</span>
+      <h3 class="str-card__title"><em>직영 물류</em> 시스템</h3>
+      <p class="str-card__body">본사 직영 물류센터에서 매일 새벽 배송. 중간 유통 마진 제거로 원가율 30% 이하 유지.</p>
+    </div>
+    <div class="str-card rv" data-d="1">
+      <span class="str-card__num">02</span>
+      <h3 class="str-card__title">독자 <em>숯불 화로</em></h3>
+      <p class="str-card__body">특허 출원 숯불 화로 시스템. 연기 99% 제거 + 참숯 풍미 100%. 다른 브랜드가 따라올 수 없는 맛.</p>
+    </div>
+    <div class="str-card rv" data-d="2">
+      <span class="str-card__num">03</span>
+      <h3 class="str-card__title"><em>3주 완성</em> 교육</h3>
+      <p class="str-card__body">요식업 경험 없어도 3주면 오픈 가능. 조리·서비스·경영 전 과정 1:1 맞춤 교육.</p>
+    </div>
+    <div class="str-card rv" data-d="3">
+      <span class="str-card__num">04</span>
+      <h3 class="str-card__title">상권 <em>독점 보장</em></h3>
+      <p class="str-card__body">반경 1km 내 추가 출점 금지. 점주님의 매출을 본사가 직접 보호합니다.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §8 WIN-WIN ===== -->
+<section class="winwin sec">
+  <div class="winwin__head rv">
+    <p class="tag" style="justify-content:center">상생 구조</p>
+    <h2 class="stitle" style="text-align:center">점주와 고객, <em>모두가 이기는</em> 구조</h2>
+  </div>
+  <div class="winwin__grid rv" data-d="1">
+    <div class="winwin__col">
+      <p class="winwin__col-icon">🏪</p>
+      <h3 class="winwin__col-title"><em>점주</em>님에게</h3>
+      <p class="winwin__item">높은 객단가 (29,900원)로 매출 극대화</p>
+      <p class="winwin__item">직영 물류로 원가율 30% 이하</p>
+      <p class="winwin__item">본사 마케팅 지원 (TV PPL + SNS)</p>
+      <p class="winwin__item">상권 독점 보장 (반경 1km)</p>
+      <p class="winwin__item">3주 교육으로 빠른 오픈</p>
+    </div>
+    <div class="winwin__arrow">
+      <span class="winwin__arrow-badge">⇄</span>
+    </div>
+    <div class="winwin__col">
+      <p class="winwin__col-icon">👨‍👩‍👧‍👦</p>
+      <h3 class="winwin__col-title"><em>고객</em>에게</h3>
+      <p class="winwin__item">프리미엄 국내산 한우 + 돼지</p>
+      <p class="winwin__item">특허 숯불 화로의 정통 풍미</p>
+      <p class="winwin__item">쾌적한 매장 환경 (연기 99% 제거)</p>
+      <p class="winwin__item">매일 새벽 배송되는 신선한 재료</p>
+      <p class="winwin__item">합리적 가격의 프리미엄 경험</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §9 MARKETING ===== -->
+<section class="sec">
+  <div class="marketing__head rv">
+    <p class="tag">마케팅 지원</p>
+    <h2 class="stitle">본사가 <em>직접</em> 마케팅합니다</h2>
+  </div>
+  <div class="marketing__tv rv" data-d="1">
+    <div class="marketing__tv-frame">
+      <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=1200&q=80" alt="TV PPL">
+      <span class="marketing__tv-badge">TV 방송 출연</span>
+    </div>
+  </div>
+  <div class="marketing__sns">
+    <div class="sns-card rv">
+      <p class="sns-card__icon">📺</p>
+      <p class="sns-card__name">YouTube</p>
+      <p class="sns-card__handle">구독자 12만</p>
+    </div>
+    <div class="sns-card rv" data-d="1">
+      <p class="sns-card__icon">📸</p>
+      <p class="sns-card__name">Instagram</p>
+      <p class="sns-card__handle">팔로워 8.5만</p>
+    </div>
+    <div class="sns-card rv" data-d="2">
+      <p class="sns-card__icon">📱</p>
+      <p class="sns-card__name">TikTok</p>
+      <p class="sns-card__handle">팔로워 15만</p>
+    </div>
+    <div class="sns-card rv" data-d="3">
+      <p class="sns-card__icon">📝</p>
+      <p class="sns-card__name">Naver Blog</p>
+      <p class="sns-card__handle">이웃 3.2만</p>
+    </div>
+    <div class="sns-card rv" data-d="4">
+      <p class="sns-card__icon">💬</p>
+      <p class="sns-card__name">KakaoTalk</p>
+      <p class="sns-card__handle">채널 친구 5만</p>
+    </div>
+    <div class="sns-card rv" data-d="5">
+      <p class="sns-card__icon">🎵</p>
+      <p class="sns-card__name">네이버 플레이스</p>
+      <p class="sns-card__handle">리뷰 2,400+</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §10 INGREDIENTS ===== -->
+<section class="ingredients sec">
+  <div class="ingredients__head rv">
+    <p class="tag" style="justify-content:center">원재료</p>
+    <h2 class="stitle" style="text-align:center">엄선된 <em>프리미엄 식재료</em></h2>
+    <p style="text-align:center;margin-top:16px;font-size:var(--sb);color:var(--text-s);max-width:600px;margin-left:auto;margin-right:auto;">매일 새벽, 본사 직영 물류센터에서 전 매장으로 직배송합니다</p>
+  </div>
+  <div class="ingredients__ring rv" data-d="1">
+    <div class="ingr-item">
+      <div class="ingr-item__photo"><img src="https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=300&q=80" alt="한우 등심"></div>
+      <p class="ingr-item__name">한우 등심</p>
+      <p class="ingr-item__desc">1++ 등급</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-item__photo"><img src="https://images.unsplash.com/photo-1588347818036-558601350947?w=300&q=80" alt="돼지 목살"></div>
+      <p class="ingr-item__name">돼지 목살</p>
+      <p class="ingr-item__desc">제주 흑돼지</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-item__photo"><img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=300&q=80" alt="양념 갈비"></div>
+      <p class="ingr-item__name">양념 갈비</p>
+      <p class="ingr-item__desc">비법 소스</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-item__photo"><img src="https://images.unsplash.com/photo-1583224994076-1df31e3e7e57?w=300&q=80" alt="참숯"></div>
+      <p class="ingr-item__name">참숯</p>
+      <p class="ingr-item__desc">국내산 참나무</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-item__photo"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&q=80" alt="쌈채소"></div>
+      <p class="ingr-item__name">쌈채소</p>
+      <p class="ingr-item__desc">유기농 직거래</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-item__photo"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=300&q=80" alt="된장찌개"></div>
+      <p class="ingr-item__name">된장찌개</p>
+      <p class="ingr-item__desc">3년 숙성 된장</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §11 PRODUCTS ===== -->
+<section class="products sec">
+  <div class="products__head rv">
+    <p class="tag" style="justify-content:center">시그니처 메뉴</p>
+    <h2 class="stitle" style="text-align:center">담가의 <em>대표 메뉴</em></h2>
+  </div>
+  <div class="products__grid">
+    <div class="prod-card rv">
+      <div class="prod-card__img"><img src="https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" alt="한우 모듬"></div>
+      <div class="prod-card__overlay">
+        <h3 class="prod-card__name">한우 모듬 세트</h3>
+        <p class="prod-card__desc">등심 + 채끝 + 안심<br>1++ 등급 프리미엄</p>
+      </div>
+      <span class="prod-card__badge">BEST</span>
+    </div>
+    <div class="prod-card rv" data-d="1">
+      <div class="prod-card__img"><img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600&q=80" alt="숯불 갈비"></div>
+      <div class="prod-card__overlay">
+        <h3 class="prod-card__name">숯불 양념갈비</h3>
+        <p class="prod-card__desc">48시간 숙성 비법 소스<br>불맛의 정점</p>
+      </div>
+      <span class="prod-card__badge">SIGNATURE</span>
+    </div>
+    <div class="prod-card rv" data-d="2">
+      <div class="prod-card__img"><img src="https://images.unsplash.com/photo-1588347818036-558601350947?w=600&q=80" alt="흑돼지"></div>
+      <div class="prod-card__overlay">
+        <h3 class="prod-card__name">제주 흑돼지 목살</h3>
+        <p class="prod-card__desc">제주 직송 흑돼지<br>두툼한 2cm 커팅</p>
+      </div>
+      <span class="prod-card__badge">NEW</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §12 STORY ===== -->
+<section class="sec">
+  <div class="story__head rv">
+    <p class="tag">대표 스토리</p>
+    <h2 class="stitle">담가의 <em>여정</em></h2>
+  </div>
+  <div class="story__layout">
+    <div class="timeline rv">
+      <div class="timeline__item">
+        <p class="timeline__year">2018</p>
+        <p class="timeline__text">서울 강남에 1호점 오픈. 숯불 화로구이 컨셉으로 시작.</p>
+      </div>
+      <div class="timeline__item">
+        <p class="timeline__year">2019</p>
+        <p class="timeline__text">직영 물류센터 설립. 전 매장 새벽 직배송 시스템 구축.</p>
+      </div>
+      <div class="timeline__item">
+        <p class="timeline__year">2020</p>
+        <p class="timeline__text">프랜차이즈 사업 시작. 첫해 10개 매장 오픈.</p>
+      </div>
+      <div class="timeline__item">
+        <p class="timeline__year">2022</p>
+        <p class="timeline__text">전국 30개 매장 돌파. TV 방송 출연 시작.</p>
+      </div>
+      <div class="timeline__item timeline__item--active">
+        <p class="timeline__year">2024</p>
+        <p class="timeline__text">42개 매장 운영 중. 연 매출 240억 달성. 해외 진출 준비.</p>
+      </div>
+    </div>
+    <div class="story__founder rv" data-d="2">
+      <div class="story__founder-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="김담가 대표"></div>
+      <div class="story__founder-overlay">
+        <p class="story__founder-name">김담가 대표</p>
+        <p class="story__founder-role">담가화로구이 창업자 · CEO</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== §13 CTA ===== -->
+<section class="cta-sec sec" id="cta">
+  <div class="cta-sec__inner rv">
+    <h2 class="cta-sec__h2"><em>창업 상담</em> 신청</h2>
+    <p class="cta-sec__body">담가화로구이와 함께할 예비 점주님을 기다립니다.<br>아래 양식을 작성해주시면 24시간 내 연락드립니다.</p>
+
+    <form class="cta-form" onsubmit="return false;">
+      <div class="cta-form__row">
+        <label class="cta-form__label">성함</label>
+        <input class="cta-form__input" type="text" placeholder="성함을 입력해주세요">
+      </div>
+      <div class="cta-form__row">
+        <label class="cta-form__label">연락처</label>
+        <input class="cta-form__input" type="tel" placeholder="010-0000-0000">
+      </div>
+      <div class="cta-form__row">
+        <label class="cta-form__label">희망 지역</label>
+        <select class="cta-form__select">
+          <option value="">지역을 선택해주세요</option>
+          <option>서울</option>
+          <option>경기</option>
+          <option>인천</option>
+          <option>부산</option>
+          <option>대구</option>
+          <option>대전</option>
+          <option>광주</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <div class="cta-form__row">
+        <label class="cta-form__label">문의 사항</label>
+        <textarea class="cta-form__textarea" placeholder="궁금하신 점을 자유롭게 작성해주세요"></textarea>
+      </div>
+      <button class="cta-form__submit" type="submit">창업 상담 신청하기</button>
+    </form>
+
+    <div class="cta-sec__contact">
+      <div class="cta-sec__contact-item">
+        <span class="cta-sec__contact-icon">📞</span>
+        <span>1588-0000</span>
+      </div>
+      <div class="cta-sec__contact-item">
+        <span class="cta-sec__contact-icon">💬</span>
+        <span>카카오톡: 담가화로구이</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SCROLL REVEAL JS ===== -->
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});
+  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+});
+</script>
+</body>
+</html>
