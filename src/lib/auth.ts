@@ -49,16 +49,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return true;
     },
-    async jwt({ token, user, account }) {
-      if (user) {
-        // Credentials 로그인: authorize()의 가짜 ID 대신 DB의 실제 ID 사용
-        if (account?.provider === 'credentials' && user.email) {
-          const dbUser = await db.user.findUnique({
-            where: { email: user.email },
-            select: { id: true },
-          });
-          token.id = dbUser?.id ?? user.id;
-        } else {
+    async jwt({ token, user }) {
+      // 최초 로그인 시 또는 token.dbId가 없을 때 DB에서 실제 ID 조회
+      if (user?.email || (token.email && !token.dbId)) {
+        const email = (user?.email ?? token.email) as string;
+        const dbUser = await db.user.findUnique({
+          where: { email },
+          select: { id: true },
+        });
+        if (dbUser) {
+          token.id = dbUser.id;
+          token.dbId = dbUser.id;
+        } else if (user) {
           token.id = user.id;
         }
       }
