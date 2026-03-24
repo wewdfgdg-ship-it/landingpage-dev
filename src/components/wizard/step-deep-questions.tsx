@@ -35,68 +35,82 @@ export function StepDeepQuestions(): React.ReactElement {
 
   const [aiAnswerLoading, setAiAnswerLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
+  const [autoFillDone, setAutoFillDone] = useState(false);
 
+  // 질문 로드 + AI 답변 자동 생성
   useEffect(() => {
     if (deepQuestions.length > 0) return;
 
     let cancelled = false;
 
-    async function loadQuestions(): Promise<void> {
+    async function loadQuestionsAndAutoFill(): Promise<void> {
       setQuestionsLoading(true);
+
+      // 1. 질문 로드
+      let questions: { id: string; question: string; placeholder: string }[];
       try {
-        const questions = await fetchDeepQuestions({
+        questions = await fetchDeepQuestions({
           productName: basicInfo.productName,
           industry: basicInfo.industry as string,
           pageGoal: basicInfo.pageGoal as string,
         });
-        if (!cancelled) {
-          setDeepQuestions(
-            questions.map((q) => ({ ...q, answer: '' })),
-          );
-        }
       } catch {
+        questions = [
+          { id: 'fallback_1', question: '이 제품/서비스가 해결하는 핵심 문제는 무엇인가요?', placeholder: '고객이 겪는 구체적인 불편함이나 고충을 설명해주세요' },
+          { id: 'fallback_2', question: '경쟁 제품 대비 가장 큰 차별점은 무엇인가요?', placeholder: '다른 제품에는 없는 우리만의 강점을 구체적으로 설명해주세요' },
+          { id: 'fallback_3', question: '실제 고객 후기나 성과 데이터가 있나요?', placeholder: '예: 만족도 95%, 재구매율 60%, "인생템이에요" 등' },
+          { id: 'fallback_4', question: '제품 구매를 망설이는 고객의 주요 걱정은 무엇인가요?', placeholder: '가격, 효과, 안전성 등 고객이 가장 많이 걱정하는 점' },
+          { id: 'fallback_5', question: '브랜드의 핵심 가치나 미션은 무엇인가요?', placeholder: '예: "모든 사람이 건강한 식단을 쉽게 실천할 수 있도록"' },
+        ];
+      }
+
+      if (cancelled) return;
+
+      const questionsWithAnswer = questions.map((q) => ({ ...q, answer: '' }));
+      setDeepQuestions(questionsWithAnswer);
+      setQuestionsLoading(false);
+
+      // 2. AI 답변 자동 생성
+      setAiAnswerLoading(true);
+      try {
+        const res = await fetch('/api/wizard/answers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productName: basicInfo.productName,
+            industry: basicInfo.industry as string,
+            pageGoal: basicInfo.pageGoal as string,
+            targetAudience: basicInfo.targetAudience,
+            priceRange: basicInfo.priceRange,
+            questions: questions.map((q) => ({ id: q.id, question: q.question })),
+          }),
+        });
+
+        if (!res.ok) {
+          const errBody = await res.json().catch(() => ({})) as { error?: string; detail?: string };
+          throw new Error(errBody.detail ?? errBody.error ?? `HTTP ${res.status}`);
+        }
+
+        const data = (await res.json()) as { answers: { id: string; answer: string }[] };
+        if (data.answers && Array.isArray(data.answers) && !cancelled) {
+          for (const a of data.answers) {
+            updateAnswer(a.id, a.answer);
+          }
+          setAutoFillDone(true);
+        }
+      } catch (err) {
         if (!cancelled) {
-          setDeepQuestions([
-            {
-              id: 'fallback_1',
-              question: '이 제품/서비스가 해결하는 핵심 문제는 무엇인가요?',
-              answer: '',
-              placeholder: '고객이 겪는 구체적인 불편함이나 고충을 설명해주세요',
-            },
-            {
-              id: 'fallback_2',
-              question: '경쟁 제품 대비 가장 큰 차별점은 무엇인가요?',
-              answer: '',
-              placeholder: '다른 제품에는 없는 우리만의 강점을 구체적으로 설명해주세요',
-            },
-            {
-              id: 'fallback_3',
-              question: '실제 고객 후기나 성과 데이터가 있나요?',
-              answer: '',
-              placeholder: '예: 만족도 95%, 재구매율 60%, "인생템이에요" 등',
-            },
-            {
-              id: 'fallback_4',
-              question: '제품 구매를 망설이는 고객의 주요 걱정은 무엇인가요?',
-              answer: '',
-              placeholder: '가격, 효과, 안전성 등 고객이 가장 많이 걱정하는 점',
-            },
-            {
-              id: 'fallback_5',
-              question: '브랜드의 핵심 가치나 미션은 무엇인가요?',
-              answer: '',
-              placeholder: '예: "모든 사람이 건강한 식단을 쉽게 실천할 수 있도록"',
-            },
-          ]);
+          const msg = err instanceof Error ? err.message : String(err);
+          setAiError(`AI 답변 자동 생성 실패: ${msg}`);
         }
       } finally {
         if (!cancelled) {
-          setQuestionsLoading(false);
+          setAiAnswerLoading(false);
         }
       }
     }
 
-    void loadQuestions();
+    void loadQuestionsAndAutoFill();
 
     return (): void => {
       cancelled = true;
@@ -163,6 +177,25 @@ export function StepDeepQuestions(): React.ReactElement {
     );
   }
 
+  // 질문은 로드됐지만 AI 답변 자동 생성 중
+  if (aiAnswerLoading && !autoFillDone) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-xl font-bold text-gray-900">심층 질문</h2>
+          <p className="mt-1 text-sm text-gray-500">
+            제품 정보를 기반으로 AI가 답변을 작성하고 있습니다...
+          </p>
+        </div>
+        <div className="flex flex-col items-center gap-4 py-16">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
+          <p className="text-sm text-blue-600 font-medium">AI 답변 생성 중...</p>
+          <p className="text-xs text-gray-400">약 10~20초 소요됩니다</p>
+        </div>
+      </div>
+    );
+  }
+
   const answeredCount = deepQuestions.filter(
     (q) => q.answer.trim().length >= 10,
   ).length;
@@ -173,7 +206,7 @@ export function StepDeepQuestions(): React.ReactElement {
         <div>
           <h2 className="text-xl font-bold text-gray-900">심층 질문</h2>
           <p className="mt-1 text-sm text-gray-500">
-            상세히 답변할수록 더 높은 품질의 랜딩페이지가 생성됩니다
+            AI가 작성한 답변을 검토하고, 필요하면 직접 수정하세요
           </p>
         </div>
         <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">
@@ -194,11 +227,11 @@ export function StepDeepQuestions(): React.ReactElement {
               AI 답변 생성 중...
             </>
           ) : (
-            '✨ AI 자동 답변 생성'
+            '✨ AI 답변 재생성'
           )}
         </Button>
         <p className="flex items-center text-xs text-gray-400">
-          제품 정보 기반으로 AI가 답변을 작성합니다 (수정 가능)
+          마음에 안 들면 AI가 다시 작성합니다
         </p>
       </div>
 
