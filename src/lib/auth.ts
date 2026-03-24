@@ -11,21 +11,63 @@ import { authConfig } from '@/lib/auth.config';
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(db),
-  events: {
-    async createUser({ user }) {
-      // 신규 유저 → Organization 자동 생성
-      if (user.id) {
-        await db.organization.create({
-          data: {
-            name: `${user.name ?? user.email}의 워크스페이스`,
-            memberships: {
-              create: {
-                userId: user.id,
-                role: 'OWNER',
+  callbacks: {
+    ...authConfig.callbacks,
+    async signIn({ user, account }) {
+      // Credentials 로그인 시 DB에 User + Org 자동 생성
+      if (account?.provider === 'credentials' && user.email) {
+        const existing = await db.user.findUnique({ where: { email: user.email } });
+        if (!existing) {
+          const created = await db.user.create({
+            data: {
+              email: user.email,
+              name: user.name ?? user.email.split('@')[0],
+            },
+          });
+          await db.organization.create({
+            data: {
+              name: `${created.name}의 워크스페이스`,
+              memberships: {
+                create: { userId: created.id, role: 'OWNER' },
               },
             },
-          },
-        });
+          });
+          // JWT에 실제 DB ID 반영
+          user.id = created.id;
+        } else {
+          user.id = existing.id;
+          // membership 없으면 생성
+          const hasMembership = await db.membership.findFirst({ where: { userId: existing.id } });
+          if (!hasMembership) {
+            await db.organization.create({
+              data: {
+                name: `${existing.name ?? existing.email}의 워크스페이스`,
+                memberships: {
+                  create: { userId: existing.id, role: 'OWNER' },
+                },
+              },
+            });
+          }
+        }
+      }
+      return true;
+    },
+  },
+  events: {
+    async createUser({ user }) {
+      // OAuth 신규 유저 → Organization 자동 생성
+      if (user.id) {
+        const hasMembership = await db.membership.findFirst({ where: { userId: user.id } });
+        if (!hasMembership) {
+          await db.organization.create({
+            data: {
+              name: `${user.name ?? user.email}의 워크스페이스`,
+              memberships: {
+                create: { userId: user.id, role: 'OWNER' },
+              },
+            },
+          });
+        }
       }
     },
   },
