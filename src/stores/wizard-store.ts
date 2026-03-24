@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 // ============================================================
 // 타입 정의
@@ -160,44 +161,62 @@ function calcDeepAnswerScore(questions: DeepQuestion[]): number {
 // 스토어
 // ============================================================
 
-export const useWizardStore = create<WizardState & WizardActions>((set, get) => ({
-  ...INITIAL_STATE,
+export const useWizardStore = create<WizardState & WizardActions>()(
+  persist(
+    (set, get) => ({
+      ...INITIAL_STATE,
 
-  setStep: (step): void => set({ currentStep: step }),
-  nextStep: (): void => set((s) => ({ currentStep: Math.min(s.currentStep + 1, 4) })),
-  prevStep: (): void => set((s) => ({ currentStep: Math.max(s.currentStep - 1, 1) })),
+      setStep: (step) => { set({ currentStep: step }); },
+      nextStep: () => { set((s) => ({ currentStep: Math.min(s.currentStep + 1, 4) })); },
+      prevStep: () => { set((s) => ({ currentStep: Math.max(s.currentStep - 1, 1) })); },
 
-  updateBasicInfo: (field, value): void =>
-    set((s) => ({
-      basicInfo: { ...s.basicInfo, [field]: value },
-    })),
+      updateBasicInfo: (field, value) => {
+        set((s) => ({ basicInfo: { ...s.basicInfo, [field]: value } }));
+      },
 
-  addImage: (image): void => set((s) => ({ images: [...s.images, image] })),
-  removeImage: (id): void => set((s) => ({ images: s.images.filter((img) => img.id !== id) })),
-  updateImage: (id, updates): void =>
-    set((s) => ({
-      images: s.images.map((img) => (img.id === id ? { ...img, ...updates } : img)),
-    })),
+      addImage: (image) => { set((s) => ({ images: [...s.images, image] })); },
+      removeImage: (id) => { set((s) => ({ images: s.images.filter((img) => img.id !== id) })); },
+      updateImage: (id, updates) => {
+        set((s) => ({ images: s.images.map((img) => (img.id === id ? { ...img, ...updates } : img)) }));
+      },
 
-  setDeepQuestions: (questions): void => set({ deepQuestions: questions }),
-  updateAnswer: (id, answer): void =>
-    set((s) => ({
-      deepQuestions: s.deepQuestions.map((q) => (q.id === id ? { ...q, answer } : q)),
-    })),
-  setQuestionsLoading: (loading): void => set({ questionsLoading: loading }),
+      setDeepQuestions: (questions) => { set({ deepQuestions: questions }); },
+      updateAnswer: (id, answer) => {
+        set((s) => ({ deepQuestions: s.deepQuestions.map((q) => (q.id === id ? { ...q, answer } : q)) }));
+      },
+      setQuestionsLoading: (loading) => { set({ questionsLoading: loading }); },
 
-  calculateScore: (): void => {
-    const { basicInfo, images, deepQuestions } = get();
-    const bi = calcBasicInfoScore(basicInfo);
-    const img = calcImageScore(images);
-    const da = calcDeepAnswerScore(deepQuestions);
-    set({
-      qualityScore: bi + img + da,
-      scoreBreakdown: { basicInfo: bi, images: img, deepAnswers: da },
-    });
-  },
+      calculateScore: () => {
+        const { basicInfo, images, deepQuestions } = get();
+        const bi = calcBasicInfoScore(basicInfo);
+        const img = calcImageScore(images);
+        const da = calcDeepAnswerScore(deepQuestions);
+        set({
+          qualityScore: bi + img + da,
+          scoreBreakdown: { basicInfo: bi, images: img, deepAnswers: da },
+        });
+      },
 
-  setSubmitting: (submitting): void => set({ submitting }),
+      setSubmitting: (submitting) => { set({ submitting }); },
 
-  reset: (): void => set(INITIAL_STATE),
-}));
+      reset: () => { set(INITIAL_STATE); },
+    }),
+    {
+      name: 'wizard-store',
+      partialize: (state) => ({
+        currentStep: state.currentStep,
+        basicInfo: state.basicInfo,
+        images: state.images.map((img) => ({
+          id: img.id,
+          file: null,
+          previewUrl: '',
+          storageKey: img.storageKey,
+          uploading: false,
+        })),
+        deepQuestions: state.deepQuestions,
+        qualityScore: state.qualityScore,
+        scoreBreakdown: state.scoreBreakdown,
+      }),
+    },
+  ),
+);

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useWizardStore, type WizardState, type WizardActions } from '@/stores/wizard-store';
 import { Button } from '@/components/ui/button';
@@ -87,9 +88,11 @@ export default function NewProjectPage(): React.ReactElement {
   const router = useRouter();
   const store = useWizardStore();
   const { currentStep, nextStep, prevStep, submitting, setSubmitting, reset } = store;
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async (): Promise<void> => {
     setSubmitting(true);
+    setSubmitError(null);
 
     try {
       const res = await fetch('/api/projects', {
@@ -111,12 +114,17 @@ export default function NewProjectPage(): React.ReactElement {
         }),
       });
 
-      if (!res.ok) throw new Error('프로젝트 생성 실패');
+      if (!res.ok) {
+        const errBody = (await res.json().catch(() => ({}))) as { error?: string; detail?: string };
+        throw new Error(errBody.detail ?? errBody.error ?? `서버 에러 (${res.status})`);
+      }
 
       const data = (await res.json()) as { project: { id: string } };
       reset();
       router.push(`/projects/${data.project.id}`);
-    } catch {
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setSubmitError(msg);
       setSubmitting(false);
     }
   };
@@ -143,6 +151,13 @@ export default function NewProjectPage(): React.ReactElement {
         {currentStep === 3 && <StepDeepQuestions />}
         {currentStep === 4 && <StepQualityScore />}
       </div>
+
+      {/* 에러 메시지 */}
+      {submitError && (
+        <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          프로젝트 생성 실패: {submitError}
+        </div>
+      )}
 
       {/* 네비게이션 */}
       <div className="mt-6 flex items-center justify-between">
