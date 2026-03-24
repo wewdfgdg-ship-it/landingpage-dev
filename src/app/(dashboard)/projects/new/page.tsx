@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useWizardStore, type WizardState, type WizardActions } from '@/stores/wizard-store';
 import { Button } from '@/components/ui/button';
@@ -89,6 +89,14 @@ export default function NewProjectPage(): React.ReactElement {
   const store = useWizardStore();
   const { currentStep, nextStep, prevStep, submitting, setSubmitting, reset } = store;
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const didReset = useRef(false);
+
+  useEffect(() => {
+    if (!didReset.current) {
+      didReset.current = true;
+      reset();
+    }
+  }, [reset]);
 
   const handleSubmit = async (): Promise<void> => {
     setSubmitting(true);
