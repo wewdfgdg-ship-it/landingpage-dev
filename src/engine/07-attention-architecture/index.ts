@@ -2,6 +2,14 @@ import type { ProductBrief } from '@/engine/01-product-intelligence/types';
 import type { StrategyBlueprint } from '@/engine/03-conversion-strategy/types';
 import type { AttentionConfig, HookType, GazePattern, ZoneConfig } from './types';
 export type { AttentionConfig } from './types';
+import {
+  GAZE_MAP,
+  SECTION_HEIGHT_PX,
+  ZONE_RATIO,
+  STICKY_CTA_URGENCY_THRESHOLD,
+  STICKY_CTA_MIN_SECTIONS,
+  EXIT_INTENT_PRICE_THRESHOLD,
+} from './rules';
 
 // ============================================================
 // Attention Architecture Engine — 규칙 엔진 (AI 호출 없음)
@@ -25,21 +33,6 @@ function selectHookType(decisionType: string): HookType {
   }
 }
 
-// --- 시선 동선 패턴 (업종 기반) ---
-
-const GAZE_MAP: Record<string, GazePattern> = {
-  saas: 'f_pattern',
-  b2b: 'f_pattern',
-  ecommerce: 'z_pattern',
-  beauty: 'z_pattern',
-  food: 'z_pattern',
-  education: 'f_pattern',
-  health: 'f_pattern',
-  finance: 'f_pattern',
-  lifestyle: 'center_focus',
-  other: 'z_pattern',
-};
-
 function selectGazePattern(industry: string): GazePattern {
   return GAZE_MAP[industry] ?? 'z_pattern';
 }
@@ -47,13 +40,12 @@ function selectGazePattern(industry: string): GazePattern {
 // --- 4 Zone 설계 ---
 
 function buildZones(totalSections: number): ZoneConfig[] {
-  const sectionHeight = 600; // 평균 섹션 높이
-  const totalHeight = totalSections * sectionHeight;
+  const totalHeight = totalSections * SECTION_HEIGHT_PX;
 
   // Zone 경계 계산 (비율 기반)
-  const z1End = sectionHeight; // 첫 섹션
-  const z2End = Math.round(totalHeight * 0.4);
-  const z3End = Math.round(totalHeight * 0.75);
+  const z1End = SECTION_HEIGHT_PX; // 첫 섹션
+  const z2End = Math.round(totalHeight * ZONE_RATIO.interest);
+  const z3End = Math.round(totalHeight * ZONE_RATIO.desire);
 
   return [
     {
@@ -114,10 +106,11 @@ export function runAttentionArchitecture(
 
   // Sticky CTA: 긴급성 저항 높거나 섹션 많을 때
   const stickyCtaEnabled =
-    brief.resistanceMap.urgency.level >= 4 || blueprint.totalSections >= 10;
+    brief.resistanceMap.urgency.level >= STICKY_CTA_URGENCY_THRESHOLD ||
+    blueprint.totalSections >= STICKY_CTA_MIN_SECTIONS;
 
   // Exit Intent: 가격 저항 높을 때
-  const exitIntentEnabled = brief.resistanceMap.price.level >= 4;
+  const exitIntentEnabled = brief.resistanceMap.price.level >= EXIT_INTENT_PRICE_THRESHOLD;
 
   return {
     hookType,

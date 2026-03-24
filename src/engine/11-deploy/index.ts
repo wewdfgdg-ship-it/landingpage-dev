@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 
 export type { DeployResult, DeployConfig } from './types';
 import type { DeployResult } from './types';
+import { DEPLOYABLE_STATUS, DEPLOYED_STATUS, UNDEPLOYED_STATUS, PUBLIC_URL_PREFIX, DEPLOY_ERRORS } from './rules';
 
 // ============================================================
 // Deploy Engine — 프로젝트 배포 처리
@@ -26,15 +27,15 @@ export async function runDeploy(input: DeployInput): Promise<DeployResult> {
   });
 
   if (!project) {
-    throw new Error('프로젝트를 찾을 수 없습니다');
+    throw new Error(DEPLOY_ERRORS.notFound);
   }
 
-  if (project.status !== 'GENERATED') {
-    throw new Error('생성 완료 상태에서만 배포할 수 있습니다');
+  if (project.status !== DEPLOYABLE_STATUS) {
+    throw new Error(DEPLOY_ERRORS.notGenerated);
   }
 
   if (!project.generatedHtml) {
-    throw new Error('생성된 HTML이 없습니다');
+    throw new Error(DEPLOY_ERRORS.noHtml);
   }
 
   const now = new Date();
@@ -44,7 +45,7 @@ export async function runDeploy(input: DeployInput): Promise<DeployResult> {
     data: {
       isDeployed: true,
       deployedAt: now,
-      status: 'DEPLOYED',
+      status: DEPLOYED_STATUS,
     },
   });
 
@@ -52,7 +53,7 @@ export async function runDeploy(input: DeployInput): Promise<DeployResult> {
 
   return {
     slug,
-    url: `/p/${slug}`,
+    url: `${PUBLIC_URL_PREFIX}${slug}`,
     deployedAt: now.toISOString(),
   };
 }
@@ -65,7 +66,7 @@ export async function undeploy(projectId: string, orgId: string): Promise<void> 
     where: { id: projectId, orgId, deletedAt: null },
     data: {
       isDeployed: false,
-      status: 'GENERATED',
+      status: UNDEPLOYED_STATUS,
     },
   });
 }

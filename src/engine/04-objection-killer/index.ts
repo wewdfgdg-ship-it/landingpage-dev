@@ -2,7 +2,7 @@ import type { ProductBrief } from '@/engine/01-product-intelligence/types';
 import type { StrategyBlueprint } from '@/engine/03-conversion-strategy/types';
 import type { ObjectionMap, ObjectionStrategy, ObjectionType } from './types';
 export type { ObjectionMap } from './types';
-import { ACTIVATION_THRESHOLD, STRATEGY_TEMPLATES } from './rules';
+import { ACTIVATION_THRESHOLD, STRATEGY_TEMPLATES, type StrategyTemplate } from './rules';
 
 // ============================================================
 // Objection Killer Engine — 규칙 엔진 (AI 호출 없음)

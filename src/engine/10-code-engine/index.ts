@@ -5,6 +5,15 @@ import type { GeneratedPage, RenderedSection } from './types';
 import { renderByPatternId } from './renderers';
 import { generateTrackingScript } from '@/engine/12-learning-loop/tracking-script';
 export type { GeneratedPage } from './types';
+import {
+  FONT_FAMILY_CSS,
+  MOBILE_BREAKPOINT,
+  SECTION_DATA_PREFIX,
+  STICKY_CTA_DEFAULT_TEXT,
+  STICKY_CTA_BUTTON_TEXT,
+  STICKY_CTA_HREF,
+  GOOGLE_FONTS_URL,
+} from './rules';
 
 // ============================================================
 // Code Engine — 규칙 엔진 (AI 호출 없음)
@@ -15,12 +24,7 @@ export type { GeneratedPage } from './types';
 
 function buildGlobalCss(style: StyleConfig): string {
   const c = style.tokens.colors;
-  const ff =
-    style.tokens.fontFamily === 'serif'
-      ? "'Noto Serif KR', Georgia, serif"
-      : style.tokens.fontFamily === 'mono'
-        ? "'JetBrains Mono', 'Noto Sans KR', monospace"
-        : "'Pretendard', 'Noto Sans KR', -apple-system, sans-serif";
+  const ff = FONT_FAMILY_CSS[style.tokens.fontFamily];
 
   return `
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -28,7 +32,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{font-family:${ff};color:${c.textPrimary};background:${c.background};line-height:1.6;-webkit-font-smoothing:antialiased;}
 img{max-width:100%;height:auto;display:block;}
 a{color:inherit;text-decoration:none;}
-@media(max-width:768px){
+@media(max-width:${MOBILE_BREAKPOINT}px){
   section{padding:48px 16px !important;}
   h1{font-size:2rem !important;}
   h2{font-size:1.5rem !important;}
@@ -49,8 +53,8 @@ function assembleHtml(
 ): string {
   const stickyBar = stickyCtaEnabled
     ? `<div style="position:fixed;bottom:0;left:0;right:0;background:${primaryColor};color:#fff;padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:16px;z-index:1000;box-shadow:0 -2px 10px rgba(0,0,0,0.1);">
-  <span style="font-weight:600;">지금 시작하세요</span>
-  <a href="#cta" style="display:inline-block;padding:10px 24px;background:#fff;color:${primaryColor};border-radius:6px;font-weight:600;text-decoration:none;">시작하기</a>
+  <span style="font-weight:600;">${STICKY_CTA_DEFAULT_TEXT}</span>
+  <a href="${STICKY_CTA_HREF}" style="display:inline-block;padding:10px 24px;background:#fff;color:${primaryColor};border-radius:6px;font-weight:600;text-decoration:none;">${STICKY_CTA_BUTTON_TEXT}</a>
 </div>`
     : '';
 
@@ -64,7 +68,7 @@ function assembleHtml(
 <meta property="og:title" content="${meta.title}">
 <meta property="og:description" content="${meta.description}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="${GOOGLE_FONTS_URL}" rel="stylesheet">
 <style>${globalCss}</style>
 </head>
 <body>
@@ -126,7 +130,7 @@ export function runCodeEngine(
   // 전체 HTML 조립 (트래킹용 data-section-id 래퍼 추가)
   const sectionsHtml = sections
     .sort((a, b) => a.order - b.order)
-    .map((s) => `<div data-section-id="s${s.order}" data-section-order="${s.order}">${s.html}</div>`)
+    .map((s) => `<div data-section-id="${SECTION_DATA_PREFIX}${s.order}" data-section-order="${s.order}">${s.html}</div>`)
     .join('\n');
 
   const meta = {

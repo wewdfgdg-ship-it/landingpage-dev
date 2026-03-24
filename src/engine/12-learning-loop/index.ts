@@ -18,6 +18,19 @@ export type {
   ABTestResult,
   LearningLoopOutput,
 } from './types';
+import {
+  THRESHOLDS,
+  MIN_VISIT_COUNT,
+  MIN_SECTION_IMPRESSIONS,
+  HERO_EXIT_RATE_WARNING,
+  HERO_EXIT_RATE_CRITICAL,
+  AB_TEST_MIN_CONFIDENCE,
+  AB_TEST_TRAFFIC_SPLIT,
+  AB_TEST_WINNER_TRAFFIC,
+  PRESCRIPTION_LEVEL,
+  AB_TEST_MIN_SAMPLE,
+  buildPrescriptionMap,
+} from './rules';
 
 // ============================================================
 // Learning Loop ⑫ — 자율 학습 엔진
@@ -127,15 +140,6 @@ export async function collectEvent(event: TrackingEvent): Promise<void> {
 
 // ---------- 2. 일일 진단 ----------
 
-const THRESHOLDS = {
-  bounceRate: { high: 70, critical: 85 },
-  conversionRate: { low: 1, veryLow: 0.5 },
-  avgScrollDepth: { low: 30, veryLow: 15 },
-  avgTimeOnPage: { low: 15, veryLow: 8 },
-  sectionExitRate: { high: 40, critical: 60 },
-  ctaClickRate: { low: 1, veryLow: 0.3 },
-} as const;
-
 function classifySeverity(value: number, lowThreshold: number, highThreshold: number): Severity {
   if (value >= highThreshold) return 'critical';
   if (value >= lowThreshold) return 'high';
@@ -150,7 +154,7 @@ export async function runDailyDiagnosis(projectId: string): Promise<Diagnosis[]>
     where: { projectId_date: { projectId, date: today } },
   });
 
-  if (!daily || daily.totalVisits < 10) {
+  if (!daily || daily.totalVisits < MIN_VISIT_COUNT) {
     return []; // 데이터 부족
   }
 
@@ -224,7 +228,7 @@ export async function runDailyDiagnosis(projectId: string): Promise<Diagnosis[]>
       where: { sectionId_date: { sectionId: section.id, date: today } },
     });
 
-    if (!sectionStats || sectionStats.impressions < 10) continue;
+    if (!sectionStats || sectionStats.impressions < MIN_SECTION_IMPRESSIONS) continue;
 
     // 섹션 이탈률
     if (sectionStats.exitRate > THRESHOLDS.sectionExitRate.high) {
@@ -264,10 +268,10 @@ export async function runDailyDiagnosis(projectId: string): Promise<Diagnosis[]>
     }
 
     // 히어로 섹션 특별 진단
-    if (section.order === 1 && sectionStats.exitRate > 30) {
+    if (section.order === 1 && sectionStats.exitRate > HERO_EXIT_RATE_WARNING) {
       diagnoses.push({
         type: 'hero_weak',
-        severity: sectionStats.exitRate > 50 ? 'critical' : 'high',
+        severity: sectionStats.exitRate > HERO_EXIT_RATE_CRITICAL ? 'critical' : 'high',
         details: {
           metric: 'heroExitRate',
           currentValue: sectionStats.exitRate,
@@ -299,91 +303,14 @@ export async function runDailyDiagnosis(projectId: string): Promise<Diagnosis[]>
 // ---------- 3. 처방 생성 ----------
 
 function generatePrescriptionLevel(diag: Diagnosis): number {
-  if (diag.severity === 'critical') return 3;
-  if (diag.severity === 'high') return 2;
-  return 1;
+  if (diag.severity === 'critical') return PRESCRIPTION_LEVEL.critical;
+  if (diag.severity === 'high') return PRESCRIPTION_LEVEL.high;
+  return PRESCRIPTION_LEVEL.medium;
 }
 
 function generatePrescription(diag: Diagnosis): Prescription {
   const level = generatePrescriptionLevel(diag) as 1 | 2 | 3;
-
-  const PRESCRIPTION_MAP: Record<DiagnosisType, Prescription> = {
-    hero_weak: {
-      level,
-      actions: [
-        {
-          type: level >= 2 ? 'layout_swap' : 'copy_tweak',
-          target: diag.details.affectedSection,
-          description: '히어로 헤드라인/서브헤드라인 변경 또는 레이아웃 교체',
-          expectedImprovement: level >= 2 ? 15 : 8,
-        },
-      ],
-    },
-    section_dropout: {
-      level,
-      actions: [
-        {
-          type: level >= 2 ? 'section_reorder' : 'copy_tweak',
-          target: diag.details.affectedSection,
-          description: '이탈 섹션 위치 변경 또는 카피 수정',
-          expectedImprovement: level >= 2 ? 12 : 5,
-        },
-      ],
-    },
-    cta_ignored: {
-      level,
-      actions: [
-        {
-          type: 'copy_tweak',
-          target: diag.details.affectedSection ?? 'all',
-          description: 'CTA 문구, 색상, 위치 변경',
-          expectedImprovement: 10,
-        },
-      ],
-    },
-    scroll_cliff: {
-      level,
-      actions: [
-        {
-          type: 'section_reorder',
-          description: '관심도 높은 섹션을 상단으로 이동',
-          expectedImprovement: 12,
-        },
-      ],
-    },
-    mobile_gap: {
-      level,
-      actions: [
-        {
-          type: 'layout_swap',
-          description: '모바일 최적화 레이아웃으로 교체',
-          expectedImprovement: 10,
-        },
-      ],
-    },
-    bounce_high: {
-      level,
-      actions: [
-        {
-          type: level >= 3 ? 'full_regenerate' : 'copy_tweak',
-          description: '히어로 섹션 전면 개편 또는 전체 재생성',
-          expectedImprovement: level >= 3 ? 25 : 10,
-        },
-      ],
-    },
-    dwell_low: {
-      level,
-      actions: [
-        {
-          type: 'copy_tweak',
-          description: '본문 카피 강화, 구체적 수치/사례 추가',
-          expectedImprovement: 8,
-        },
-      ],
-    },
-  };
-
-  return PRESCRIPTION_MAP[diag.type];
+  return buildPrescriptionMap(diag, level)[diag.type];
 }
 
 // ---------- Lv.2: 자동 A/B 변형 생성 ----------
@@ -419,7 +346,7 @@ export async function createAutoVariant(
       version: versionNum,
       label: `A/B 변형 #${versionNum}`,
       sectionSnapshot: currentVersion.sectionSnapshot ?? undefined,
-      trafficWeight: 50,
+      trafficWeight: AB_TEST_TRAFFIC_SPLIT,
       isActive: true,
     },
   });
@@ -427,7 +354,7 @@ export async function createAutoVariant(
   // control 트래픽 50%로 조정
   await db.pageVersion.update({
     where: { id: currentVersion.id },
-    data: { trafficWeight: 50 },
+    data: { trafficWeight: AB_TEST_TRAFFIC_SPLIT },
   });
 
   // 처방 내용을 변형 메타데이터로 저장
@@ -446,7 +373,7 @@ export async function createAutoVariant(
       variantVersionId: variantVersion.id,
       optimizationLevel: prescription.level,
       targetMetric: 'conversion_rate',
-      minSampleSize: prescription.level >= 3 ? 200 : 100,
+      minSampleSize: AB_TEST_MIN_SAMPLE[prescription.level] ?? AB_TEST_MIN_SAMPLE[2],
     },
   });
 
@@ -484,7 +411,7 @@ export async function autoSwapWinner(projectId: string): Promise<{
       projectId,
       status: 'CONCLUDED',
       winner: { not: null },
-      confidence: { gte: 0.95 },
+      confidence: { gte: AB_TEST_MIN_CONFIDENCE },
     },
     include: {
       controlVersion: { select: { id: true, conversionRate: true, trafficWeight: true } },
@@ -510,7 +437,7 @@ export async function autoSwapWinner(projectId: string): Promise<{
   await db.$transaction([
     db.pageVersion.update({
       where: { id: winnerId },
-      data: { trafficWeight: 100, isActive: true },
+      data: { trafficWeight: AB_TEST_WINNER_TRAFFIC, isActive: true },
     }),
     db.pageVersion.update({
       where: { id: loserId },
@@ -596,7 +523,7 @@ export async function concludeTest(testId: string): Promise<ABTestResult> {
 
   // 간단한 Z-test 신뢰도 계산
   const confidence = calculateZTestConfidence(cVisits, cConv, vVisits, vConv);
-  const winner = confidence >= 0.95 ? (vRate > cRate ? 'variant' : 'control') : undefined;
+  const winner = confidence >= AB_TEST_MIN_CONFIDENCE ? (vRate > cRate ? 'variant' : 'control') : undefined;
 
   await db.aBTest.update({
     where: { id: testId },
