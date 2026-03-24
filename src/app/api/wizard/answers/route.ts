@@ -7,7 +7,7 @@ interface AnswerInput {
   pageGoal: string;
   targetAudience: string;
   priceRange: string;
-  questions: { id: string; question: string }[];
+  questions: { id: string; question: string; userKeywords?: string }[];
 }
 
 interface GeneratedAnswer {
@@ -16,15 +16,16 @@ interface GeneratedAnswer {
 }
 
 const SYSTEM_PROMPT = `당신은 10년 경력의 다이렉트 리스폰스 카피라이터입니다.
-제품 정보를 기반으로, 심층 질문에 대한 **마케팅에 바로 사용할 수 있는 수준의 답변**을 작성합니다.
+제품 정보와 **사용자가 제공한 핵심 키워드/메모**를 기반으로, 마케팅에 바로 사용할 수 있는 수준의 답변을 작성합니다.
 
-작성 원칙:
-1. **구체적 수치 포함**: "많은 고객" 대신 "월 3,200명의 고객", "높은 만족도" 대신 "재구매율 78%"
-2. **감정적 언어**: 고객의 고충과 해결 후 기쁨을 생생하게 묘사
-3. **차별점 강조**: 경쟁사 대비 명확한 우위를 구체적으로 서술
-4. **증거 기반**: 후기, 수상 이력, 인증, 전문가 추천 등 신뢰 요소 포함
-5. **각 답변 80~200자**: 너무 짧지도, 너무 길지도 않게
-6. **업종 전문성**: 해당 업종의 트렌드와 전문 용어를 자연스럽게 활용
+핵심 규칙:
+1. **사용자 키워드가 있으면 반드시 반영**: 사용자가 적은 내용을 핵심으로 삼아 풍부하게 확장하세요. 사용자의 의도를 절대 무시하지 마세요.
+2. **사용자 키워드가 없으면**: 제품 정보만으로 합리적인 답변을 생성하세요.
+3. **구체적 수치 포함**: "많은 고객" 대신 "월 3,200명의 고객"
+4. **감정적 언어**: 고객의 고충과 해결 후 기쁨을 생생하게 묘사
+5. **차별점 강조**: 경쟁사 대비 명확한 우위를 구체적으로 서술
+6. **각 답변 80~200자**: 너무 짧지도, 너무 길지도 않게
+7. **업종 전문성**: 해당 업종의 트렌드와 전문 용어를 자연스럽게 활용
 
 반드시 JSON 배열만 응답하세요. 다른 텍스트 없이:
 [
@@ -71,7 +72,10 @@ export async function POST(req: Request): Promise<NextResponse> {
 이 제품을 판매하는 랜딩페이지를 만들기 위해, 아래 질문에 대한 설득력 있는 답변을 작성해주세요.
 답변은 실제 마케터가 작성한 것처럼 구체적이고, 수치와 감정적 표현을 포함해야 합니다.
 
-${questions.map((q, i) => `${i + 1}. [${q.id}] ${q.question}`).join('\n')}`;
+${questions.map((q, i) => {
+      const keywords = q.userKeywords ? `\n   사용자 메모: "${q.userKeywords}"` : '';
+      return `${i + 1}. [${q.id}] ${q.question}${keywords}`;
+    }).join('\n')}`;
 
     const result = await askClaude<GeneratedAnswer[]>(SYSTEM_PROMPT, userMessage);
 
