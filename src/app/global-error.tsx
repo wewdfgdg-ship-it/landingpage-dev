@@ -9,7 +9,7 @@ export default function GlobalError({
 }: {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}): React.ReactElement {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { getOrgUsage, getPlans, getPlanConfig, PLANS } from '@/lib/billing';
+import { getOrgUsage, getPlans, getPlanConfig } from '@/lib/billing';
 import type { PlanType } from '@/lib/billing';
 import { requestPayment, registerRebill, cancelRebill } from '@/lib/payapp';
 import { validateCoupon } from '@/lib/coupon';

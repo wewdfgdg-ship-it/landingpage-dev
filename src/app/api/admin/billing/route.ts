@@ -45,7 +45,15 @@ export async function GET(req: Request): Promise<NextResponse> {
 // 매출 개요
 // ============================================================
 
-async function getOverview() {
+async function getOverview(): Promise<{
+  totalRevenue: number;
+  monthlyRevenue: number;
+  prevMonthRevenue: number;
+  growthRate: number;
+  activeSubscriptions: number;
+  planDistribution: { plan: string; count: number }[];
+  recentPayments: { id: string; orgName: string; amount: number; status: string; createdAt: Date }[];
+}> {
   const now = new Date();
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
   const prevMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
@@ -129,7 +137,16 @@ interface ListParams {
   limit: number;
 }
 
-async function getSubscriptions({ status, plan, skip, limit }: ListParams) {
+async function getSubscriptions({ status, plan, skip, limit }: ListParams): Promise<{
+  items: {
+    id: string; orgId: string; orgName: string; plan: string; status: string;
+    currentPeriodStart: Date; currentPeriodEnd: Date;
+    cancelAtPeriodEnd: boolean; cancelReason: string | null; createdAt: Date;
+  }[];
+  total: number;
+  page: number;
+  totalPages: number;
+}> {
   const where: Record<string, unknown> = {};
   if (status) where.status = status;
   if (plan) where.plan = plan;
@@ -170,7 +187,15 @@ async function getSubscriptions({ status, plan, skip, limit }: ListParams) {
 // 결제 내역
 // ============================================================
 
-async function getPayments({ status, skip, limit }: Omit<ListParams, 'plan'>) {
+async function getPayments({ status, skip, limit }: Omit<ListParams, 'plan'>): Promise<{
+  items: {
+    id: string; orgId: string; orgName: string; amount: number; status: string;
+    provider: string; externalId: string | null; metadata: unknown; createdAt: Date;
+  }[];
+  total: number;
+  page: number;
+  totalPages: number;
+}> {
   const where: Record<string, unknown> = {};
   if (status) where.status = status;
 

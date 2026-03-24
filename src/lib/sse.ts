@@ -11,7 +11,7 @@ export function createSSEStream(
   const encoder = new TextEncoder();
 
   return new ReadableStream({
-    async start(controller) {
+    async start(controller: ReadableStreamDefaultController<Uint8Array>): Promise<void> {
       const send = (event: SSEEvent): void => {
         const message = `event: ${event.event}\ndata: ${JSON.stringify(event.data)}\n\n`;
         controller.enqueue(encoder.encode(message));
