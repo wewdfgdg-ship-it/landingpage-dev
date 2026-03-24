@@ -195,68 +195,88 @@ export function StepBasicInfo(): React.ReactElement {
         </div>
       </div>
 
-      {/* 구분선 */}
-      <div className="border-t border-gray-200 pt-6">
+      {/* 구분선 + 이미지 드롭존 */}
+      <div
+        className="border-t border-gray-200 pt-6"
+        onDrop={handleDrop}
+        onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('ring-2', 'ring-blue-400', 'ring-offset-2', 'rounded-lg'); }}
+        onDragLeave={(e) => { e.currentTarget.classList.remove('ring-2', 'ring-blue-400', 'ring-offset-2', 'rounded-lg'); }}
+      >
         <Label>제품 이미지</Label>
         <p className="mt-1 mb-3 text-xs text-gray-400">
           제품 사진을 올리면 랜딩페이지에 직접 사용됩니다 (최대 5장, 선택)
         </p>
 
-        {/* 이미지 그리드 + 업로드 영역 */}
-        <div className="grid grid-cols-5 gap-2">
-          {images.map((img) => (
-            <div key={img.id} className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
-              {img.previewUrl ? (
-                <Image src={img.previewUrl} alt="제품 이미지" fill className="object-cover" />
-              ) : (
-                <div className="flex h-full items-center justify-center text-xs text-gray-400">
-                  {img.storageKey ? '업로드됨' : '...'}
-                </div>
-              )}
-              {img.uploading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                </div>
-              )}
-              {!img.uploading && img.storageKey && (
-                <div className="absolute bottom-1 left-1">
-                  <span className="rounded-full bg-green-500 px-1.5 py-0.5 text-[10px] text-white">완료</span>
-                </div>
-              )}
-              <button
-                type="button"
-                onClick={() => removeImage(img.id)}
-                className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity group-hover:opacity-100"
-              >
-                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+        {images.length === 0 ? (
+          /* 이미지 없을 때: 큰 드롭 영역 */
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 py-10 transition-colors hover:border-gray-400 hover:bg-gray-100"
+          >
+            <svg className="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+            </svg>
+            <div className="text-center">
+              <p className="text-sm font-medium text-gray-700">클릭하거나 이미지를 드래그하세요</p>
+              <p className="mt-1 text-xs text-gray-400">PNG, JPG, WEBP (최대 10MB, 5장)</p>
             </div>
-          ))}
+          </div>
+        ) : (
+          /* 이미지 있을 때: 그리드 + 추가 버튼 */
+          <div className="grid grid-cols-5 gap-2">
+            {images.map((img) => (
+              <div key={img.id} className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+                {img.previewUrl ? (
+                  <Image src={img.previewUrl} alt="제품 이미지" fill className="object-cover" />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-xs text-gray-400">
+                    {img.storageKey ? '업로드됨' : '...'}
+                  </div>
+                )}
+                {img.uploading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  </div>
+                )}
+                {!img.uploading && img.storageKey && (
+                  <div className="absolute bottom-1 left-1">
+                    <span className="rounded-full bg-green-500 px-1.5 py-0.5 text-[10px] text-white">완료</span>
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={() => removeImage(img.id)}
+                  className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            ))}
 
-          {images.length < 5 && (
-            <div
-              onDrop={handleDrop}
-              onDragOver={(e) => e.preventDefault()}
-              onClick={() => fileInputRef.current?.click()}
-              className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-gray-400 hover:bg-gray-100"
-            >
-              <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-              <span className="mt-1 text-[10px] text-gray-400">{images.length === 0 ? '이미지 추가' : `${5 - images.length}장 더`}</span>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={(e) => handleFiles(e.target.files)}
-                className="hidden"
-              />
-            </div>
-          )}
-        </div>
+            {images.length < 5 && (
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-gray-400 hover:bg-gray-100"
+              >
+                <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                <span className="mt-1 text-[10px] text-gray-400">{5 - images.length}장 더</span>
+              </div>
+            )}
+          </div>
+        )}
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => handleFiles(e.target.files)}
+          className="hidden"
+        />
       </div>
     </div>
   );
