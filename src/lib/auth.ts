@@ -12,7 +12,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   adapter: PrismaAdapter(db),
   callbacks: {
-    ...authConfig.callbacks,
     async signIn({ user, account }) {
       // Credentials 로그인 시 DB에 User + Org 자동 생성
       if (account?.provider === 'credentials' && user.email) {
@@ -32,11 +31,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               },
             },
           });
-          // JWT에 실제 DB ID 반영
           user.id = created.id;
         } else {
           user.id = existing.id;
-          // membership 없으면 생성
           const hasMembership = await db.membership.findFirst({ where: { userId: existing.id } });
           if (!hasMembership) {
             await db.organization.create({
@@ -51,6 +48,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
       }
       return true;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.id && session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
     },
   },
   events: {
