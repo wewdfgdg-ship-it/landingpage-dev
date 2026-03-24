@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // ============================================================
 // BullMQ Worker process — Railway 배포용
 // 6개 큐 처리: generation, regeneration, image-generation,
@@ -184,7 +185,7 @@ for (const worker of workers) {
 // ============================================================
 // Graceful Shutdown
 // ============================================================
-async function shutdown() {
+async function shutdown(): Promise<void> {
   console.log('[Worker] Shutting down gracefully...');
   await Promise.all(workers.map((w) => w.close()));
   await connection.quit();

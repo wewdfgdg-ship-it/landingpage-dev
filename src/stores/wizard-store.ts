@@ -163,30 +163,30 @@ function calcDeepAnswerScore(questions: DeepQuestion[]): number {
 export const useWizardStore = create<WizardState & WizardActions>((set, get) => ({
   ...INITIAL_STATE,
 
-  setStep: (step) => set({ currentStep: step }),
-  nextStep: () => set((s) => ({ currentStep: Math.min(s.currentStep + 1, 4) })),
-  prevStep: () => set((s) => ({ currentStep: Math.max(s.currentStep - 1, 1) })),
+  setStep: (step): void => set({ currentStep: step }),
+  nextStep: (): void => set((s) => ({ currentStep: Math.min(s.currentStep + 1, 4) })),
+  prevStep: (): void => set((s) => ({ currentStep: Math.max(s.currentStep - 1, 1) })),
 
-  updateBasicInfo: (field, value) =>
+  updateBasicInfo: (field, value): void =>
     set((s) => ({
       basicInfo: { ...s.basicInfo, [field]: value },
     })),
 
-  addImage: (image) => set((s) => ({ images: [...s.images, image] })),
-  removeImage: (id) => set((s) => ({ images: s.images.filter((img) => img.id !== id) })),
-  updateImage: (id, updates) =>
+  addImage: (image): void => set((s) => ({ images: [...s.images, image] })),
+  removeImage: (id): void => set((s) => ({ images: s.images.filter((img) => img.id !== id) })),
+  updateImage: (id, updates): void =>
     set((s) => ({
       images: s.images.map((img) => (img.id === id ? { ...img, ...updates } : img)),
     })),
 
-  setDeepQuestions: (questions) => set({ deepQuestions: questions }),
-  updateAnswer: (id, answer) =>
+  setDeepQuestions: (questions): void => set({ deepQuestions: questions }),
+  updateAnswer: (id, answer): void =>
     set((s) => ({
       deepQuestions: s.deepQuestions.map((q) => (q.id === id ? { ...q, answer } : q)),
     })),
-  setQuestionsLoading: (loading) => set({ questionsLoading: loading }),
+  setQuestionsLoading: (loading): void => set({ questionsLoading: loading }),
 
-  calculateScore: () => {
+  calculateScore: (): void => {
     const { basicInfo, images, deepQuestions } = get();
     const bi = calcBasicInfoScore(basicInfo);
     const img = calcImageScore(images);
@@ -197,7 +197,7 @@ export const useWizardStore = create<WizardState & WizardActions>((set, get) => 
     });
   },
 
-  setSubmitting: (submitting) => set({ submitting }),
+  setSubmitting: (submitting): void => set({ submitting }),
 
-  reset: () => set(INITIAL_STATE),
+  reset: (): void => set(INITIAL_STATE),
 }));

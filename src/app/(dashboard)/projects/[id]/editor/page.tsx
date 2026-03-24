@@ -98,7 +98,7 @@ export default function EditorPage(): React.ReactElement {
     }
 
     liveUpdateTimerRef.current = setTimeout(() => {
-      void (async () => {
+      void (async (): Promise<void> => {
         setLiveUpdating(true);
         try {
           const res = await fetch(`/api/projects/${id}/preview-live`, {
@@ -119,7 +119,7 @@ export default function EditorPage(): React.ReactElement {
       })();
     }, 1200);
 
-    return () => {
+    return (): void => {
       if (liveUpdateTimerRef.current) {
         clearTimeout(liveUpdateTimerRef.current);
       }
@@ -165,7 +165,7 @@ export default function EditorPage(): React.ReactElement {
       }
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    return (): void => { window.removeEventListener('beforeunload', handleBeforeUnload); };
   }, [isDirty]);
 
   if (loading) {

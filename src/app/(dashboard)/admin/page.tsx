@@ -685,7 +685,7 @@ function Field({
       <input
         type="text"
         value={value}
-        onChange={onChange ? (e) => onChange(e.target.value) : undefined}
+        onChange={onChange ? (e: React.ChangeEvent<HTMLInputElement>): void => onChange(e.target.value) : undefined}
         disabled={disabled}
         className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm disabled:bg-gray-50 disabled:text-gray-400"
       />

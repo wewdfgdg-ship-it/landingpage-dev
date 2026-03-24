@@ -70,7 +70,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   isRebuilding: false,
   isLiveUpdating: false,
 
-  initialize: (projectId, copyBlocks, layoutConfig, styleConfig, html) => {
+  initialize: (projectId, copyBlocks, layoutConfig, styleConfig, html): void => {
     const sections: EditorSection[] = layoutConfig.sections.map((layout) => {
       const sectionCopy = copyBlocks.sections.find(
         (s) => s.sectionOrder === layout.order,
@@ -104,9 +104,9 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     });
   },
 
-  selectSection: (order) => set({ selectedSectionOrder: order }),
+  selectSection: (order): void => set({ selectedSectionOrder: order }),
 
-  updateCopy: (order, field, value) =>
+  updateCopy: (order, field, value): void =>
     set((state) => ({
       isDirty: true,
       sections: state.sections.map((s) =>
@@ -116,7 +116,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       ),
     })),
 
-  changePattern: (order, patternId, patternName) =>
+  changePattern: (order, patternId, patternName): void =>
     set((state) => ({
       isDirty: true,
       sections: state.sections.map((s) =>
@@ -124,7 +124,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       ),
     })),
 
-  reorderSections: (fromIndex, toIndex) =>
+  reorderSections: (fromIndex, toIndex): void =>
     set((state) => {
       const newSections = [...state.sections];
       const [moved] = newSections.splice(fromIndex, 1);
@@ -134,7 +134,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       return { sections: reordered, isDirty: true };
     }),
 
-  moveSection: (fromOrder, toOrder) =>
+  moveSection: (fromOrder, toOrder): void =>
     set((state) => {
       const fromIndex = state.sections.findIndex((s) => s.order === fromOrder);
       const toIndex = state.sections.findIndex((s) => s.order === toOrder);
@@ -146,7 +146,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       return { sections: reordered, isDirty: true };
     }),
 
-  deleteSection: (order) =>
+  deleteSection: (order): void =>
     set((state) => {
       const filtered = state.sections.filter((s) => s.order !== order);
       const reordered = filtered.map((s, i) => ({ ...s, order: i + 1 }));
@@ -158,7 +158,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       };
     }),
 
-  addSection: (sectionType) =>
+  addSection: (sectionType): void =>
     set((state) => {
       const newOrder = state.sections.length + 1;
       const newSection: EditorSection = {
@@ -184,7 +184,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       };
     }),
 
-  duplicateSection: (order) =>
+  duplicateSection: (order): void =>
     set((state) => {
       const target = state.sections.find((s) => s.order === order);
       if (!target) return state;
@@ -209,13 +209,13 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       };
     }),
 
-  setPreviewHtml: (html) => set({ previewHtml: html }),
-  setSaving: (saving) => set({ isSaving: saving }),
-  setRebuilding: (rebuilding) => set({ isRebuilding: rebuilding }),
-  setLiveUpdating: (updating) => set({ isLiveUpdating: updating }),
-  markClean: () => set({ isDirty: false }),
+  setPreviewHtml: (html): void => set({ previewHtml: html }),
+  setSaving: (saving): void => set({ isSaving: saving }),
+  setRebuilding: (rebuilding): void => set({ isRebuilding: rebuilding }),
+  setLiveUpdating: (updating): void => set({ isLiveUpdating: updating }),
+  markClean: (): void => set({ isDirty: false }),
 
-  toCopyBlocks: () => {
+  toCopyBlocks: (): CopyBlocks => {
     const sections: SectionCopy[] = get().sections.map((s) => ({
       sectionOrder: s.order,
       role: s.role,
@@ -225,7 +225,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     return { sections, tone: '', qualityScore: 0 };
   },
 
-  toLayoutSections: () =>
+  toLayoutSections: (): SectionLayout[] =>
     get().sections.map((s) => ({
       order: s.order,
       role: s.role,
