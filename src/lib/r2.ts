@@ -47,3 +47,20 @@ export async function deleteObject(key: string): Promise<void> {
 export function getCdnUrl(key: string): string {
   return `${process.env.R2_CDN_URL}/${key}`;
 }
+
+/** R2에서 객체를 Buffer로 읽기 (참조 이미지 base64 변환용) */
+export async function getObjectBuffer(key: string): Promise<Buffer> {
+  const command = new GetObjectCommand({
+    Bucket: BUCKET,
+    Key: key,
+  });
+  const response = await r2.send(command);
+  if (!response.Body) {
+    throw new Error(`R2 객체를 찾을 수 없습니다: ${key}`);
+  }
+  const chunks: Uint8Array[] = [];
+  for await (const chunk of response.Body as AsyncIterable<Uint8Array>) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+}

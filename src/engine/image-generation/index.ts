@@ -195,34 +195,55 @@ export async function runImageGeneration(
   copyBlocks: CopyBlocks,
   layoutConfig: LayoutConfig,
   referenceImageBase64?: string,
+  preAssignedImages?: Map<number, string>,
 ): Promise<ImageGenerationOutput> {
-  const requests = extractImageRequests(copyBlocks, layoutConfig);
+  const allRequests = extractImageRequests(copyBlocks, layoutConfig);
 
-  if (requests.length === 0) {
+  if (allRequests.length === 0) {
     return { images: [], totalCost: 0, totalImages: 0, failedSections: [] };
   }
 
-  const results = await processInBatches(requests, MAX_CONCURRENT, (req) =>
-    generateAndUpload(req, projectId, productName, industry, moodPreset, referenceImageBase64),
-  );
-
+  // 원본 이미지가 배치된 섹션은 AI 생성 스킵
   const images: SectionImageResult[] = [];
-  const failedSections: number[] = [];
-  let totalCost = 0;
+  const aiRequests: SectionImageRequest[] = [];
 
-  results.forEach((result, idx) => {
-    if (result.status === 'fulfilled') {
-      images.push(result.value);
-      totalCost += result.value.cost;
+  for (const req of allRequests) {
+    const userCdnUrl = preAssignedImages?.get(req.sectionOrder);
+    if (userCdnUrl) {
+      images.push({
+        sectionOrder: req.sectionOrder,
+        cdnUrl: userCdnUrl,
+        storageKey: '',
+        cost: 0,
+      });
     } else {
-      failedSections.push(requests[idx].sectionOrder);
-      // eslint-disable-next-line no-console
-      console.error(
-        `[ImageGen] 섹션 ${requests[idx].sectionOrder} 실패:`,
-        result.reason,
-      );
+      aiRequests.push(req);
     }
-  });
+  }
+
+  // 원본이 없는 섹션만 AI 생성
+  let totalCost = 0;
+  const failedSections: number[] = [];
+
+  if (aiRequests.length > 0) {
+    const results = await processInBatches(aiRequests, MAX_CONCURRENT, (req) =>
+      generateAndUpload(req, projectId, productName, industry, moodPreset, referenceImageBase64),
+    );
+
+    results.forEach((result, idx) => {
+      if (result.status === 'fulfilled') {
+        images.push(result.value);
+        totalCost += result.value.cost;
+      } else {
+        failedSections.push(aiRequests[idx].sectionOrder);
+        // eslint-disable-next-line no-console
+        console.error(
+          `[ImageGen] 섹션 ${aiRequests[idx].sectionOrder} 실패:`,
+          result.reason,
+        );
+      }
+    });
+  }
 
   return {
     images,

@@ -16,7 +16,9 @@ import { runLayoutIntelligence } from '@/engine/08-layout-intelligence';
 import { runVisualStyle } from '@/engine/09-visual-style';
 import { runCodeEngine } from '@/engine/10-code-engine';
 import { runImageGeneration } from '@/engine/image-generation';
+import { IMAGE_REQUIRED_PATTERNS } from '@/engine/image-generation/types';
 import { runCrossEngineBridge, injectZoneAttributes } from '@/engine/cross-engine-bridge';
+import { getCdnUrl, getObjectBuffer } from '@/lib/r2';
 
 // ============================================================
 // 타입 정의
@@ -198,6 +200,36 @@ export async function runPipeline(
 
   // ⑩ Image Generation (AI N회)
   emitProgress(onProgress, 9, 'start');
+
+  // 사용자 업로드 이미지 → 이미지 필요 섹션에 배치
+  const userImages: Array<{ storageKey: string }> =
+    (inputData as unknown as { images?: Array<{ storageKey: string }> }).images ?? [];
+  const userCdnUrls = userImages
+    .filter((img) => img.storageKey)
+    .map((img) => getCdnUrl(img.storageKey));
+
+  // 이미지 필요 섹션 순서대로 추출 (hero → feature)
+  const imageRequiredSections = layoutConfig.sections
+    .filter((s) => IMAGE_REQUIRED_PATTERNS.has(s.selectedPattern))
+    .sort((a, b) => a.order - b.order);
+
+  // 원본 이미지를 섹션에 순서대로 배치
+  const preAssignedImages = new Map<number, string>();
+  for (let i = 0; i < Math.min(userCdnUrls.length, imageRequiredSections.length); i++) {
+    preAssignedImages.set(imageRequiredSections[i].order, userCdnUrls[i]);
+  }
+
+  // 첫 번째 업로드 이미지를 참조 이미지(base64)로 변환 — AI가 스타일 참고
+  let referenceImageBase64: string | undefined;
+  if (userImages.length > 0 && userImages[0].storageKey) {
+    try {
+      const buf = await getObjectBuffer(userImages[0].storageKey);
+      referenceImageBase64 = buf.toString('base64');
+    } catch {
+      // 참조 이미지 로드 실패 시 AI 자체 생성으로 진행
+    }
+  }
+
   const imageResult = await runImageGeneration(
     projectId,
     inputData.basicInfo.productName,
@@ -205,6 +237,8 @@ export async function runPipeline(
     styleConfig.mood,
     copyBlocks,
     layoutConfig,
+    referenceImageBase64,
+    preAssignedImages,
   );
   totalCost += imageResult.totalCost;
 

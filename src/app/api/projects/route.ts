@@ -24,18 +24,33 @@ export async function POST(req: Request): Promise<NextResponse> {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return NextResponse.json({ error: '인증 필요' }, { status: 401 });
+      return NextResponse.json({ error: '인증 필요', debug: { session } }, { status: 401 });
+    }
+
+    const userId = session.user.id;
+
+    // Credentials 가짜 ID 감지 → DB에서 email로 실제 ID 조회
+    let resolvedUserId = userId;
+    if (session.user.email && !userId.startsWith('c')) {
+      // cuid는 'c'로 시작 — 가짜 ID면 email로 DB 조회
+      const dbUser = await db.user.findUnique({
+        where: { email: session.user.email },
+        select: { id: true },
+      });
+      if (dbUser) {
+        resolvedUserId = dbUser.id;
+      }
     }
 
     // 유저의 Organization 조회
     const membership = await db.membership.findFirst({
-      where: { userId: session.user.id },
+      where: { userId: resolvedUserId },
       select: { orgId: true },
     });
 
     if (!membership) {
       return NextResponse.json(
-        { error: '조직 없음', detail: `userId=${session.user.id}에 대한 membership이 없습니다. 다시 로그인해주세요.` },
+        { error: '조직 없음', detail: `userId=${resolvedUserId} (original=${userId})에 대한 membership이 없습니다.` },
         { status: 403 },
       );
     }
