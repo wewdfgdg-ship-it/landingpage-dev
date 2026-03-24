@@ -1,14 +1,12 @@
 import type { ProductBrief } from '@/engine/01-product-intelligence/types';
 import type { UrgencyBrief, UrgencyType, UrgencyElement, UrgencyPlacement } from './types';
 export type { UrgencyBrief } from './types';
+import { HIGH_PRICE_INDUSTRIES, LIFESTYLE_INDUSTRIES, URGENCY_FALLBACKS } from './rules';
 
 // ============================================================
 // Why Now Engine — 규칙 엔진 (AI 호출 없음)
 // Product Brief의 저항/시장 데이터 기반으로 긴급성 전략 결정
 // ============================================================
-
-const HIGH_PRICE_INDUSTRIES = ['saas', 'b2b', 'finance'];
-const LIFESTYLE_INDUSTRIES = ['lifestyle', 'beauty', 'education'];
 
 function extractPriceNumber(priceRange: string): number {
   const nums = priceRange.replace(/[^0-9]/g, '');
@@ -48,15 +46,7 @@ function selectSecondaryType(
   // urgency 저항이 5면 복합 적용
   if (brief.resistanceMap.urgency.level < 5) return null;
 
-  const fallbacks: Record<UrgencyType, UrgencyType> = {
-    time_based: 'quantity_based',
-    quantity_based: 'time_based',
-    situational: 'emotional',
-    emotional: 'situational',
-    price_anchor: 'situational',
-  };
-
-  return fallbacks[primary] ?? null;
+  return URGENCY_FALLBACKS[primary] ?? null;
 }
 
 function generateElements(
