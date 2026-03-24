@@ -13,7 +13,8 @@ import {
 } from './quality-gate';
 export type { CopyBlocks } from './types';
 export type { QualityGateResult } from './quality-gate';
-import { TONE_MAP, SYSTEM_PROMPT } from './rules';
+import { TONE_MAP } from './rules';
+import { SYSTEM_PROMPT } from './prompts';
 
 // ============================================================
 // Psychological Copy Engine — AI 1회

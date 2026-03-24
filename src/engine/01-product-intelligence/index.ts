@@ -1,7 +1,7 @@
 import { askClaude } from '@/lib/ai/claude';
 import type { ProductBrief, ProductIntelligenceInput } from './types';
 export type { ProductBrief, ProductIntelligenceInput } from './types';
-import { PHASE_A_SYSTEM, PHASE_B_SYSTEM, PHASE_C_SYSTEM } from './rules';
+import { PHASE_A_SYSTEM, PHASE_B_SYSTEM, PHASE_C_SYSTEM } from './prompts';
 
 // ============================================================
 // Product Intelligence Engine

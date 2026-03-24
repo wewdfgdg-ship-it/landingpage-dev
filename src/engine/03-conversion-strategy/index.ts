@@ -10,8 +10,8 @@ import {
   MAX_SECTIONS,
   HIGH_PRICE_RESISTANCE_EXTRA,
   PRICE_RESISTANCE_THRESHOLD,
-  SYSTEM_PROMPT,
 } from './rules';
+import { SYSTEM_PROMPT } from './prompts';
 
 // ============================================================
 // Conversion Strategy Engine — AI 1회 + 규칙 엔진
