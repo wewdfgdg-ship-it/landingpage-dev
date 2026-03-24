@@ -167,7 +167,7 @@ export const useWizardStore = create<WizardState & WizardActions>()(
       ...INITIAL_STATE,
 
       setStep: (step) => { set({ currentStep: step }); },
-      nextStep: () => { set((s) => ({ currentStep: Math.min(s.currentStep + 1, 4) })); },
+      nextStep: () => { set((s) => ({ currentStep: Math.min(s.currentStep + 1, 3) })); },
       prevStep: () => { set((s) => ({ currentStep: Math.max(s.currentStep - 1, 1) })); },
 
       updateBasicInfo: (field, value) => {

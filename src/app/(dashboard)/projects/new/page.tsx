@@ -5,16 +5,16 @@ import { useRouter } from 'next/navigation';
 import { useWizardStore, type WizardState, type WizardActions } from '@/stores/wizard-store';
 import { Button } from '@/components/ui/button';
 import { StepBasicInfo } from '@/components/wizard/step-basic-info';
-import { StepImageUpload } from '@/components/wizard/step-image-upload';
 import { StepDeepQuestions } from '@/components/wizard/step-deep-questions';
 import { StepQualityScore } from '@/components/wizard/step-quality-score';
 
 const STEPS = [
-  { number: 1, title: '기본 정보' },
-  { number: 2, title: '이미지' },
-  { number: 3, title: '심층 질문' },
-  { number: 4, title: '품질 확인' },
+  { number: 1, title: '제품 정보' },
+  { number: 2, title: '심층 질문' },
+  { number: 3, title: '품질 확인' },
 ] as const;
+
+const MAX_STEP = 3;
 
 function StepIndicator({
   current,
@@ -74,10 +74,8 @@ function canProceed(step: number, store: WizardState & WizardActions): boolean {
         store.basicInfo.pageGoal
       );
     case 2:
-      return true; // 이미지는 선택사항
+      return true; // 질문 답변은 선택사항
     case 3:
-      return true; // 질문 답변도 선택사항
-    case 4:
       return store.qualityScore >= 30; // 최소 30점
     default:
       return false;
@@ -87,7 +85,7 @@ function canProceed(step: number, store: WizardState & WizardActions): boolean {
 export default function NewProjectPage(): React.ReactElement {
   const router = useRouter();
   const store = useWizardStore();
-  const { currentStep, nextStep, prevStep, submitting, setSubmitting, reset } = store;
+  const { currentStep, setStep, submitting, setSubmitting, reset } = store;
   const [submitError, setSubmitError] = useState<string | null>(null);
   const didReset = useRef(false);
 
@@ -97,6 +95,12 @@ export default function NewProjectPage(): React.ReactElement {
       reset();
     }
   }, [reset]);
+
+  // 3단계 시스템: step은 1~3
+  const clampedStep = Math.min(currentStep, MAX_STEP);
+
+  const goNext = (): void => { setStep(Math.min(clampedStep + 1, MAX_STEP)); };
+  const goPrev = (): void => { setStep(Math.max(clampedStep - 1, 1)); };
 
   const handleSubmit = async (): Promise<void> => {
     setSubmitting(true);
@@ -149,15 +153,14 @@ export default function NewProjectPage(): React.ReactElement {
 
       {/* 스텝 인디케이터 */}
       <div className="mb-8">
-        <StepIndicator current={currentStep} />
+        <StepIndicator current={clampedStep} />
       </div>
 
       {/* 스텝 콘텐츠 */}
       <div className="rounded-xl border border-gray-200 bg-white p-6">
-        {currentStep === 1 && <StepBasicInfo />}
-        {currentStep === 2 && <StepImageUpload />}
-        {currentStep === 3 && <StepDeepQuestions />}
-        {currentStep === 4 && <StepQualityScore />}
+        {clampedStep === 1 && <StepBasicInfo />}
+        {clampedStep === 2 && <StepDeepQuestions />}
+        {clampedStep === 3 && <StepQualityScore />}
       </div>
 
       {/* 에러 메시지 */}
@@ -171,22 +174,22 @@ export default function NewProjectPage(): React.ReactElement {
       <div className="mt-6 flex items-center justify-between">
         <Button
           variant="outline"
-          onClick={currentStep === 1 ? (): void => { router.push('/projects'); } : prevStep}
+          onClick={clampedStep === 1 ? (): void => { router.push('/projects'); } : goPrev}
         >
-          {currentStep === 1 ? '취소' : '이전'}
+          {clampedStep === 1 ? '취소' : '이전'}
         </Button>
 
-        {currentStep < 4 ? (
+        {clampedStep < MAX_STEP ? (
           <Button
-            onClick={nextStep}
-            disabled={!canProceed(currentStep, store)}
+            onClick={goNext}
+            disabled={!canProceed(clampedStep, store)}
           >
             다음
           </Button>
         ) : (
           <Button
             onClick={handleSubmit}
-            disabled={submitting || !canProceed(currentStep, store)}
+            disabled={submitting || !canProceed(clampedStep, store)}
           >
             {submitting ? '생성 중...' : '프로젝트 생성'}
           </Button>

@@ -1,6 +1,8 @@
 'use client';
 
-import { useWizardStore, type Industry, type PageGoal } from '@/stores/wizard-store';
+import { useCallback, useRef } from 'react';
+import Image from 'next/image';
+import { useWizardStore, type Industry, type PageGoal, type UploadedImage } from '@/stores/wizard-store';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -34,15 +36,63 @@ const GOAL_OPTIONS: { value: PageGoal; label: string }[] = [
   { value: 'newsletter', label: '뉴스레터 구독' },
 ];
 
+function generateId(): string {
+  return `img_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+async function uploadFile(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch('/api/upload', { method: 'POST', body: formData });
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? '업로드 실패');
+  }
+  const data = (await res.json()) as { storageKey: string };
+  return data.storageKey;
+}
+
 export function StepBasicInfo(): React.ReactElement {
-  const { basicInfo, updateBasicInfo } = useWizardStore();
+  const { basicInfo, updateBasicInfo, images, addImage, removeImage, updateImage } = useWizardStore();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFiles = useCallback(
+    async (files: FileList | null) => {
+      if (!files) return;
+      const remaining = 5 - images.length;
+      const filesToAdd = Array.from(files).slice(0, remaining);
+
+      for (const file of filesToAdd) {
+        if (!file.type.startsWith('image/')) continue;
+        if (file.size > 10 * 1024 * 1024) continue;
+
+        const id = generateId();
+        const previewUrl = URL.createObjectURL(file);
+        const newImage: UploadedImage = { id, file, previewUrl, storageKey: '', uploading: true };
+        addImage(newImage);
+
+        try {
+          const storageKey = await uploadFile(file);
+          updateImage(id, { storageKey, uploading: false });
+        } catch {
+          updateImage(id, { uploading: false });
+        }
+      }
+    },
+    [images.length, addImage, updateImage],
+  );
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => { e.preventDefault(); handleFiles(e.dataTransfer.files); },
+    [handleFiles],
+  );
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-gray-900">기본 정보</h2>
+        <h2 className="text-xl font-bold text-gray-900">제품 정보</h2>
         <p className="mt-1 text-sm text-gray-500">
-          제품/서비스에 대한 기본 정보를 입력해주세요
+          제품 정보와 이미지를 입력하면 AI가 최적의 랜딩페이지를 생성합니다
         </p>
       </div>
 
@@ -142,6 +192,70 @@ export function StepBasicInfo(): React.ReactElement {
           <p className="text-xs text-gray-400">
             참고할 만한 경쟁사 랜딩페이지가 있다면 입력해주세요
           </p>
+        </div>
+      </div>
+
+      {/* 구분선 */}
+      <div className="border-t border-gray-200 pt-6">
+        <Label>제품 이미지</Label>
+        <p className="mt-1 mb-3 text-xs text-gray-400">
+          제품 사진을 올리면 랜딩페이지에 직접 사용됩니다 (최대 5장, 선택)
+        </p>
+
+        {/* 이미지 그리드 + 업로드 영역 */}
+        <div className="grid grid-cols-5 gap-2">
+          {images.map((img) => (
+            <div key={img.id} className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+              {img.previewUrl ? (
+                <Image src={img.previewUrl} alt="제품 이미지" fill className="object-cover" />
+              ) : (
+                <div className="flex h-full items-center justify-center text-xs text-gray-400">
+                  {img.storageKey ? '업로드됨' : '...'}
+                </div>
+              )}
+              {img.uploading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                </div>
+              )}
+              {!img.uploading && img.storageKey && (
+                <div className="absolute bottom-1 left-1">
+                  <span className="rounded-full bg-green-500 px-1.5 py-0.5 text-[10px] text-white">완료</span>
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => removeImage(img.id)}
+                className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity group-hover:opacity-100"
+              >
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          ))}
+
+          {images.length < 5 && (
+            <div
+              onDrop={handleDrop}
+              onDragOver={(e) => e.preventDefault()}
+              onClick={() => fileInputRef.current?.click()}
+              className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-gray-400 hover:bg-gray-100"
+            >
+              <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              <span className="mt-1 text-[10px] text-gray-400">{images.length === 0 ? '이미지 추가' : `${5 - images.length}장 더`}</span>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => handleFiles(e.target.files)}
+                className="hidden"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
