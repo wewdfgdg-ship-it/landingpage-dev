@@ -1,68 +1,88 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
+import Credentials from 'next-auth/providers/credentials';
+import Google from 'next-auth/providers/google';
 import { db } from '@/lib/db';
-import { authConfig } from '@/lib/auth.config';
+import type { NextAuthConfig } from 'next-auth';
 
 // ============================================================
 // 서버 전용 인증 설정 (API routes, Server Components용)
-// PrismaAdapter 포함 — Node.js Runtime 전용
+// PrismaAdapter + DB 접근 가능 — Node.js Runtime 전용
 // ============================================================
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  ...authConfig,
-  adapter: PrismaAdapter(db),
-  callbacks: {
-    async signIn({ user, account }) {
-      // Credentials 로그인 시 DB에 User + Org 자동 생성
-      if (account?.provider === 'credentials' && user.email) {
-        const existing = await db.user.findUnique({ where: { email: user.email } });
-        if (!existing) {
-          const created = await db.user.create({
-            data: {
-              email: user.email,
-              name: user.name ?? user.email.split('@')[0],
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+const providers: NextAuthConfig['providers'] = [
+  Credentials({
+    name: '이메일 로그인',
+    credentials: {
+      email: { label: '이메일', type: 'email' },
+      password: { label: '비밀번호', type: 'password' },
+    },
+    async authorize(credentials) {
+      const email = credentials?.email as string;
+      const password = credentials?.password as string;
+      if (!email || !password) return null;
+
+      // DB에서 사용자 조회 또는 생성
+      let user = await db.user.findUnique({ where: { email } });
+
+      if (!user) {
+        user = await db.user.create({
+          data: {
+            email,
+            name: email.split('@')[0],
+          },
+        });
+        // Organization + Membership 자동 생성
+        await db.organization.create({
+          data: {
+            name: `${user.name}의 워크스페이스`,
+            memberships: {
+              create: { userId: user.id, role: 'OWNER' },
             },
-          });
+          },
+        });
+      } else {
+        // membership 없으면 생성
+        const hasMembership = await db.membership.findFirst({ where: { userId: user.id } });
+        if (!hasMembership) {
           await db.organization.create({
             data: {
-              name: `${created.name}의 워크스페이스`,
+              name: `${user.name ?? user.email}의 워크스페이스`,
               memberships: {
-                create: { userId: created.id, role: 'OWNER' },
+                create: { userId: user.id, role: 'OWNER' },
               },
             },
           });
-          user.id = created.id;
-        } else {
-          user.id = existing.id;
-          const hasMembership = await db.membership.findFirst({ where: { userId: existing.id } });
-          if (!hasMembership) {
-            await db.organization.create({
-              data: {
-                name: `${existing.name ?? existing.email}의 워크스페이스`,
-                memberships: {
-                  create: { userId: existing.id, role: 'OWNER' },
-                },
-              },
-            });
-          }
         }
       }
-      return true;
+
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      };
     },
+  }),
+];
+
+if (googleClientId && googleClientSecret) {
+  providers.push(
+    Google({ clientId: googleClientId, clientSecret: googleClientSecret }),
+  );
+}
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  providers,
+  adapter: PrismaAdapter(db),
+  session: { strategy: 'jwt' },
+  pages: { signIn: '/login' },
+  callbacks: {
     async jwt({ token, user }) {
-      // 최초 로그인 시 또는 token.dbId가 없을 때 DB에서 실제 ID 조회
-      if (user?.email || (token.email && !token.dbId)) {
-        const email = (user?.email ?? token.email) as string;
-        const dbUser = await db.user.findUnique({
-          where: { email },
-          select: { id: true },
-        });
-        if (dbUser) {
-          token.id = dbUser.id;
-          token.dbId = dbUser.id;
-        } else if (user) {
-          token.id = user.id;
-        }
+      if (user) {
+        token.id = user.id;
       }
       return token;
     },
