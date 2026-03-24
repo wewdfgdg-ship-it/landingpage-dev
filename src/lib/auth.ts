@@ -59,6 +59,7 @@ const providers: NextAuthConfig['providers'] = [
         }
       }
 
+      console.log('[AUTH] authorize: DB user found/created', { id: user.id, email: user.email });
       return {
         id: user.id,
         email: user.email,
@@ -82,6 +83,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        console.log('[AUTH] jwt callback: user.id =', user.id);
         token.id = user.id;
       }
       return token;
