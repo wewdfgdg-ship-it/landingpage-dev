@@ -49,9 +49,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id;
+        // Credentials 로그인: authorize()의 가짜 ID 대신 DB의 실제 ID 사용
+        if (account?.provider === 'credentials' && user.email) {
+          const dbUser = await db.user.findUnique({
+            where: { email: user.email },
+            select: { id: true },
+          });
+          token.id = dbUser?.id ?? user.id;
+        } else {
+          token.id = user.id;
+        }
       }
       return token;
     },
