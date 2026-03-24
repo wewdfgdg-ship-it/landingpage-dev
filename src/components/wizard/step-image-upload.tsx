@@ -8,32 +8,21 @@ function generateId(): string {
   return `img_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-async function uploadToR2(file: File, imageId: string): Promise<string> {
-  // 1. presigned URL 요청
+async function uploadToR2(file: File, _imageId: string): Promise<string> {
+  const formData = new FormData();
+  formData.append('file', file);
+
   const res = await fetch('/api/upload', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      filename: `${imageId}_${file.name}`,
-      contentType: file.type,
-    }),
+    body: formData,
   });
 
-  if (!res.ok) throw new Error('업로드 URL 생성 실패');
-  const { uploadUrl, storageKey } = (await res.json()) as {
-    uploadUrl: string;
-    storageKey: string;
-  };
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(err.error ?? '이미지 업로드 실패');
+  }
 
-  // 2. R2에 직접 업로드
-  const uploadRes = await fetch(uploadUrl, {
-    method: 'PUT',
-    headers: { 'Content-Type': file.type },
-    body: file,
-  });
-
-  if (!uploadRes.ok) throw new Error('이미지 업로드 실패');
-
+  const { storageKey } = (await res.json()) as { storageKey: string };
   return storageKey;
 }
 
