@@ -75,7 +75,23 @@ ${questions.map((q, i) => `${i + 1}. [${q.id}] ${q.question}`).join('\n')}`;
 
     const result = await askClaude<GeneratedAnswer[]>(SYSTEM_PROMPT, userMessage);
 
-    return NextResponse.json({ answers: result.data });
+    // 응답이 배열인지 검증
+    if (!Array.isArray(result.data)) {
+      return NextResponse.json(
+        { error: '답변 생성 실패', detail: 'AI 응답이 올바른 형식이 아닙니다' },
+        { status: 500 },
+      );
+    }
+
+    // id 매핑 검증 — 질문 id와 매칭되는 답변만 반환
+    const validAnswers = result.data
+      .filter((a): a is GeneratedAnswer => typeof a.id === 'string' && typeof a.answer === 'string')
+      .map((a) => ({
+        id: a.id,
+        answer: a.answer.trim(),
+      }));
+
+    return NextResponse.json({ answers: validAnswers });
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
     console.error('Answer generation error:', msg);

@@ -22,28 +22,6 @@ async function fetchDeepQuestions(
   return data.questions;
 }
 
-async function fetchAiAnswers(
-  basicInfo: {
-    productName: string;
-    industry: string;
-    pageGoal: string;
-    targetAudience: string;
-    priceRange: string;
-  },
-  questions: { id: string; question: string }[],
-): Promise<{ id: string; answer: string }[]> {
-  const res = await fetch('/api/wizard/answers', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...basicInfo, questions }),
-  });
-
-  if (!res.ok) throw new Error('답변 생성 실패');
-  const data = (await res.json()) as {
-    answers: { id: string; answer: string }[];
-  };
-  return data.answers;
-}
 
 export function StepDeepQuestions(): React.ReactElement {
   const {
@@ -56,6 +34,7 @@ export function StepDeepQuestions(): React.ReactElement {
   } = useWizardStore();
 
   const [aiAnswerLoading, setAiAnswerLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   useEffect(() => {
     if (deepQuestions.length > 0) return;
@@ -130,23 +109,38 @@ export function StepDeepQuestions(): React.ReactElement {
 
   const handleAiAutoFill = async (): Promise<void> => {
     setAiAnswerLoading(true);
+    setAiError(null);
     try {
-      const answers = await fetchAiAnswers(
-        {
+      const res = await fetch('/api/wizard/answers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           productName: basicInfo.productName,
           industry: basicInfo.industry as string,
           pageGoal: basicInfo.pageGoal as string,
           targetAudience: basicInfo.targetAudience,
           priceRange: basicInfo.priceRange,
-        },
-        deepQuestions.map((q) => ({ id: q.id, question: q.question })),
-      );
+          questions: deepQuestions.map((q) => ({ id: q.id, question: q.question })),
+        }),
+      });
 
-      for (const a of answers) {
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => ({})) as { error?: string; detail?: string };
+        throw new Error(errBody.detail ?? errBody.error ?? `HTTP ${res.status}`);
+      }
+
+      const data = (await res.json()) as { answers: { id: string; answer: string }[] };
+
+      if (!data.answers || !Array.isArray(data.answers)) {
+        throw new Error('응답 형식 오류');
+      }
+
+      for (const a of data.answers) {
         updateAnswer(a.id, a.answer);
       }
-    } catch {
-      // 실패 시 무시
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setAiError(`AI 답변 생성 실패: ${msg}`);
     } finally {
       setAiAnswerLoading(false);
     }
@@ -207,6 +201,12 @@ export function StepDeepQuestions(): React.ReactElement {
           제품 정보 기반으로 AI가 답변을 작성합니다 (수정 가능)
         </p>
       </div>
+
+      {aiError && (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          {aiError}
+        </div>
+      )}
 
       <div className="space-y-5">
         {deepQuestions.map((q, index) => (
