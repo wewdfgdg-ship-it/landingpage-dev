@@ -1,7 +1,7 @@
 import type { ProductBrief } from '@/engine/01-product-intelligence/types';
 import type { StrategyBlueprint } from '@/engine/03-conversion-strategy/types';
 import type { AttentionConfig } from '@/engine/07-attention-architecture/types';
-import type { LayoutPattern, LayoutCategory, SectionLayout, LayoutConfig } from './types';
+import type { LayoutPattern, SectionLayout, LayoutConfig } from './types';
 export type { LayoutConfig } from './types';
 import { PATTERNS, ROLE_CATEGORY_MAP, ZONE_RATIOS, SCORE_WEIGHTS } from './rules';
 
@@ -94,7 +94,7 @@ function estimateContentAmount(role: string): number {
 export function runLayoutIntelligence(
   brief: ProductBrief,
   blueprint: StrategyBlueprint,
-  _attention: AttentionConfig,
+  _attention: AttentionConfig, // eslint-disable-line @typescript-eslint/no-unused-vars
 ): LayoutConfig {
   const usedPatterns = new Set<string>();
   const sections: SectionLayout[] = [];

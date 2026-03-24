@@ -2,7 +2,6 @@ import { db } from '@/lib/db';
 import type {
   TrackingEvent,
   Diagnosis,
-  DiagnosisType,
   Severity,
   Prescription,
   ABTestResult,

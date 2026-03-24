@@ -192,10 +192,7 @@ export async function runImageGeneration(
       totalCost += result.value.cost;
     } else {
       failedSections.push(requests[idx].sectionOrder);
-      console.error(
-        `[ImageGen] 섹션 ${requests[idx].sectionOrder} 실패:`,
-        result.reason,
-      );
+      // 이미지 생성 실패 — failedSections에 기록됨
     }
   });
 

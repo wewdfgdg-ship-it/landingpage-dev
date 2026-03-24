@@ -14,7 +14,6 @@ import {
   SPACING,
   SECTION_PADDING,
   DEFAULT_MOOD_INDEX,
-  type MoodDef,
 } from './rules';
 
 // ============================================================
