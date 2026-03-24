@@ -38,14 +38,19 @@ export default function EditorPage(): React.ReactElement {
     isDirty,
     isSaving,
     isRebuilding,
+    isLiveUpdating,
     initialize,
     setSaving,
     setRebuilding,
+    setLiveUpdating,
     setPreviewHtml,
     markClean,
     toCopyBlocks,
     toLayoutSections,
   } = useEditorStore();
+
+  // sections 변화 감지용 구독
+  const sections = useEditorStore((s) => s.sections);
 
   const fetchAndInit = useCallback(async (): Promise<void> => {
     try {
@@ -74,6 +79,52 @@ export default function EditorPage(): React.ReactElement {
       void fetchAndInit();
     }
   }, [fetchAndInit]);
+
+  // 섹션 변경 시 실시간 미리보기 갱신 (debounce 1.2초)
+  const liveUpdateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isInitializedRef = useRef(false);
+
+  useEffect(() => {
+    // 초기화 전에는 실행하지 않음
+    if (!isInitializedRef.current) {
+      if (sections.length > 0) {
+        isInitializedRef.current = true;
+      }
+      return;
+    }
+
+    if (liveUpdateTimerRef.current) {
+      clearTimeout(liveUpdateTimerRef.current);
+    }
+
+    liveUpdateTimerRef.current = setTimeout(() => {
+      void (async () => {
+        setLiveUpdating(true);
+        try {
+          const res = await fetch(`/api/projects/${id}/preview-live`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              copyBlocks: toCopyBlocks(),
+              layoutSections: toLayoutSections(),
+            }),
+          });
+          if (res.ok) {
+            const data = (await res.json()) as { html: string };
+            setPreviewHtml(data.html);
+          }
+        } finally {
+          setLiveUpdating(false);
+        }
+      })();
+    }, 1200);
+
+    return () => {
+      if (liveUpdateTimerRef.current) {
+        clearTimeout(liveUpdateTimerRef.current);
+      }
+    };
+  }, [sections, id, setLiveUpdating, setPreviewHtml, toCopyBlocks, toLayoutSections]);
 
   // 저장 + Code Engine 재실행
   const handleSave = async (): Promise<void> => {
@@ -160,6 +211,9 @@ export default function EditorPage(): React.ReactElement {
         </div>
 
         <div className="flex items-center gap-2">
+          {isLiveUpdating && (
+            <span className="text-xs text-gray-400 animate-pulse">실시간 미리보기 갱신 중...</span>
+          )}
           {isRebuilding && (
             <span className="text-xs text-blue-600 animate-pulse">미리보기 갱신 중...</span>
           )}

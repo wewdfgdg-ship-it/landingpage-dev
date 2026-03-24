@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useEditorStore } from '@/stores/editor-store';
+import { cn } from '@/lib/utils';
 
 // ============================================================
 // 미리보기 패널 — 중앙
@@ -11,6 +12,7 @@ import { useEditorStore } from '@/stores/editor-store';
 export function PreviewPanel(): React.ReactElement {
   const previewHtml = useEditorStore((s) => s.previewHtml);
   const isRebuilding = useEditorStore((s) => s.isRebuilding);
+  const isLiveUpdating = useEditorStore((s) => s.isLiveUpdating);
   const [device, setDevice] = useState<'desktop' | 'mobile'>('desktop');
 
   return (
@@ -40,6 +42,9 @@ export function PreviewPanel(): React.ReactElement {
           </button>
         </div>
 
+        {isLiveUpdating && !isRebuilding && (
+          <span className="text-xs text-gray-400 animate-pulse">실시간 반영 중...</span>
+        )}
         {isRebuilding && (
           <span className="text-xs text-blue-600 animate-pulse">미리보기 갱신 중...</span>
         )}
@@ -48,11 +53,10 @@ export function PreviewPanel(): React.ReactElement {
       {/* iframe 미리보기 */}
       <div className="flex-1 flex justify-center overflow-auto p-4">
         <div
-          className="bg-white shadow-lg rounded-lg overflow-hidden transition-all"
-          style={{
-            width: device === 'mobile' ? '375px' : '100%',
-            maxWidth: '100%',
-          }}
+          className={cn(
+            'bg-white shadow-lg rounded-lg overflow-hidden transition-all max-w-full',
+            device === 'mobile' ? 'w-[375px]' : 'w-full',
+          )}
         >
           <iframe
             srcDoc={previewHtml}

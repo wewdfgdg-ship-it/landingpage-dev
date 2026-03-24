@@ -29,6 +29,7 @@ interface EditorState {
   isDirty: boolean;
   isSaving: boolean;
   isRebuilding: boolean;
+  isLiveUpdating: boolean;
 
   // 액션
   initialize: (
@@ -42,10 +43,14 @@ interface EditorState {
   updateCopy: (order: number, field: keyof CopyBlock, value: string | string[]) => void;
   changePattern: (order: number, patternId: string, patternName: string) => void;
   reorderSections: (fromIndex: number, toIndex: number) => void;
+  moveSection: (fromOrder: number, toOrder: number) => void;
   deleteSection: (order: number) => void;
+  addSection: (sectionType: string) => void;
+  duplicateSection: (order: number) => void;
   setPreviewHtml: (html: string) => void;
   setSaving: (saving: boolean) => void;
   setRebuilding: (rebuilding: boolean) => void;
+  setLiveUpdating: (updating: boolean) => void;
   markClean: () => void;
 
   // 데이터 추출
@@ -63,6 +68,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   isDirty: false,
   isSaving: false,
   isRebuilding: false,
+  isLiveUpdating: false,
 
   initialize: (projectId, copyBlocks, layoutConfig, styleConfig, html) => {
     const sections: EditorSection[] = layoutConfig.sections.map((layout) => {
@@ -128,6 +134,18 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       return { sections: reordered, isDirty: true };
     }),
 
+  moveSection: (fromOrder, toOrder) =>
+    set((state) => {
+      const fromIndex = state.sections.findIndex((s) => s.order === fromOrder);
+      const toIndex = state.sections.findIndex((s) => s.order === toOrder);
+      if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) return state;
+      const newSections = [...state.sections];
+      const [moved] = newSections.splice(fromIndex, 1);
+      newSections.splice(toIndex, 0, moved);
+      const reordered = newSections.map((s, i) => ({ ...s, order: i + 1 }));
+      return { sections: reordered, isDirty: true };
+    }),
+
   deleteSection: (order) =>
     set((state) => {
       const filtered = state.sections.filter((s) => s.order !== order);
@@ -140,9 +158,61 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       };
     }),
 
+  addSection: (sectionType) =>
+    set((state) => {
+      const newOrder = state.sections.length + 1;
+      const newSection: EditorSection = {
+        order: newOrder,
+        role: sectionType,
+        sectionType,
+        patternId: '',
+        patternName: '',
+        copy: {
+          headline: '',
+          subheadline: '',
+          body: '',
+          bulletPoints: [],
+          ctaText: '',
+          microCopy: '',
+          imageDirection: '',
+        },
+      };
+      return {
+        sections: [...state.sections, newSection],
+        isDirty: true,
+        selectedSectionOrder: newOrder,
+      };
+    }),
+
+  duplicateSection: (order) =>
+    set((state) => {
+      const target = state.sections.find((s) => s.order === order);
+      if (!target) return state;
+      const insertIndex = state.sections.findIndex((s) => s.order === order) + 1;
+      const newSection: EditorSection = {
+        ...target,
+        order: 0, // 임시값, 재할당됨
+        copy: {
+          ...target.copy,
+          bulletPoints: [...target.copy.bulletPoints],
+          headline: target.copy.headline ? `${target.copy.headline} (복사본)` : '',
+        },
+      };
+      const newSections = [...state.sections];
+      newSections.splice(insertIndex, 0, newSection);
+      const reordered = newSections.map((s, i) => ({ ...s, order: i + 1 }));
+      const duplicatedOrder = reordered[insertIndex].order;
+      return {
+        sections: reordered,
+        isDirty: true,
+        selectedSectionOrder: duplicatedOrder,
+      };
+    }),
+
   setPreviewHtml: (html) => set({ previewHtml: html }),
   setSaving: (saving) => set({ isSaving: saving }),
   setRebuilding: (rebuilding) => set({ isRebuilding: rebuilding }),
+  setLiveUpdating: (updating) => set({ isLiveUpdating: updating }),
   markClean: () => set({ isDirty: false }),
 
   toCopyBlocks: () => {
