@@ -1,60 +1,62 @@
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-const r2Endpoint = process.env.R2_ENDPOINT;
-const r2AccessKeyId = process.env.R2_ACCESS_KEY_ID;
-const r2SecretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
-const BUCKET = process.env.R2_BUCKET_NAME;
+// Lazy initialization — 환경변수 없어도 모듈 import가 실패하지 않음
+let _client: S3Client | null = null;
 
-if (!r2Endpoint || !r2AccessKeyId || !r2SecretAccessKey || !BUCKET) {
-  throw new Error('R2_ENDPOINT, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME must be set');
+function getBucket(): string {
+  return (process.env.R2_BUCKET_NAME ?? '').replace(/"/g, '');
 }
 
-export const r2 = new S3Client({
-  region: 'auto',
-  endpoint: r2Endpoint,
-  credentials: {
-    accessKeyId: r2AccessKeyId,
-    secretAccessKey: r2SecretAccessKey,
+function getClient(): S3Client {
+  if (_client) return _client;
+
+  const endpoint = (process.env.R2_ENDPOINT ?? '').replace(/"/g, '');
+  const accessKeyId = (process.env.R2_ACCESS_KEY_ID ?? '').replace(/"/g, '');
+  const secretAccessKey = (process.env.R2_SECRET_ACCESS_KEY ?? '').replace(/"/g, '');
+
+  if (!endpoint || !accessKeyId || !secretAccessKey) {
+    throw new Error('R2 환경변수가 설정되지 않았습니다 (R2_ENDPOINT, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY)');
+  }
+
+  _client = new S3Client({
+    region: 'auto',
+    endpoint,
+    credentials: { accessKeyId, secretAccessKey },
+  });
+  return _client;
+}
+
+// 기존 코드 호환을 위한 Proxy export
+export const r2 = new Proxy({} as S3Client, {
+  get(_target, prop) {
+    const client = getClient();
+    const value = (client as unknown as Record<string | symbol, unknown>)[prop];
+    return typeof value === 'function' ? (value as CallableFunction).bind(client) : value;
   },
 });
 
 export async function getUploadUrl(key: string, contentType: string): Promise<string> {
-  const command = new PutObjectCommand({
-    Bucket: BUCKET,
-    Key: key,
-    ContentType: contentType,
-  });
-  return getSignedUrl(r2, command, { expiresIn: 600 }); // 10분
+  const command = new PutObjectCommand({ Bucket: getBucket(), Key: key, ContentType: contentType });
+  return getSignedUrl(getClient(), command, { expiresIn: 600 });
 }
 
 export async function getDownloadUrl(key: string): Promise<string> {
-  const command = new GetObjectCommand({
-    Bucket: BUCKET,
-    Key: key,
-  });
-  return getSignedUrl(r2, command, { expiresIn: 7200 }); // 2시간
+  const command = new GetObjectCommand({ Bucket: getBucket(), Key: key });
+  return getSignedUrl(getClient(), command, { expiresIn: 7200 });
 }
 
 export async function deleteObject(key: string): Promise<void> {
-  const command = new DeleteObjectCommand({
-    Bucket: BUCKET,
-    Key: key,
-  });
-  await r2.send(command);
+  await getClient().send(new DeleteObjectCommand({ Bucket: getBucket(), Key: key }));
 }
 
 export function getCdnUrl(key: string): string {
-  return `${process.env.R2_CDN_URL}/${key}`;
+  const cdnUrl = (process.env.R2_CDN_URL ?? '').replace(/"/g, '');
+  return `${cdnUrl}/${key}`;
 }
 
-/** R2에서 객체를 Buffer로 읽기 (참조 이미지 base64 변환용) */
 export async function getObjectBuffer(key: string): Promise<Buffer> {
-  const command = new GetObjectCommand({
-    Bucket: BUCKET,
-    Key: key,
-  });
-  const response = await r2.send(command);
+  const response = await getClient().send(new GetObjectCommand({ Bucket: getBucket(), Key: key }));
   if (!response.Body) {
     throw new Error(`R2 객체를 찾을 수 없습니다: ${key}`);
   }
