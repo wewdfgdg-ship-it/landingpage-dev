@@ -8,6 +8,16 @@ import type { CopyBlock } from '@/engine/05-psychological-copy/types';
 // 선택된 섹션의 카피 수정 + 레이아웃 패턴 변경
 // ============================================================
 
+const ROLE_LABELS: Record<string, string> = {
+  HOOK: '훅 (첫인상)',
+  PAIN: '고통점',
+  SOLUTION: '솔루션',
+  PROOF: '사회적 증거',
+  OBJECTION: '반론 해소',
+  URGENCY: '긴급성',
+  CTA: '행동 유도',
+};
+
 /** 카테고리별 패턴 목록 */
 const PATTERN_OPTIONS: Record<string, { id: string; name: string }[]> = {
   hero: [
@@ -62,28 +72,48 @@ function FieldInput({
   value,
   onChange,
   multiline,
+  maxLength,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   multiline?: boolean;
+  maxLength?: number;
 }): React.ReactElement {
+  const len = value.trim().length;
+  const isOver = maxLength ? len > maxLength : false;
+
   return (
     <div>
-      <label className="block text-xs font-medium text-gray-500 mb-1">{label}</label>
+      <div className="flex items-center justify-between mb-1">
+        <label className="text-xs font-medium text-gray-500">{label}</label>
+        {maxLength && (
+          <span className={`text-xs ${isOver ? 'text-red-500 font-medium' : 'text-gray-400'}`}>
+            {len}/{maxLength}
+          </span>
+        )}
+      </div>
       {multiline ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={3}
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none"
+          className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-1 resize-none ${
+            isOver
+              ? 'border-red-300 focus:border-red-400 focus:ring-red-400'
+              : 'border-gray-200 focus:border-blue-400 focus:ring-blue-400'
+          }`}
         />
       ) : (
         <input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400"
+          className={`w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-1 ${
+            isOver
+              ? 'border-red-300 focus:border-red-400 focus:ring-red-400'
+              : 'border-gray-200 focus:border-blue-400 focus:ring-blue-400'
+          }`}
         />
       )}
     </div>
@@ -153,12 +183,12 @@ export function EditPanel(): React.ReactElement {
   }
 
   const patterns = PATTERN_OPTIONS[section.sectionType] ?? [];
-  const copyFields: { key: keyof CopyBlock; label: string; multiline?: boolean }[] = [
-    { key: 'headline', label: '헤드라인' },
-    { key: 'subheadline', label: '서브 헤드라인' },
-    { key: 'body', label: '본문', multiline: true },
-    { key: 'ctaText', label: 'CTA 버튼 텍스트' },
-    { key: 'microCopy', label: '마이크로 카피' },
+  const copyFields: { key: keyof CopyBlock; label: string; multiline?: boolean; maxLength?: number }[] = [
+    { key: 'headline', label: '헤드라인', maxLength: 20 },
+    { key: 'subheadline', label: '서브 헤드라인', maxLength: 50 },
+    { key: 'body', label: '본문', multiline: true, maxLength: 200 },
+    { key: 'ctaText', label: 'CTA 버튼 텍스트', maxLength: 12 },
+    { key: 'microCopy', label: '마이크로 카피', maxLength: 30 },
   ];
 
   return (
@@ -168,7 +198,12 @@ export function EditPanel(): React.ReactElement {
         <h3 className="text-sm font-bold text-gray-700">
           섹션 {section.order} 편집
         </h3>
-        <p className="text-xs text-gray-400 mt-0.5">{section.sectionType}</p>
+        <div className="flex items-center gap-2 mt-0.5">
+          <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-500">
+            {ROLE_LABELS[section.role] ?? section.role}
+          </span>
+          <span className="text-xs text-gray-400">{section.sectionType}</span>
+        </div>
       </div>
 
       {/* 편집 폼 */}
@@ -197,7 +232,7 @@ export function EditPanel(): React.ReactElement {
         )}
 
         {/* 카피 필드 */}
-        {copyFields.map(({ key, label, multiline }) => {
+        {copyFields.map(({ key, label, multiline, maxLength }) => {
           const value = section.copy[key];
           if (typeof value !== 'string') return null;
           return (
@@ -207,6 +242,7 @@ export function EditPanel(): React.ReactElement {
               value={value}
               onChange={(v) => updateCopy(section.order, key, v)}
               multiline={multiline}
+              maxLength={maxLength}
             />
           );
         })}

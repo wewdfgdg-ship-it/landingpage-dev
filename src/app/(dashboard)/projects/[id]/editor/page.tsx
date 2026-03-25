@@ -157,6 +157,23 @@ export default function EditorPage(): React.ReactElement {
     }
   };
 
+  // 키보드 단축키: Ctrl+S 저장, Esc 선택 해제
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        if (isDirty && !isSaving) {
+          void handleSave();
+        }
+      }
+      if (e.key === 'Escape') {
+        useEditorStore.getState().selectSection(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return (): void => { window.removeEventListener('keydown', handleKeyDown); };
+  }, [isDirty, isSaving]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // 페이지 떠날 때 저장 안 된 변경 경고
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent): void => {

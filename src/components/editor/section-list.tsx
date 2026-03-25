@@ -167,6 +167,34 @@ export function SectionList(): React.ReactElement {
 
               {/* 컨트롤 버튼 (hover 시 표시) */}
               <div className="flex-shrink-0 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                {/* 위로 이동 */}
+                {section.order > 1 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      moveSection(section.order, section.order - 1);
+                    }}
+                    className="rounded p-1 text-gray-400 hover:text-blue-500 text-xs"
+                    title="위로 이동"
+                  >
+                    ▲
+                  </button>
+                )}
+
+                {/* 아래로 이동 */}
+                {section.order < sections.length && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      moveSection(section.order, section.order + 1);
+                    }}
+                    className="rounded p-1 text-gray-400 hover:text-blue-500 text-xs"
+                    title="아래로 이동"
+                  >
+                    ▼
+                  </button>
+                )}
+
                 {/* 복제 */}
                 <button
                   onClick={(e) => {
